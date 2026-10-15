@@ -127,3 +127,28 @@ node scripts/model-loading-check.cjs
 - 独立设计师检查 1440px 与390px 实际截图，无横向溢出。说明与分数字段有无障碍关联；高分候选送入复核后仍要求人工核实，排除后退出待办。没有更改 CSS、导航或版面。
 
 证据：[原故障基线](validation/detection-threshold-baseline.json)、[版本混用失败基线](validation/detection-mixed-deployment-baseline.json)、[修复后验收](validation/detection-threshold-validation.json)、[界面回归](validation/detection-threshold-ui-validation.json)。未做新的社区领域评测、训练或量化；素材时间/区域沿用问题另记在 BACKLOG。
+
+## 2026-10-16 · 素材现场确认与失败替换保留
+
+```bash
+node --test tests/*.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 -m unittest discover -s tests/training -p 'test_*.py'
+python3 scripts/verify_assets.py
+python3 scripts/verify_parking.py
+node scripts/media-context-check.cjs
+node scripts/model-check.cjs
+node scripts/model-loading-check.cjs
+node scripts/detection-threshold-check.cjs
+```
+
+- 79 项 JS、6 项标注 QA、4 项训练基础检查通过。新增 7 项覆盖未知时间、日历/时区、素材版本、确认失效、明确复用及尺寸变化；对象模式的未知时间旧行为先失败后通过。训练检查用于回归基础实现，本轮没有重新训练模型。
+- 独立真实 Chrome 新流程 10/10 通过，页面异常及跨站请求为 0。基线先复现旧来源/时间/ROI/片段起点继承与坏图清报告；修复后同尺寸图片和视频均先清空，手动复用仍要求新时间和重新核对。
+- 导出记录当前来源、原始宽高与本地确认。换入同尺寸镜像图后，素材提交版本 1→2；手工测试时间 2026-10-16 09:20（UTC+8）产生 01:20Z 候选。另一条 08:15 流程实际送审，页面显示对应来源与当地日期时间。确认是人工操作记录，不是媒体元数据认证。
+- 原图与双倍原始分辨率都显示为 960×640，仍拒绝沿用旧 ROI；640×960 竖图也恢复整幅。ROI 摘要显示当前范围。纯物体模式 `started_at:null`，真实检测到校车且候选为 0。
+- 损坏 JPEG 显示中文错误，来源、确认、完成报告和导出逐项不变。受控延迟 `Image.decode()` 的成功与失败两种完成顺序均不能覆盖较新素材。加载未完成时可继续选文件，分析/编辑/送审/导出暂停，避免处理旧结果。
+- 真实解码的合成短片在 offset=2 时采样 `[2,3]` 秒，候选开始比人工输入时间晚 2 秒；下一短片 offset=0、时间为空。合成短片来自公开照片重复画面，仅证明采样与时间绑定，不证明持续停留或真实行为精度。
+- 原 `model-check` 通过图片检测、7 帧视频、送审排除、offset=2 导出与 offset=999 拒绝；张量 262→262。加载故障 8/8、阈值回归 7/7 通过；11 项资源、12,830 项公开数据哈希及全部 6,413 条停车测试预测重算通过，旧模型和评测结果保留。
+- 独立设计师在 1440px 与 390px 重走未知时间物体检测、换素材、沿用、缺时间/确认报错、填写到秒的时间、真实分析、导出及送审。两端无横向溢出；遗漏日期聚焦 `vision-start`，遗漏确认聚焦复选框，手机错误提示与开始按钮同屏。确认后表单状态和底部提示一致，原红色错误已清除；原导航、字体、版面保留，仅增加必要控件样式。两端 09:30:25 测试输入均形成 01:30:25Z 的单车候选，送审原图可见。
+
+证据：[原故障基线](validation/media-context-baseline.json)、[修复后验收](validation/media-context-validation.json)、[桌面与手机回归](validation/media-context-final-ui.json)。报告不携带媒体；配置目前只能在当前标签页显式沿用，不支持具名预设或检测报告恢复。

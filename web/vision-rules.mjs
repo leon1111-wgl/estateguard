@@ -21,6 +21,7 @@ export function makeCandidates(tracks,config){
  const {roi,rule}=config;
  if(!['objects','access','lift','parking','direction'].includes(rule))throw new Error('未知场景规则');
  if(!Array.isArray(roi)||roi.length!==4||roi.some(x=>!Number.isFinite(x))||roi[0]<0||roi[1]<0||roi[2]<=0||roi[3]<=0||roi[0]+roi[2]>1.00001||roi[1]+roi[3]>1.00001)throw new Error('区域坐标必须位于画面内，且宽高大于 0');
+ if(rule==='objects')return [];
  if(!Number.isFinite(Date.parse(config.started_at)))throw new Error('请输入有效的录像开始时间');
  const candidates=[];
  for(const track of tracks){

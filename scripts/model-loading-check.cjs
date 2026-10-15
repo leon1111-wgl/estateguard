@@ -31,7 +31,7 @@ const controls=page=>page.evaluate(()=>({
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});report.browser=await browser.version();
  const pages=[];
- const prepareSample=async page=>{await page.locator('#sample-image').click();await page.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);await page.locator('#vision-rule').selectOption('access');};
+ const prepareSample=async page=>{await page.locator('#sample-image').click();await page.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);await page.locator('#vision-rule').selectOption('access');await page.locator('#vision-camera').fill('模型加载回归');await page.locator('#vision-zone').fill('测试区域');await page.locator('#vision-start').fill('2026-10-16T08:00');await page.locator('#vision-context-confirmed').check();};
  const open=async({disableCache=false,holdCachePut=false}={})=>{
   const page=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});pages.push(page);page.setDefaultTimeout(15000);
   page.on('pageerror',error=>report.page_errors.push(error.message));page.on('request',request=>{if(request.url().startsWith('http')&&new URL(request.url()).origin!==new URL(base).origin)report.external_requests.push(request.url());});

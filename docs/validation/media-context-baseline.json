@@ -1,0 +1,485 @@
+{
+  "scope": "Synthetic variations of the public CC0 bus image test workflow state only; not field accuracy or real recordings.",
+  "states": [
+    {
+      "name": "old_public_image_configured",
+      "fields": {
+        "vision-camera": "旧现场A-东门",
+        "vision-zone": "旧现场A-消防通道",
+        "vision-start": "2021-12-10T09:30",
+        "vision-offset": "2",
+        "vision-rule": "access",
+        "roi-x": "10",
+        "roi-y": "20",
+        "roi-w": "80",
+        "roi-h": "70"
+      },
+      "canvas": [
+        960,
+        640
+      ],
+      "file": "公开示例-校车.jpg · 0.21 MB",
+      "roi_summary": "关注区域 默认整幅画面",
+      "message": "公开示例：Raysonho，CC0，2011。用于测试物体检测；不是小区违规证据。请选择规则后分析。",
+      "run_disabled": false,
+      "send_disabled": true,
+      "results_hidden": true
+    },
+    {
+      "name": "same_dimensions_different_image",
+      "fields": {
+        "vision-camera": "旧现场A-东门",
+        "vision-zone": "旧现场A-消防通道",
+        "vision-start": "2021-12-10T09:30",
+        "vision-offset": "2",
+        "vision-rule": "access",
+        "roi-x": "10",
+        "roi-y": "20",
+        "roi-w": "80",
+        "roi-h": "70"
+      },
+      "canvas": [
+        960,
+        640
+      ],
+      "file": "新现场B-2026-10-16-同画幅镜像.png · 1.43 MB",
+      "roi_summary": "关注区域 默认整幅画面",
+      "message": "素材已就绪。选择场景规则和关注区域，然后开始分析。",
+      "run_disabled": false,
+      "send_disabled": true,
+      "results_hidden": true
+    },
+    {
+      "name": "same_dimensions_after_inference",
+      "fields": {
+        "vision-camera": "旧现场A-东门",
+        "vision-zone": "旧现场A-消防通道",
+        "vision-start": "2021-12-10T09:30",
+        "vision-offset": "2",
+        "vision-rule": "access",
+        "roi-x": "10",
+        "roi-y": "20",
+        "roi-w": "80",
+        "roi-h": "70"
+      },
+      "canvas": [
+        960,
+        640
+      ],
+      "file": "新现场B-2026-10-16-同画幅镜像.png · 1.43 MB",
+      "roi_summary": "关注区域 默认整幅画面",
+      "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+      "run_disabled": false,
+      "send_disabled": false,
+      "results_hidden": false
+    },
+    {
+      "name": "failed_replacement",
+      "fields": {
+        "vision-camera": "旧现场A-东门",
+        "vision-zone": "旧现场A-消防通道",
+        "vision-start": "2021-12-10T09:30",
+        "vision-offset": "2",
+        "vision-rule": "access",
+        "roi-x": "10",
+        "roi-y": "20",
+        "roi-w": "80",
+        "roi-h": "70"
+      },
+      "canvas": [
+        960,
+        640
+      ],
+      "file": "新现场B-2026-10-16-同画幅镜像.png · 1.43 MB",
+      "roi_summary": "关注区域 默认整幅画面",
+      "message": "The source image cannot be decoded. 当前仍保留此前素材。",
+      "run_disabled": false,
+      "send_disabled": true,
+      "results_hidden": true
+    },
+    {
+      "name": "different_dimensions_image",
+      "fields": {
+        "vision-camera": "旧现场A-东门",
+        "vision-zone": "旧现场A-消防通道",
+        "vision-start": "2021-12-10T09:30",
+        "vision-offset": "2",
+        "vision-rule": "access",
+        "roi-x": "10",
+        "roi-y": "20",
+        "roi-w": "80",
+        "roi-h": "70"
+      },
+      "canvas": [
+        640,
+        960
+      ],
+      "file": "新现场C-不同画幅.png · 0.69 MB",
+      "roi_summary": "关注区域 默认整幅画面",
+      "message": "素材已就绪。选择场景规则和关注区域，然后开始分析。",
+      "run_disabled": false,
+      "send_disabled": true,
+      "results_hidden": true
+    },
+    {
+      "name": "new_video_inherits_offset",
+      "fields": {
+        "vision-camera": "旧现场A-东门",
+        "vision-zone": "旧现场A-消防通道",
+        "vision-start": "2021-12-10T09:30",
+        "vision-offset": "2",
+        "vision-rule": "access",
+        "roi-x": "10",
+        "roi-y": "20",
+        "roi-w": "80",
+        "roi-h": "70"
+      },
+      "canvas": [
+        640,
+        426
+      ],
+      "file": "新现场D-2026-10-16-合成短片.mp4 · 0.19 MB · 6.1 秒 · 检测画面：0.0 秒（下方播放器可独立播放）",
+      "roi_summary": "关注区域 默认整幅画面",
+      "message": "素材已就绪。选择场景规则和关注区域，然后开始分析。",
+      "run_disabled": false,
+      "send_disabled": true,
+      "results_hidden": true
+    },
+    {
+      "name": "new_video_after_inference",
+      "fields": {
+        "vision-camera": "旧现场A-东门",
+        "vision-zone": "旧现场A-消防通道",
+        "vision-start": "2021-12-10T09:30",
+        "vision-offset": "2",
+        "vision-rule": "access",
+        "roi-x": "10",
+        "roi-y": "20",
+        "roi-w": "80",
+        "roi-h": "70"
+      },
+      "canvas": [
+        640,
+        426
+      ],
+      "file": "新现场D-2026-10-16-合成短片.mp4 · 0.19 MB · 6.1 秒 · 检测画面：6.0 秒（下方播放器可独立播放）",
+      "roi_summary": "关注区域 默认整幅画面",
+      "message": "分析完成：5 帧、1 条匿名轨迹、1 个待核实候选。",
+      "run_disabled": false,
+      "send_disabled": false,
+      "results_hidden": false
+    }
+  ],
+  "page_errors": [],
+  "same_dimensions_actual_model_report": {
+    "format": "estateguard-detections",
+    "version": 1,
+    "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+    "runtime": "TensorFlow.js 4.22.0",
+    "backend": "webgl",
+    "model_loading": {
+      "network_bytes": 20041229,
+      "cache_bytes": 0,
+      "cache_available": true,
+      "resource_bytes": 20041229,
+      "load_ms": 1057.7999999523163,
+      "initialization_ms": 858,
+      "reused_in_memory": false
+    },
+    "media": {
+      "name": "新现场B-2026-10-16-同画幅镜像.png",
+      "type": "image/png",
+      "bytes": 1497914
+    },
+    "params": {
+      "rule": "access",
+      "roi": [
+        0.1,
+        0.2,
+        0.8,
+        0.7
+      ],
+      "camera": "旧现场A-东门",
+      "zone": "旧现场A-消防通道",
+      "started_at": "2021-12-10T09:30:00+08:00",
+      "media_name": "新现场B-2026-10-16-同画幅镜像.png",
+      "dwell_seconds": 5,
+      "is_video": false,
+      "expected_direction": "right",
+      "minimum_score": 0.5,
+      "offset_seconds": 0,
+      "sample_interval_seconds": 1,
+      "max_frames": 20,
+      "max_detections": 50,
+      "nms_iou_threshold": 0.5,
+      "postprocess": "coco-ssd-2.2.3-fixed-nms-v1"
+    },
+    "complete": true,
+    "frames": [
+      {
+        "time": 0,
+        "detections": [
+          {
+            "class": "bus",
+            "score": 0.984306812286377,
+            "bbox": [
+              0.008275479078292847,
+              0.29976537823677063,
+              0.8490057289600372,
+              0.6453140676021576
+            ]
+          }
+        ]
+      }
+    ],
+    "tracks": [
+      {
+        "id": "track-1",
+        "class": "bus",
+        "samples": [
+          {
+            "time": 0,
+            "bbox": [
+              0.008275479078292847,
+              0.29976537823677063,
+              0.8490057289600372,
+              0.6453140676021576
+            ],
+            "score": 0.984306812286377
+          }
+        ]
+      }
+    ],
+    "candidates": [
+      {
+        "id": "vision-track-1-1",
+        "camera": "旧现场A-东门",
+        "zone": "旧现场A-消防通道",
+        "track": "track-1",
+        "category": "blocked_access",
+        "start": "2021-12-10T01:30:00.000Z",
+        "end": "2021-12-10T01:30:00.001Z",
+        "score": 0.984306812286377,
+        "quality": 0.4,
+        "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+        "evidence": [
+          "新现场B-2026-10-16-同画幅镜像.png @ 0.00s"
+        ]
+      }
+    ],
+    "metrics": {
+      "frame_count": 1,
+      "mean_inference_ms": 39.10000002384186,
+      "total_ms": 1101.3999999761581
+    },
+    "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+  },
+  "new_video_actual_model_report": {
+    "format": "estateguard-detections",
+    "version": 1,
+    "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+    "runtime": "TensorFlow.js 4.22.0",
+    "backend": "webgl",
+    "model_loading": {
+      "network_bytes": 0,
+      "cache_bytes": 0,
+      "cache_available": true,
+      "resource_bytes": 20041229,
+      "load_ms": 0,
+      "initialization_ms": 0,
+      "reused_in_memory": true
+    },
+    "media": {
+      "name": "新现场D-2026-10-16-合成短片.mp4",
+      "type": "video/mp4",
+      "bytes": 202685
+    },
+    "params": {
+      "rule": "access",
+      "roi": [
+        0.1,
+        0.2,
+        0.8,
+        0.7
+      ],
+      "camera": "旧现场A-东门",
+      "zone": "旧现场A-消防通道",
+      "started_at": "2021-12-10T09:30:00+08:00",
+      "media_name": "新现场D-2026-10-16-合成短片.mp4",
+      "dwell_seconds": 5,
+      "is_video": true,
+      "expected_direction": "right",
+      "minimum_score": 0.5,
+      "offset_seconds": 2,
+      "sample_interval_seconds": 1,
+      "max_frames": 20,
+      "max_detections": 50,
+      "nms_iou_threshold": 0.5,
+      "postprocess": "coco-ssd-2.2.3-fixed-nms-v1"
+    },
+    "complete": true,
+    "frames": [
+      {
+        "time": 2,
+        "detections": [
+          {
+            "class": "bus",
+            "score": 0.9881211519241333,
+            "bbox": [
+              0.12991443276405334,
+              0.2908094823360443,
+              0.8413687646389008,
+              0.645001083612442
+            ]
+          }
+        ]
+      },
+      {
+        "time": 3,
+        "detections": [
+          {
+            "class": "bus",
+            "score": 0.9884323477745056,
+            "bbox": [
+              0.12964525818824768,
+              0.28905874490737915,
+              0.8413911759853363,
+              0.6468492746353149
+            ]
+          }
+        ]
+      },
+      {
+        "time": 4,
+        "detections": [
+          {
+            "class": "bus",
+            "score": 0.9900193214416504,
+            "bbox": [
+              0.1290258765220642,
+              0.2918848395347595,
+              0.8453010320663452,
+              0.644586443901062
+            ]
+          }
+        ]
+      },
+      {
+        "time": 5,
+        "detections": [
+          {
+            "class": "bus",
+            "score": 0.9899007678031921,
+            "bbox": [
+              0.1298712193965912,
+              0.2925097644329071,
+              0.8485362827777863,
+              0.6440360844135284
+            ]
+          }
+        ]
+      },
+      {
+        "time": 6,
+        "detections": [
+          {
+            "class": "bus",
+            "score": 0.9896509647369385,
+            "bbox": [
+              0.12981131672859192,
+              0.29272380471229553,
+              0.8468184173107147,
+              0.644161194562912
+            ]
+          }
+        ]
+      }
+    ],
+    "tracks": [
+      {
+        "id": "track-1",
+        "class": "bus",
+        "samples": [
+          {
+            "time": 2,
+            "bbox": [
+              0.12991443276405334,
+              0.2908094823360443,
+              0.8413687646389008,
+              0.645001083612442
+            ],
+            "score": 0.9881211519241333
+          },
+          {
+            "time": 3,
+            "bbox": [
+              0.12964525818824768,
+              0.28905874490737915,
+              0.8413911759853363,
+              0.6468492746353149
+            ],
+            "score": 0.9884323477745056
+          },
+          {
+            "time": 4,
+            "bbox": [
+              0.1290258765220642,
+              0.2918848395347595,
+              0.8453010320663452,
+              0.644586443901062
+            ],
+            "score": 0.9900193214416504
+          },
+          {
+            "time": 5,
+            "bbox": [
+              0.1298712193965912,
+              0.2925097644329071,
+              0.8485362827777863,
+              0.6440360844135284
+            ],
+            "score": 0.9899007678031921
+          },
+          {
+            "time": 6,
+            "bbox": [
+              0.12981131672859192,
+              0.29272380471229553,
+              0.8468184173107147,
+              0.644161194562912
+            ],
+            "score": 0.9896509647369385
+          }
+        ]
+      }
+    ],
+    "candidates": [
+      {
+        "id": "vision-track-1-1",
+        "camera": "旧现场A-东门",
+        "zone": "旧现场A-消防通道",
+        "track": "track-1",
+        "category": "blocked_access",
+        "start": "2021-12-10T01:30:02.000Z",
+        "end": "2021-12-10T01:30:06.000Z",
+        "score": 0.9900193214416504,
+        "quality": 0.4,
+        "summary": "模型检测：bus；5 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+        "evidence": [
+          "新现场D-2026-10-16-合成短片.mp4 @ 2.00s",
+          "新现场D-2026-10-16-合成短片.mp4 @ 3.00s",
+          "新现场D-2026-10-16-合成短片.mp4 @ 4.00s",
+          "新现场D-2026-10-16-合成短片.mp4 @ 5.00s",
+          "新现场D-2026-10-16-合成短片.mp4 @ 6.00s"
+        ]
+      }
+    ],
+    "metrics": {
+      "frame_count": 5,
+      "mean_inference_ms": 25.02000002861023,
+      "total_ms": 346
+    },
+    "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+  },
+  "finished_at": "2026-10-15T20:34:57.193Z"
+}

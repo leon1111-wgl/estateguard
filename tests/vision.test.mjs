@@ -3,6 +3,11 @@ import assert from 'node:assert/strict';
 import {trackDetections,makeCandidates} from '../web/vision-rules.mjs';
 const d=(box=[.1,.2,.3,.3],label='car')=>({bbox:box,class:label,score:.9});
 const config={rule:'access',roi:[0,0,1,1],camera:'local-camera',zone:'Test zone',started_at:'2026-10-15T08:00:00+08:00',media_name:'test.mp4',dwell_seconds:2,is_video:true,expected_direction:'right'};
+test('object-only inference with unknown capture time produces no dated event',()=>{
+ const tracks=trackDetections([{time:0,detections:[d()]}]);
+ assert.deepEqual(makeCandidates(tracks,{...config,rule:'objects',started_at:null}),[]);
+ assert.throws(()=>makeCandidates(tracks,{...config,started_at:null}),/时间/);
+});
 test('nearby same-class boxes link into an anonymous track',()=>{
  const t=trackDetections([{time:0,detections:[d()]},{time:1,detections:[d([.11,.2,.3,.3])]}]);assert.equal(t.length,1);assert.equal(t[0].samples.length,2);
 });

@@ -40,6 +40,10 @@ JSON，版本 1。最多 5 MiB、10,000 条记录。见 `data/demo.json`。导�
 
 2026-10-16 起的报告在 `params` 中保存实际 `minimum_score`、`nms_iou_threshold`、`postprocess` 补丁标识、`max_detections`、`offset_seconds`、`sample_interval_seconds`、`max_frames`。片段起点为相对原素材的秒数，图片实际为 0；`started_at` 是原素材开始时间，候选绝对时间在此基础上加采样秒数。旧报告缺失这些字段时不得假定当时用了默认值，无法完整重现其检测设置。报告不包含原始媒体，当前也没有从检测报告一键恢复分析设置的入口。
 
+素材确认版本增加 `media.width`、`media.height`（原始尺寸）以及 `params.context_confirmed`。顶层 `context_confirmation` 为 `{media_revision, confirmed_at}`，只有规则分析通过当前素材核对时才有值；通用检测为 `null`。`media_revision` 只是本标签页内成功替换素材的计数，不是跨会话文件标识；`confirmed_at` 是勾选时间，不是拍摄时间，也不是受认证的审计凭证。
+
+`params.started_at` 可在通用物体检测中为 `null`，来源和区域名也可为空；此模式始终没有候选。事件规则则要求有效来源、区域名、素材时间与当前确认；日期明确按 UTC+8，精度到秒。换素材不会自动继承日期或文件修改时间。公开校车图的具体拍摄时间未知，如填写日期演示规则，该日期属于人工测试输入，不是公开数据的真实时间标注。
+
 ## 标注 QA
 
 `scripts/audit_annotations.py` 输入数组，字段为 video_id、track、start_s、end_s、label、annotator、split。label 支持上述八类及 normal，split 为 train、validation、test。

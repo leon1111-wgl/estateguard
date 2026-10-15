@@ -1,0 +1,972 @@
+{
+  "scope": "Media context UI integration; original approved layout retained.",
+  "views": [
+    {
+      "width": 1440,
+      "steps": {
+        "initial": {
+          "width": 1440,
+          "docWidth": 1440,
+          "focus": "sample-image",
+          "filename": "公开示例-校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "",
+            "vision-zone": "",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "confirmationHidden": true,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": true,
+          "status": "新素材已清空来源和时间，片段起点归零、关注区域恢复整幅。可重新填写，或显式沿用已核对的现场设置。",
+          "roiSummary": "整幅画面",
+          "checkboxRect": {
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "statusRect": {
+            "top": 716.8125,
+            "bottom": 752
+          },
+          "message": "公开示例：Raysonho，CC0，2011。具体拍摄时间未知，可直接做通用物体检测；规则演示需自行填写测试时间，不是小区违规证据。",
+          "messageError": false
+        },
+        "replaced": {
+          "width": 1440,
+          "docWidth": 1440,
+          "focus": "",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "",
+            "vision-zone": "",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "新素材已清空来源和时间，片段起点归零、关注区域恢复整幅。可重新填写，或显式沿用已核对的现场设置。",
+          "roiSummary": "整幅画面",
+          "checkboxRect": {
+            "top": 793.5,
+            "bottom": 807.5,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 816.6875,
+            "bottom": 851.875
+          },
+          "message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。",
+          "messageError": false
+        },
+        "reused": {
+          "width": 1440,
+          "docWidth": 1440,
+          "focus": "reuse-scene",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 834.5,
+            "bottom": 848.5,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 857.6875,
+            "bottom": 892.875
+          },
+          "message": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "messageError": false
+        },
+        "missingTime": {
+          "width": 1440,
+          "docWidth": 1440,
+          "focus": "vision-start",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "生成候选前请填写本素材的实际起始时间；未知时可选择通用物体检测。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 834.5,
+            "bottom": 848.5,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 857.6875,
+            "bottom": 892.875
+          },
+          "message": "生成候选前请填写本素材的实际起始时间；未知时可选择通用物体检测。",
+          "messageError": true
+        },
+        "missingConfirmation": {
+          "width": 1440,
+          "docWidth": 1440,
+          "focus": "vision-context-confirmed",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "2026-10-16T09:30:25",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "请核对当前素材的来源、关注区域与采集时间，再勾选确认。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 834.5,
+            "bottom": 848.5,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 857.6875,
+            "bottom": 892.875
+          },
+          "message": "请核对当前素材的来源、关注区域与采集时间，再勾选确认。",
+          "messageError": true
+        },
+        "ready": {
+          "width": 1440,
+          "docWidth": 1440,
+          "focus": "vision-context-confirmed",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "2026-10-16T09:30:25",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": true,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": true,
+          "status": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 790.3125,
+            "bottom": 804.3125,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 813.5,
+            "bottom": 848.6875
+          },
+          "message": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+          "messageError": false
+        },
+        "analyzed": {
+          "width": 1440,
+          "docWidth": 1440,
+          "focus": "download-detections",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "2026-10-16T09:30:25",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": true,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": true,
+          "status": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 790.3125,
+            "bottom": 804.3125,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 813.5,
+            "bottom": 848.6875
+          },
+          "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+          "messageError": false
+        },
+        "differentDimensions": {
+          "width": 1440,
+          "docWidth": 1440,
+          "focus": "reuse-scene",
+          "filename": "B-20150708-0805-1.jpg · 0.00 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "已沿用来源设置；画面尺寸变化，关注区域保持整幅。请重新框选并填写本素材时间，再核对。",
+          "roiSummary": "整幅画面",
+          "checkboxRect": {
+            "top": 834.5,
+            "bottom": 848.5,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 857.6875,
+            "bottom": 892.875
+          },
+          "message": "已沿用来源设置；画面尺寸变化，关注区域保持整幅。请重新框选并填写本素材时间，再核对。",
+          "messageError": false
+        }
+      },
+      "unknownTimeReport": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "runtime": "TensorFlow.js 4.22.0",
+        "backend": "webgl",
+        "model_loading": {
+          "network_bytes": 20041229,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 994.8000000715256,
+          "initialization_ms": 816.3999999761581,
+          "reused_in_memory": false
+        },
+        "media": {
+          "name": "公开示例-校车.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152,
+          "width": 960,
+          "height": 640
+        },
+        "params": {
+          "rule": "objects",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "",
+          "zone": "",
+          "started_at": null,
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": 5,
+          "is_video": false,
+          "expected_direction": "right",
+          "minimum_score": 0.5,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+          "context_confirmed": false
+        },
+        "context_confirmation": null,
+        "complete": true,
+        "frames": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9916937947273254,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ],
+                "score": 0.9916937947273254
+              }
+            ]
+          }
+        ],
+        "candidates": [],
+        "metrics": {
+          "frame_count": 1,
+          "mean_inference_ms": 38.199999928474426,
+          "total_ms": 1037.1999999284744
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      },
+      "confirmedReport": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "runtime": "TensorFlow.js 4.22.0",
+        "backend": "webgl",
+        "model_loading": {
+          "network_bytes": 0,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 0,
+          "initialization_ms": 0,
+          "reused_in_memory": true
+        },
+        "media": {
+          "name": "下一班次-公开校车.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152,
+          "width": 960,
+          "height": 640
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0.2,
+            0.15,
+            0.7,
+            0.75
+          ],
+          "camera": "NORTH-GATE-01",
+          "zone": "北门消防通道",
+          "started_at": "2026-10-16T09:30:25+08:00",
+          "media_name": "下一班次-公开校车.jpg",
+          "dwell_seconds": 5,
+          "is_video": false,
+          "expected_direction": "right",
+          "minimum_score": 0.5,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+          "context_confirmed": true
+        },
+        "context_confirmation": {
+          "media_revision": 2,
+          "confirmed_at": "2026-10-15T20:52:45.443Z"
+        },
+        "complete": true,
+        "frames": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9916937947273254,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ],
+                "score": 0.9916937947273254
+              }
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "NORTH-GATE-01",
+            "zone": "北门消防通道",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-16T01:30:25.000Z",
+            "end": "2026-10-16T01:30:25.001Z",
+            "score": 0.9916937947273254,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "下一班次-公开校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "metrics": {
+          "frame_count": 1,
+          "mean_inference_ms": 27.299999952316284,
+          "total_ms": 38
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      },
+      "handoff": {
+        "events": 1,
+        "decision": "open",
+        "description": "证据不足高风险类别通道占用线索NORTH-GATE-01 · 北门消防通道 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/16 09:30:25 → 2026/10/16 09:30:25（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）99 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：COCO-SSD 2.2.3 / SSDLite MobileNet V2。来源：下一班次-公开校车.jpg。规则：access；采样 1 fps；区域 0.2,0.15,0.7,0.75。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）下一班次-公开校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。下一班次-公开校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。"
+      }
+    },
+    {
+      "width": 390,
+      "steps": {
+        "initial": {
+          "width": 390,
+          "docWidth": 390,
+          "focus": "sample-image",
+          "filename": "公开示例-校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "",
+            "vision-zone": "",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "confirmationHidden": true,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": true,
+          "status": "新素材已清空来源和时间，片段起点归零、关注区域恢复整幅。可重新填写，或显式沿用已核对的现场设置。",
+          "roiSummary": "整幅画面",
+          "checkboxRect": {
+            "top": 0,
+            "bottom": 0,
+            "width": 0,
+            "height": 0
+          },
+          "statusRect": {
+            "top": 1130.109375,
+            "bottom": 1165.296875
+          },
+          "message": "公开示例：Raysonho，CC0，2011。具体拍摄时间未知，可直接做通用物体检测；规则演示需自行填写测试时间，不是小区违规证据。",
+          "messageError": false
+        },
+        "replaced": {
+          "width": 390,
+          "docWidth": 390,
+          "focus": "",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "",
+            "vision-zone": "",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "新素材已清空来源和时间，片段起点归零、关注区域恢复整幅。可重新填写，或显式沿用已核对的现场设置。",
+          "roiSummary": "整幅画面",
+          "checkboxRect": {
+            "top": 542.296875,
+            "bottom": 556.296875,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 565.484375,
+            "bottom": 600.671875
+          },
+          "message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。",
+          "messageError": false
+        },
+        "reused": {
+          "width": 390,
+          "docWidth": 390,
+          "focus": "reuse-scene",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 750.296875,
+            "bottom": 764.296875,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 773.484375,
+            "bottom": 808.671875
+          },
+          "message": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "messageError": false
+        },
+        "missingTime": {
+          "width": 390,
+          "docWidth": 390,
+          "focus": "vision-start",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "生成候选前请填写本素材的实际起始时间；未知时可选择通用物体检测。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 739.296875,
+            "bottom": 753.296875,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 762.484375,
+            "bottom": 797.671875
+          },
+          "message": "生成候选前请填写本素材的实际起始时间；未知时可选择通用物体检测。",
+          "messageError": true
+        },
+        "missingConfirmation": {
+          "width": 390,
+          "docWidth": 390,
+          "focus": "vision-context-confirmed",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "2026-10-16T09:30:25",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "请核对当前素材的来源、关注区域与采集时间，再勾选确认。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 739.296875,
+            "bottom": 753.296875,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 762.484375,
+            "bottom": 780.078125
+          },
+          "message": "请核对当前素材的来源、关注区域与采集时间，再勾选确认。",
+          "messageError": true
+        },
+        "ready": {
+          "width": 390,
+          "docWidth": 390,
+          "focus": "vision-context-confirmed",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "2026-10-16T09:30:25",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": true,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": true,
+          "status": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 695.109375,
+            "bottom": 709.109375,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 718.296875,
+            "bottom": 753.484375
+          },
+          "message": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+          "messageError": false
+        },
+        "analyzed": {
+          "width": 390,
+          "docWidth": 390,
+          "focus": "download-detections",
+          "filename": "下一班次-公开校车.jpg · 0.21 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "2026-10-16T09:30:25",
+            "vision-offset": "0",
+            "roi-x": "20",
+            "roi-y": "15",
+            "roi-w": "70",
+            "roi-h": "75"
+          },
+          "confirmed": true,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": true,
+          "status": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+          "roiSummary": "X 20% · Y 15% · 宽 70% · 高 75%",
+          "checkboxRect": {
+            "top": 1338.109375,
+            "bottom": 1352.109375,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 1361.296875,
+            "bottom": 1396.484375
+          },
+          "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+          "messageError": false
+        },
+        "differentDimensions": {
+          "width": 390,
+          "docWidth": 390,
+          "focus": "reuse-scene",
+          "filename": "B-20150708-0805-1.jpg · 0.00 MB",
+          "values": {
+            "vision-camera": "NORTH-GATE-01",
+            "vision-zone": "北门消防通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "confirmationHidden": false,
+          "confirmationText": "已核对本素材的来源、时间和关注区域",
+          "reuseHidden": false,
+          "status": "已沿用来源设置；画面尺寸变化，关注区域保持整幅。请重新框选并填写本素材时间，再核对。",
+          "roiSummary": "整幅画面",
+          "checkboxRect": {
+            "top": 749.96875,
+            "bottom": 763.96875,
+            "width": 14,
+            "height": 14
+          },
+          "statusRect": {
+            "top": 773.15625,
+            "bottom": 808.34375
+          },
+          "message": "已沿用来源设置；画面尺寸变化，关注区域保持整幅。请重新框选并填写本素材时间，再核对。",
+          "messageError": false
+        }
+      },
+      "unknownTimeReport": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "runtime": "TensorFlow.js 4.22.0",
+        "backend": "webgl",
+        "model_loading": {
+          "network_bytes": 0,
+          "cache_bytes": 20041229,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 861.6000000238419,
+          "initialization_ms": 728.5,
+          "reused_in_memory": false
+        },
+        "media": {
+          "name": "公开示例-校车.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152,
+          "width": 960,
+          "height": 640
+        },
+        "params": {
+          "rule": "objects",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "",
+          "zone": "",
+          "started_at": null,
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": 5,
+          "is_video": false,
+          "expected_direction": "right",
+          "minimum_score": 0.5,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+          "context_confirmed": false
+        },
+        "context_confirmation": null,
+        "complete": true,
+        "frames": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9916937947273254,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ],
+                "score": 0.9916937947273254
+              }
+            ]
+          }
+        ],
+        "candidates": [],
+        "metrics": {
+          "frame_count": 1,
+          "mean_inference_ms": 36.299999952316284,
+          "total_ms": 902.1000000238419
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      },
+      "confirmedReport": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "runtime": "TensorFlow.js 4.22.0",
+        "backend": "webgl",
+        "model_loading": {
+          "network_bytes": 0,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 0,
+          "initialization_ms": 0,
+          "reused_in_memory": true
+        },
+        "media": {
+          "name": "下一班次-公开校车.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152,
+          "width": 960,
+          "height": 640
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0.2,
+            0.15,
+            0.7,
+            0.75
+          ],
+          "camera": "NORTH-GATE-01",
+          "zone": "北门消防通道",
+          "started_at": "2026-10-16T09:30:25+08:00",
+          "media_name": "下一班次-公开校车.jpg",
+          "dwell_seconds": 5,
+          "is_video": false,
+          "expected_direction": "right",
+          "minimum_score": 0.5,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+          "context_confirmed": true
+        },
+        "context_confirmation": {
+          "media_revision": 2,
+          "confirmed_at": "2026-10-15T20:52:48.880Z"
+        },
+        "complete": true,
+        "frames": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9916937947273254,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ],
+                "score": 0.9916937947273254
+              }
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "NORTH-GATE-01",
+            "zone": "北门消防通道",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-16T01:30:25.000Z",
+            "end": "2026-10-16T01:30:25.001Z",
+            "score": 0.9916937947273254,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "下一班次-公开校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "metrics": {
+          "frame_count": 1,
+          "mean_inference_ms": 29,
+          "total_ms": 39.5
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      },
+      "handoff": {
+        "events": 1,
+        "decision": "open",
+        "description": "证据不足高风险类别通道占用线索NORTH-GATE-01 · 北门消防通道 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/16 09:30:25 → 2026/10/16 09:30:25（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）99 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：COCO-SSD 2.2.3 / SSDLite MobileNet V2。来源：下一班次-公开校车.jpg。规则：access；采样 1 fps；区域 0.2,0.15,0.7,0.75。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）下一班次-公开校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。下一班次-公开校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。"
+      }
+    }
+  ],
+  "errors": []
+}

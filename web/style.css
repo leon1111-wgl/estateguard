@@ -397,3 +397,11 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
 @media (max-width: 650px) {
   #model-load-progress { flex-basis: 100px; width: 100px; }
 }
+
+/* Source confirmation stays inside the existing analysis form. */
+#analyze #reuse-scene, #analyze #vision-context-confirmation, #analyze #vision-context-status { grid-column: 1 / -1; }
+#analyze #reuse-scene { justify-self: start; max-width: 100%; white-space: normal; text-align: left; }
+#analyze #vision-context-confirmation { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; line-height: 1.6; color: var(--ink); }
+#analyze #vision-context-confirmed { flex: 0 0 14px; width: 14px; height: 14px; margin: 3px 0 0; padding: 0; accent-color: var(--blue); }
+#analyze #vision-context-status { overflow-wrap: anywhere; }
+#analyze #vision-context-status.error { color: var(--danger); }

@@ -1,0 +1,842 @@
+{
+  "started_at": "2026-10-15T20:52:02.112Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Real model inference and browser interactions; transformed public photo/video fixtures only verify workflow, not field accuracy.",
+  "checks": [
+    {
+      "name": "new media clears source, timestamp, offset and ROI without changing the selected rule",
+      "passed": true,
+      "evidence": {
+        "initial": {
+          "fields": {
+            "vision-camera": "",
+            "vision-zone": "",
+            "vision-start": "",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "right",
+            "vision-dwell": "5",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "canvas": [
+            960,
+            640
+          ],
+          "message": "公开示例：Raysonho，CC0，2011。具体拍摄时间未知，可直接做通用物体检测；规则演示需自行填写测试时间，不是小区违规证据。",
+          "context_status": "新素材已清空来源和时间，片段起点归零、关注区域恢复整幅。可重新填写，或显式沿用已核对的现场设置。",
+          "roi_summary": "整幅画面",
+          "results_hidden": true,
+          "send_disabled": true
+        },
+        "state": {
+          "fields": {
+            "vision-camera": "",
+            "vision-zone": "",
+            "vision-start": "",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "right",
+            "vision-dwell": "5",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "file": "成功换入新图片.png · 1.43 MB",
+          "canvas": [
+            960,
+            640
+          ],
+          "message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。",
+          "context_status": "新素材已清空来源和时间，片段起点归零、关注区域恢复整幅。可重新填写，或显式沿用已核对的现场设置。",
+          "roi_summary": "整幅画面",
+          "results_hidden": true,
+          "send_disabled": true
+        }
+      }
+    },
+    {
+      "name": "candidate rules require explicit source, recording time and current-media confirmation",
+      "passed": true,
+      "evidence": {
+        "state": {
+          "fields": {
+            "vision-camera": "需确认来源",
+            "vision-zone": "测试区域",
+            "vision-start": "2026-10-16T08:15",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "right",
+            "vision-dwell": "5",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "canvas": [
+            960,
+            640
+          ],
+          "message": "请核对当前素材的来源、关注区域与采集时间，再勾选确认。",
+          "context_status": "请核对当前素材的来源、关注区域与采集时间，再勾选确认。",
+          "roi_summary": "整幅画面",
+          "results_hidden": true,
+          "send_disabled": true
+        }
+      }
+    },
+    {
+      "name": "confirmed real inference exports current context and sends the correctly dated candidate to review",
+      "passed": true,
+      "evidence": {
+        "report": {
+          "format": "estateguard-detections",
+          "version": 1,
+          "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+          "runtime": "TensorFlow.js 4.22.0",
+          "backend": "webgl",
+          "model_loading": {
+            "network_bytes": 20041229,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20041229,
+            "load_ms": 1081.7000000476837,
+            "initialization_ms": 862.8999999761581,
+            "reused_in_memory": false
+          },
+          "media": {
+            "name": "公开示例-校车.jpg",
+            "type": "image/jpeg",
+            "bytes": 223152,
+            "width": 960,
+            "height": 640
+          },
+          "params": {
+            "rule": "access",
+            "roi": [
+              0.1,
+              0.2,
+              0.8,
+              0.7
+            ],
+            "camera": "东门-测试镜头",
+            "zone": "测试通道",
+            "started_at": "2026-10-16T08:15:00+08:00",
+            "media_name": "公开示例-校车.jpg",
+            "dwell_seconds": 3,
+            "is_video": false,
+            "expected_direction": "left",
+            "minimum_score": 0.5,
+            "offset_seconds": 0,
+            "sample_interval_seconds": 1,
+            "max_frames": 20,
+            "max_detections": 50,
+            "nms_iou_threshold": 0.5,
+            "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+            "context_confirmed": true
+          },
+          "context_confirmation": {
+            "media_revision": 1,
+            "confirmed_at": "2026-10-15T20:52:04.700Z"
+          },
+          "complete": true,
+          "frames": [
+            {
+              "time": 0,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9916937947273254,
+                  "bbox": [
+                    0.13031357526779175,
+                    0.29490771889686584,
+                    0.8503782749176025,
+                    0.6453458964824677
+                  ]
+                }
+              ]
+            }
+          ],
+          "tracks": [
+            {
+              "id": "track-1",
+              "class": "bus",
+              "samples": [
+                {
+                  "time": 0,
+                  "bbox": [
+                    0.13031357526779175,
+                    0.29490771889686584,
+                    0.8503782749176025,
+                    0.6453458964824677
+                  ],
+                  "score": 0.9916937947273254
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "vision-track-1-1",
+              "camera": "东门-测试镜头",
+              "zone": "测试通道",
+              "track": "track-1",
+              "category": "blocked_access",
+              "start": "2026-10-16T00:15:00.000Z",
+              "end": "2026-10-16T00:15:00.001Z",
+              "score": 0.9916937947273254,
+              "quality": 0.4,
+              "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+              "evidence": [
+                "公开示例-校车.jpg @ 0.00s"
+              ]
+            }
+          ],
+          "metrics": {
+            "frame_count": 1,
+            "mean_inference_ms": 42.700000047683716,
+            "total_ms": 1129.3999999761581
+          },
+          "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+        }
+      }
+    },
+    {
+      "name": "same-size reuse is explicit and never restores a time or confirmation",
+      "passed": true,
+      "evidence": {
+        "reused": {
+          "fields": {
+            "vision-camera": "东门-测试镜头",
+            "vision-zone": "测试通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "left",
+            "vision-dwell": "3",
+            "roi-x": "10",
+            "roi-y": "20",
+            "roi-w": "80",
+            "roi-h": "70"
+          },
+          "confirmed": false,
+          "file": "同尺寸新图.png · 1.43 MB",
+          "canvas": [
+            960,
+            640
+          ],
+          "message": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "context_status": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "roi_summary": "X 10% · Y 20% · 宽 80% · 高 70%",
+          "results_hidden": true,
+          "send_disabled": true
+        },
+        "old_revision": 1,
+        "current": {
+          "format": "estateguard-detections",
+          "version": 1,
+          "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+          "runtime": "TensorFlow.js 4.22.0",
+          "backend": "webgl",
+          "model_loading": {
+            "network_bytes": 0,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20041229,
+            "load_ms": 0,
+            "initialization_ms": 0,
+            "reused_in_memory": true
+          },
+          "media": {
+            "name": "同尺寸新图.png",
+            "type": "image/png",
+            "bytes": 1497914,
+            "width": 960,
+            "height": 640
+          },
+          "params": {
+            "rule": "access",
+            "roi": [
+              0.1,
+              0.2,
+              0.8,
+              0.7
+            ],
+            "camera": "东门-测试镜头",
+            "zone": "测试通道",
+            "started_at": "2026-10-16T09:20:00+08:00",
+            "media_name": "同尺寸新图.png",
+            "dwell_seconds": 3,
+            "is_video": false,
+            "expected_direction": "left",
+            "minimum_score": 0.5,
+            "offset_seconds": 0,
+            "sample_interval_seconds": 1,
+            "max_frames": 20,
+            "max_detections": 50,
+            "nms_iou_threshold": 0.5,
+            "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+            "context_confirmed": true
+          },
+          "context_confirmation": {
+            "media_revision": 2,
+            "confirmed_at": "2026-10-15T20:52:07.645Z"
+          },
+          "complete": true,
+          "frames": [
+            {
+              "time": 0,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.984306812286377,
+                  "bbox": [
+                    0.008275508880615234,
+                    0.299765408039093,
+                    0.8490056991577148,
+                    0.6453139781951904
+                  ]
+                }
+              ]
+            }
+          ],
+          "tracks": [
+            {
+              "id": "track-1",
+              "class": "bus",
+              "samples": [
+                {
+                  "time": 0,
+                  "bbox": [
+                    0.008275508880615234,
+                    0.299765408039093,
+                    0.8490056991577148,
+                    0.6453139781951904
+                  ],
+                  "score": 0.984306812286377
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "vision-track-1-1",
+              "camera": "东门-测试镜头",
+              "zone": "测试通道",
+              "track": "track-1",
+              "category": "blocked_access",
+              "start": "2026-10-16T01:20:00.000Z",
+              "end": "2026-10-16T01:20:00.001Z",
+              "score": 0.984306812286377,
+              "quality": 0.4,
+              "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+              "evidence": [
+                "同尺寸新图.png @ 0.00s"
+              ]
+            }
+          ],
+          "metrics": {
+            "frame_count": 1,
+            "mean_inference_ms": 29,
+            "total_ms": 40.5
+          },
+          "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+        }
+      }
+    },
+    {
+      "name": "changing camera, zone, time, rule, direction or ROI revokes the current confirmation",
+      "passed": true,
+      "evidence": {
+        "state": {
+          "fields": {
+            "vision-camera": "东门-测试镜头",
+            "vision-zone": "测试通道",
+            "vision-start": "2026-10-16T08:15",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "left",
+            "vision-dwell": "3",
+            "roi-x": "11",
+            "roi-y": "20",
+            "roi-w": "79",
+            "roi-h": "70"
+          },
+          "confirmed": false,
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "canvas": [
+            960,
+            640
+          ],
+          "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+          "context_status": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+          "roi_summary": "X 11% · Y 20% · 宽 79% · 高 70%",
+          "results_hidden": true,
+          "send_disabled": true
+        }
+      }
+    },
+    {
+      "name": "different original dimensions cannot silently reuse a previous ROI",
+      "passed": true,
+      "evidence": {
+        "same_display": {
+          "fields": {
+            "vision-camera": "东门-测试镜头",
+            "vision-zone": "测试通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "left",
+            "vision-dwell": "3",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "file": "相同显示画幅原始双倍分辨率.png · 4.62 MB",
+          "canvas": [
+            960,
+            640
+          ],
+          "message": "已沿用来源设置；画面尺寸变化，关注区域保持整幅。请重新框选并填写本素材时间，再核对。",
+          "context_status": "已沿用来源设置；画面尺寸变化，关注区域保持整幅。请重新框选并填写本素材时间，再核对。",
+          "roi_summary": "整幅画面",
+          "results_hidden": true,
+          "send_disabled": true
+        },
+        "state": {
+          "fields": {
+            "vision-camera": "东门-测试镜头",
+            "vision-zone": "测试通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "left",
+            "vision-dwell": "3",
+            "roi-x": "0",
+            "roi-y": "0",
+            "roi-w": "100",
+            "roi-h": "100"
+          },
+          "confirmed": false,
+          "file": "竖向新图.png · 0.69 MB",
+          "canvas": [
+            640,
+            960
+          ],
+          "message": "已沿用来源设置；画面尺寸变化，关注区域保持整幅。请重新框选并填写本素材时间，再核对。",
+          "context_status": "已沿用来源设置；画面尺寸变化，关注区域保持整幅。请重新框选并填写本素材时间，再核对。",
+          "roi_summary": "整幅画面",
+          "results_hidden": true,
+          "send_disabled": true
+        }
+      }
+    },
+    {
+      "name": "objects-only inference accepts unknown source and time without inventing candidates",
+      "passed": true,
+      "evidence": {
+        "report": {
+          "format": "estateguard-detections",
+          "version": 1,
+          "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+          "runtime": "TensorFlow.js 4.22.0",
+          "backend": "webgl",
+          "model_loading": {
+            "network_bytes": 0,
+            "cache_bytes": 20041229,
+            "cache_available": true,
+            "resource_bytes": 20041229,
+            "load_ms": 834.1000000238419,
+            "initialization_ms": 701.2000000476837,
+            "reused_in_memory": false
+          },
+          "media": {
+            "name": "公开示例-校车.jpg",
+            "type": "image/jpeg",
+            "bytes": 223152,
+            "width": 960,
+            "height": 640
+          },
+          "params": {
+            "rule": "objects",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "camera": "",
+            "zone": "",
+            "started_at": null,
+            "media_name": "公开示例-校车.jpg",
+            "dwell_seconds": 5,
+            "is_video": false,
+            "expected_direction": "right",
+            "minimum_score": 0.5,
+            "offset_seconds": 0,
+            "sample_interval_seconds": 1,
+            "max_frames": 20,
+            "max_detections": 50,
+            "nms_iou_threshold": 0.5,
+            "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+            "context_confirmed": false
+          },
+          "context_confirmation": null,
+          "complete": true,
+          "frames": [
+            {
+              "time": 0,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9916937947273254,
+                  "bbox": [
+                    0.13031357526779175,
+                    0.29490771889686584,
+                    0.8503782749176025,
+                    0.6453458964824677
+                  ]
+                }
+              ]
+            }
+          ],
+          "tracks": [
+            {
+              "id": "track-1",
+              "class": "bus",
+              "samples": [
+                {
+                  "time": 0,
+                  "bbox": [
+                    0.13031357526779175,
+                    0.29490771889686584,
+                    0.8503782749176025,
+                    0.6453458964824677
+                  ],
+                  "score": 0.9916937947273254
+                }
+              ]
+            }
+          ],
+          "candidates": [],
+          "metrics": {
+            "frame_count": 1,
+            "mean_inference_ms": 39.59999990463257,
+            "total_ms": 877.9000000953674
+          },
+          "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+        }
+      }
+    },
+    {
+      "name": "failed image replacement preserves the completed report and its confirmed context",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "fields": {
+            "vision-camera": "东门-测试镜头",
+            "vision-zone": "测试通道",
+            "vision-start": "2026-10-16T08:15",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "left",
+            "vision-dwell": "3",
+            "roi-x": "10",
+            "roi-y": "20",
+            "roi-w": "80",
+            "roi-h": "70"
+          },
+          "confirmed": true,
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "canvas": [
+            960,
+            640
+          ],
+          "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+          "context_status": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+          "roi_summary": "X 10% · Y 20% · 宽 80% · 高 70%",
+          "results_hidden": false,
+          "send_disabled": false
+        },
+        "after": {
+          "fields": {
+            "vision-camera": "东门-测试镜头",
+            "vision-zone": "测试通道",
+            "vision-start": "2026-10-16T08:15",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "left",
+            "vision-dwell": "3",
+            "roi-x": "10",
+            "roi-y": "20",
+            "roi-w": "80",
+            "roi-h": "70"
+          },
+          "confirmed": true,
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "canvas": [
+            960,
+            640
+          ],
+          "message": "无法解码这张图片，请选择可打开的 JPEG、PNG 或 WebP 文件。 当前仍保留此前素材、设置与已完成报告。",
+          "context_status": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+          "roi_summary": "X 10% · Y 20% · 宽 80% · 高 70%",
+          "results_hidden": false,
+          "send_disabled": false
+        }
+      }
+    },
+    {
+      "name": "pending decode blocks stale actions and late success or failure cannot replace newer media",
+      "passed": true,
+      "evidence": {
+        "rounds": [
+          {
+            "late_completion": "success",
+            "state": {
+              "fields": {
+                "vision-camera": "最新选择保留",
+                "vision-zone": "",
+                "vision-start": "",
+                "vision-offset": "0",
+                "vision-rule": "access",
+                "vision-direction": "left",
+                "vision-dwell": "3",
+                "roi-x": "0",
+                "roi-y": "0",
+                "roi-w": "100",
+                "roi-h": "100"
+              },
+              "confirmed": false,
+              "file": "最终图一.png · 1.43 MB",
+              "canvas": [
+                960,
+                640
+              ],
+              "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+              "context_status": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+              "roi_summary": "整幅画面",
+              "results_hidden": true,
+              "send_disabled": true
+            }
+          },
+          {
+            "late_completion": "failure",
+            "state": {
+              "fields": {
+                "vision-camera": "最新选择保留",
+                "vision-zone": "",
+                "vision-start": "",
+                "vision-offset": "0",
+                "vision-rule": "access",
+                "vision-direction": "left",
+                "vision-dwell": "3",
+                "roi-x": "0",
+                "roi-y": "0",
+                "roi-w": "100",
+                "roi-h": "100"
+              },
+              "confirmed": false,
+              "file": "最终图二.png · 1.43 MB",
+              "canvas": [
+                960,
+                640
+              ],
+              "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+              "context_status": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+              "roi_summary": "整幅画面",
+              "results_hidden": true,
+              "send_disabled": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "video offset is confirmed per file and a new video starts from zero with unknown recording time",
+      "passed": true,
+      "evidence": {
+        "report": {
+          "format": "estateguard-detections",
+          "version": 1,
+          "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+          "runtime": "TensorFlow.js 4.22.0",
+          "backend": "webgl",
+          "model_loading": {
+            "network_bytes": 0,
+            "cache_bytes": 20041229,
+            "cache_available": true,
+            "resource_bytes": 20041229,
+            "load_ms": 851.7000000476837,
+            "initialization_ms": 721,
+            "reused_in_memory": false
+          },
+          "media": {
+            "name": "合成时间测试.mp4",
+            "type": "video/mp4",
+            "bytes": 69344,
+            "width": 640,
+            "height": 426
+          },
+          "params": {
+            "rule": "access",
+            "roi": [
+              0.1,
+              0.2,
+              0.8,
+              0.7
+            ],
+            "camera": "东门-测试镜头",
+            "zone": "测试通道",
+            "started_at": "2026-10-16T08:15:00+08:00",
+            "media_name": "合成时间测试.mp4",
+            "dwell_seconds": 3,
+            "is_video": true,
+            "expected_direction": "left",
+            "minimum_score": 0.5,
+            "offset_seconds": 2,
+            "sample_interval_seconds": 1,
+            "max_frames": 20,
+            "max_detections": 50,
+            "nms_iou_threshold": 0.5,
+            "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+            "context_confirmed": true
+          },
+          "context_confirmation": {
+            "media_revision": 1,
+            "confirmed_at": "2026-10-15T20:52:17.882Z"
+          },
+          "complete": true,
+          "frames": [
+            {
+              "time": 2,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9881211519241333,
+                  "bbox": [
+                    0.12991443276405334,
+                    0.2908094823360443,
+                    0.8413687646389008,
+                    0.645001083612442
+                  ]
+                }
+              ]
+            },
+            {
+              "time": 3,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9884323477745056,
+                  "bbox": [
+                    0.12964525818824768,
+                    0.28905874490737915,
+                    0.8413911759853363,
+                    0.6468492746353149
+                  ]
+                }
+              ]
+            }
+          ],
+          "tracks": [
+            {
+              "id": "track-1",
+              "class": "bus",
+              "samples": [
+                {
+                  "time": 2,
+                  "bbox": [
+                    0.12991443276405334,
+                    0.2908094823360443,
+                    0.8413687646389008,
+                    0.645001083612442
+                  ],
+                  "score": 0.9881211519241333
+                },
+                {
+                  "time": 3,
+                  "bbox": [
+                    0.12964525818824768,
+                    0.28905874490737915,
+                    0.8413911759853363,
+                    0.6468492746353149
+                  ],
+                  "score": 0.9884323477745056
+                }
+              ]
+            }
+          ],
+          "candidates": [
+            {
+              "id": "vision-track-1-1",
+              "camera": "东门-测试镜头",
+              "zone": "测试通道",
+              "track": "track-1",
+              "category": "blocked_access",
+              "start": "2026-10-16T00:15:02.000Z",
+              "end": "2026-10-16T00:15:03.000Z",
+              "score": 0.9884323477745056,
+              "quality": 0.4,
+              "summary": "模型检测：bus；2 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+              "evidence": [
+                "合成时间测试.mp4 @ 2.00s",
+                "合成时间测试.mp4 @ 3.00s"
+              ]
+            }
+          ],
+          "metrics": {
+            "frame_count": 2,
+            "mean_inference_ms": 28.600000023841858,
+            "total_ms": 983.6000000238419
+          },
+          "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+        },
+        "new_video": {
+          "fields": {
+            "vision-camera": "东门-测试镜头",
+            "vision-zone": "测试通道",
+            "vision-start": "",
+            "vision-offset": "0",
+            "vision-rule": "access",
+            "vision-direction": "left",
+            "vision-dwell": "3",
+            "roi-x": "10",
+            "roi-y": "20",
+            "roi-w": "80",
+            "roi-h": "70"
+          },
+          "confirmed": false,
+          "file": "下一合成短片.mp4 · 0.07 MB · 3.1 秒 · 检测画面：0.0 秒（下方播放器可独立播放）",
+          "canvas": [
+            640,
+            426
+          ],
+          "message": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "context_status": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "roi_summary": "X 10% · Y 20% · 宽 80% · 高 70%",
+          "results_hidden": true,
+          "send_disabled": true
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.79",
+  "finished_at": "2026-10-15T20:52:19.105Z",
+  "passed": 10,
+  "failed": 0,
+  "ok": true
+}
