@@ -34,7 +34,7 @@ node scripts/model-check.cjs
 
 ## 尚未验证
 
-真实物业视频上的领域精度、每小时误报与事故/损坏减少；长期多日运行；移动端各型号推理速度；多人共享权限；生产后端；专项行为模型训练、蒸馏和量化。
+真实物业视频上的领域精度、每小时误报与事故/损坏减少；长期多日运行；移动端各型号推理速度；多人共享权限；生产后端；电梯/垃圾专项行为模型训练、蒸馏和量化。车位占用模型已独立实际训练，见下节。
 
 ## 发布核验
 
@@ -42,3 +42,30 @@ node scripts/model-check.cjs
 - 应用 HTML、CSS、四个逻辑模块、模型结构，以及个人主页 HTML，共 8 个线上文件与本地字节一致，见 `validation/deployed-assets.json`。
 - 在公开 GitHub Pages 地址重新运行真实模型图片/视频验证、送审、排除、张量稳定与手机布局检查，全部通过；见 `validation/deployed-model-validation.json`。个人主页的项目入口在桌面与 390px 下可见且无页面横向溢出。
 - 第一次线上模型加载超过 120 秒的测试等待时间；放宽等待并重试后通过。这是已发现的首次使用体验问题，不能由一次较快重试推断所有用户的加载速度。后续须改进下载进度、缓存与弱网恢复。
+
+## 2026-10-16 · 公开数据停车链路
+
+本轮全部58项JavaScript行为测试通过（包含10项新增停车检查）；原有基线仍保留。
+
+- 完整官方归档：36,596,809字节，ZIP CRC通过，12,584个唯一样本；锁定来源SHA-256。
+- 实际训练：A相机训练4,284、验证1,275、间隔612；B相机测试6,413。按验证损失选MLP32第39轮；两候选训练日志、全量划分和权重已保存。
+- `scripts/verify_parking.py`：核对12,830个公开数据文件哈希、每个测试样本与来源对应、帧/像素跨分区隔离、模型哈希、全部6,413条预测重算的混淆矩阵、复核区和多数类基线。
+- Python训练单测4项通过：特征、分组隔离、实际优化和权重往返、漏判计数。原Python标注QA单测6项仍通过。
+- 浏览器实测首快照53张图片，模型从图片像素计算；与Python输出最大绝对差 `4.44e-16`。同像素换无标签文件名上传结果一致。所有1,485个测试错例可选。
+- `scripts/parking-check.cjs`：已分析与未分析计数、标签对照、草稿保留、人工记录导出恢复、失败恢复原子性、历史回放实际推理、读取失败保持未分析并重试、正常占用不生成违停、桌面/390px布局。
+- `scripts/parking-critic-check.cjs`：6项独立找茬回归，包括超过旧8MiB限制的文件往返、24MiB人工记录边界、异步恢复次序、手动分析/播放顺序、错例跨帧跳转、手机点选定位。24MiB人工记录加全部6,413条预测导出27,818,317字节，可恢复；保存超限保留旧记录与草稿。
+- 原 `browser-check.cjs`、`critic-check.cjs`、`model-check.cjs` 再次通过。COCO图片分数仍为0.99169，实际视频采样7帧，重复推理张量262→262；属于运行回归，不是停车模型的效果评测。
+
+复现新增检查：
+
+```bash
+python3 -m pip install -r requirements-training.txt
+python3 -m unittest discover -s tests/training -p 'test_*.py'
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+python3 scripts/verify_parking.py
+node scripts/parking-check.cjs
+node scripts/parking-critic-check.cjs
+```
+
+CI执行JS、Python、模型/数据完整性和合成流程再生成；真实浏览器交互仍在本机验证。推理输出真实不代表领域泛化合格：测试仍有1,134张占用图错报空闲，详见 [PARKING_DATA.md](PARKING_DATA.md)。

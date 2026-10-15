@@ -1,0 +1,26 @@
+{
+  "errors": [],
+  "states": [
+    {
+      "width": 1440,
+      "count": 53,
+      "gridHeight": 590,
+      "gridScrollHeight": 3643,
+      "bodyHeight": 1457,
+      "columns": "191.5px 191.5px 191.5px 191.5px",
+      "overflow": false,
+      "selected": "B-20150708-0805-18"
+    },
+    {
+      "width": 390,
+      "count": 53,
+      "gridHeight": 400,
+      "gridScrollHeight": 6425,
+      "bodyHeight": 2585,
+      "columns": "149px 149px",
+      "overflow": false,
+      "selected": "B-20150708-0805-18"
+    }
+  ],
+  "mobileNavigation": "sixth existing navigation and new parking navigation reachable"
+}

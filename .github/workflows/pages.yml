@@ -24,7 +24,10 @@ jobs:
           python-version: '3.12'
       - run: node --test tests/*.test.mjs
       - run: python3 -m unittest discover -s tests -p 'test_*.py'
+      - run: python3 -m pip install -r requirements-training.txt
+      - run: python3 -m unittest discover -s tests/training -p 'test_*.py'
       - run: python3 scripts/verify_assets.py
+      - run: python3 scripts/verify_parking.py
       - run: python3 scripts/make_demo.py
       - run: node scripts/evaluate.mjs data/demo.json data/reference.json --write
       - run: git diff --exit-code -- data web/demo.json web/benchmark.json

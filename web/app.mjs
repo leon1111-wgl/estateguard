@@ -9,7 +9,7 @@ const actions={bulky_load:'核对搬运预约、客梯 / 货梯用途及防护�
 const formatTime=x=>new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Hong_Kong',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date(x));
 let ws=null,events=[],selected=null,dirty=false,loadSequence=0;
 const media=new Map(),drafts=new Map();
-const titles={analyze:'视频与图片分析',workspace:'事件复核',policy:'场景规则',results:'评测与模型',story:'项目说明'};
+const titles={analyze:'视频与图片分析',workspace:'事件复核',parking:'车位巡检',policy:'场景规则',results:'评测与模型',story:'项目说明'};
 function navigate(){const view=Object.hasOwn(titles,location.hash.slice(1))?location.hash.slice(1):'analyze';for(const section of document.querySelectorAll('[data-page]'))section.hidden=section.id!==view;for(const a of document.querySelectorAll('[data-nav]'))a.classList.toggle('active',a.dataset.nav===view);$('view-title').textContent=titles[view];}
 window.addEventListener('hashchange',navigate);navigate();
 function message(text,error=false){$('message').textContent=text;$('message').classList.toggle('error',error);}

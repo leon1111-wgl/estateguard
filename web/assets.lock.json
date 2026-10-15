@@ -72,6 +72,13 @@
       "sha256": "300dfae273d20b4046f46a06d735688f03675a807561e9bcb5f664eb2f3d2831",
       "source": "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js",
       "license": "Apache-2.0"
+    },
+    {
+      "path": "models/parking-occupancy/model.json",
+      "bytes": 173489,
+      "sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+      "source": "scripts/train_parking.py; CNRPark camera A, seed 20261015",
+      "license": "MIT (project model); source database ODbL-1.0; see docs/PARKING_DATA.md"
     }
   ]
 }

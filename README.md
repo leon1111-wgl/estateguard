@@ -2,7 +2,7 @@
 
 **把监控线索变成能复核、能解释、能交接的物业事件。**
 
-[在线体验（中文版）](https://leon1111-wgl.github.io/estateguard/) · [项目案例](docs/CASE_STUDY.md) · [模型卡](docs/MODEL_CARD.md) · [数据与接口](docs/DATA_CONTRACT.md) · [研究来源](docs/RESEARCH.md)
+[在线体验（中文版）](https://leon1111-wgl.github.io/estateguard/) · [公开数据与训练](docs/PARKING_DATA.md) · [项目案例](docs/CASE_STUDY.md) · [模型卡](docs/MODEL_CARD.md) · [数据与接口](docs/DATA_CONTRACT.md) · [研究来源](docs/RESEARCH.md)
 
 ![EstateGuard 运行真实小模型的中文工作台](docs/assets/workspace.png)
 
@@ -14,6 +14,7 @@ EstateGuard 将轻量视觉推理、场景规则、事件合并与人工复核�
 
 | 环节 | 可运行能力 |
 | --- | --- |
+| 公开数据车位巡检 | CNRPark 真实历史快照，本项目实际训练的 7,745 参数占用分类器；逐时刻回放、全测试错例、人工结论恢复 |
 | 本地视觉推理 | 本站自托管 COCO-SSD / SSDLite MobileNet V2，识别 COCO 物体类别，显示检测框和分数 |
 | 图片与短视频 | JPEG/PNG/WebP、MP4/WebM；每秒采样一帧，单次最多 20 秒，可选片段起点 |
 | 场景规则 | 用户指定区域内车辆、持续停留、疑似逆向移动、支持类别的大件物品 |
@@ -21,9 +22,15 @@ EstateGuard 将轻量视觉推理、场景规则、事件合并与人工复核�
 | 人工复核 | 查看本地媒体，确认或排除线索、补充证据、完成处置；保留草稿、理由与历史 |
 | 交接与评测 | 检测 JSON、可恢复的工作区 JSON、中文交接单；事件级基线比较、标注冲突与视频划分泄漏检查 |
 
-**这版运行的是通用预训练小模型和可检查的规则。** 物体检测不等于违规识别。挡门动作、碰撞损伤、垃圾投放和精细大件分类尚无专用模型验证。八类事件都可以导入、复核；当前自动分析只覆盖上表的规则候选，不会自动认定损坏、身份或责任。
+**现在包含两条真实推理链路：通用预训练检测器，以及本项目从零训练的车位占用小模型。** 物体检测不等于违规识别。挡门动作、碰撞损伤、垃圾投放和精细大件分类尚无专用模型验证。八类事件都可以导入、复核；当前自动分析只覆盖上表的规则候选，不会自动认定损坏、身份或责任。
 
-## 先体验一次
+## 先体验公开数据
+
+打开[车位巡检](https://leon1111-wgl.github.io/estateguard/#parking)，点击「分析当前快照」。页面用公开图片像素运行模型，支持历史快照回放、原始标注对照、错例筛选、单车位图片上传与人工复核导出/恢复。布局沿用用户确认的中文业务工作台。占用只表示有车，不生成违停事件。
+
+真实训练使用 4,284 张图片，验证 1,275 张；跨摄像头测试 6,413 张。正确率 **76.84%**，多数类基线 **74.55%**，平衡正确率 **77.39%**。仍有 **1,134 张占用图片被错报为空闲**，尚不适合可靠空位引导。全量错例、模型权重、训练日志、划分及复现命令均公开，见[训练说明](docs/PARKING_DATA.md)。这是经典轻量基线；没有把论文效果算作自己的结果。
+
+## 体验原有检测与事件工作流
 
 1. 打开网页，选择「使用公开示例图片」，或选择自己的本地文件。
 2. 先运行「通用物体检测」，查看模型实际输出的框、类别和耗时。
@@ -48,13 +55,14 @@ python3 -m http.server 8766 --directory web
 node --test tests/*.test.mjs
 python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/verify_assets.py
+python3 scripts/verify_parking.py
 node scripts/evaluate.mjs
 python3 scripts/audit_annotations.py data/annotations-example.json
 ```
 
 标注审计退出码：`0` 无发现，`1` 存在需检查的问题，`2` 文件或输入结构错误。分歧不会自动投票改成“真值”。
 
-浏览器检查为可选开发依赖：安装 Playwright 及 Chromium 后运行 `node scripts/browser-check.cjs`、`node scripts/model-check.cjs`。已有 Chrome 可通过 `CHROME_PATH` 指定；运行前启动本地服务。详见[验证记录](docs/VALIDATION.md)。
+浏览器检查为可选开发依赖：安装 Playwright 及 Chromium 后运行 `node scripts/browser-check.cjs`、`node scripts/model-check.cjs`、`node scripts/parking-check.cjs`。已有 Chrome 可通过 `CHROME_PATH` 指定；运行前启动本地服务。详见[验证记录](docs/VALIDATION.md)。
 
 ## 效果如何理解
 
@@ -70,6 +78,6 @@ python3 scripts/audit_annotations.py data/annotations-example.json
 
 ## 持续迭代
 
-每轮由独立审查代理扮演物业值班员、住户或部署工程师，先复现痛点，再改代码并验证。另设界面设计师，按飞书式中文业务工具的方向审查桌面与手机布局、信息密度和操作顺序。问题、取舍和证据记录在 [IMPROVEMENT_LOG](docs/IMPROVEMENT_LOG.md)，下一步在 [BACKLOG](docs/BACKLOG.md)。自动迭代由本地 Codex 定时任务执行，仓库本身不包含自主执行的在线代理。
+每轮由独立审查代理扮演物业值班员、住户或部署工程师，先复现痛点，再改代码并验证。另设界面设计师，在用户已经认可并固定的飞书式版面内，审查新增功能、桌面与手机适配和操作顺序，不再反复重新设计。问题、取舍和证据记录在 [IMPROVEMENT_LOG](docs/IMPROVEMENT_LOG.md)，下一步在 [BACKLOG](docs/BACKLOG.md)。自动迭代由本地 Codex 定时任务执行，仓库本身不包含自主执行的在线代理。
 
 **作者：Leon Wang。** 第一版为中文，英文版在工作流成熟后增加。原创代码为 MIT；模型/运行库和示例素材按 [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md) 中各自许可证分发。

@@ -300,3 +300,89 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
   footer { padding: 16px; flex-direction: column; gap: 5px; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+
+/* Parking extends the established workbench; shared layout and tokens stay intact. */
+#parking .page-heading > .toolbar { width: auto; }
+#parking .parking-snapshots { padding: 18px; }
+#parking .parking-snapshots > .panel-heading { align-items: flex-end; padding-bottom: 15px; border-bottom: 1px solid var(--line); }
+#parking .parking-session-field { min-width: 210px; max-width: 320px; }
+#parking .parking-playback { display: flex; align-items: center; gap: 18px; }
+#parking .parking-playback .toolbar { flex: 0 0 auto; }
+#parking .parking-playback .button { padding-inline: 10px; }
+#parking .parking-slider { display: flex; align-items: center; gap: 10px; min-width: 120px; flex: 1; font-size: 11px; color: var(--muted); white-space: nowrap; }
+#parking .parking-slider input { width: 100%; min-width: 0; height: 24px; margin: 0; accent-color: var(--blue); cursor: pointer; }
+#parking .parking-time { margin: 10px 0 16px; }
+#parking .parking-grid-toolbar { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+#parking .parking-filter-field { width: 190px; }
+#parking .parking-checkbox { display: inline-flex; align-items: center; gap: 7px; min-height: 32px; color: var(--muted); font-size: 12px; cursor: pointer; }
+#parking .parking-checkbox input { margin: 0; width: 14px; height: 14px; accent-color: var(--blue); }
+#parking .parking-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; align-content: start; max-height: 590px; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-gutter: stable; padding: 2px 5px 2px 2px; }
+#parking .parking-grid:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+#parking .parking-grid-help { margin: -5px 0 10px; }
+#parking .parking-grid > .empty { grid-column: 1 / -1; margin: 0; text-align: center; padding: 50px 20px; background: #fafbfc; border-radius: 4px; }
+#parking .parking-tile { display: block; width: 100%; min-width: 0; padding: 8px; border: 1px solid var(--line); border-radius: 5px; background: #fff; color: var(--ink); text-align: left; font: inherit; }
+#parking .parking-tile:hover { border-color: #a8bee8; background: #fafbff; }
+#parking .parking-tile.active, #parking .parking-tile[aria-pressed="true"] { border-color: var(--blue); background: #f5f8ff; box-shadow: 0 0 0 1px var(--blue); }
+#parking .parking-tile img { display: block; width: 150px; height: auto; aspect-ratio: 1; max-width: 100%; margin: 0 auto 8px; object-fit: contain; background: #f5f6f8; border-radius: 2px; }
+#parking .parking-tile strong { display: block; font-size: 12px; font-weight: 500; overflow-wrap: anywhere; }
+#parking .parking-tile small { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
+#parking .parking-tile .parking-tile-line { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 5px; margin-top: 6px; font-size: 11px; }
+#parking .parking-tile .badge { max-width: 100%; }
+#parking .parking-truth { padding-top: 6px; border-top: 1px solid var(--line); }
+#parking .parking-grid-note { margin: 16px 0 0; }
+#parking .parking-side { display: grid; gap: 16px; min-width: 0; }
+#parking .parking-side .panel { padding: 16px; }
+#parking #parking-detail { font-size: 12px; }
+#parking .parking-review { scroll-margin-top: 16px; }
+#parking #parking-detail .empty { padding: 18px 0; margin: 0; }
+#parking #parking-detail img, #parking #parking-upload-result img { display: block; width: 150px; height: auto; max-width: 100%; margin: 0 auto 12px; border-radius: 3px; }
+#parking #parking-detail h3 { font-size: 14px; font-weight: 500; }
+#parking #parking-detail dl { display: grid; grid-template-columns: auto 1fr; gap: 7px 12px; margin: 12px 0; }
+#parking #parking-detail dt { color: var(--muted); }
+#parking #parking-detail dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+#parking #parking-detail .badge { margin-right: 5px; }
+#parking .parking-review-fields { display: grid; gap: 11px; padding-top: 14px; margin-top: 14px; border-top: 1px solid var(--line); }
+#parking .parking-review-fields .button { justify-self: start; }
+#parking .parking-review-fields > p { margin: 0; }
+#parking .parking-upload-panel > p { font-size: 12px; color: var(--muted); }
+#parking .parking-upload-panel > .subtle { margin: 9px 0 0; }
+#parking #parking-upload-result:not(:empty) { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; }
+#parking-evaluation { margin-top: 28px; }
+#parking-evaluation #parking-evaluation-content > :last-child { margin-bottom: 0; }
+#parking-evaluation .table-wrap { margin-top: 14px; }
+#parking-evaluation .metrics { margin-top: 0; }
+#parking-evaluation .training-history { font-size: 12px; color: var(--muted); }
+@media (max-width: 1250px) {
+  #parking .parking-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #parking .parking-playback { flex-wrap: wrap; gap: 10px; }
+  #parking .parking-slider { flex-basis: 100%; }
+}
+@media (max-width: 960px) {
+  #parking .parking-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  #parking .parking-side { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+}
+@media (max-width: 760px) {
+  #parking .parking-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 650px) {
+  #parking .page-heading > .toolbar { width: 100%; }
+  #parking .parking-snapshots { padding: 13px; }
+  #parking .parking-snapshots > .panel-heading { align-items: flex-start; }
+  #parking .parking-session-field { min-width: 0; max-width: none; width: 100%; }
+  #parking .parking-playback .toolbar { width: 100%; }
+  #parking .parking-playback .button { flex: 1; }
+  #parking .parking-slider { width: 100%; }
+  #parking .parking-grid-toolbar { align-items: flex-start; gap: 9px; }
+  #parking .parking-filter-field { width: 100%; }
+  #parking .parking-checkbox { min-height: 28px; }
+  #parking .parking-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; max-height: 400px; }
+  #parking .parking-tile { padding: 7px; }
+  #parking .parking-tile strong { font-size: 12px; }
+  #parking .parking-tile small { font-size: 10px; }
+  #parking .parking-side { grid-template-columns: 1fr; }
+  #parking .parking-grid-note { font-size: 10px !important; }
+  #parking-evaluation .table-wrap { overflow-x: auto; }
+  #parking-evaluation .table-wrap table { min-width: 0; }
+  #parking-evaluation .table-wrap:first-of-type::before { content: "左右滑动查看完整数据划分"; display: block; margin-bottom: 8px; font-size: 10px; color: #69717d; }
+  #parking-evaluation .table-wrap:first-of-type table { min-width: 480px; }
+}

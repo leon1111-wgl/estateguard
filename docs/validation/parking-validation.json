@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-15T16:18:34.199Z",
+  "browser": "155.0.8059.79",
+  "base": "http://127.0.0.1:8766",
+  "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+  "first_frame_samples": 53,
+  "max_python_js_score_error": 4.440892098500626e-16,
+  "test_errors_accessible": 1485,
+  "external_requests": 0,
+  "passed": [
+    "real image inference and Python parity",
+    "unanalysed counts",
+    "labels separate from predictions",
+    "all test errors browsable",
+    "drafts and review export/restore",
+    "invalid import atomicity",
+    "unlabelled local image inference",
+    "playback inference and original intervals",
+    "image failure remains pending and retry succeeds",
+    "no violation events generated",
+    "approved desktop and 390px layout"
+  ]
+}
