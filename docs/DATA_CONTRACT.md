@@ -44,6 +44,19 @@ JSON，版本 1。最多 5 MiB、10,000 条记录。见 `data/demo.json`。导�
 
 `params.started_at` 可在通用物体检测中为 `null`，来源和区域名也可为空；此模式始终没有候选。事件规则则要求有效来源、区域名、素材时间与当前确认；日期明确按 UTC+8，精度到秒。换素材不会自动继承日期或文件修改时间。公开校车图的具体拍摄时间未知，如填写日期演示规则，该日期属于人工测试输入，不是公开数据的真实时间标注。
 
+## 车位复核与离线错例清单
+
+车位人工记录使用 `format: estateguard-parking-review`、`version: 1`。`reviews` 按样本 ID 保存人工结论，`samples` 保存本次浏览器实际推理的分数与来源；`failures` 是模型输入读取失败，`evidence_failures` 是复核原图读取失败，后者含 `id`、`image`、`error`。原图失败不清除已计算的模型分数。恢复只采用校验通过的人工结论，不采用导入的预测、完成数或失败状态作为当前结果。记录可编辑，不提供身份认证或防篡改。
+
+错例清单使用独立的 `format: estateguard-parking-error-audit`、`version: 1`，仅作只读分析，不支持恢复为人工复核：
+
+- `prediction_source` 固定为 `published-fixed-model-evaluation`，表示已发布冻结评测。
+- `model_sha256`、`predictions_sha256` 分别标识模型与完整逐样本预测文件，`dataset` 保留公开来源和时间说明。
+- `filters.type` 为 `all`、`false_free`、`false_occupied` 或 `low_score_false_free`；最后一种为原标注占用且分数 ≤0.35。`filters.slot` 是 `all` 或相机/车位数组的 JSON 字符串，如 `["B","12"]`。
+- `matched_count` 等于导出 `samples` 长度。每条含样本 ID、相机/日期/钟面时间/车位、原始 `label`、冻结 `prediction` 和 `score`、错误类型、原图路径及 `source_sha256`。分数未经校准，不是概率承诺。
+- `summary` 与 `groups` 保留完整测试集的计数和按车位分布，不随当前筛选缩小分母；`samples` 仅包含当前筛选的错例。没有匹配只意味着当前组合为空。
+- 读取时核对完整样本集合、唯一 ID、标签、模型标识、分数范围、阈值分类与正确性标志，并与总评测计数比对。哈希用于版本追溯，不是签名或原始标签正确性的认证。
+
 ## 标注 QA
 
 `scripts/audit_annotations.py` 输入数组，字段为 video_id、track、start_s、end_s、label、annotator、split。label 支持上述八类及 normal，split 为 train、validation、test。

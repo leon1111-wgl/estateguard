@@ -1,0 +1,170 @@
+{
+  "started_at": "2026-10-15T22:38:33.862Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Fixed published CNRPark evaluation, fresh browser pixel inference, and controlled same-origin failures; not new training or a new blind test.",
+  "checks": [
+    {
+      "name": "all error types retain the complete published baseline and export exact matching IDs",
+      "passed": false,
+      "error": "missing audit control #parking-error-type\n\n0 !== 1\n",
+      "evidence": {
+        "state": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        }
+      }
+    },
+    {
+      "name": "camera and slot filtering isolates 102 low-score false-free cases and can show an empty group",
+      "passed": false,
+      "error": "missing audit control #parking-error-type\n\n0 !== 1\n",
+      "evidence": {
+        "state": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        }
+      }
+    },
+    {
+      "name": "an offline evaluation network failure retains an actionable retry",
+      "passed": false,
+      "error": "Expected values to be strictly equal:\n\nfalse !== true\n",
+      "evidence": {
+        "failed": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        },
+        "state": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        }
+      }
+    },
+    {
+      "name": "modified offline records are rejected and clean published bytes can be retried",
+      "passed": false,
+      "error": "locator.isEnabled: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#parking-load-errors')\u001b[22m\n",
+      "evidence": {
+        "failed": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        },
+        "state": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        }
+      }
+    },
+    {
+      "name": "selecting a filtered error runs its actual pixel input and locates the correct frame and slot",
+      "passed": false,
+      "error": "missing audit control #parking-error-type\n\n0 !== 1\n",
+      "evidence": {
+        "state": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        }
+      }
+    },
+    {
+      "name": "failed model input is not replaced by a published score and a retry performs real inference",
+      "passed": false,
+      "error": "missing audit control #parking-error-type\n\n0 !== 1\n",
+      "evidence": {
+        "state": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        }
+      }
+    },
+    {
+      "name": "missing inspection photo blocks clear decisions, allows evidence-needed review and exports the separate failure",
+      "passed": false,
+      "error": "missing audit control #parking-error-type\n\n0 !== 1\n",
+      "evidence": {
+        "state": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        }
+      }
+    },
+    {
+      "name": "mobile error selection reveals the selected tile within its grid and the review card in the viewport",
+      "passed": false,
+      "error": "missing audit control #parking-error-type\n\n0 !== 1\n",
+      "evidence": {
+        "state": {
+          "hash": "#results",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照。点击“分析当前快照”运行模型。",
+          "review_message": "",
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "selected": "B-20150708-0805-1",
+          "detail": "摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区独立测试集35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。",
+          "image_width": 150
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.79",
+  "finished_at": "2026-10-15T22:38:48.282Z",
+  "passed": 0,
+  "failed": 8,
+  "ok": false
+}

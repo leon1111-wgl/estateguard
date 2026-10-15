@@ -1,0 +1,12 @@
+{
+  "scenario": "original inspection photo HTTP 404; real model input PNG remains available",
+  "sample_id": "B-20150708-1645-52",
+  "actual": {
+    "message": "已保存 2015/07/08 16:45 · B:52：已确认空闲。当前快照还剩 52 个待人工复核。",
+    "progress": "当前快照：已确认 1 / 53 · 待人工复核 52（其中需补证据 0）",
+    "image_natural_width": 0,
+    "model_result": "摄像头 B · 车位 52空闲原始采样时间2015/07/08 16:45占用分数0.00%数据分区独立测试集原始数据标签占用35%–65% 的分数优先复核。分数未做概率校准，明确分类也可能错判。"
+  },
+  "passed": false,
+  "error": "The input did not match the regular expression /保存失败|无法.*确认|不能.*确认/. Input:\n\n'已保存 2015/07/08 16:45 · B:52：已确认空闲。当前快照还剩 52 个待人工复核。'\n"
+}

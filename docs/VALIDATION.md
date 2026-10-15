@@ -152,3 +152,32 @@ node scripts/detection-threshold-check.cjs
 - 独立设计师在 1440px 与 390px 重走未知时间物体检测、换素材、沿用、缺时间/确认报错、填写到秒的时间、真实分析、导出及送审。两端无横向溢出；遗漏日期聚焦 `vision-start`，遗漏确认聚焦复选框，手机错误提示与开始按钮同屏。确认后表单状态和底部提示一致，原红色错误已清除；原导航、字体、版面保留，仅增加必要控件样式。两端 09:30:25 测试输入均形成 01:30:25Z 的单车候选，送审原图可见。
 
 证据：[原故障基线](validation/media-context-baseline.json)、[修复后验收](validation/media-context-validation.json)、[桌面与手机回归](validation/media-context-final-ui.json)。报告不携带媒体；配置目前只能在当前标签页显式沿用，不支持具名预设或检测报告恢复。
+
+## 2026-10-16 · 冻结模型错例审查与原图可用性
+
+```bash
+node --test tests/*.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 -m unittest discover -s tests/training -p 'test_*.py'
+python3 scripts/audit_parking_errors.py --recompute --output artifacts/parking-error-audit.json
+python3 scripts/verify_assets.py
+python3 scripts/verify_parking.py
+node scripts/parking-error-audit-check.cjs
+node scripts/parking-check.cjs
+node scripts/parking-critic-check.cjs
+node scripts/parking-review-check.cjs
+node scripts/model-check.cjs
+```
+
+- 全部 84 项 JS、14 项 Python、4 项训练基础检查通过。新增审计测试覆盖阈值边界、相机/车位隔离、错误标签/模型/分数/重复记录拒绝、原始分母、来源导出、全数据计数和真实冻结模型重算。Python 重算测试需现有 NumPy/Pillow；CI 安装依赖后执行，避免静默跳过。
+- 全量 6,413 张原始 JPEG 的文件 SHA、解码 RGB SHA 与中心采样输入逐项一致；MLP32 重算分数最大绝对差 0.0（容差 1e-10），分类和分数带归属差异为 0。未训练、调阈值、改标签或替换权重。11 项资源和 12,830 项公开数据文件哈希通过。
+- Python 与浏览器纯逻辑分别统计：53 个相机/车位的样本数、占用分母、两类错误、低分漏判及漏判比例逐项一致；1,485 个错例 ID 一致。263 个不确定样本中 127 个错误，区间外 1,358 个错误；B:12 的低分有车报空闲 102 个，空位报占用 0 个。
+- 独立新浏览器验收先 0/8，修复后 8/8，无页面错误或跨站请求。全部错误、错误空闲、错误占用、低分错误空闲的下拉与导出数量依次为 1,485、1,134、351、1,037；导出样本 ID、分数、原图路径与 SHA 逐项对照发布文件。错误组合空结果不会显示全局无错。
+- 实际选择 B-20150708-1645-52，请求其 PNG 输入并运行模型，浏览器分数 `0.000021880970806291324`，与冻结记录差小于 1e-12。导出仍保留原标注占用、实际模型预测空闲，未生成违规事件。模型输入 404 时保持未分析，离线分数不回填；重试后恢复真实预测。
+- 原图 JPEG 404 而模型输入成功时，明确空闲/占用均不能保存；草稿、所选样本与 0/53 已确认数保持。可以保存需补证据，导出独立 `evidence_failures`，推理仍无失败。带查询参数的原图重试再次受控 404，仍无法明确确认；解除故障后原图 150px 成功显示，可确认占用，原分数不变。
+- 旧 `parking-check` 全过，`parking-critic-check` 6/6、`parking-review-check` 9/9。旧复核脚本发现新增原图也使用车位 `data-sample-id`，导致选择器命中两个元素；产品改用独立证据属性后，原测试不变全部通过。保存/恢复、跨快照隔离、失败停止回放保留。
+- 原 `model-check` 的 COCO 图片分数 `0.9916937947`，实际视频 7 帧，张量 262→262；非零片段起点与越界拒绝继续通过。它只是原通用链路回归，不是车位模型或违规行为精度。
+
+- 独立界面设计师完成 1440px/390px 实际截图回归；选择错例后，当前车位进入网格滚动窗口，手机复核卡顶部 16px。展开车位分布表曾造成页面宽 513px，增加局部最小宽度约束后，页面宽 390px、表格容器宽 324px、内容宽 480px，仅在表内横滚。导出 B:12 的 102 张低分错例后，切到错误占用的空组合，旧“已导出”提示会重置；两端定向复查及独立 8 项验收均通过。保留既有视觉框架。
+
+证据：[原失败基线](validation/parking-error-audit-baseline.json)、[原图缺失仍能确认的基线](validation/parking-photo-baseline.json)、[独立端到端验收](validation/parking-error-audit-validation.json)、[全量冻结重算及分布](validation/parking-error-audit.json)、[桌面与手机回归](validation/parking-error-audit-ui-validation.json)。受控网络故障用于复现失败恢复，公开历史图片用于实际推理；没有接入真实物业监控。

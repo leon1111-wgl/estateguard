@@ -405,3 +405,20 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
 #analyze #vision-context-confirmed { flex: 0 0 14px; width: 14px; height: 14px; margin: 3px 0 0; padding: 0; accent-color: var(--blue); }
 #analyze #vision-context-status { overflow-wrap: anywhere; }
 #analyze #vision-context-status.error { color: var(--danger); }
+
+/* Error review uses the existing field, table, and status styles. */
+#parking-evaluation #parking-error-picker { display: grid; gap: 10px; margin: 16px 0; min-width: 0; }
+#parking-evaluation #parking-error-picker > p { margin: 0; }
+#parking-evaluation .parking-error-controls { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 12px; max-width: 600px; }
+#parking-evaluation #parking-error-picker > .field { max-width: 780px; }
+#parking-evaluation #parking-error-picker select { max-width: 100%; text-overflow: ellipsis; }
+#parking-evaluation #parking-error-picker > details { min-width: 0; }
+#parking-evaluation #parking-error-picker details > summary { cursor: pointer; font-size: 12px; }
+#parking-evaluation #parking-error-picker details > p { margin: 8px 0 0; }
+#parking-evaluation #parking-error-status.error, #parking #parking-image-status.error { color: var(--danger); }
+#parking #parking-image-status { overflow-wrap: anywhere; }
+#parking #parking-image-retry { margin-bottom: 12px; }
+@media (max-width: 650px) {
+  #parking-evaluation .parking-error-controls { grid-template-columns: minmax(0, 1fr); max-width: none; }
+  #parking-evaluation #parking-error-picker .table-wrap::before { content: "左右滑动查看完整车位分布"; }
+}
