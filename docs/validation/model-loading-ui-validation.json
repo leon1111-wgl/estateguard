@@ -1,0 +1,654 @@
+{
+  "main_flow": {
+    "before": {
+      "status": "模型尚未加载",
+      "detail": "",
+      "progress": 0,
+      "progressVisible": false,
+      "stop": "停止分析",
+      "stopVisible": false,
+      "runDisabled": false,
+      "uploadDisabled": false,
+      "cameraDisabled": false,
+      "message": "公开示例：Raysonho，CC0，2011。用于测试物体检测；不是小区违规证据。请选择规则后分析。",
+      "params": {
+        "vision-rule": "access",
+        "vision-camera": "NORTH-GATE-01",
+        "vision-zone": "北门消防通道",
+        "vision-score": "0.6",
+        "vision-start": "2026-10-16T08:00",
+        "roi-x": "0",
+        "roi-y": "0",
+        "roi-w": "100",
+        "roi-h": "100"
+      },
+      "viewport": 1440,
+      "docWidth": 1440,
+      "loadingBox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "detailBox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "progressBox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      }
+    },
+    "hanging": {
+      "390": {
+        "status": "加载模型资源 79%",
+        "detail": "已读取 15.1 / 19.1 MiB · 本次下载 15.1 MiB · 复用缓存 0.0 MiB",
+        "progress": 0.7907136799912778,
+        "progressVisible": true,
+        "stop": "取消加载",
+        "stopVisible": true,
+        "runDisabled": true,
+        "uploadDisabled": true,
+        "cameraDisabled": true,
+        "message": "正在加载本站小模型。可以取消加载，原素材和设置会保留。",
+        "params": {
+          "vision-rule": "access",
+          "vision-camera": "NORTH-GATE-01",
+          "vision-zone": "北门消防通道",
+          "vision-score": "0.6",
+          "vision-start": "2026-10-16T08:00",
+          "roi-x": "0",
+          "roi-y": "0",
+          "roi-w": "100",
+          "roi-h": "100"
+        },
+        "viewport": 390,
+        "docWidth": 390,
+        "loadingBox": {
+          "x": 16,
+          "y": 343.953125,
+          "width": 358,
+          "height": 33
+        },
+        "detailBox": {
+          "x": 126,
+          "y": 343.953125,
+          "width": 248,
+          "height": 33
+        },
+        "progressBox": {
+          "x": 16,
+          "y": 357.453125,
+          "width": 100,
+          "height": 6
+        }
+      },
+      "1440": {
+        "status": "加载模型资源 79%",
+        "detail": "已读取 15.1 / 19.1 MiB · 本次下载 15.1 MiB · 复用缓存 0.0 MiB",
+        "progress": 0.7907136799912778,
+        "progressVisible": true,
+        "stop": "取消加载",
+        "stopVisible": true,
+        "runDisabled": true,
+        "uploadDisabled": true,
+        "cameraDisabled": true,
+        "message": "正在加载本站小模型。可以取消加载，原素材和设置会保留。",
+        "params": {
+          "vision-rule": "access",
+          "vision-camera": "NORTH-GATE-01",
+          "vision-zone": "北门消防通道",
+          "vision-score": "0.6",
+          "vision-start": "2026-10-16T08:00",
+          "roi-x": "0",
+          "roi-y": "0",
+          "roi-w": "100",
+          "roi-h": "100"
+        },
+        "viewport": 1440,
+        "docWidth": 1440,
+        "loadingBox": {
+          "x": 232,
+          "y": 201.578125,
+          "width": 1180,
+          "height": 16.5
+        },
+        "detailBox": {
+          "x": 382,
+          "y": 201.578125,
+          "width": 1030,
+          "height": 16.5
+        },
+        "progressBox": {
+          "x": 232,
+          "y": 206.828125,
+          "width": 140,
+          "height": 6
+        }
+      }
+    },
+    "cancelMs": 35,
+    "cancelledBeforeRelease": {
+      "390": {
+        "status": "加载已取消，可重试",
+        "detail": "下载已取消；点击开始分析即可重试，原素材与设置保留。",
+        "progress": 0.7907136799912778,
+        "progressVisible": true,
+        "stop": "停止分析",
+        "stopVisible": false,
+        "runDisabled": false,
+        "uploadDisabled": false,
+        "cameraDisabled": false,
+        "message": "模型加载已取消。素材与设置已保留，可重新开始分析。",
+        "params": {
+          "vision-rule": "access",
+          "vision-camera": "NORTH-GATE-01",
+          "vision-zone": "北门消防通道",
+          "vision-score": "0.6",
+          "vision-start": "2026-10-16T08:00",
+          "roi-x": "0",
+          "roi-y": "0",
+          "roi-w": "100",
+          "roi-h": "100"
+        },
+        "viewport": 390,
+        "docWidth": 390,
+        "loadingBox": {
+          "x": 16,
+          "y": 343.953125,
+          "width": 358,
+          "height": 33
+        },
+        "detailBox": {
+          "x": 126,
+          "y": 343.953125,
+          "width": 248,
+          "height": 33
+        },
+        "progressBox": {
+          "x": 16,
+          "y": 357.453125,
+          "width": 100,
+          "height": 6
+        }
+      },
+      "1440": {
+        "status": "加载已取消，可重试",
+        "detail": "下载已取消；点击开始分析即可重试，原素材与设置保留。",
+        "progress": 0.7907136799912778,
+        "progressVisible": true,
+        "stop": "停止分析",
+        "stopVisible": false,
+        "runDisabled": false,
+        "uploadDisabled": false,
+        "cameraDisabled": false,
+        "message": "模型加载已取消。素材与设置已保留，可重新开始分析。",
+        "params": {
+          "vision-rule": "access",
+          "vision-camera": "NORTH-GATE-01",
+          "vision-zone": "北门消防通道",
+          "vision-score": "0.6",
+          "vision-start": "2026-10-16T08:00",
+          "roi-x": "0",
+          "roi-y": "0",
+          "roi-w": "100",
+          "roi-h": "100"
+        },
+        "viewport": 1440,
+        "docWidth": 1440,
+        "loadingBox": {
+          "x": 232,
+          "y": 201.578125,
+          "width": 1180,
+          "height": 16.5
+        },
+        "detailBox": {
+          "x": 382,
+          "y": 201.578125,
+          "width": 1030,
+          "height": 16.5
+        },
+        "progressBox": {
+          "x": 232,
+          "y": 206.828125,
+          "width": 140,
+          "height": 6
+        }
+      }
+    },
+    "retry": {
+      "390": {
+        "status": "模型已就绪",
+        "detail": "资源已校验 · 本次下载 4.0 MiB · 复用缓存 13.7 MiB",
+        "progress": 1,
+        "progressVisible": true,
+        "stop": "停止分析",
+        "stopVisible": false,
+        "runDisabled": false,
+        "uploadDisabled": false,
+        "cameraDisabled": false,
+        "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+        "params": {
+          "vision-rule": "access",
+          "vision-camera": "NORTH-GATE-01",
+          "vision-zone": "北门消防通道",
+          "vision-score": "0.6",
+          "vision-start": "2026-10-16T08:00",
+          "roi-x": "0",
+          "roi-y": "0",
+          "roi-w": "100",
+          "roi-h": "100"
+        },
+        "viewport": 390,
+        "docWidth": 390,
+        "loadingBox": {
+          "x": 16,
+          "y": 343.953125,
+          "width": 358,
+          "height": 33
+        },
+        "detailBox": {
+          "x": 126,
+          "y": 343.953125,
+          "width": 248,
+          "height": 33
+        },
+        "progressBox": {
+          "x": 16,
+          "y": 357.453125,
+          "width": 100,
+          "height": 6
+        }
+      },
+      "1440": {
+        "status": "模型已就绪",
+        "detail": "资源已校验 · 本次下载 4.0 MiB · 复用缓存 13.7 MiB",
+        "progress": 1,
+        "progressVisible": true,
+        "stop": "停止分析",
+        "stopVisible": false,
+        "runDisabled": false,
+        "uploadDisabled": false,
+        "cameraDisabled": false,
+        "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+        "params": {
+          "vision-rule": "access",
+          "vision-camera": "NORTH-GATE-01",
+          "vision-zone": "北门消防通道",
+          "vision-score": "0.6",
+          "vision-start": "2026-10-16T08:00",
+          "roi-x": "0",
+          "roi-y": "0",
+          "roi-w": "100",
+          "roi-h": "100"
+        },
+        "viewport": 1440,
+        "docWidth": 1440,
+        "loadingBox": {
+          "x": 232,
+          "y": 201.578125,
+          "width": 1180,
+          "height": 16.5
+        },
+        "detailBox": {
+          "x": 382,
+          "y": 201.578125,
+          "width": 1030,
+          "height": 16.5
+        },
+        "progressBox": {
+          "x": 232,
+          "y": 206.828125,
+          "width": 140,
+          "height": 6
+        }
+      }
+    },
+    "retryReport": {
+      "format": "estateguard-detections",
+      "version": 1,
+      "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+      "runtime": "TensorFlow.js 4.22.0",
+      "backend": "webgl",
+      "model_loading": {
+        "network_bytes": 4194304,
+        "cache_bytes": 14367539,
+        "cache_available": true,
+        "resource_bytes": 18561843,
+        "load_ms": 875.8999999761581,
+        "initialization_ms": 820.2999999523163,
+        "reused_in_memory": false
+      },
+      "media": {
+        "name": "公开示例-校车.jpg",
+        "type": "image/jpeg",
+        "bytes": 223152
+      },
+      "params": {
+        "rule": "access",
+        "roi": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "camera": "NORTH-GATE-01",
+        "zone": "北门消防通道",
+        "started_at": "2026-10-16T08:00:00+08:00",
+        "media_name": "公开示例-校车.jpg",
+        "dwell_seconds": 5,
+        "is_video": false,
+        "expected_direction": "right"
+      },
+      "complete": true,
+      "frames": [
+        {
+          "time": 0,
+          "detections": [
+            {
+              "class": "bus",
+              "score": 0.9916937947273254,
+              "bbox": [
+                0.13031357526779175,
+                0.29490771889686584,
+                0.8503782749176025,
+                0.6453458964824677
+              ]
+            }
+          ]
+        }
+      ],
+      "tracks": [
+        {
+          "id": "track-1",
+          "class": "bus",
+          "samples": [
+            {
+              "time": 0,
+              "bbox": [
+                0.13031357526779175,
+                0.29490771889686584,
+                0.8503782749176025,
+                0.6453458964824677
+              ],
+              "score": 0.9916937947273254
+            }
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "id": "vision-track-1-1",
+          "camera": "NORTH-GATE-01",
+          "zone": "北门消防通道",
+          "track": "track-1",
+          "category": "blocked_access",
+          "start": "2026-10-16T00:00:00.000Z",
+          "end": "2026-10-16T00:00:00.001Z",
+          "score": 0.9916937947273254,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "公开示例-校车.jpg @ 0.00s"
+          ]
+        }
+      ],
+      "metrics": {
+        "frame_count": 1,
+        "mean_inference_ms": 37.10000002384186,
+        "total_ms": 917.8999999761581
+      },
+      "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+    },
+    "cacheReuse": {
+      "390": {
+        "status": "模型已就绪",
+        "detail": "资源已校验 · 本次下载 0.0 MiB · 复用缓存 19.1 MiB",
+        "progress": 1,
+        "progressVisible": true,
+        "stop": "停止分析",
+        "stopVisible": false,
+        "runDisabled": false,
+        "uploadDisabled": false,
+        "cameraDisabled": false,
+        "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+        "params": {
+          "vision-rule": "access",
+          "vision-camera": "本地摄像头",
+          "vision-zone": "待确认区域",
+          "vision-score": "0.5",
+          "vision-start": "2026-10-16T01:22",
+          "roi-x": "0",
+          "roi-y": "0",
+          "roi-w": "100",
+          "roi-h": "100"
+        },
+        "viewport": 390,
+        "docWidth": 390,
+        "loadingBox": {
+          "x": 16,
+          "y": 343.953125,
+          "width": 358,
+          "height": 33
+        },
+        "detailBox": {
+          "x": 126,
+          "y": 343.953125,
+          "width": 248,
+          "height": 33
+        },
+        "progressBox": {
+          "x": 16,
+          "y": 357.453125,
+          "width": 100,
+          "height": 6
+        }
+      },
+      "1440": {
+        "status": "模型已就绪",
+        "detail": "资源已校验 · 本次下载 0.0 MiB · 复用缓存 19.1 MiB",
+        "progress": 1,
+        "progressVisible": true,
+        "stop": "停止分析",
+        "stopVisible": false,
+        "runDisabled": false,
+        "uploadDisabled": false,
+        "cameraDisabled": false,
+        "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+        "params": {
+          "vision-rule": "access",
+          "vision-camera": "本地摄像头",
+          "vision-zone": "待确认区域",
+          "vision-score": "0.5",
+          "vision-start": "2026-10-16T01:22",
+          "roi-x": "0",
+          "roi-y": "0",
+          "roi-w": "100",
+          "roi-h": "100"
+        },
+        "viewport": 1440,
+        "docWidth": 1440,
+        "loadingBox": {
+          "x": 232,
+          "y": 201.578125,
+          "width": 1180,
+          "height": 16.5
+        },
+        "detailBox": {
+          "x": 382,
+          "y": 201.578125,
+          "width": 1030,
+          "height": 16.5
+        },
+        "progressBox": {
+          "x": 232,
+          "y": 206.828125,
+          "width": 140,
+          "height": 6
+        }
+      }
+    },
+    "cacheReport": {
+      "format": "estateguard-detections",
+      "version": 1,
+      "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+      "runtime": "TensorFlow.js 4.22.0",
+      "backend": "webgl",
+      "model_loading": {
+        "network_bytes": 0,
+        "cache_bytes": 20040985,
+        "cache_available": true,
+        "resource_bytes": 20040985,
+        "load_ms": 792.5999999046326,
+        "initialization_ms": 652.2999999523163,
+        "reused_in_memory": false
+      },
+      "media": {
+        "name": "公开示例-校车.jpg",
+        "type": "image/jpeg",
+        "bytes": 223152
+      },
+      "params": {
+        "rule": "access",
+        "roi": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "camera": "本地摄像头",
+        "zone": "待确认区域",
+        "started_at": "2026-10-16T01:22:00+08:00",
+        "media_name": "公开示例-校车.jpg",
+        "dwell_seconds": 5,
+        "is_video": false,
+        "expected_direction": "right"
+      },
+      "complete": true,
+      "frames": [
+        {
+          "time": 0,
+          "detections": [
+            {
+              "class": "bus",
+              "score": 0.9916937947273254,
+              "bbox": [
+                0.13031357526779175,
+                0.29490771889686584,
+                0.8503782749176025,
+                0.6453458964824677
+              ]
+            }
+          ]
+        }
+      ],
+      "tracks": [
+        {
+          "id": "track-1",
+          "class": "bus",
+          "samples": [
+            {
+              "time": 0,
+              "bbox": [
+                0.13031357526779175,
+                0.29490771889686584,
+                0.8503782749176025,
+                0.6453458964824677
+              ],
+              "score": 0.9916937947273254
+            }
+          ]
+        }
+      ],
+      "candidates": [
+        {
+          "id": "vision-track-1-1",
+          "camera": "本地摄像头",
+          "zone": "待确认区域",
+          "track": "track-1",
+          "category": "blocked_access",
+          "start": "2026-10-15T17:22:00.000Z",
+          "end": "2026-10-15T17:22:00.001Z",
+          "score": 0.9916937947273254,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "公开示例-校车.jpg @ 0.00s"
+          ]
+        }
+      ],
+      "metrics": {
+        "frame_count": 1,
+        "mean_inference_ms": 31.799999952316284,
+        "total_ms": 828.6000000238419
+      },
+      "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+    },
+    "secondPageAssetNetworkRequests": [],
+    "browserErrors": []
+  },
+  "mobile_natural_click": {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "scrollY": 738,
+    "progress": 0.7907136799912778,
+    "elements": {
+      "model-loading": {
+        "text": "已读取 15.1 / 19.1 MiB · 本次下载 15.1 MiB · 复用缓存 0.0 MiB",
+        "top": -394.046875,
+        "bottom": -361.046875,
+        "left": 16,
+        "right": 374,
+        "height": 33,
+        "intersectsViewport": false,
+        "fullyInViewport": false
+      },
+      "model-load-detail": {
+        "text": "已读取 15.1 / 19.1 MiB · 本次下载 15.1 MiB · 复用缓存 0.0 MiB",
+        "top": -394.046875,
+        "bottom": -361.046875,
+        "left": 126,
+        "right": 374,
+        "height": 33,
+        "intersectsViewport": false,
+        "fullyInViewport": false
+      },
+      "run-analysis": {
+        "text": "开始分析",
+        "top": 549.921875,
+        "bottom": 583.109375,
+        "left": 33,
+        "right": 357,
+        "height": 33.1875,
+        "intersectsViewport": true,
+        "fullyInViewport": true
+      },
+      "stop-analysis": {
+        "text": "取消加载",
+        "top": 594.109375,
+        "bottom": 627.296875,
+        "left": 33,
+        "right": 357,
+        "height": 33.1875,
+        "intersectsViewport": true,
+        "fullyInViewport": true
+      },
+      "vision-message": {
+        "text": "已读取 15.1 / 19.1 MiB · 本次下载 15.1 MiB · 复用缓存 0.0 MiB。可取消加载。",
+        "top": 658.296875,
+        "bottom": 718.671875,
+        "left": 16,
+        "right": 374,
+        "height": 60.375,
+        "intersectsViewport": true,
+        "fullyInViewport": true
+      }
+    }
+  }
+}

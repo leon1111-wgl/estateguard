@@ -1,20 +1,51 @@
 import {trackDetections,makeCandidates} from './vision-rules.mjs';
+import {createModelAssetLoader,registerModelRoute} from './model-assets.mjs';
 const $=id=>document.getElementById(id);
 const names={person:'人员',bicycle:'自行车',car:'小汽车',motorcycle:'摩托车',bus:'公交 / 大巴',truck:'卡车',chair:'椅子',couch:'沙发',bed:'床',suitcase:'行李箱','dining table':'餐桌',refrigerator:'冰箱',backpack:'背包',handbag:'手提包',bottle:'瓶子',cat:'猫',dog:'狗',tv:'电视'};
-let model=null,modelPromise=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0;
+let model=null,modelPromise=null,modelController=null,modelLoadStats=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0;
 const canvas=$('analysis-canvas'),ctx=canvas.getContext('2d'),frame=document.createElement('canvas'),frameCtx=frame.getContext('2d');
 const notice=(text,error=false)=>{$('vision-message').textContent=text;$('vision-message').classList.toggle('error',error);};
 $('vision-start').value=new Date(Date.now()+8*3600000).toISOString().slice(0,16);
-function loadScript(file){return new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL(file,import.meta.url).href;script.onload=resolve;script.onerror=()=>{script.remove();reject(new Error('模型运行脚本加载失败，请检查本站连接后重试。'));};document.head.append(script);});}
-async function getModel(){if(model)return model;if(modelPromise)return modelPromise;modelPromise=(async()=>{
- $('model-status').textContent='正在加载小模型…';notice('正在加载本站的模型权重，首次加载可能需要一些时间。文件不会上传。');
- if(!globalThis.tf)await loadScript('./vendor/tf.min.js');if(!globalThis.cocoSsd)await loadScript('./vendor/coco-ssd.min.js');
- try{await tf.setBackend('webgl');await tf.ready();}catch{await tf.setBackend('cpu');await tf.ready();}
- const started=performance.now();
- model=await cocoSsd.load({base:'lite_mobilenet_v2',modelUrl:new URL('./models/ssdlite_mobilenet_v2/model.json',import.meta.url).href});
- $('model-status').textContent='模型已就绪';$('model-dot').classList.add('ready');$('model-backend').textContent=`${tf.getBackend().toUpperCase()} · 加载 ${(performance.now()-started).toFixed(0)} ms`;
- return model;
- })().catch(error=>{modelPromise=null;$('model-status').textContent='加载失败，可重试';throw error;});return modelPromise;}
+async function loadScript(buffer){const url=URL.createObjectURL(new Blob([buffer],{type:'text/javascript'}));try{await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=url;script.onload=()=>{script.remove();resolve();};script.onerror=()=>{script.remove();reject(new Error('模型运行脚本初始化失败，请重试。'));};document.head.append(script);});}finally{URL.revokeObjectURL(url);}}
+const mib=value=>(value/1024/1024).toFixed(1);
+async function getModel(){
+ if(model){modelLoadStats={...modelLoadStats,network_bytes:0,cache_bytes:0,load_ms:0,initialization_ms:0,reused_in_memory:true};$('model-load-detail').textContent='复用本页已就绪模型，本次无需下载或重新初始化。';return model;}
+ if(modelPromise)return modelPromise;
+ const controller=new AbortController(),signal=controller.signal;modelController=controller;
+ const check=()=>{if(signal.aborted)throw signal.reason;};
+ modelPromise=(async()=>{
+  const started=performance.now();let route=null,detector=null,manifestTimer;
+  $('model-loading').hidden=false;$('model-load-progress').value=0;$('model-status').textContent='正在准备模型资源…';$('stop-analysis').textContent='取消加载';
+  $('model-load-detail').textContent='读取资源清单；公共模型可缓存在本机，素材不会上传。';
+  notice('正在加载本站小模型。可以取消加载，原素材和设置会保留。');
+  try{
+   manifestTimer=setTimeout(()=>controller.abort(new Error('模型清单加载超时，请检查网络后重试。')),30000);
+   const response=await fetch(new URL('./assets.lock.json',import.meta.url),{signal});if(!response.ok)throw new Error(`模型清单加载失败 (${response.status})`);
+   const manifest=await response.json();clearTimeout(manifestTimer);check();
+   const files=manifest.files.filter(file=>file.path.startsWith('models/ssdlite_mobilenet_v2/')||file.path==='vendor/tf.min.js'&&!globalThis.tf||file.path==='vendor/coco-ssd.min.js'&&!globalThis.cocoSsd);
+   const loader=createModelAssetLoader({baseURL:new URL('./',import.meta.url),files,signal,onProgress:progress=>{
+    $('model-status').textContent=`加载模型资源 ${Math.floor(progress.loaded/progress.total*100)}%`;
+    $('model-load-progress').value=progress.loaded/progress.total;
+    $('model-load-detail').textContent=`已读取 ${mib(progress.loaded)} / ${mib(progress.total)} MiB · 网络读取 ${mib(progress.networkBytes)} MiB · 复用缓存 ${mib(progress.cacheBytes)} MiB${progress.cacheAvailable?'':' · 缓存不可用，本次直接加载'}`;
+    notice(`${$('model-load-detail').textContent}。可取消加载。`);
+   }});
+   if(!globalThis.tf){await loadScript(await loader.read('vendor/tf.min.js'));check();}
+   if(!globalThis.cocoSsd){await loadScript(await loader.read('vendor/coco-ssd.min.js'));check();}
+   if(!tf.getBackend()){try{await tf.setBackend('webgl');await tf.ready();}catch{await tf.setBackend('cpu');await tf.ready();}}check();
+   const url=new URL('./models/ssdlite_mobilenet_v2/model.json',import.meta.url).href;
+   const handler=tf.io.http(url,{fetchFunc:loader.fetch});
+   let initializedAt=0;
+   route=registerModelRoute(tf,{load:async()=>{const artifacts=await handler.load();check();initializedAt=performance.now();$('model-status').textContent='正在初始化推理引擎…';$('model-load-detail').textContent+=' · 下载和校验完成';notice('模型资源已校验，正在初始化推理引擎。');return artifacts;}});
+   detector=new cocoSsd.ObjectDetection('lite_mobilenet_v2',route.url);await detector.load();check();
+   model=detector;const stats=loader.summary();modelLoadStats={network_bytes:stats.networkBytes,cache_bytes:stats.cacheBytes,cache_available:stats.cacheAvailable,resource_bytes:stats.total,load_ms:performance.now()-started,initialization_ms:performance.now()-initializedAt,reused_in_memory:false};
+   $('model-status').textContent='模型已就绪';$('model-dot').classList.add('ready');$('model-load-progress').value=1;
+   $('model-backend').textContent=`${tf.getBackend().toUpperCase()} · 加载 ${Math.round(modelLoadStats.load_ms)} ms`;
+   $('model-load-detail').textContent=`资源已校验 · 网络读取 ${mib(stats.networkBytes)} MiB · 复用缓存 ${mib(stats.cacheBytes)} MiB${stats.cacheAvailable?'':' · 缓存不可用'}`;
+   return model;
+  }catch(error){controller.abort(error);detector?.dispose();const cancelled=error.name==='AbortError';$('model-status').textContent=cancelled?'加载已取消，可重试':'加载失败，可重试';$('model-load-detail').textContent=cancelled?'下载已取消；点击开始分析即可重试，原素材与设置保留。':`${error.message} 原素材与设置保留。`;throw error;}
+  finally{clearTimeout(manifestTimer);route?.release();modelController=null;$('stop-analysis').textContent='停止分析';}
+ })().catch(error=>{modelPromise=null;throw error;});return modelPromise;
+}
 function invalidate(){report=null;$('send-candidates').disabled=true;$('vision-results').hidden=true;}
 function roi(){const values=['roi-x','roi-y','roi-w','roi-h'].map(id=>Number($(id).value)/100);if(values.some(x=>!Number.isFinite(x))||values[0]<0||values[1]<0||values[2]<=0||values[3]<=0||values[0]+values[2]>1.00001||values[1]+values[3]>1.00001)throw new Error('关注区域超出画面，请调整 X、Y、宽和高。');return values;}
 function paint(boxes=lastBoxes){if(!frameSnapshot)return;ctx.putImageData(frameSnapshot,0,0);let region;try{region=roi();}catch{return;}
@@ -48,7 +79,7 @@ $('analysis-form').addEventListener('input',()=>{if(!busy){invalidate();paint();
 let origin=null;
 canvas.addEventListener('pointerdown',event=>{if(busy||!source)return;const rect=canvas.getBoundingClientRect();origin=[Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width)),Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height))];canvas.setPointerCapture(event.pointerId);});
 canvas.addEventListener('pointerup',event=>{if(!origin)return;const rect=canvas.getBoundingClientRect();const end=[Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width)),Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height))];const values=[Math.min(origin[0],end[0]),Math.min(origin[1],end[1]),Math.abs(origin[0]-end[0]),Math.abs(origin[1]-end[1])];origin=null;if(values[2]<.02||values[3]<.02)return;['roi-x','roi-y','roi-w','roi-h'].forEach((id,i)=>$(id).value=Math.floor(values[i]*100));invalidate();paint();notice('关注区域已更新，请重新分析。');});
-$('stop-analysis').addEventListener('click',()=>{stopped=true;notice('正在停止：等待当前帧推理结束。');});
+$('stop-analysis').addEventListener('click',()=>{stopped=true;if(modelController){modelController.abort(new DOMException('已取消模型加载','AbortError'));notice('正在取消模型加载…');}else notice('正在停止：等待当前帧推理结束。');});
 function setBusy(value){busy=value;for(const el of $('analysis-form').querySelectorAll('input,select,button'))el.disabled=value;$('stop-analysis').disabled=false;$('stop-analysis').hidden=!value;$('run-analysis').disabled=value||loading||!source;$('analysis-file').disabled=value;$('sample-image').disabled=value;if(isVideo){$('source-video').controls=!value;if(value)$('source-video').pause();}}
 $('analysis-form').addEventListener('submit',async event=>{event.preventDefault();if(!source||busy||loading)return;
  let region;try{region=roi();}catch(error){notice(error.message,true);return;}
@@ -60,9 +91,9 @@ $('analysis-form').addEventListener('submit',async event=>{event.preventDefault(
  for(let i=0;i<times.length;i++){if(stopped)break;notice(`正在推理 ${i+1} / ${times.length} 帧 · ${times[i].toFixed(1)} 秒`);if(isVideo){source.pause();await seek(times[i]);}capture();const t=performance.now();const predictions=await detector.detect(frame,50,minimumScore);durations.push(performance.now()-t);
  const detections=predictions.map(p=>({class:p.class,score:p.score,bbox:[Math.max(0,p.bbox[0]/frame.width),Math.max(0,p.bbox[1]/frame.height),p.bbox[2]/frame.width,p.bbox[3]/frame.height]}));frames.push({time:times[i],detections});lastBoxes=detections;paint();await new Promise(resolve=>requestAnimationFrame(resolve));}
  const tracks=trackDetections(frames),candidates=stopped?[]:makeCandidates(tracks,params);
- report={format:'estateguard-detections',version:1,model:'COCO-SSD 2.2.3 / SSDLite MobileNet V2',runtime:'TensorFlow.js 4.22.0',backend:tf.getBackend(),media:{name:sourceFile.name,type:sourceFile.type,bytes:sourceFile.size},params,complete:!stopped,frames,tracks,candidates,metrics:{frame_count:frames.length,mean_inference_ms:durations.length?durations.reduce((a,b)=>a+b,0)/durations.length:null,total_ms:performance.now()-totalStart},scope:'真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。'};
+ report={format:'estateguard-detections',version:1,model:'COCO-SSD 2.2.3 / SSDLite MobileNet V2',runtime:'TensorFlow.js 4.22.0',backend:tf.getBackend(),model_loading:{...modelLoadStats},media:{name:sourceFile.name,type:sourceFile.type,bytes:sourceFile.size},params,complete:!stopped,frames,tracks,candidates,metrics:{frame_count:frames.length,mean_inference_ms:durations.length?durations.reduce((a,b)=>a+b,0)/durations.length:null,total_ms:performance.now()-totalStart},scope:'真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。'};
  renderResults();notice(stopped?'分析已停止。可导出已完成帧，未完成任务不生成候选。':`分析完成：${frames.length} 帧、${tracks.length} 条匿名轨迹、${candidates.length} 个待核实候选。`);
- }catch(error){notice(`分析失败：${error.message}`,true);}finally{setBusy(false);}
+ }catch(error){if(stopped&&error.name==='AbortError')notice('模型加载已取消。素材与设置已保留，可重新开始分析。');else notice(`分析失败：${error.message}`,true);}finally{setBusy(false);}
 });
 function renderResults(){
  $('vision-results').hidden=false;$('send-candidates').disabled=!report.candidates.length;

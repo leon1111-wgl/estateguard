@@ -1,0 +1,332 @@
+{
+  "started_at": "2026-10-15T17:28:25.487Z",
+  "base": "http://127.0.0.1:8766",
+  "cache_name": "estateguard-public-model-v1",
+  "case_filter": null,
+  "cases": [
+    {
+      "name": "cancelling a stalled model shard unlocks the current media within one second",
+      "status": "passed",
+      "evidence": {
+        "after_cancel_ms": 55,
+        "state": {
+          "run_disabled": false,
+          "file_disabled": false,
+          "rule_disabled": false,
+          "stop_visible": false,
+          "message": "模型加载已取消。素材与设置已保留，可重新开始分析。",
+          "model_status": "加载已取消，可重试",
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "candidates_enabled": false,
+          "results_visible": false
+        },
+        "after_old_request_settles": {
+          "run_disabled": false,
+          "file_disabled": false,
+          "rule_disabled": false,
+          "stop_visible": false,
+          "message": "素材已就绪。选择场景规则和关注区域，然后开始分析。",
+          "model_status": "加载已取消，可重试",
+          "file": "取消后重新选择.jpg · 0.21 MB",
+          "candidates_enabled": false,
+          "results_visible": false
+        }
+      },
+      "duration_ms": 1179
+    },
+    {
+      "name": "retry after cancellation runs actual bus inference",
+      "status": "passed",
+      "evidence": {
+        "after_cancel_ms": 51,
+        "state": {
+          "run_disabled": false,
+          "file_disabled": false,
+          "rule_disabled": false,
+          "stop_visible": false,
+          "message": "模型加载已取消。素材与设置已保留，可重新开始分析。",
+          "model_status": "加载已取消，可重试",
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "candidates_enabled": false,
+          "results_visible": false
+        },
+        "retry": {
+          "score": 0.9916937947273254,
+          "backend": "webgl",
+          "frames": 1,
+          "candidates": 1,
+          "total_ms": 892.1999999284744,
+          "model_loading": {
+            "network_bytes": 4194304,
+            "cache_bytes": 14367539,
+            "cache_available": true,
+            "resource_bytes": 18561843,
+            "load_ms": 847.1000000238419,
+            "initialization_ms": 794.2999999523163,
+            "reused_in_memory": false
+          }
+        }
+      },
+      "duration_ms": 1436
+    },
+    {
+      "name": "a failed shard shows a recoverable error and a retry succeeds",
+      "status": "passed",
+      "evidence": {
+        "failed_requests": 1,
+        "failure": {
+          "run_disabled": false,
+          "file_disabled": false,
+          "rule_disabled": false,
+          "stop_visible": false,
+          "message": "分析失败：模型资源下载失败 (500)，可重试。",
+          "model_status": "加载失败，可重试",
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "candidates_enabled": false,
+          "results_visible": false
+        },
+        "retry": {
+          "score": 0.9916937947273254,
+          "backend": "webgl",
+          "frames": 1,
+          "candidates": 1,
+          "total_ms": 802,
+          "model_loading": {
+            "network_bytes": 18034528,
+            "cache_bytes": 527315,
+            "cache_available": true,
+            "resource_bytes": 18561843,
+            "load_ms": 766.5,
+            "initialization_ms": 688.6000000238419,
+            "reused_in_memory": false
+          }
+        }
+      },
+      "duration_ms": 1285
+    },
+    {
+      "name": "download progress reports completed bytes while a real shard is still pending",
+      "status": "passed",
+      "evidence": {
+        "progress": {
+          "tag": "PROGRESS",
+          "value": 0.2636226213432124,
+          "max": 1,
+          "visible": true
+        },
+        "detail": "已读取 5.0 / 19.1 MiB · 网络读取 5.0 MiB · 复用缓存 0.0 MiB",
+        "inference": {
+          "score": 0.9916937947273254,
+          "backend": "webgl",
+          "frames": 1,
+          "candidates": 1,
+          "total_ms": 1037.6999999284744,
+          "model_loading": {
+            "network_bytes": 20040985,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20040985,
+            "load_ms": 998.7000000476837,
+            "initialization_ms": 713,
+            "reused_in_memory": false
+          }
+        }
+      },
+      "duration_ms": 1373
+    },
+    {
+      "name": "a same-context reload uses only validated public model cache entries",
+      "status": "passed",
+      "evidence": {
+        "cold": {
+          "score": 0.9916937947273254,
+          "backend": "webgl",
+          "frames": 1,
+          "candidates": 1,
+          "total_ms": 877.3999999761581,
+          "model_loading": {
+            "network_bytes": 20040985,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20040985,
+            "load_ms": 840.2000000476837,
+            "initialization_ms": 675,
+            "reused_in_memory": false
+          }
+        },
+        "cache_keys": [
+          "http://127.0.0.1:8766/vendor/tf.min.js?sha256=300dfae273d20b4046f46a06d735688f03675a807561e9bcb5f664eb2f3d2831",
+          "http://127.0.0.1:8766/vendor/coco-ssd.min.js?sha256=8875b8c1bb57723990c9d6506226e0e51cd21b8b6943eb53201086096de52df5",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/model.json?sha256=3770b2528339b1e3340cb74360e1e40401816b009779aeb8d0cce3a4353ea3a9",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard5of5?sha256=3d356f1fb6dfca6af78c56db34d9326706d0196e303f9de6b04f236ca79ed309",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard3of5?sha256=50383033f893eae136392a403e8f70ade5efd90867df5695c4ca5ac640e14f38",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard1of5?sha256=0e7af0f713e98521252321f7f84892c31cefccccec3ac64c84e5065b75ed5646",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard2of5?sha256=74cc6cfc2c4510c9cd81b8ad4cebf6f6a8f305119bb365ce0eb96276da38519a",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard4of5?sha256=d856dc534c780068bbf6c666ce1516df2c8433d87578aa31fcdf197de7058cc2"
+        ],
+        "in_memory": {
+          "score": 0.9916937947273254,
+          "backend": "webgl",
+          "frames": 1,
+          "candidates": 1,
+          "total_ms": 36.39999997615814,
+          "model_loading": {
+            "network_bytes": 0,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20040985,
+            "load_ms": 0,
+            "initialization_ms": 0,
+            "reused_in_memory": true
+          }
+        },
+        "warm": {
+          "score": 0.9916937947273254,
+          "backend": "webgl",
+          "frames": 1,
+          "candidates": 1,
+          "total_ms": 838.7000000476837,
+          "model_loading": {
+            "network_bytes": 0,
+            "cache_bytes": 20040985,
+            "cache_available": true,
+            "resource_bytes": 20040985,
+            "load_ms": 807,
+            "initialization_ms": 678.0999999046326,
+            "reused_in_memory": false
+          }
+        },
+        "warm_model_requests": []
+      },
+      "duration_ms": 2453
+    },
+    {
+      "name": "a same-length corrupted cached shard is rejected and downloaded again",
+      "status": "passed",
+      "evidence": {
+        "before": {
+          "score": 0.9916937947273254,
+          "backend": "webgl",
+          "frames": 1,
+          "candidates": 1,
+          "total_ms": 915.7999999523163,
+          "model_loading": {
+            "network_bytes": 20040985,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20040985,
+            "load_ms": 879.2000000476837,
+            "initialization_ms": 717.3999999761581,
+            "reused_in_memory": false
+          }
+        },
+        "corrupted": {
+          "url": "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard1of5?sha256=0e7af0f713e98521252321f7f84892c31cefccccec3ac64c84e5065b75ed5646",
+          "bytes": 4194304
+        },
+        "after": {
+          "score": 0.9916937947273254,
+          "backend": "webgl",
+          "frames": 1,
+          "candidates": 1,
+          "total_ms": 855.5999999046326,
+          "model_loading": {
+            "network_bytes": 4194304,
+            "cache_bytes": 15846681,
+            "cache_available": true,
+            "resource_bytes": 20040985,
+            "load_ms": 818.3999999761581,
+            "initialization_ms": 657.8999999761581,
+            "reused_in_memory": false
+          }
+        },
+        "model_requests": [
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard1of5"
+        ],
+        "restored_sha256": "0e7af0f713e98521252321f7f84892c31cefccccec3ac64c84e5065b75ed5646"
+      },
+      "duration_ms": 2308
+    },
+    {
+      "name": "blocked CacheStorage falls back to a real network model load",
+      "status": "passed",
+      "evidence": {
+        "inference": {
+          "score": 0.9916937947273254,
+          "backend": "webgl",
+          "frames": 1,
+          "candidates": 1,
+          "total_ms": 846.1000000238419,
+          "model_loading": {
+            "network_bytes": 20040985,
+            "cache_bytes": 0,
+            "cache_available": false,
+            "resource_bytes": 20040985,
+            "load_ms": 810.2999999523163,
+            "initialization_ms": 666.7999999523163,
+            "reused_in_memory": false
+          }
+        },
+        "model_requests": [
+          "http://127.0.0.1:8766/vendor/tf.min.js",
+          "http://127.0.0.1:8766/vendor/coco-ssd.min.js",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/model.json",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard1of5",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard2of5",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard3of5",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard4of5",
+          "http://127.0.0.1:8766/models/ssdlite_mobilenet_v2/group1-shard5of5"
+        ],
+        "final_state": {
+          "run_disabled": false,
+          "file_disabled": false,
+          "rule_disabled": false,
+          "stop_visible": false,
+          "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+          "model_status": "模型已就绪",
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "candidates_enabled": true,
+          "results_visible": true
+        }
+      },
+      "duration_ms": 1185
+    },
+    {
+      "name": "a hanging cache.put can be cancelled without late state replacement",
+      "status": "passed",
+      "evidence": {
+        "after_cancel_ms": 37,
+        "state": {
+          "run_disabled": false,
+          "file_disabled": false,
+          "rule_disabled": false,
+          "stop_visible": false,
+          "message": "模型加载已取消。素材与设置已保留，可重新开始分析。",
+          "model_status": "加载已取消，可重试",
+          "file": "公开示例-校车.jpg · 0.21 MB",
+          "candidates_enabled": false,
+          "results_visible": false
+        },
+        "after_old_cache_put": {
+          "run_disabled": false,
+          "file_disabled": false,
+          "rule_disabled": false,
+          "stop_visible": false,
+          "message": "素材已就绪。选择场景规则和关注区域，然后开始分析。",
+          "model_status": "加载已取消，可重试",
+          "file": "缓存等待取消后.jpg · 0.21 MB",
+          "candidates_enabled": false,
+          "results_visible": false
+        }
+      },
+      "duration_ms": 989
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.79",
+  "finished_at": "2026-10-15T17:28:38.130Z",
+  "passed": 8,
+  "failed": 0,
+  "ok": true
+}

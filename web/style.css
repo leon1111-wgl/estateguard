@@ -386,3 +386,14 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
   #parking-evaluation .table-wrap:first-of-type::before { content: "左右滑动查看完整数据划分"; display: block; margin-bottom: 8px; font-size: 10px; color: #69717d; }
   #parking-evaluation .table-wrap:first-of-type table { min-width: 480px; }
 }
+
+/* Resource loading status extends the existing model bar without a new panel. */
+#model-loading { display: flex; align-items: center; flex-wrap: wrap; gap: 7px 10px; margin: -5px 0 14px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+#model-load-progress { appearance: none; -webkit-appearance: none; flex: 0 0 140px; width: 140px; height: 6px; padding: 0; border: 0; border-radius: 4px; overflow: hidden; background: #edf0f3; accent-color: var(--blue); }
+#model-load-progress::-webkit-progress-bar { background: #edf0f3; border-radius: 4px; }
+#model-load-progress::-webkit-progress-value { background: var(--blue); border-radius: 4px; }
+#model-load-progress::-moz-progress-bar { background: var(--blue); border-radius: 4px; }
+#model-load-detail { flex: 1; min-width: 180px; overflow-wrap: anywhere; }
+@media (max-width: 650px) {
+  #model-load-progress { flex-basis: 100px; width: 100px; }
+}
