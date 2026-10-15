@@ -10,11 +10,11 @@
 - [x] 3. Implement `web/index.html`, `web/style.css`, `web/app.mjs`: load/import, queue filters, incident evidence, local-media review, reasoned dispositions, policy controls and replayable export/import. Verify happy and malformed flows in a real browser, including 390px layout and keyboard focus.
 - [x] 4. Write Python annotation QA tests, observe failures, implement `scripts/audit_annotations.py` for interval integrity, conflicting labels and video-level split leakage. Run the CLI on deliberate good/bad examples and document exit codes.
 - [x] 5. Write README, case study, source ledger, model/data boundaries, critic contract and ranked backlog. A separate critic attempts to break the operator workflow; fix verified issues and rerun impacted checks.
-- [ ] 6. Publish only reviewed files, verify CI/remote head and live asset bytes, add additive links on the existing GitHub profile and site. Preserve unrelated work and verify both deployments.
+- [x] 6. Publish only reviewed files, verify CI/remote head and live asset bytes, add additive links on the existing GitHub profile and site. Preserve unrelated work and verify both deployments.
 
 ## Accepted scope additions
 
 - [x] Real self-hosted small-model inference, image/video pipeline, rule candidates and end-to-end verification.
 - [x] Chinese-first enterprise dashboard instead of presentation-led landing page.
 - [x] Two independent critic rounds and fixes for recoverability, dates, draft loss, media races and manual-routing overrides.
-- [ ] Final remote CI, publication and live verification.
+- [x] Final remote CI, publication and live verification. See ../../VALIDATION.md.

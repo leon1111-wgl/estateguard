@@ -1,0 +1,50 @@
+[
+  {
+    "url": "https://leon1111-wgl.github.io/estateguard/index.html",
+    "status": "MATCH",
+    "bytes": 16573,
+    "sha256": "1c195fbe02c7a9cc045b55e63aaec9fbe8992fc16aad214d1919fa1ca4056c27"
+  },
+  {
+    "url": "https://leon1111-wgl.github.io/estateguard/style.css",
+    "status": "MATCH",
+    "bytes": 21722,
+    "sha256": "aaff98303509f17449fa854faa1985520a3fdd2dadb7fbc84dd25540f618ea1a"
+  },
+  {
+    "url": "https://leon1111-wgl.github.io/estateguard/app.mjs",
+    "status": "MATCH",
+    "bytes": 16822,
+    "sha256": "355eb8c6f95ecff352a9f37606ab2ee5f3315aac12493fd712a2caf178782fd2"
+  },
+  {
+    "url": "https://leon1111-wgl.github.io/estateguard/engine.mjs",
+    "status": "MATCH",
+    "bytes": 12417,
+    "sha256": "e9c9cd85ad5c27ff09f3c1ac5e35b65805e6f11bae683318a30b61dbc93092b9"
+  },
+  {
+    "url": "https://leon1111-wgl.github.io/estateguard/vision.mjs",
+    "status": "MATCH",
+    "bytes": 16200,
+    "sha256": "f640bd34fe2677369c204edb169ba5ff9413486facedeba4f3c39e86046c1cba"
+  },
+  {
+    "url": "https://leon1111-wgl.github.io/estateguard/vision-rules.mjs",
+    "status": "MATCH",
+    "bytes": 4486,
+    "sha256": "2c09bff18cf52b8bae71c66d554bb07e4d0ed1a5136dc6f9d5008845cf1c6f42"
+  },
+  {
+    "url": "https://leon1111-wgl.github.io/estateguard/models/ssdlite_mobilenet_v2/model.json",
+    "status": "MATCH",
+    "bytes": 527315,
+    "sha256": "3770b2528339b1e3340cb74360e1e40401816b009779aeb8d0cce3a4353ea3a9"
+  },
+  {
+    "url": "https://leon1111-wgl.github.io/leon1111-wgl/index.html",
+    "status": "MATCH",
+    "bytes": 20128,
+    "sha256": "d7fba802c2aeee668e6d8423bb07e8d96a2c7a44a35c42707fcf3fcc9ab1f1b7"
+  }
+]

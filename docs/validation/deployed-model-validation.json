@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-15",
+  "browser": "155.0.8059.79",
+  "scope": "Deployed GitHub Pages execution smoke tests; not detection accuracy or real-world parking validation.",
+  "image_score": 0.9916937947273254,
+  "image_mean_ms": 40.799999952316284,
+  "video_frames": 7,
+  "video_mean_ms": 27.985714282308304,
+  "tensors_before": 262,
+  "tensors_after": 262,
+  "external_requests": 0,
+  "passed": [
+    "real image inference",
+    "same-origin assets",
+    "candidate handoff",
+    "review dismissal",
+    "real video decoding and sampling",
+    "synthetic dwell candidate",
+    "repeat inference tensor stability",
+    "out-of-range offset rejection",
+    "mobile layout"
+  ],
+  "url": "https://leon1111-wgl.github.io/estateguard/",
+  "loading_note": "Initial online check exceeded its 120 second wait. A fresh retry with a 600 second allowance completed all model and workflow checks. This is not a first-load latency benchmark."
+}
