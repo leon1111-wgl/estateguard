@@ -19,7 +19,7 @@
   <div class="model-bar"><span class="status-dot" aria-hidden="true"></span><strong id="parking-model-status">占用分类器尚未加载</strong><span>本项目使用公开标签训练</span><span>CNRPark 基础子集</span><a href="#results">训练与评测记录</a></div>
   <p id="parking-message" class="message" role="status" aria-live="polite">历史裁剪图片快照，不是视频或实时摄像头。车位占用不代表违停。</p>
   <div id="parking-metrics" class="metrics" aria-label="当前快照统计">
-    <div class="metric"><strong>—</strong><span>当前快照车位</span></div><div class="metric"><strong>—</strong><span>模型预测空闲</span></div><div class="metric"><strong>—</strong><span>模型预测占用</span></div><div class="metric"><strong>—</strong><span>待复核</span></div>
+    <div class="metric"><strong>—</strong><span>当前快照车位</span></div><div class="metric"><strong>—</strong><span>模型预测空闲</span></div><div class="metric"><strong>—</strong><span>模型预测占用</span></div><div class="metric"><strong>—</strong><span>模型不确定 / 未分析</span></div>
   </div>
   <div class="analysis-layout">
     <div class="panel parking-snapshots">
@@ -29,7 +29,8 @@
         <label class="parking-slider">采样时刻<input id="parking-frame" type="range" min="0" max="0" value="0" step="1" aria-label="选择历史快照时刻"></label>
       </div>
       <p id="parking-time" class="subtle parking-time">按数据集原始时间显示；相邻快照的实际采样间隔将在数据加载后显示。</p>
-      <div class="parking-grid-toolbar"><label class="field parking-filter-field">显示车位<select id="parking-filter"><option value="all">全部车位</option><option value="review">待复核车位</option><option value="errors">与数据集标注不一致</option></select></label><label class="parking-checkbox"><input id="parking-show-truth" type="checkbox">显示数据集标注</label></div>
+      <div class="parking-grid-toolbar"><label class="field parking-filter-field">显示车位<select id="parking-filter"><option value="all">全部车位</option><option value="review">待人工复核</option><option value="confirmed">已人工确认</option><option value="evidence">需补证据</option><option value="model_uncertain">模型不确定或未分析</option><option value="errors">与数据集标注不一致</option></select></label><label class="parking-checkbox"><input id="parking-show-truth" type="checkbox">显示数据集标注</label></div>
+      <p id="parking-review-progress" class="subtle" role="status" aria-live="polite"></p>
       <p id="parking-grid-help" class="subtle parking-grid-help">在网格内滚动浏览全部车位，点击车位查看复核详情。</p>
       <div id="parking-grid" class="parking-grid" tabindex="0" aria-label="当前时刻的车位裁剪图" aria-describedby="parking-grid-help"><p class="empty">公开数据加载后，这里会显示同一时刻的车位。点击车位查看详情。</p></div>
       <p class="subtle parking-grid-note">原始车位裁剪图为 150 × 150 像素。标注仅用于结果对照，不作为模型输入。</p>
@@ -41,7 +42,8 @@
         <div class="parking-review-fields">
           <label class="field">人工结论<select id="parking-decision"><option value="pending">待复核</option><option value="free">空闲</option><option value="busy">占用</option><option value="uncertain">无法判断</option></select></label>
           <label class="field">复核说明<textarea id="parking-note" maxlength="2000" rows="3" placeholder="记录遮挡、阴影或判断依据。"></textarea></label>
-          <button id="parking-save" class="button primary" type="button">保存车位复核</button>
+          <div class="toolbar"><button id="parking-save" class="button primary" type="button">保存车位复核</button><button id="parking-save-next" class="button" type="button">保存并继续</button></div>
+          <p id="parking-review-message" class="message" role="status" aria-live="polite"></p>
           <p class="subtle">复核结论与模型预测分别保留；离开前请导出巡检记录。</p>
         </div>
       </div>

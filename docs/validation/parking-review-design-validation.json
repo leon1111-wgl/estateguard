@@ -1,0 +1,71 @@
+{
+  "widths": [
+    {
+      "width": 1440,
+      "initialTotal": 53,
+      "counts": {
+        "all": 53,
+        "review": 52,
+        "confirmed": 1,
+        "evidence": 1,
+        "model_uncertain": 1,
+        "errors": 10
+      },
+      "first": "B-20150708-0805-1",
+      "continued": "B-20150708-0805-10",
+      "successPosition": {
+        "scrollY": 78,
+        "cardTop": 293.15625,
+        "messageTop": 955.25,
+        "messageBottom": 1034.8125,
+        "height": 1000
+      },
+      "finalProgress": "当前快照：已确认 2 / 53 · 待人工复核 51（其中需补证据 0）",
+      "modelMetricsUnchanged": true,
+      "failedSaveAtomic": true,
+      "snapshotUnchanged": true,
+      "navigation": [
+        "analyze",
+        "workspace",
+        "policy",
+        "results",
+        "story",
+        "parking"
+      ]
+    },
+    {
+      "width": 390,
+      "initialTotal": 53,
+      "counts": {
+        "all": 53,
+        "review": 52,
+        "confirmed": 1,
+        "evidence": 1,
+        "model_uncertain": 1,
+        "errors": 10
+      },
+      "first": "B-20150708-0805-1",
+      "continued": "B-20150708-0805-10",
+      "successPosition": {
+        "scrollY": 1510,
+        "cardTop": 15.8125,
+        "messageTop": 677.90625,
+        "messageBottom": 738.28125,
+        "height": 844
+      },
+      "finalProgress": "当前快照：已确认 2 / 53 · 待人工复核 51（其中需补证据 0）",
+      "modelMetricsUnchanged": true,
+      "failedSaveAtomic": true,
+      "snapshotUnchanged": true,
+      "navigation": [
+        "analyze",
+        "workspace",
+        "policy",
+        "results",
+        "story",
+        "parking"
+      ]
+    }
+  ],
+  "errors": []
+}

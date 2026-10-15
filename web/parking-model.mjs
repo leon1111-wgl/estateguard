@@ -21,6 +21,23 @@ export function predictPatch(rgba,model){
 }
 export function classifyScore(p){if(!Number.isFinite(p)||p<0||p>1)throw new Error('无效模型分数');return p<=.35?'free':p>=.65?'busy':'uncertain';}
 export function frameSummary(rows,predictions){const result={total:rows.length,free:0,busy:0,uncertain:0,pending:0};for(const row of rows){if(predictions.has(row.id))result[classifyScore(predictions.get(row.id))]++;else result.pending++;}return result;}
+// Human completion is independent of model confidence and belongs to one snapshot.
+export function parkingReviewStatus(review){return review?.decision==='free'||review?.decision==='busy'?'confirmed':review?.decision==='uncertain'?'needs_evidence':'pending';}
+export function parkingReviewSummary(rows,reviews){const result={total:rows.length,confirmed:0,pending:0,needs_evidence:0};for(const row of rows)result[parkingReviewStatus(reviews[row.id])]++;return result;}
+export function filterParkingRows(rows,predictions,reviews,filter){return rows.filter(row=>{
+ const status=parkingReviewStatus(reviews[row.id]);
+ if(filter==='review')return status!=='confirmed';
+ if(filter==='confirmed')return status==='confirmed';
+ if(filter==='evidence')return status==='needs_evidence';
+ if(filter==='model_uncertain')return !predictions.has(row.id)||classifyScore(predictions.get(row.id))==='uncertain';
+ if(filter==='errors')return predictions.has(row.id)&&Number(predictions.get(row.id)>=.5)!==row.label;
+ return true;
+});}
+export function nextParkingReviewId(rows,reviews,currentId){
+ const start=rows.findIndex(row=>row.id===currentId);
+ for(let step=1;step<=rows.length;step++){const row=rows[(start+step)%rows.length];if(parkingReviewStatus(reviews[row.id])!=='confirmed')return row.id;}
+ return null;
+}
 export function exportParkingReview(context,reviews){const result={format:'estateguard-parking-review',version:1,model_sha256:context.model_sha256,reviews:structuredClone(reviews)};importParkingReview(result,context);return result;}
 export function serializeParkingReview(data,context){importParkingReview(data,context);return JSON.stringify(data);}
 export function importParkingReview(data,context){

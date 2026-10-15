@@ -56,7 +56,7 @@ const errors=[];
   assert.ok((await capacity.locator('#parking-message').textContent()).includes('人工复核记录超过 24 MiB'));
   await capacity.locator('#parking-export').click();assert.ok((await capacity.locator('#parking-message').textContent()).includes('未保存'));
   await capacity.locator('#parking-note').fill('x');await capacity.locator('#parking-save').click();
-  await capacity.waitForFunction(()=>document.querySelector('#parking-message').textContent.startsWith('人工复核已保存'));
+  await capacity.waitForFunction(()=>document.querySelector('#parking-review-message').textContent.startsWith('已保存 '));
   await capacity.locator('#parking-run').click();await capacity.waitForFunction(()=>document.querySelector('#parking-message').textContent.startsWith('当前快照分析完成'));
   const [capacityDownload]=await Promise.all([capacity.waitForEvent('download'),capacity.locator('#parking-export').click()]);
   const capacityExport=fs.readFileSync(await capacityDownload.path()),capacityParsed=JSON.parse(capacityExport);

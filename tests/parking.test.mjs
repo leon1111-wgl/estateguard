@@ -3,6 +3,25 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {extractFeatures,predictPatch,classifyScore,frameSummary,exportParkingReview,importParkingReview} from '../web/parking-model.mjs';
 import * as parkingModel from '../web/parking-model.mjs';
+test('human review queue completes confirmed samples and retains inconclusive low-score samples',()=>{
+ const rows=[{id:'B35',label:1},{id:'B1',label:0},{id:'B2',label:1},{id:'B3',label:1}];
+ const predictions=new Map([['B35',.622],['B1',.029],['B2',.99]]);
+ const reviews={B35:{decision:'busy'},B1:{decision:'uncertain'},B2:{decision:'pending'}};
+ assert.deepEqual(parkingModel.parkingReviewSummary(rows,reviews),{total:4,confirmed:1,pending:2,needs_evidence:1});
+ assert.deepEqual(parkingModel.filterParkingRows(rows,predictions,reviews,'review').map(r=>r.id),['B1','B2','B3']);
+ assert.deepEqual(parkingModel.filterParkingRows(rows,predictions,reviews,'confirmed').map(r=>r.id),['B35']);
+ assert.deepEqual(parkingModel.filterParkingRows(rows,predictions,reviews,'evidence').map(r=>r.id),['B1']);
+ assert.deepEqual(parkingModel.filterParkingRows(rows,predictions,reviews,'model_uncertain').map(r=>r.id),['B35','B3']);
+ assert.deepEqual(frameSummary(rows,predictions),{total:4,free:1,busy:1,uncertain:1,pending:1});
+ reviews.B35.decision='pending';assert.equal(parkingModel.filterParkingRows(rows,predictions,reviews,'review').length,4);
+});
+test('review completion belongs to a source snapshot and advances only among remaining rows',()=>{
+ const rows=[{id:'B-0805-1'},{id:'B-0805-2'},{id:'B-0805-3'}],reviews={'B-0805-1':{decision:'busy'},'B-0805-2':{decision:'free'}};
+ assert.equal(parkingModel.nextParkingReviewId(rows,reviews,'B-0805-1'),'B-0805-3');
+ reviews['B-0805-3']={decision:'uncertain'};assert.equal(parkingModel.nextParkingReviewId(rows,reviews,'B-0805-3'),'B-0805-3');
+ reviews['B-0805-3'].decision='free';assert.equal(parkingModel.nextParkingReviewId(rows,reviews,'B-0805-2'),null);
+ assert.deepEqual(parkingModel.parkingReviewSummary([{id:'B-0810-1'}],reviews),{total:1,confirmed:0,pending:1,needs_evidence:0});
+});
 test('uniform RGB pixels have zero texture and fixed feature dimensions',()=>{const rgba=new Uint8ClampedArray(32*32*4);for(let i=0;i<rgba.length;i+=4)rgba.set([128,128,128,255],i);const f=extractFeatures(rgba);assert.equal(f.length,240);for(let c=0;c<16;c++)for(let j=3;j<15;j++)assert.equal(f[c*15+j],0);});
 test('uncertain score is kept for review and never called illegal parking',()=>{assert.equal(classifyScore(.5),'uncertain');assert.equal(classifyScore(.1),'free');assert.equal(classifyScore(.9),'busy');assert.throws(()=>classifyScore(NaN));});
 test('missing predictions remain unanalysed rather than free',()=>{const rows=[{id:'a'},{id:'b'},{id:'c'}];const s=frameSummary(rows,new Map([['a',.9],['b',.5]]));assert.deepEqual(s,{total:3,free:0,busy:1,uncertain:1,pending:1});});
