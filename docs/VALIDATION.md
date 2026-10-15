@@ -105,3 +105,25 @@ python3 scripts/verify_parking.py
 - 设计师1440px与390px回归无溢出。手机自然点击开始后，原进度行在视口上方；修复后底部反馈区域约y658–719，包含真实读取/缓存摘要，取消按钮y594–627，同屏可操作。未调整原版面框架。
 
 证据：[加载流程验收](validation/model-loading-validation.json)、[界面与自然操作回归](validation/model-loading-ui-validation.json)。网络中断通过控制真实响应模拟；完整离线站点、低端手机各型号与长时间缓存配额竞争仍未验证。
+
+## 2026-10-16 · 检测分数与 NMS 分离
+
+```bash
+node --test tests/*.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 scripts/patch_coco_ssd.py --check
+python3 scripts/verify_assets.py
+node scripts/detection-threshold-check.cjs
+node scripts/model-check.cjs
+node scripts/model-loading-check.cjs
+```
+
+- 72 项 JS 测试、6 项 Python 标注检查通过。新增 3 项使用真实 TensorFlow NMS 和受控图输出张量，隔离检查重复框、适度重叠目标和分数筛选；旧版为 2 红/1 绿，补丁后全绿。这些受控张量不充当实际模型效果证据。
+- 独立浏览器 7 项真实推理验收通过，页面异常和跨站请求为 0。原版与补丁的默认 0.5 输出按类别、框坐标、分数逐项对照，容差 1e-6；0.95 下同一校车重复框与候选从 2 变为 1。0.1 保留低分人员/远车，升高分数只删除结果；没有固定低分候选必须只有一条。
+- 合成图由同一 CC0 校车照片的两个相离副本组成，真实推理仍产生 2 辆车、2 条候选。图片与合成排布用于特定故障回归，不代表真实多车召回率。
+- 导出记录分数、IoU=0.5、补丁标识、最多 50 框、每秒 1 帧/最多 20 帧、实际片段起点。原短视频回归另验证 offset=2 秒时首帧为 2 秒，候选绝对时间比原素材起始时间晚 2 秒。图片实际 offset 为 0。
+- 同浏览器预置旧哈希脚本缓存后，重新加载只重新获取 1 次新脚本，0.95 推理为单车单候选。返回缺少补丁标识的旧清单时，在模型加载前明确失败；素材、规则与操作控件保留，恢复当前资源后直接重试成功。原版默认对照使用独立 context 受控替换运行脚本与对应哈希，模型权重与公开图片仍为真实文件。
+- 旧的 8 类下载/缓存故障验收再次通过；原校车分数仍为 0.9916937947，视频实际处理 7 帧，重复推理张量 262→262。补丁与固定上游逐字节重建一致；11 项资产校验通过，权重没有变化。
+- 独立设计师检查 1440px 与390px 实际截图，无横向溢出。说明与分数字段有无障碍关联；高分候选送入复核后仍要求人工核实，排除后退出待办。没有更改 CSS、导航或版面。
+
+证据：[原故障基线](validation/detection-threshold-baseline.json)、[版本混用失败基线](validation/detection-mixed-deployment-baseline.json)、[修复后验收](validation/detection-threshold-validation.json)、[界面回归](validation/detection-threshold-ui-validation.json)。未做新的社区领域评测、训练或量化；素材时间/区域沿用问题另记在 BACKLOG。

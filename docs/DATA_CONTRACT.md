@@ -38,6 +38,8 @@ JSON，版本 1。最多 5 MiB、10,000 条记录。见 `data/demo.json`。导�
 
 `format: estateguard-detections`；包含模型/运行库版本、后端、来源文件元数据、阈值、区域、场景参数、逐帧检测框、匿名轨迹、规则候选与实际耗时。它是视觉模块的可复查原始输出；用「送入事件复核」产生兼容的观察批次。
 
+2026-10-16 起的报告在 `params` 中保存实际 `minimum_score`、`nms_iou_threshold`、`postprocess` 补丁标识、`max_detections`、`offset_seconds`、`sample_interval_seconds`、`max_frames`。片段起点为相对原素材的秒数，图片实际为 0；`started_at` 是原素材开始时间，候选绝对时间在此基础上加采样秒数。旧报告缺失这些字段时不得假定当时用了默认值，无法完整重现其检测设置。报告不包含原始媒体，当前也没有从检测报告一键恢复分析设置的入口。
+
 ## 标注 QA
 
 `scripts/audit_annotations.py` 输入数组，字段为 video_id、track、start_s、end_s、label、annotator、split。label 支持上述八类及 normal，split 为 train、validation、test。

@@ -25,3 +25,9 @@
 核验 [TensorFlow.js 4.22.0官方API](https://js.tensorflow.org/api/4.22.0/#io.http) 中 `io.http`、`loadGraphModel` 的IOHandler及自定义fetch接口，并检查本站固定版本的COCO-SSD 2.2.3加载与预热实现。证据层级为官方API全文对应条目、随包源代码和本项目真实浏览器运行。采用IO路由接入可取消、带校验的资源读取，保留原检测器及预热流程；没有引入新算法、替换模型或用论文指标宣传效果。
 
 缓存只节省重复资源读取，不省去新页面的模型初始化。加载统计分别记录网络读取、缓存读取、初始化和逐帧推理；Chrome受控网络/存储故障检查不能代替全部移动设备与真实弱网测试。
+
+## 2026-10-16 · 检测分数与重叠框抑制的工程依据
+
+核验 [COCO-SSD 2.2.3 官方版本源码](https://raw.githubusercontent.com/tensorflow/tfjs-models/coco-ssd-v2.2.3/coco-ssd/src/index.ts) 的 `infer` 实现及 [TensorFlow.js 4.22.0 NMS 接口](https://js.tensorflow.org/api/4.22.0/#image.nonMaxSuppression)。证据层级为已读官方函数全文、固定版本发布文件与本项目真实推理对照。原函数把同一个 `minScore` 传入两个含义不同的阈值；本地实测提高分数至 0.95 后，校车出现重叠度约 0.9496 的两框，进一步产生两条候选。
+
+采用最小补丁固定 NMS IoU=0.5，保留默认行为、原模型和类别处理，分数继续由用户设定。选择依据是已定位的参数错误和可重复错例，无需新增算法或数据下载。限制：NMS 仍可能误抑制真实重叠目标；单张公开图片与合成多目标图仅验证这个故障，不能推导社区场景召回率或每小时误报收益。

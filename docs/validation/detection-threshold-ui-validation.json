@@ -1,0 +1,987 @@
+{
+  "checks": [
+    {
+      "width": 1440,
+      "score": 0.1,
+      "ui": {
+        "viewWidth": 1440,
+        "docWidth": 1440,
+        "scoreDescriptionId": "vision-score-help",
+        "helpText": "只保留达到下限的检测结果；重叠框按固定规则合并。",
+        "helpWidth": 266,
+        "helpHeight": 17.59375,
+        "helpScrollWidth": 266,
+        "helpClientWidth": 266,
+        "message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。"
+      },
+      "report": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "runtime": "TensorFlow.js 4.22.0",
+        "backend": "webgl",
+        "model_loading": {
+          "network_bytes": 20041229,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 988.3999999761581,
+          "initialization_ms": 780.6000000238419,
+          "reused_in_memory": false
+        },
+        "media": {
+          "name": "公开示例-校车.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "本地摄像头",
+          "zone": "待确认区域",
+          "started_at": "2026-10-16T08:00:00+08:00",
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": 5,
+          "is_video": false,
+          "expected_direction": "right",
+          "minimum_score": 0.1,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1"
+        },
+        "complete": true,
+        "frames": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9916937947273254,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ]
+              },
+              {
+                "class": "person",
+                "score": 0.21160626411437988,
+                "bbox": [
+                  0.5867244005203247,
+                  0.549952507019043,
+                  0.03106248378753662,
+                  0.08994483947753906
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.16767115890979767,
+                "bbox": [
+                  0.8295001983642578,
+                  0.3325704336166382,
+                  0.16689801216125488,
+                  0.4206303358078003
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ],
+                "score": 0.9916937947273254
+              }
+            ]
+          },
+          {
+            "id": "track-2",
+            "class": "person",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.5867244005203247,
+                  0.549952507019043,
+                  0.03106248378753662,
+                  0.08994483947753906
+                ],
+                "score": 0.21160626411437988
+              }
+            ]
+          },
+          {
+            "id": "track-3",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.8295001983642578,
+                  0.3325704336166382,
+                  0.16689801216125488,
+                  0.4206303358078003
+                ],
+                "score": 0.16767115890979767
+              }
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "本地摄像头",
+            "zone": "待确认区域",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-16T00:00:00.000Z",
+            "end": "2026-10-16T00:00:00.001Z",
+            "score": 0.9916937947273254,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          },
+          {
+            "id": "vision-track-3-2",
+            "camera": "本地摄像头",
+            "zone": "待确认区域",
+            "track": "track-3",
+            "category": "blocked_access",
+            "start": "2026-10-16T00:00:00.000Z",
+            "end": "2026-10-16T00:00:00.001Z",
+            "score": 0.16767115890979767,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "metrics": {
+          "frame_count": 1,
+          "mean_inference_ms": 31.199999928474426,
+          "total_ms": 1024.3999999761581
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      }
+    },
+    {
+      "width": 1440,
+      "score": 0.5,
+      "ui": {
+        "viewWidth": 1440,
+        "docWidth": 1440,
+        "scoreDescriptionId": "vision-score-help",
+        "helpText": "只保留达到下限的检测结果；重叠框按固定规则合并。",
+        "helpWidth": 266,
+        "helpHeight": 17.59375,
+        "helpScrollWidth": 266,
+        "helpClientWidth": 266,
+        "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。"
+      },
+      "report": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "runtime": "TensorFlow.js 4.22.0",
+        "backend": "webgl",
+        "model_loading": {
+          "network_bytes": 0,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 0,
+          "initialization_ms": 0,
+          "reused_in_memory": true
+        },
+        "media": {
+          "name": "公开示例-校车.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "本地摄像头",
+          "zone": "待确认区域",
+          "started_at": "2026-10-16T08:00:00+08:00",
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": 5,
+          "is_video": false,
+          "expected_direction": "right",
+          "minimum_score": 0.5,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1"
+        },
+        "complete": true,
+        "frames": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9916937947273254,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.13031357526779175,
+                  0.29490771889686584,
+                  0.8503782749176025,
+                  0.6453458964824677
+                ],
+                "score": 0.9916937947273254
+              }
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "本地摄像头",
+            "zone": "待确认区域",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-16T00:00:00.000Z",
+            "end": "2026-10-16T00:00:00.001Z",
+            "score": 0.9916937947273254,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "metrics": {
+          "frame_count": 1,
+          "mean_inference_ms": 27.100000023841858,
+          "total_ms": 37
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      }
+    },
+    {
+      "width": 1440,
+      "score": 0.95,
+      "ui": {
+        "viewWidth": 1440,
+        "docWidth": 1440,
+        "scoreDescriptionId": "vision-score-help",
+        "helpText": "只保留达到下限的检测结果；重叠框按固定规则合并。",
+        "helpWidth": 266,
+        "helpHeight": 17.59375,
+        "helpScrollWidth": 266,
+        "helpClientWidth": 266,
+        "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。"
+      },
+      "report": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "runtime": "TensorFlow.js 4.22.0",
+        "backend": "webgl",
+        "model_loading": {
+          "network_bytes": 0,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 0,
+          "initialization_ms": 0,
+          "reused_in_memory": true
+        },
+        "media": {
+          "name": "公开示例-校车.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "本地摄像头",
+          "zone": "待确认区域",
+          "started_at": "2026-10-16T08:00:00+08:00",
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": 5,
+          "is_video": false,
+          "expected_direction": "right",
+          "minimum_score": 0.95,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1"
+        },
+        "complete": true,
+        "frames": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9917388558387756,
+                "bbox": [
+                  0.13031750917434692,
+                  0.2949357032775879,
+                  0.8505373001098633,
+                  0.645323634147644
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.13031750917434692,
+                  0.2949357032775879,
+                  0.8505373001098633,
+                  0.645323634147644
+                ],
+                "score": 0.9917388558387756
+              }
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "本地摄像头",
+            "zone": "待确认区域",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-16T00:00:00.000Z",
+            "end": "2026-10-16T00:00:00.001Z",
+            "score": 0.9917388558387756,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "metrics": {
+          "frame_count": 1,
+          "mean_inference_ms": 24.899999976158142,
+          "total_ms": 30.100000023841858
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      }
+    },
+    {
+      "width": 390,
+      "score": 0.1,
+      "ui": {
+        "viewWidth": 390,
+        "docWidth": 390,
+        "scoreDescriptionId": "vision-score-help",
+        "helpText": "只保留达到下限的检测结果；重叠框按固定规则合并。",
+        "helpWidth": 324,
+        "helpHeight": 17.59375,
+        "helpScrollWidth": 324,
+        "helpClientWidth": 324,
+        "message": "分析完成：1 帧、4 条匿名轨迹、2 个待核实候选。"
+      },
+      "report": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "runtime": "TensorFlow.js 4.22.0",
+        "backend": "webgl",
+        "model_loading": {
+          "network_bytes": 0,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 0,
+          "initialization_ms": 0,
+          "reused_in_memory": true
+        },
+        "media": {
+          "name": "公开示例-校车.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "本地摄像头",
+          "zone": "待确认区域",
+          "started_at": "2026-10-16T08:00:00+08:00",
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": 5,
+          "is_video": false,
+          "expected_direction": "right",
+          "minimum_score": 0.1,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1"
+        },
+        "complete": true,
+        "frames": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9917388558387756,
+                "bbox": [
+                  0.13031750917434692,
+                  0.2949357032775879,
+                  0.8505373001098633,
+                  0.645323634147644
+                ]
+              },
+              {
+                "class": "person",
+                "score": 0.20943276584148407,
+                "bbox": [
+                  0.5867332220077515,
+                  0.5499911308288574,
+                  0.03103458881378174,
+                  0.08982229232788086
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.16844454407691956,
+                "bbox": [
+                  0.8296226263046265,
+                  0.3322817087173462,
+                  0.1667931079864502,
+                  0.42085063457489014
+                ]
+              },
+              {
+                "class": "person",
+                "score": 0.10318414121866226,
+                "bbox": [
+                  0.098485566675663,
+                  0.5522789359092712,
+                  0.017860829830169678,
+                  0.03381061553955078
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.13031750917434692,
+                  0.2949357032775879,
+                  0.8505373001098633,
+                  0.645323634147644
+                ],
+                "score": 0.9917388558387756
+              }
+            ]
+          },
+          {
+            "id": "track-2",
+            "class": "person",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.5867332220077515,
+                  0.5499911308288574,
+                  0.03103458881378174,
+                  0.08982229232788086
+                ],
+                "score": 0.20943276584148407
+              }
+            ]
+          },
+          {
+            "id": "track-3",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.8296226263046265,
+                  0.3322817087173462,
+                  0.1667931079864502,
+                  0.42085063457489014
+                ],
+                "score": 0.16844454407691956
+              }
+            ]
+          },
+          {
+            "id": "track-4",
+            "class": "person",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.098485566675663,
+                  0.5522789359092712,
+                  0.017860829830169678,
+                  0.03381061553955078
+                ],
+                "score": 0.10318414121866226
+              }
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "本地摄像头",
+            "zone": "待确认区域",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-16T00:00:00.000Z",
+            "end": "2026-10-16T00:00:00.001Z",
+            "score": 0.9917388558387756,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          },
+          {
+            "id": "vision-track-3-2",
+            "camera": "本地摄像头",
+            "zone": "待确认区域",
+            "track": "track-3",
+            "category": "blocked_access",
+            "start": "2026-10-16T00:00:00.000Z",
+            "end": "2026-10-16T00:00:00.001Z",
+            "score": 0.16844454407691956,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "metrics": {
+          "frame_count": 1,
+          "mean_inference_ms": 26,
+          "total_ms": 28.600000023841858
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      }
+    },
+    {
+      "width": 390,
+      "score": 0.95,
+      "ui": {
+        "viewWidth": 390,
+        "docWidth": 390,
+        "scoreDescriptionId": "vision-score-help",
+        "helpText": "只保留达到下限的检测结果；重叠框按固定规则合并。",
+        "helpWidth": 324,
+        "helpHeight": 17.59375,
+        "helpScrollWidth": 324,
+        "helpClientWidth": 324,
+        "message": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。"
+      },
+      "report": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "runtime": "TensorFlow.js 4.22.0",
+        "backend": "webgl",
+        "model_loading": {
+          "network_bytes": 0,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 0,
+          "initialization_ms": 0,
+          "reused_in_memory": true
+        },
+        "media": {
+          "name": "公开示例-校车.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "本地摄像头",
+          "zone": "待确认区域",
+          "started_at": "2026-10-16T08:00:00+08:00",
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": 5,
+          "is_video": false,
+          "expected_direction": "right",
+          "minimum_score": 0.95,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1"
+        },
+        "complete": true,
+        "frames": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9917388558387756,
+                "bbox": [
+                  0.13031750917434692,
+                  0.2949357032775879,
+                  0.8505373001098633,
+                  0.645323634147644
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 0,
+                "bbox": [
+                  0.13031750917434692,
+                  0.2949357032775879,
+                  0.8505373001098633,
+                  0.645323634147644
+                ],
+                "score": 0.9917388558387756
+              }
+            ]
+          }
+        ],
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "本地摄像头",
+            "zone": "待确认区域",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-16T00:00:00.000Z",
+            "end": "2026-10-16T00:00:00.001Z",
+            "score": 0.9917388558387756,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "metrics": {
+          "frame_count": 1,
+          "mean_inference_ms": 25.699999928474426,
+          "total_ms": 27.90000009536743
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      }
+    }
+  ],
+  "errors": [],
+  "scope": "真实公开图片推理与UI回归，不是领域准确率评测",
+  "accessibility": {
+    "nodeId": "8",
+    "ignored": false,
+    "role": {
+      "type": "role",
+      "value": "spinbutton"
+    },
+    "chromeRole": {
+      "type": "internalRole",
+      "value": 156
+    },
+    "name": {
+      "type": "computedString",
+      "value": "检测分数下限",
+      "sources": [
+        {
+          "type": "relatedElement",
+          "attribute": "aria-labelledby"
+        },
+        {
+          "type": "attribute",
+          "attribute": "aria-label"
+        },
+        {
+          "type": "relatedElement",
+          "value": {
+            "type": "computedString",
+            "value": "检测分数下限"
+          },
+          "nativeSource": "labelwrapped",
+          "nativeSourceValue": {
+            "type": "nodeList",
+            "relatedNodes": [
+              {
+                "backendDOMNodeId": 123,
+                "text": "检测分数下限"
+              }
+            ]
+          }
+        },
+        {
+          "type": "attribute",
+          "attribute": "title",
+          "superseded": true
+        },
+        {
+          "type": "placeholder",
+          "attribute": "placeholder",
+          "superseded": true
+        },
+        {
+          "type": "placeholder",
+          "attribute": "aria-placeholder",
+          "superseded": true
+        },
+        {
+          "type": "attribute",
+          "attribute": "title",
+          "superseded": true
+        }
+      ]
+    },
+    "description": {
+      "type": "computedString",
+      "value": "只保留达到下限的检测结果；重叠框按固定规则合并。"
+    },
+    "value": {
+      "type": "number",
+      "value": 0.949999988079071
+    },
+    "properties": [
+      {
+        "name": "invalid",
+        "value": {
+          "type": "token",
+          "value": "false"
+        }
+      },
+      {
+        "name": "focusable",
+        "value": {
+          "type": "booleanOrUndefined",
+          "value": true
+        }
+      },
+      {
+        "name": "editable",
+        "value": {
+          "type": "token",
+          "value": "plaintext"
+        }
+      },
+      {
+        "name": "settable",
+        "value": {
+          "type": "booleanOrUndefined",
+          "value": true
+        }
+      },
+      {
+        "name": "required",
+        "value": {
+          "type": "boolean",
+          "value": true
+        }
+      },
+      {
+        "name": "valuemin",
+        "value": {
+          "type": "number",
+          "value": 0.10000000149011612
+        }
+      },
+      {
+        "name": "valuemax",
+        "value": {
+          "type": "number",
+          "value": 0.949999988079071
+        }
+      },
+      {
+        "name": "valuetext",
+        "value": {
+          "type": "string",
+          "value": "0.95"
+        }
+      },
+      {
+        "name": "describedby",
+        "value": {
+          "type": "idrefList",
+          "value": "vision-score-help",
+          "relatedNodes": [
+            {
+              "backendDOMNodeId": 104,
+              "idref": "vision-score-help"
+            }
+          ]
+        }
+      },
+      {
+        "name": "labelledby",
+        "value": {
+          "type": "nodeList",
+          "relatedNodes": [
+            {
+              "backendDOMNodeId": 123,
+              "text": "检测分数下限"
+            }
+          ]
+        }
+      }
+    ],
+    "parentId": "123",
+    "childIds": [
+      "318"
+    ],
+    "backendDOMNodeId": 8
+  },
+  "handoff": {
+    "queueCount": 1,
+    "decision": "open",
+    "detail": "证据不足高风险类别通道占用线索本地摄像头 · 待确认区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/16 08:00:00 → 2026/10/16 08:00:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）99 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：COCO-SSD 2.2.3 / SSDLite MobileNet V2。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+    "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。"
+  },
+  "reviewDismissed": true,
+  "workspace": {
+    "format": "estateguard-workspace",
+    "version": 1,
+    "batch": {
+      "schema_version": 1,
+      "name": "本地模型分析 · 公开示例-校车.jpg",
+      "provenance": "真实浏览器推理：COCO-SSD 2.2.3 / SSDLite MobileNet V2。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。",
+      "observations": [
+        {
+          "id": "vision-track-1-1",
+          "camera": "本地摄像头",
+          "zone": "待确认区域",
+          "track": "track-1",
+          "category": "blocked_access",
+          "start": "2026-10-16T00:00:00.000Z",
+          "end": "2026-10-16T00:00:00.001Z",
+          "score": 0.9917388558387756,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "公开示例-校车.jpg @ 0.00s"
+          ]
+        }
+      ]
+    },
+    "policy": {
+      "score_threshold": 0.6,
+      "quality_threshold": 0.5,
+      "merge_gap_seconds": 30,
+      "parking_grace_seconds": 30
+    },
+    "decisions": {
+      "event:vision-track-1-1": {
+        "status": "dismissed",
+        "note": "公开校车图片只用于模型运行验证，不是小区违规证据。",
+        "at": "2026-10-15T18:39:36.251Z"
+      }
+    },
+    "audit": [
+      {
+        "event_id": "event:vision-track-1-1",
+        "status": "dismissed",
+        "note": "公开校车图片只用于模型运行验证，不是小区违规证据。",
+        "at": "2026-10-15T18:39:36.251Z"
+      }
+    ],
+    "exported_at": "2026-10-15T18:39:36.284Z"
+  },
+  "visual_review": {
+    "desktop_width": 1440,
+    "mobile_width": 390,
+    "horizontal_overflow": false,
+    "score_help_visible": true,
+    "accessible_description_verified_in_chrome_ax_tree": true,
+    "analysis_screenshots": [
+      "score-ui-0p95-1440.png",
+      "score-ui-0p95-390.png"
+    ],
+    "handoff_screenshots": [
+      "score-ui-handoff-1440.png",
+      "score-ui-handoff-390.png",
+      "score-ui-handoff-detail-390.png"
+    ],
+    "capture_note": "First mobile full-page handoff capture had compositor stitching artifacts after viewport resize. Recaptured in a fresh 390px browser by importing the exact tested real candidate observations and reopening the public sample image; viewport detail and full-page capture render normally. The original send-to-review and dismissal flow passed before this capture-only check."
+  }
+}

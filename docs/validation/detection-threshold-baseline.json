@@ -1,0 +1,308 @@
+{
+  "started_at": "2026-10-15T18:37:51.035Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Real model execution on a public CC0 photo and a synthetic two-copy layout; not real-world accuracy or violation evidence.",
+  "baseline_vendor_sha256": "8875b8c1bb57723990c9d6506226e0e51cd21b8b6943eb53201086096de52df5",
+  "runs": [
+    {
+      "fixture": "public-bus",
+      "input_minimum_score": 0.1,
+      "detections": [
+        {
+          "class": "bus",
+          "score": 0.9916937947273254,
+          "bbox": [
+            0.13031357526779175,
+            0.29490771889686584,
+            0.8503782749176025,
+            0.6453458964824677
+          ]
+        },
+        {
+          "class": "person",
+          "score": 0.21160626411437988,
+          "bbox": [
+            0.5867244005203247,
+            0.549952507019043,
+            0.03106248378753662,
+            0.08994483947753906
+          ]
+        }
+      ],
+      "tracks": 2,
+      "candidates": [
+        {
+          "id": "vision-track-1-1",
+          "camera": "阈值回归公开图片",
+          "zone": "测试区域",
+          "track": "track-1",
+          "category": "blocked_access",
+          "start": "2026-10-16T00:00:00.000Z",
+          "end": "2026-10-16T00:00:00.001Z",
+          "score": 0.9916937947273254,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "公开示例-校车.jpg @ 0.00s"
+          ]
+        }
+      ],
+      "params": {
+        "rule": "access",
+        "roi": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "camera": "阈值回归公开图片",
+        "zone": "测试区域",
+        "started_at": "2026-10-16T08:00:00+08:00",
+        "media_name": "公开示例-校车.jpg",
+        "dwell_seconds": 5,
+        "is_video": false,
+        "expected_direction": "right"
+      },
+      "complete": true,
+      "frame_count": 1
+    },
+    {
+      "fixture": "public-bus",
+      "input_minimum_score": 0.5,
+      "detections": [
+        {
+          "class": "bus",
+          "score": 0.9916937947273254,
+          "bbox": [
+            0.13031357526779175,
+            0.29490771889686584,
+            0.8503782749176025,
+            0.6453458964824677
+          ]
+        }
+      ],
+      "tracks": 1,
+      "candidates": [
+        {
+          "id": "vision-track-1-1",
+          "camera": "阈值回归公开图片",
+          "zone": "测试区域",
+          "track": "track-1",
+          "category": "blocked_access",
+          "start": "2026-10-16T00:00:00.000Z",
+          "end": "2026-10-16T00:00:00.001Z",
+          "score": 0.9916937947273254,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "公开示例-校车.jpg @ 0.00s"
+          ]
+        }
+      ],
+      "params": {
+        "rule": "access",
+        "roi": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "camera": "阈值回归公开图片",
+        "zone": "测试区域",
+        "started_at": "2026-10-16T08:00:00+08:00",
+        "media_name": "公开示例-校车.jpg",
+        "dwell_seconds": 5,
+        "is_video": false,
+        "expected_direction": "right"
+      },
+      "complete": true,
+      "frame_count": 1
+    },
+    {
+      "fixture": "public-bus",
+      "input_minimum_score": 0.95,
+      "detections": [
+        {
+          "class": "bus",
+          "score": 0.9917388558387756,
+          "bbox": [
+            0.13031750917434692,
+            0.2949357032775879,
+            0.8505373001098633,
+            0.645323634147644
+          ]
+        },
+        {
+          "class": "bus",
+          "score": 0.9721013903617859,
+          "bbox": [
+            0.14382681250572205,
+            0.2910713255405426,
+            0.8244720995426178,
+            0.6396780908107758
+          ]
+        }
+      ],
+      "tracks": 2,
+      "candidates": [
+        {
+          "id": "vision-track-1-1",
+          "camera": "阈值回归公开图片",
+          "zone": "测试区域",
+          "track": "track-1",
+          "category": "blocked_access",
+          "start": "2026-10-16T00:00:00.000Z",
+          "end": "2026-10-16T00:00:00.001Z",
+          "score": 0.9917388558387756,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "公开示例-校车.jpg @ 0.00s"
+          ]
+        },
+        {
+          "id": "vision-track-2-2",
+          "camera": "阈值回归公开图片",
+          "zone": "测试区域",
+          "track": "track-2",
+          "category": "blocked_access",
+          "start": "2026-10-16T00:00:00.000Z",
+          "end": "2026-10-16T00:00:00.001Z",
+          "score": 0.9721013903617859,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "公开示例-校车.jpg @ 0.00s"
+          ]
+        }
+      ],
+      "params": {
+        "rule": "access",
+        "roi": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "camera": "阈值回归公开图片",
+        "zone": "测试区域",
+        "started_at": "2026-10-16T08:00:00+08:00",
+        "media_name": "公开示例-校车.jpg",
+        "dwell_seconds": 5,
+        "is_video": false,
+        "expected_direction": "right"
+      },
+      "complete": true,
+      "frame_count": 1
+    },
+    {
+      "fixture": "synthetic-two-public-photo-copies",
+      "input_minimum_score": 0.5,
+      "detections": [
+        {
+          "class": "bus",
+          "score": 0.9844465851783752,
+          "bbox": [
+            0.06522732973098755,
+            0.27022531628608704,
+            0.42219412326812744,
+            0.6621919572353363
+          ]
+        },
+        {
+          "class": "bus",
+          "score": 0.9481795430183411,
+          "bbox": [
+            0.5789567828178406,
+            0.3001635670661926,
+            0.40062153339385986,
+            0.6460832357406616
+          ]
+        }
+      ],
+      "tracks": 2,
+      "candidates": [
+        {
+          "id": "vision-track-1-1",
+          "camera": "阈值回归公开图片",
+          "zone": "测试区域",
+          "track": "track-1",
+          "category": "blocked_access",
+          "start": "2026-10-16T00:00:00.000Z",
+          "end": "2026-10-16T00:00:00.001Z",
+          "score": 0.9844465851783752,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "synthetic-two-bus-copies.png @ 0.00s"
+          ]
+        },
+        {
+          "id": "vision-track-2-2",
+          "camera": "阈值回归公开图片",
+          "zone": "测试区域",
+          "track": "track-2",
+          "category": "blocked_access",
+          "start": "2026-10-16T00:00:00.000Z",
+          "end": "2026-10-16T00:00:00.001Z",
+          "score": 0.9481795430183411,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "synthetic-two-bus-copies.png @ 0.00s"
+          ]
+        }
+      ],
+      "params": {
+        "rule": "access",
+        "roi": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "camera": "阈值回归公开图片",
+        "zone": "测试区域",
+        "started_at": "2026-10-16T08:00:00+08:00",
+        "media_name": "synthetic-two-bus-copies.png",
+        "dwell_seconds": 5,
+        "is_video": false,
+        "expected_direction": "right"
+      },
+      "complete": true,
+      "frame_count": 1
+    }
+  ],
+  "checks": [
+    {
+      "name": "default threshold retains the original pinned-model result",
+      "passed": true
+    },
+    {
+      "name": "a higher minimum score cannot create duplicate bus candidates",
+      "passed": false,
+      "error": "same bus produced 2 boxes, IoU 0.94955741685264\n\n2 !== 1\n"
+    },
+    {
+      "name": "low-score detections remain available below the default cutoff",
+      "passed": true
+    },
+    {
+      "name": "export identifies every actual score and suppression parameter",
+      "passed": false,
+      "error": "Expected values to be strictly equal:\n\nundefined !== 0.1\n"
+    },
+    {
+      "name": "separated synthetic buses remain separate detections and candidates",
+      "passed": true
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.79",
+  "high_threshold_bus_iou": 0.94955741685264,
+  "finished_at": "2026-10-15T18:37:54.098Z",
+  "passed": 3,
+  "failed": 2,
+  "ok": false
+}

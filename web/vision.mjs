@@ -1,6 +1,7 @@
 import {trackDetections,makeCandidates} from './vision-rules.mjs';
 import {createModelAssetLoader,registerModelRoute} from './model-assets.mjs';
 const $=id=>document.getElementById(id);
+const inferenceSettings=Object.freeze({sample_interval_seconds:1,max_frames:20,max_detections:50,nms_iou_threshold:.5,postprocess:'coco-ssd-2.2.3-fixed-nms-v1'});
 const names={person:'人员',bicycle:'自行车',car:'小汽车',motorcycle:'摩托车',bus:'公交 / 大巴',truck:'卡车',chair:'椅子',couch:'沙发',bed:'床',suitcase:'行李箱','dining table':'餐桌',refrigerator:'冰箱',backpack:'背包',handbag:'手提包',bottle:'瓶子',cat:'猫',dog:'狗',tv:'电视'};
 let model=null,modelPromise=null,modelController=null,modelLoadStats=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0;
 const canvas=$('analysis-canvas'),ctx=canvas.getContext('2d'),frame=document.createElement('canvas'),frameCtx=frame.getContext('2d');
@@ -20,8 +21,9 @@ async function getModel(){
   notice('正在加载本站小模型。可以取消加载，原素材和设置会保留。');
   try{
    manifestTimer=setTimeout(()=>controller.abort(new Error('模型清单加载超时，请检查网络后重试。')),30000);
-   const response=await fetch(new URL('./assets.lock.json',import.meta.url),{signal});if(!response.ok)throw new Error(`模型清单加载失败 (${response.status})`);
+   const response=await fetch(new URL('./assets.lock.json',import.meta.url),{signal,cache:'no-store'});if(!response.ok)throw new Error(`模型清单加载失败 (${response.status})`);
    const manifest=await response.json();clearTimeout(manifestTimer);check();
+   if(manifest.files?.find(file=>file.path==='vendor/coco-ssd.min.js')?.local_patch!==inferenceSettings.postprocess)throw new Error('模型资源清单与页面版本不一致，请刷新页面后重试。');
    const files=manifest.files.filter(file=>file.path.startsWith('models/ssdlite_mobilenet_v2/')||file.path==='vendor/tf.min.js'&&!globalThis.tf||file.path==='vendor/coco-ssd.min.js'&&!globalThis.cocoSsd);
    const loader=createModelAssetLoader({baseURL:new URL('./',import.meta.url),files,signal,onProgress:progress=>{
     $('model-status').textContent=`加载模型资源 ${Math.floor(progress.loaded/progress.total*100)}%`;
@@ -83,12 +85,12 @@ $('stop-analysis').addEventListener('click',()=>{stopped=true;if(modelController
 function setBusy(value){busy=value;for(const el of $('analysis-form').querySelectorAll('input,select,button'))el.disabled=value;$('stop-analysis').disabled=false;$('stop-analysis').hidden=!value;$('run-analysis').disabled=value||loading||!source;$('analysis-file').disabled=value;$('sample-image').disabled=value;if(isVideo){$('source-video').controls=!value;if(value)$('source-video').pause();}}
 $('analysis-form').addEventListener('submit',async event=>{event.preventDefault();if(!source||busy||loading)return;
  let region;try{region=roi();}catch(error){notice(error.message,true);return;}
- const params={rule:$('vision-rule').value,roi:region,camera:$('vision-camera').value.trim(),zone:$('vision-zone').value.trim(),started_at:$('vision-start').value+':00+08:00',media_name:sourceFile.name,dwell_seconds:Number($('vision-dwell').value),is_video:isVideo,expected_direction:$('vision-direction').value};
- let minimumScore=Number($('vision-score').value),offset=Number($('vision-offset').value);
+ const minimumScore=Number($('vision-score').value),offset=isVideo?Number($('vision-offset').value):0;
+ const params={rule:$('vision-rule').value,roi:region,camera:$('vision-camera').value.trim(),zone:$('vision-zone').value.trim(),started_at:$('vision-start').value+':00+08:00',media_name:sourceFile.name,dwell_seconds:Number($('vision-dwell').value),is_video:isVideo,expected_direction:$('vision-direction').value,minimum_score:minimumScore,offset_seconds:offset,...inferenceSettings};
  if(!params.camera||!params.zone){notice('请填写摄像头和区域名称。',true);return;}if(isVideo&&offset>=source.duration){notice('分析起点必须小于视频时长。',true);return;}if(!isVideo&&['parking','direction'].includes(params.rule)){notice('停留和方向规则需要视频。单张图片只能检测物体或区域候选。',true);return;}
  setBusy(true);stopped=false;invalidate();const frames=[];const durations=[];const totalStart=performance.now();
- try{const detector=await getModel();const times=isVideo?Array.from({length:Math.min(20,Math.ceil(source.duration-offset))},(_,i)=>offset+i):[0];
- for(let i=0;i<times.length;i++){if(stopped)break;notice(`正在推理 ${i+1} / ${times.length} 帧 · ${times[i].toFixed(1)} 秒`);if(isVideo){source.pause();await seek(times[i]);}capture();const t=performance.now();const predictions=await detector.detect(frame,50,minimumScore);durations.push(performance.now()-t);
+ try{const detector=await getModel();const times=isVideo?Array.from({length:Math.min(params.max_frames,Math.ceil((source.duration-offset)/params.sample_interval_seconds))},(_,i)=>offset+i*params.sample_interval_seconds):[0];
+ for(let i=0;i<times.length;i++){if(stopped)break;notice(`正在推理 ${i+1} / ${times.length} 帧 · ${times[i].toFixed(1)} 秒`);if(isVideo){source.pause();await seek(times[i]);}capture();const t=performance.now();const predictions=await detector.detect(frame,params.max_detections,params.minimum_score);durations.push(performance.now()-t);
  const detections=predictions.map(p=>({class:p.class,score:p.score,bbox:[Math.max(0,p.bbox[0]/frame.width),Math.max(0,p.bbox[1]/frame.height),p.bbox[2]/frame.width,p.bbox[3]/frame.height]}));frames.push({time:times[i],detections});lastBoxes=detections;paint();await new Promise(resolve=>requestAnimationFrame(resolve));}
  const tracks=trackDetections(frames),candidates=stopped?[]:makeCandidates(tracks,params);
  report={format:'estateguard-detections',version:1,model:'COCO-SSD 2.2.3 / SSDLite MobileNet V2',runtime:'TensorFlow.js 4.22.0',backend:tf.getBackend(),model_loading:{...modelLoadStats},media:{name:sourceFile.name,type:sourceFile.type,bytes:sourceFile.size},params,complete:!stopped,frames,tracks,candidates,metrics:{frame_count:frames.length,mean_inference_ms:durations.length?durations.reduce((a,b)=>a+b,0)/durations.length:null,total_ms:performance.now()-totalStart},scope:'真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。'};

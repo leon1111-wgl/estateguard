@@ -1,7 +1,9 @@
 """Verify every vendored model/runtime/sample asset against the tracked lock."""
 from pathlib import Path
 import hashlib,json,math
+from patch_coco_ssd import build_bundle
 root=Path(__file__).resolve().parents[1]/'web'
+assert (root/'vendor/coco-ssd.min.js').read_bytes()==build_bundle(),'COCO-SSD NMS patch is not reproducible'
 lock=json.loads((root/'assets.lock.json').read_text())
 for asset in lock['files']:
     content=(root/asset['path']).read_bytes()

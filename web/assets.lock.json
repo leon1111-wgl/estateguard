@@ -1,5 +1,5 @@
 {
-  "verified_date": "2026-10-15",
+  "verified_date": "2026-10-16",
   "model": "SSDLite MobileNet V2",
   "weights_bytes": 18034528,
   "files": [
@@ -61,10 +61,13 @@
     },
     {
       "path": "vendor/coco-ssd.min.js",
-      "bytes": 9299,
-      "sha256": "8875b8c1bb57723990c9d6506226e0e51cd21b8b6943eb53201086096de52df5",
+      "bytes": 9543,
+      "sha256": "fd2f8358819b5c363081e611ac52a1ee231262ed75aa2d42dfa957737fcf8c19",
       "source": "https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js",
-      "license": "Apache-2.0"
+      "license": "Apache-2.0",
+      "upstream_sha256": "8875b8c1bb57723990c9d6506226e0e51cd21b8b6943eb53201086096de52df5",
+      "local_patch": "coco-ssd-2.2.3-fixed-nms-v1",
+      "reproduce": "python3 scripts/patch_coco_ssd.py"
     },
     {
       "path": "vendor/tf.min.js",
