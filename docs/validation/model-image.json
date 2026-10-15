@@ -1,0 +1,87 @@
+{
+  "format": "estateguard-detections",
+  "version": 1,
+  "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+  "runtime": "TensorFlow.js 4.22.0",
+  "backend": "webgl",
+  "media": {
+    "name": "公开示例-校车.jpg",
+    "type": "image/jpeg",
+    "bytes": 223152
+  },
+  "params": {
+    "rule": "access",
+    "roi": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "camera": "本地摄像头",
+    "zone": "待确认区域",
+    "started_at": "2026-10-15T23:01:00+08:00",
+    "media_name": "公开示例-校车.jpg",
+    "dwell_seconds": 5,
+    "is_video": false,
+    "expected_direction": "right"
+  },
+  "complete": true,
+  "frames": [
+    {
+      "time": 0,
+      "detections": [
+        {
+          "class": "bus",
+          "score": 0.9916937947273254,
+          "bbox": [
+            0.13031357526779175,
+            0.29490771889686584,
+            0.8503782749176025,
+            0.6453458964824677
+          ]
+        }
+      ]
+    }
+  ],
+  "tracks": [
+    {
+      "id": "track-1",
+      "class": "bus",
+      "samples": [
+        {
+          "time": 0,
+          "bbox": [
+            0.13031357526779175,
+            0.29490771889686584,
+            0.8503782749176025,
+            0.6453458964824677
+          ],
+          "score": 0.9916937947273254
+        }
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "id": "vision-track-1-1",
+      "camera": "本地摄像头",
+      "zone": "待确认区域",
+      "track": "track-1",
+      "category": "blocked_access",
+      "start": "2026-10-15T15:01:00.000Z",
+      "end": "2026-10-15T15:01:00.001Z",
+      "score": 0.9916937947273254,
+      "quality": 0.4,
+      "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+      "evidence": [
+        "公开示例-校车.jpg @ 0.00s"
+      ]
+    }
+  ],
+  "metrics": {
+    "frame_count": 1,
+    "mean_inference_ms": 36.60000002384186,
+    "total_ms": 972.7000000476837
+  },
+  "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+}

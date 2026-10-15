@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-15",
+  "pages": [
+    {
+      "page": "analyze",
+      "width": 1440,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "workspace",
+      "width": 1440,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "policy",
+      "width": 1440,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "results",
+      "width": 1440,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "story",
+      "width": 1440,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "analyze",
+      "width": 390,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "workspace",
+      "width": 390,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "policy",
+      "width": 390,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "results",
+      "width": 390,
+      "horizontal_overflow": false
+    },
+    {
+      "page": "story",
+      "width": 390,
+      "horizontal_overflow": false
+    }
+  ],
+  "page_errors": [],
+  "real_image_inference": "分析完成：1 帧、1 条匿名轨迹、1 个待核实候选。",
+  "candidate_review_completed": true,
+  "roi_drag_percent": [
+    10,
+    20,
+    70,
+    70
+  ],
+  "scope": "Desktop and 390px browser interaction checks; not a survey of user satisfaction."
+}

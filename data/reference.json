@@ -1,0 +1,86 @@
+{
+  "provenance": "Hand-authored synthetic reference incidents; includes one deliberately unobserved event.",
+  "incidents": [
+    {
+      "id": "ref-door-held",
+      "camera": "LIFT-A",
+      "zone": "A\u680b\u5ba2\u68af",
+      "track": "door-held",
+      "category": "door_obstruction",
+      "start": "2026-10-15T08:00:20+08:00",
+      "end": "2026-10-15T08:00:54+08:00"
+    },
+    {
+      "id": "ref-unbooked",
+      "camera": "LIFT-B",
+      "zone": "B\u680b\u5ba2\u68af",
+      "track": "unbooked",
+      "category": "bulky_load",
+      "start": "2026-10-15T08:06:00+08:00",
+      "end": "2026-10-15T08:06:26+08:00"
+    },
+    {
+      "id": "ref-van-route",
+      "camera": "PARK-ENTRY",
+      "zone": "\u6807\u8bb0\u516c\u5171\u901a\u9053",
+      "track": "van-route",
+      "category": "blocked_access",
+      "start": "2026-10-15T08:08:00+08:00",
+      "end": "2026-10-15T08:08:42+08:00"
+    },
+    {
+      "id": "ref-bay-17",
+      "camera": "PARK-B1",
+      "zone": "\u5730\u4e0bB1\u505c\u8f66\u533a",
+      "track": "bay-17",
+      "category": "illegal_parking",
+      "start": "2026-10-15T08:10:00+08:00",
+      "end": "2026-10-15T08:10:51+08:00"
+    },
+    {
+      "id": "ref-reverse",
+      "camera": "PARK-RAMP",
+      "zone": "\u51fa\u53e3\u5761\u9053",
+      "track": "reverse",
+      "category": "wrong_way",
+      "start": "2026-10-15T08:15:00+08:00",
+      "end": "2026-10-15T08:15:26+08:00"
+    },
+    {
+      "id": "ref-bags",
+      "camera": "REFUSE-A",
+      "zone": "A\u680b\u5783\u573e\u6536\u96c6\u95f4",
+      "track": "bags",
+      "category": "waste_dumping",
+      "start": "2026-10-15T08:18:00+08:00",
+      "end": "2026-10-15T08:18:26+08:00"
+    },
+    {
+      "id": "ref-full-bin",
+      "camera": "REFUSE-B",
+      "zone": "\u82b1\u56ed\u5783\u573e\u6536\u96c6\u70b9",
+      "track": "full-bin",
+      "category": "waste_overflow",
+      "start": "2026-10-15T08:21:00+08:00",
+      "end": "2026-10-15T08:21:26+08:00"
+    },
+    {
+      "id": "ref-dark-route",
+      "camera": "PARK-REAR",
+      "zone": "\u540e\u95e8\u901a\u9053",
+      "track": "dark-route",
+      "category": "blocked_access",
+      "start": "2026-10-15T08:24:00+08:00",
+      "end": "2026-10-15T08:24:18+08:00"
+    },
+    {
+      "id": "ref-unseen-overflow",
+      "camera": "REFUSE-C",
+      "zone": "\u540e\u4fa7\u5783\u573e\u6536\u96c6\u95f4",
+      "track": "unseen",
+      "category": "waste_overflow",
+      "start": "2026-10-15T08:28:20+08:00",
+      "end": "2026-10-15T08:29:00+08:00"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-15",
+  "browser": "155.0.8059.79",
+  "scope": "Local execution smoke tests; not detection accuracy or real-world parking validation.",
+  "image_score": 0.9916937947273254,
+  "image_mean_ms": 36.60000002384186,
+  "video_frames": 7,
+  "video_mean_ms": 26.271428568022593,
+  "tensors_before": 262,
+  "tensors_after": 262,
+  "external_requests": 0,
+  "passed": [
+    "real image inference",
+    "same-origin assets",
+    "candidate handoff",
+    "review dismissal",
+    "real video decoding and sampling",
+    "synthetic dwell candidate",
+    "repeat inference tensor stability",
+    "out-of-range offset rejection",
+    "mobile layout"
+  ]
+}

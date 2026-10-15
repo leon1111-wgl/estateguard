@@ -1,0 +1,27 @@
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+(async()=>{
+ const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
+ const page=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('dialog',dialog=>dialog.accept());
+ const base=process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766';const out=path.join(__dirname,'../artifacts');fs.mkdirSync(out,{recursive:true});
+ await page.goto(base+'/#workspace');await page.waitForSelector('.event-button');
+ assert.equal(await page.locator('.event-button').count(),9);
+ await page.locator('#decision-status').selectOption('needs_evidence');await page.locator('#decision-note').fill('请值班员核查完整开关门片段。');
+ await page.locator('.event-button').nth(1).click();await page.locator('.event-button').nth(0).click();assert.equal(await page.locator('#decision-note').inputValue(),'请值班员核查完整开关门片段。');
+ await page.getByRole('button',{name:'保存复核记录',exact:true}).click();assert.match(await page.locator('.history').textContent(),/请值班员/);
+ const [download]=await Promise.all([page.waitForEvent('download'),page.locator('#export-json').click()]);const saved=JSON.parse(fs.readFileSync(await download.path(),'utf8'));assert.equal(saved.audit.length,1);
+ await page.locator('#reset-demo').click();await page.waitForFunction(()=>document.querySelector('#message').textContent.startsWith('当前为合成班次'));
+ await page.locator('#import-file').setInputFiles({name:'workspace.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});await page.waitForFunction(()=>document.querySelector('#message').textContent.startsWith('JSON 已导入'));assert.match(await page.locator('.history').textContent(),/请值班员/);
+ await page.locator('#import-file').setInputFiles({name:'bad.json',mimeType:'application/json',buffer:Buffer.from('{oops')});await page.waitForFunction(()=>document.querySelector('#message').textContent.startsWith('导入被拒绝'));assert.equal(await page.locator('.event-button').count(),9);
+ await page.locator('#queue-filter').selectOption('all');assert.equal(await page.locator('.event-button').count(),12);await page.locator('#area-filter').selectOption('Refuse');assert.equal(await page.locator('.event-button').count(),3);await page.locator('#area-filter').selectOption('all');
+ const hostile=structuredClone(saved);hostile.batch.observations[4].summary='<img src=x onerror="window.bad=1">';await page.locator('#import-file').setInputFiles({name:'text.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(hostile))});await page.waitForFunction(()=>document.querySelector('#message').textContent.startsWith('JSON 已导入'));assert.equal(await page.evaluate(()=>window.bad),undefined);assert.match(await page.locator('#incident-detail').textContent(),/onerror/);
+ assert.match(await page.locator('#incident-detail').textContent(),/2026\/10\/15/);
+ await page.locator('#media-file').setInputFiles({name:'tiny.png',mimeType:'image/png',buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jRZkAAAAASUVORK5CYII=','base64')});await page.waitForSelector('#media-preview img');
+ await page.locator('[data-nav="policy"]').click();await page.locator('#parking-grace').fill('60');await page.getByRole('button',{name:'应用规则',exact:true}).click();assert.match(await page.locator('#message').textContent(),/规则已应用/);
+ await page.locator('[data-nav="analyze"]').click();await page.screenshot({path:path.join(out,'desktop.png'),fullPage:true});
+ await page.setViewportSize({width:390,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,'mobile overflow');await page.screenshot({path:path.join(out,'mobile.png'),fullPage:true});
+ assert.equal(errors.length,0,errors.join('\n'));console.log('PASS: 中文桌面/手机布局、草稿保留、复核、导出恢复、无效导入原子性、筛选、文本注入、日期、本地证据、规则设置。');await browser.close();
+})().catch(e=>{console.error(e);process.exit(1);});

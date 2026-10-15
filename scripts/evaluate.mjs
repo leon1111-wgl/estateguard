@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {buildEvents,defaultPolicy,inReviewQueue,evaluate,validateBatch} from '../web/engine.mjs';
+const root=fileURLToPath(new URL('../',import.meta.url));
+const batch=validateBatch(JSON.parse(fs.readFileSync(process.argv[2]||`${root}data/demo.json`,'utf8')));
+const reference=JSON.parse(fs.readFileSync(process.argv[3]||`${root}data/reference.json`,'utf8'));
+const grouped=buildEvents(batch,defaultPolicy);
+const raw=batch.observations.filter(r=>r.score>=defaultPolicy.score_threshold).map(r=>buildEvents({...batch,observations:[r]},defaultPolicy)[0]);
+const proposed=grouped.filter(inReviewQueue);
+const report={schema_version:1,scope:'Synthetic workflow regression fixture, not a detector benchmark or field trial.',batch:batch.name,provenance:batch.provenance,policy:defaultPolicy,matching:'Same camera, zone, anonymous track, category; temporal IoU >= 0.1; greedy one-to-one highest overlap.',raw_observations:batch.observations.length,grouped_events:grouped.length,baseline:evaluate(raw,reference.incidents),proposed:evaluate(proposed,reference.incidents),queue_reduction:1-proposed.length/raw.length,urgent_uncertain:proposed.filter(e=>e.urgent&&e.routing==='insufficient_evidence').length,limitations:['No computer vision model is executed.','Synthetic labels and thresholds are authored for regression coverage, not estimated from a production population.','One reference event has no observation and remains missed.','A contact cue is deliberately a false positive; the operator must resolve it.','No claim about damage prevented, staffing hours saved or real-world accuracy.']};
+if(process.argv.includes('--write'))fs.writeFileSync(`${root}web/benchmark.json`,JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify(report,null,2));

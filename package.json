@@ -1,0 +1,17 @@
+{
+  "name": "estateguard",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "evaluate": "node scripts/evaluate.mjs",
+    "serve": "python3 -m http.server 8766 --directory web"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

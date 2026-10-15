@@ -1,0 +1,77 @@
+{
+  "verified_date": "2026-10-15",
+  "model": "SSDLite MobileNet V2",
+  "weights_bytes": 18034528,
+  "files": [
+    {
+      "path": "models/ssdlite_mobilenet_v2/group1-shard1of5",
+      "bytes": 4194304,
+      "sha256": "0e7af0f713e98521252321f7f84892c31cefccccec3ac64c84e5065b75ed5646",
+      "source": "https://storage.googleapis.com/tfjs-models/savedmodel/ssdlite_mobilenet_v2/group1-shard1of5",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/ssdlite_mobilenet_v2/group1-shard2of5",
+      "bytes": 4194304,
+      "sha256": "74cc6cfc2c4510c9cd81b8ad4cebf6f6a8f305119bb365ce0eb96276da38519a",
+      "source": "https://storage.googleapis.com/tfjs-models/savedmodel/ssdlite_mobilenet_v2/group1-shard2of5",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/ssdlite_mobilenet_v2/group1-shard3of5",
+      "bytes": 4194304,
+      "sha256": "50383033f893eae136392a403e8f70ade5efd90867df5695c4ca5ac640e14f38",
+      "source": "https://storage.googleapis.com/tfjs-models/savedmodel/ssdlite_mobilenet_v2/group1-shard3of5",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/ssdlite_mobilenet_v2/group1-shard4of5",
+      "bytes": 4194304,
+      "sha256": "d856dc534c780068bbf6c666ce1516df2c8433d87578aa31fcdf197de7058cc2",
+      "source": "https://storage.googleapis.com/tfjs-models/savedmodel/ssdlite_mobilenet_v2/group1-shard4of5",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/ssdlite_mobilenet_v2/group1-shard5of5",
+      "bytes": 1257312,
+      "sha256": "3d356f1fb6dfca6af78c56db34d9326706d0196e303f9de6b04f236ca79ed309",
+      "source": "https://storage.googleapis.com/tfjs-models/savedmodel/ssdlite_mobilenet_v2/group1-shard5of5",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/ssdlite_mobilenet_v2/model.json",
+      "bytes": 527315,
+      "sha256": "3770b2528339b1e3340cb74360e1e40401816b009779aeb8d0cce3a4353ea3a9",
+      "source": "https://storage.googleapis.com/tfjs-models/savedmodel/ssdlite_mobilenet_v2/model.json",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "samples/bus.jpg",
+      "bytes": 223152,
+      "sha256": "34ff1128eb83891e0ae38c6323022af6a4dc6a035d150c106201088b093499bd",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/YellowSchoolBus.jpg/960px-YellowSchoolBus.jpg",
+      "license": "CC0-1.0"
+    },
+    {
+      "path": "vendor/LICENSE-APACHE-2.0.txt",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source": "https://cdn.jsdelivr.net/gh/tensorflow/tfjs@tfjs-v4.22.0/LICENSE",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "vendor/coco-ssd.min.js",
+      "bytes": 9299,
+      "sha256": "8875b8c1bb57723990c9d6506226e0e51cd21b8b6943eb53201086096de52df5",
+      "source": "https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "vendor/tf.min.js",
+      "bytes": 1469843,
+      "sha256": "300dfae273d20b4046f46a06d735688f03675a807561e9bcb5f664eb2f3d2831",
+      "source": "https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js",
+      "license": "Apache-2.0"
+    }
+  ]
+}

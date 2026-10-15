@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "scope": "Synthetic workflow regression fixture, not a detector benchmark or field trial.",
+  "batch": "枫庭小区 · 模拟早班",
+  "provenance": "原创合成场景，无真实住户或监控，不是模型推理结果或实地部署测量。",
+  "policy": {
+    "score_threshold": 0.6,
+    "quality_threshold": 0.5,
+    "merge_gap_seconds": 30,
+    "parking_grace_seconds": 30
+  },
+  "matching": "Same camera, zone, anonymous track, category; temporal IoU >= 0.1; greedy one-to-one highest overlap.",
+  "raw_observations": 36,
+  "grouped_events": 12,
+  "baseline": {
+    "predictions": 33,
+    "references": 9,
+    "true_positive": 7,
+    "false_positive": 26,
+    "missed": 2,
+    "precision": 0.21212121212121213,
+    "recall": 0.7777777777777778,
+    "matches": [
+      {
+        "prediction": "event:unbooked-1",
+        "reference": "ref-unbooked",
+        "iou": 0.38461538461538464
+      },
+      {
+        "prediction": "event:reverse-1",
+        "reference": "ref-reverse",
+        "iou": 0.38461538461538464
+      },
+      {
+        "prediction": "event:bags-1",
+        "reference": "ref-bags",
+        "iou": 0.38461538461538464
+      },
+      {
+        "prediction": "event:full-bin-1",
+        "reference": "ref-full-bin",
+        "iou": 0.38461538461538464
+      },
+      {
+        "prediction": "event:door-held-1",
+        "reference": "ref-door-held",
+        "iou": 0.29411764705882354
+      },
+      {
+        "prediction": "event:bay-17-1",
+        "reference": "ref-bay-17",
+        "iou": 0.29411764705882354
+      },
+      {
+        "prediction": "event:van-route-1",
+        "reference": "ref-van-route",
+        "iou": 0.23809523809523808
+      }
+    ],
+    "missed_ids": [
+      "ref-dark-route",
+      "ref-unseen-overflow"
+    ]
+  },
+  "proposed": {
+    "predictions": 9,
+    "references": 9,
+    "true_positive": 8,
+    "false_positive": 1,
+    "missed": 1,
+    "precision": 0.8888888888888888,
+    "recall": 0.8888888888888888,
+    "matches": [
+      {
+        "prediction": "event:door-held-1",
+        "reference": "ref-door-held",
+        "iou": 1
+      },
+      {
+        "prediction": "event:van-route-1",
+        "reference": "ref-van-route",
+        "iou": 1
+      },
+      {
+        "prediction": "event:reverse-1",
+        "reference": "ref-reverse",
+        "iou": 1
+      },
+      {
+        "prediction": "event:dark-route-1",
+        "reference": "ref-dark-route",
+        "iou": 1
+      },
+      {
+        "prediction": "event:unbooked-1",
+        "reference": "ref-unbooked",
+        "iou": 1
+      },
+      {
+        "prediction": "event:bay-17-1",
+        "reference": "ref-bay-17",
+        "iou": 1
+      },
+      {
+        "prediction": "event:bags-1",
+        "reference": "ref-bags",
+        "iou": 1
+      },
+      {
+        "prediction": "event:full-bin-1",
+        "reference": "ref-full-bin",
+        "iou": 1
+      }
+    ],
+    "missed_ids": [
+      "ref-unseen-overflow"
+    ]
+  },
+  "queue_reduction": 0.7272727272727273,
+  "urgent_uncertain": 1,
+  "limitations": [
+    "No computer vision model is executed.",
+    "Synthetic labels and thresholds are authored for regression coverage, not estimated from a production population.",
+    "One reference event has no observation and remains missed.",
+    "A contact cue is deliberately a false positive; the operator must resolve it.",
+    "No claim about damage prevented, staffing hours saved or real-world accuracy."
+  ]
+}

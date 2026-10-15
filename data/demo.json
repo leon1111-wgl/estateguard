@@ -1,0 +1,579 @@
+{
+  "schema_version": 1,
+  "name": "\u67ab\u5ead\u5c0f\u533a \u00b7 \u6a21\u62df\u65e9\u73ed",
+  "provenance": "\u539f\u521b\u5408\u6210\u573a\u666f\uff0c\u65e0\u771f\u5b9e\u4f4f\u6237\u6216\u76d1\u63a7\uff0c\u4e0d\u662f\u6a21\u578b\u63a8\u7406\u7ed3\u679c\u6216\u5b9e\u5730\u90e8\u7f72\u6d4b\u91cf\u3002",
+  "observations": [
+    {
+      "id": "move-booked-1",
+      "camera": "LIFT-A",
+      "zone": "A\u680b\u5ba2\u68af",
+      "track": "move-booked",
+      "category": "bulky_load",
+      "start": "2026-10-15T08:00:00+08:00",
+      "end": "2026-10-15T08:00:10+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5927\u4ef6\u67dc\u4f53\u8fdb\u5165\u5ba2\u68af\uff0c\u6765\u6e90\u8bb0\u5f55\u58f0\u660e\u5df2\u6709\u642c\u8fd0\u9884\u7ea6\uff0c\u4ecd\u9700\u6838\u5bf9\u9884\u7ea6\u6709\u6548\u6027\u3002",
+      "evidence": [
+        "move-booked-frame-1.jpg"
+      ],
+      "move_permit": true
+    },
+    {
+      "id": "move-booked-2",
+      "camera": "LIFT-A",
+      "zone": "A\u680b\u5ba2\u68af",
+      "track": "move-booked",
+      "category": "bulky_load",
+      "start": "2026-10-15T08:00:08+08:00",
+      "end": "2026-10-15T08:00:18+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5927\u4ef6\u67dc\u4f53\u8fdb\u5165\u5ba2\u68af\uff0c\u6765\u6e90\u8bb0\u5f55\u58f0\u660e\u5df2\u6709\u642c\u8fd0\u9884\u7ea6\uff0c\u4ecd\u9700\u6838\u5bf9\u9884\u7ea6\u6709\u6548\u6027\u3002",
+      "evidence": [
+        "move-booked-frame-2.jpg"
+      ],
+      "move_permit": true
+    },
+    {
+      "id": "move-booked-3",
+      "camera": "LIFT-A",
+      "zone": "A\u680b\u5ba2\u68af",
+      "track": "move-booked",
+      "category": "bulky_load",
+      "start": "2026-10-15T08:00:16+08:00",
+      "end": "2026-10-15T08:00:26+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5927\u4ef6\u67dc\u4f53\u8fdb\u5165\u5ba2\u68af\uff0c\u6765\u6e90\u8bb0\u5f55\u58f0\u660e\u5df2\u6709\u642c\u8fd0\u9884\u7ea6\uff0c\u4ecd\u9700\u6838\u5bf9\u9884\u7ea6\u6709\u6548\u6027\u3002",
+      "evidence": [
+        "move-booked-frame-3.jpg"
+      ],
+      "move_permit": true
+    },
+    {
+      "id": "move-booked-4",
+      "camera": "LIFT-A",
+      "zone": "A\u680b\u5ba2\u68af",
+      "track": "move-booked",
+      "category": "bulky_load",
+      "start": "2026-10-15T08:00:24+08:00",
+      "end": "2026-10-15T08:00:34+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5927\u4ef6\u67dc\u4f53\u8fdb\u5165\u5ba2\u68af\uff0c\u6765\u6e90\u8bb0\u5f55\u58f0\u660e\u5df2\u6709\u642c\u8fd0\u9884\u7ea6\uff0c\u4ecd\u9700\u6838\u5bf9\u9884\u7ea6\u6709\u6548\u6027\u3002",
+      "evidence": [
+        "move-booked-frame-4.jpg"
+      ],
+      "move_permit": true
+    },
+    {
+      "id": "door-held-1",
+      "camera": "LIFT-A",
+      "zone": "A\u680b\u5ba2\u68af",
+      "track": "door-held",
+      "category": "door_obstruction",
+      "start": "2026-10-15T08:00:20+08:00",
+      "end": "2026-10-15T08:00:30+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u9884\u7ea6\u642c\u5bb6\u8fc7\u7a0b\u4e2d\uff0c\u63a8\u8f66\u7591\u4f3c\u963b\u6321\u7535\u68af\u5173\u95e8\uff1b\u9884\u7ea6\u4e0d\u80fd\u8c41\u514d\u6321\u95e8\u98ce\u9669\u3002",
+      "evidence": [
+        "door-held-frame-1.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "door-held-2",
+      "camera": "LIFT-A",
+      "zone": "A\u680b\u5ba2\u68af",
+      "track": "door-held",
+      "category": "door_obstruction",
+      "start": "2026-10-15T08:00:28+08:00",
+      "end": "2026-10-15T08:00:38+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u9884\u7ea6\u642c\u5bb6\u8fc7\u7a0b\u4e2d\uff0c\u63a8\u8f66\u7591\u4f3c\u963b\u6321\u7535\u68af\u5173\u95e8\uff1b\u9884\u7ea6\u4e0d\u80fd\u8c41\u514d\u6321\u95e8\u98ce\u9669\u3002",
+      "evidence": [
+        "door-held-frame-2.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "door-held-3",
+      "camera": "LIFT-A",
+      "zone": "A\u680b\u5ba2\u68af",
+      "track": "door-held",
+      "category": "door_obstruction",
+      "start": "2026-10-15T08:00:36+08:00",
+      "end": "2026-10-15T08:00:46+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u9884\u7ea6\u642c\u5bb6\u8fc7\u7a0b\u4e2d\uff0c\u63a8\u8f66\u7591\u4f3c\u963b\u6321\u7535\u68af\u5173\u95e8\uff1b\u9884\u7ea6\u4e0d\u80fd\u8c41\u514d\u6321\u95e8\u98ce\u9669\u3002",
+      "evidence": [
+        "door-held-frame-3.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "door-held-4",
+      "camera": "LIFT-A",
+      "zone": "A\u680b\u5ba2\u68af",
+      "track": "door-held",
+      "category": "door_obstruction",
+      "start": "2026-10-15T08:00:44+08:00",
+      "end": "2026-10-15T08:00:54+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u9884\u7ea6\u642c\u5bb6\u8fc7\u7a0b\u4e2d\uff0c\u63a8\u8f66\u7591\u4f3c\u963b\u6321\u7535\u68af\u5173\u95e8\uff1b\u9884\u7ea6\u4e0d\u80fd\u8c41\u514d\u6321\u95e8\u98ce\u9669\u3002",
+      "evidence": [
+        "door-held-frame-4.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "impact-1",
+      "camera": "LIFT-B",
+      "zone": "B\u680b\u5ba2\u68af",
+      "track": "impact",
+      "category": "lift_impact",
+      "start": "2026-10-15T08:03:00+08:00",
+      "end": "2026-10-15T08:03:10+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u67dc\u4f53\u8fb9\u7f18\u7591\u4f3c\u9760\u8fd1\u7535\u68af\u5185\u58c1\uff0c\u9700\u5bf9\u7167\u524d\u540e\u753b\u9762\uff0c\u76ee\u524d\u4e0d\u80fd\u8ba4\u5b9a\u635f\u574f\u3002",
+      "evidence": [
+        "impact-frame-1.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "impact-2",
+      "camera": "LIFT-B",
+      "zone": "B\u680b\u5ba2\u68af",
+      "track": "impact",
+      "category": "lift_impact",
+      "start": "2026-10-15T08:03:08+08:00",
+      "end": "2026-10-15T08:03:18+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u67dc\u4f53\u8fb9\u7f18\u7591\u4f3c\u9760\u8fd1\u7535\u68af\u5185\u58c1\uff0c\u9700\u5bf9\u7167\u524d\u540e\u753b\u9762\uff0c\u76ee\u524d\u4e0d\u80fd\u8ba4\u5b9a\u635f\u574f\u3002",
+      "evidence": [
+        "impact-frame-2.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "unbooked-1",
+      "camera": "LIFT-B",
+      "zone": "B\u680b\u5ba2\u68af",
+      "track": "unbooked",
+      "category": "bulky_load",
+      "start": "2026-10-15T08:06:00+08:00",
+      "end": "2026-10-15T08:06:10+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5ba2\u68af\u5185\u51fa\u73b0\u5bb6\u5177\u642c\u8fd0\uff0c\u6682\u672a\u67e5\u5230\u9884\u7ea6\u8bb0\u5f55\uff0c\u5e94\u5148\u6838\u5bf9\u73b0\u573a\u642c\u8fd0\u89c4\u5b9a\u3002",
+      "evidence": [
+        "unbooked-frame-1.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "unbooked-2",
+      "camera": "LIFT-B",
+      "zone": "B\u680b\u5ba2\u68af",
+      "track": "unbooked",
+      "category": "bulky_load",
+      "start": "2026-10-15T08:06:08+08:00",
+      "end": "2026-10-15T08:06:18+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5ba2\u68af\u5185\u51fa\u73b0\u5bb6\u5177\u642c\u8fd0\uff0c\u6682\u672a\u67e5\u5230\u9884\u7ea6\u8bb0\u5f55\uff0c\u5e94\u5148\u6838\u5bf9\u73b0\u573a\u642c\u8fd0\u89c4\u5b9a\u3002",
+      "evidence": [
+        "unbooked-frame-2.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "unbooked-3",
+      "camera": "LIFT-B",
+      "zone": "B\u680b\u5ba2\u68af",
+      "track": "unbooked",
+      "category": "bulky_load",
+      "start": "2026-10-15T08:06:16+08:00",
+      "end": "2026-10-15T08:06:26+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5ba2\u68af\u5185\u51fa\u73b0\u5bb6\u5177\u642c\u8fd0\uff0c\u6682\u672a\u67e5\u5230\u9884\u7ea6\u8bb0\u5f55\uff0c\u5e94\u5148\u6838\u5bf9\u73b0\u573a\u642c\u8fd0\u89c4\u5b9a\u3002",
+      "evidence": [
+        "unbooked-frame-3.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "van-route-1",
+      "camera": "PARK-ENTRY",
+      "zone": "\u6807\u8bb0\u516c\u5171\u901a\u9053",
+      "track": "van-route",
+      "category": "blocked_access",
+      "start": "2026-10-15T08:08:00+08:00",
+      "end": "2026-10-15T08:08:10+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u914d\u9001\u8f66\u8f86\u505c\u5728\u6807\u8bb0\u901a\u9053\u4e0a\uff0c\u9700\u786e\u8ba4\u901a\u9053\u7528\u9014\u5e76\u5b89\u6392\u73b0\u573a\u6838\u67e5\u3002",
+      "evidence": [
+        "van-route-frame-1.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "van-route-2",
+      "camera": "PARK-ENTRY",
+      "zone": "\u6807\u8bb0\u516c\u5171\u901a\u9053",
+      "track": "van-route",
+      "category": "blocked_access",
+      "start": "2026-10-15T08:08:08+08:00",
+      "end": "2026-10-15T08:08:18+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u914d\u9001\u8f66\u8f86\u505c\u5728\u6807\u8bb0\u901a\u9053\u4e0a\uff0c\u9700\u786e\u8ba4\u901a\u9053\u7528\u9014\u5e76\u5b89\u6392\u73b0\u573a\u6838\u67e5\u3002",
+      "evidence": [
+        "van-route-frame-2.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "van-route-3",
+      "camera": "PARK-ENTRY",
+      "zone": "\u6807\u8bb0\u516c\u5171\u901a\u9053",
+      "track": "van-route",
+      "category": "blocked_access",
+      "start": "2026-10-15T08:08:16+08:00",
+      "end": "2026-10-15T08:08:26+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u914d\u9001\u8f66\u8f86\u505c\u5728\u6807\u8bb0\u901a\u9053\u4e0a\uff0c\u9700\u786e\u8ba4\u901a\u9053\u7528\u9014\u5e76\u5b89\u6392\u73b0\u573a\u6838\u67e5\u3002",
+      "evidence": [
+        "van-route-frame-3.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "van-route-4",
+      "camera": "PARK-ENTRY",
+      "zone": "\u6807\u8bb0\u516c\u5171\u901a\u9053",
+      "track": "van-route",
+      "category": "blocked_access",
+      "start": "2026-10-15T08:08:24+08:00",
+      "end": "2026-10-15T08:08:34+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u914d\u9001\u8f66\u8f86\u505c\u5728\u6807\u8bb0\u901a\u9053\u4e0a\uff0c\u9700\u786e\u8ba4\u901a\u9053\u7528\u9014\u5e76\u5b89\u6392\u73b0\u573a\u6838\u67e5\u3002",
+      "evidence": [
+        "van-route-frame-4.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "van-route-5",
+      "camera": "PARK-ENTRY",
+      "zone": "\u6807\u8bb0\u516c\u5171\u901a\u9053",
+      "track": "van-route",
+      "category": "blocked_access",
+      "start": "2026-10-15T08:08:32+08:00",
+      "end": "2026-10-15T08:08:42+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u914d\u9001\u8f66\u8f86\u505c\u5728\u6807\u8bb0\u901a\u9053\u4e0a\uff0c\u9700\u786e\u8ba4\u901a\u9053\u7528\u9014\u5e76\u5b89\u6392\u73b0\u573a\u6838\u67e5\u3002",
+      "evidence": [
+        "van-route-frame-5.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "bay-17-1",
+      "camera": "PARK-B1",
+      "zone": "\u5730\u4e0bB1\u505c\u8f66\u533a",
+      "track": "bay-17",
+      "category": "illegal_parking",
+      "start": "2026-10-15T08:10:00+08:00",
+      "end": "2026-10-15T08:10:15+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u8f66\u8f86\u90e8\u5206\u8d85\u51fa\u8f66\u4f4d\u7ebf\uff0c\u8f93\u5165\u8bb0\u5f55\u8986\u76d6\u8d85\u8fc730\u79d2\uff0c\u9700\u6838\u5bf9\u4e34\u65f6\u505c\u653e\u8bb8\u53ef\u3002",
+      "evidence": [
+        "bay-17-frame-1.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "bay-17-2",
+      "camera": "PARK-B1",
+      "zone": "\u5730\u4e0bB1\u505c\u8f66\u533a",
+      "track": "bay-17",
+      "category": "illegal_parking",
+      "start": "2026-10-15T08:10:12+08:00",
+      "end": "2026-10-15T08:10:27+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u8f66\u8f86\u90e8\u5206\u8d85\u51fa\u8f66\u4f4d\u7ebf\uff0c\u8f93\u5165\u8bb0\u5f55\u8986\u76d6\u8d85\u8fc730\u79d2\uff0c\u9700\u6838\u5bf9\u4e34\u65f6\u505c\u653e\u8bb8\u53ef\u3002",
+      "evidence": [
+        "bay-17-frame-2.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "bay-17-3",
+      "camera": "PARK-B1",
+      "zone": "\u5730\u4e0bB1\u505c\u8f66\u533a",
+      "track": "bay-17",
+      "category": "illegal_parking",
+      "start": "2026-10-15T08:10:24+08:00",
+      "end": "2026-10-15T08:10:39+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u8f66\u8f86\u90e8\u5206\u8d85\u51fa\u8f66\u4f4d\u7ebf\uff0c\u8f93\u5165\u8bb0\u5f55\u8986\u76d6\u8d85\u8fc730\u79d2\uff0c\u9700\u6838\u5bf9\u4e34\u65f6\u505c\u653e\u8bb8\u53ef\u3002",
+      "evidence": [
+        "bay-17-frame-3.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "bay-17-4",
+      "camera": "PARK-B1",
+      "zone": "\u5730\u4e0bB1\u505c\u8f66\u533a",
+      "track": "bay-17",
+      "category": "illegal_parking",
+      "start": "2026-10-15T08:10:36+08:00",
+      "end": "2026-10-15T08:10:51+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u8f66\u8f86\u90e8\u5206\u8d85\u51fa\u8f66\u4f4d\u7ebf\uff0c\u8f93\u5165\u8bb0\u5f55\u8986\u76d6\u8d85\u8fc730\u79d2\uff0c\u9700\u6838\u5bf9\u4e34\u65f6\u505c\u653e\u8bb8\u53ef\u3002",
+      "evidence": [
+        "bay-17-frame-4.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "drop-off-1",
+      "camera": "PARK-B1",
+      "zone": "\u4e34\u65f6\u88c5\u5378\u70b9",
+      "track": "drop-off",
+      "category": "illegal_parking",
+      "start": "2026-10-15T08:12:30+08:00",
+      "end": "2026-10-15T08:12:38+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u77ed\u65f6\u914d\u9001\u505c\u9760\uff0c\u5c1a\u4e0d\u8db3\u4ee5\u786e\u8ba4\u8d85\u65f6\u505c\u8f66\uff0c\u9700\u6838\u5bf9\u88c5\u5378\u5b89\u6392\u3002",
+      "evidence": [
+        "drop-off-frame-1.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "drop-off-2",
+      "camera": "PARK-B1",
+      "zone": "\u4e34\u65f6\u88c5\u5378\u70b9",
+      "track": "drop-off",
+      "category": "illegal_parking",
+      "start": "2026-10-15T08:12:35+08:00",
+      "end": "2026-10-15T08:12:43+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u77ed\u65f6\u914d\u9001\u505c\u9760\uff0c\u5c1a\u4e0d\u8db3\u4ee5\u786e\u8ba4\u8d85\u65f6\u505c\u8f66\uff0c\u9700\u6838\u5bf9\u88c5\u5378\u5b89\u6392\u3002",
+      "evidence": [
+        "drop-off-frame-2.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "reverse-1",
+      "camera": "PARK-RAMP",
+      "zone": "\u51fa\u53e3\u5761\u9053",
+      "track": "reverse",
+      "category": "wrong_way",
+      "start": "2026-10-15T08:15:00+08:00",
+      "end": "2026-10-15T08:15:10+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u8fde\u7eed\u89c2\u5bdf\u63d0\u793a\u8f66\u8f86\u53ef\u80fd\u9006\u5411\u884c\u9a76\uff0c\u5e94\u5bf9\u7167\u51fa\u53e3\u6807\u8bc6\u6838\u67e5\u8f68\u8ff9\u3002",
+      "evidence": [
+        "reverse-frame-1.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "reverse-2",
+      "camera": "PARK-RAMP",
+      "zone": "\u51fa\u53e3\u5761\u9053",
+      "track": "reverse",
+      "category": "wrong_way",
+      "start": "2026-10-15T08:15:08+08:00",
+      "end": "2026-10-15T08:15:18+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u8fde\u7eed\u89c2\u5bdf\u63d0\u793a\u8f66\u8f86\u53ef\u80fd\u9006\u5411\u884c\u9a76\uff0c\u5e94\u5bf9\u7167\u51fa\u53e3\u6807\u8bc6\u6838\u67e5\u8f68\u8ff9\u3002",
+      "evidence": [
+        "reverse-frame-2.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "reverse-3",
+      "camera": "PARK-RAMP",
+      "zone": "\u51fa\u53e3\u5761\u9053",
+      "track": "reverse",
+      "category": "wrong_way",
+      "start": "2026-10-15T08:15:16+08:00",
+      "end": "2026-10-15T08:15:26+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u8fde\u7eed\u89c2\u5bdf\u63d0\u793a\u8f66\u8f86\u53ef\u80fd\u9006\u5411\u884c\u9a76\uff0c\u5e94\u5bf9\u7167\u51fa\u53e3\u6807\u8bc6\u6838\u67e5\u8f68\u8ff9\u3002",
+      "evidence": [
+        "reverse-frame-3.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "bags-1",
+      "camera": "REFUSE-A",
+      "zone": "A\u680b\u5783\u573e\u6536\u96c6\u95f4",
+      "track": "bags",
+      "category": "waste_dumping",
+      "start": "2026-10-15T08:18:00+08:00",
+      "end": "2026-10-15T08:18:10+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u793a\u4f8b\u6e05\u8fd0\u65f6\u6bb5\u7ed3\u675f\u540e\uff0c\u6536\u96c6\u533a\u57df\u5916\u4ecd\u6709\u5783\u573e\u888b\u3002",
+      "evidence": [
+        "bags-frame-1.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "bags-2",
+      "camera": "REFUSE-A",
+      "zone": "A\u680b\u5783\u573e\u6536\u96c6\u95f4",
+      "track": "bags",
+      "category": "waste_dumping",
+      "start": "2026-10-15T08:18:08+08:00",
+      "end": "2026-10-15T08:18:18+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u793a\u4f8b\u6e05\u8fd0\u65f6\u6bb5\u7ed3\u675f\u540e\uff0c\u6536\u96c6\u533a\u57df\u5916\u4ecd\u6709\u5783\u573e\u888b\u3002",
+      "evidence": [
+        "bags-frame-2.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "bags-3",
+      "camera": "REFUSE-A",
+      "zone": "A\u680b\u5783\u573e\u6536\u96c6\u95f4",
+      "track": "bags",
+      "category": "waste_dumping",
+      "start": "2026-10-15T08:18:16+08:00",
+      "end": "2026-10-15T08:18:26+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u793a\u4f8b\u6e05\u8fd0\u65f6\u6bb5\u7ed3\u675f\u540e\uff0c\u6536\u96c6\u533a\u57df\u5916\u4ecd\u6709\u5783\u573e\u888b\u3002",
+      "evidence": [
+        "bags-frame-3.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "full-bin-1",
+      "camera": "REFUSE-B",
+      "zone": "\u82b1\u56ed\u5783\u573e\u6536\u96c6\u70b9",
+      "track": "full-bin",
+      "category": "waste_overflow",
+      "start": "2026-10-15T08:21:00+08:00",
+      "end": "2026-10-15T08:21:10+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5783\u573e\u5bb9\u5668\u9876\u76d6\u65e0\u6cd5\u95ed\u5408\uff0c\u7269\u6599\u9ad8\u4e8e\u8fb9\u7f18\uff0c\u9700\u8981\u6838\u67e5\u5e76\u5b89\u6392\u6e05\u8fd0\u3002",
+      "evidence": [
+        "full-bin-frame-1.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "full-bin-2",
+      "camera": "REFUSE-B",
+      "zone": "\u82b1\u56ed\u5783\u573e\u6536\u96c6\u70b9",
+      "track": "full-bin",
+      "category": "waste_overflow",
+      "start": "2026-10-15T08:21:08+08:00",
+      "end": "2026-10-15T08:21:18+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5783\u573e\u5bb9\u5668\u9876\u76d6\u65e0\u6cd5\u95ed\u5408\uff0c\u7269\u6599\u9ad8\u4e8e\u8fb9\u7f18\uff0c\u9700\u8981\u6838\u67e5\u5e76\u5b89\u6392\u6e05\u8fd0\u3002",
+      "evidence": [
+        "full-bin-frame-2.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "full-bin-3",
+      "camera": "REFUSE-B",
+      "zone": "\u82b1\u56ed\u5783\u573e\u6536\u96c6\u70b9",
+      "track": "full-bin",
+      "category": "waste_overflow",
+      "start": "2026-10-15T08:21:16+08:00",
+      "end": "2026-10-15T08:21:26+08:00",
+      "score": 0.88,
+      "quality": 0.9,
+      "summary": "\u5783\u573e\u5bb9\u5668\u9876\u76d6\u65e0\u6cd5\u95ed\u5408\uff0c\u7269\u6599\u9ad8\u4e8e\u8fb9\u7f18\uff0c\u9700\u8981\u6838\u67e5\u5e76\u5b89\u6392\u6e05\u8fd0\u3002",
+      "evidence": [
+        "full-bin-frame-3.jpg"
+      ],
+      "move_permit": false
+    },
+    {
+      "id": "dark-route-1",
+      "camera": "PARK-REAR",
+      "zone": "\u540e\u95e8\u901a\u9053",
+      "track": "dark-route",
+      "category": "blocked_access",
+      "start": "2026-10-15T08:24:00+08:00",
+      "end": "2026-10-15T08:24:10+08:00",
+      "score": 0.35,
+      "quality": 0.25,
+      "summary": "\u6697\u5149\u753b\u9762\u51fa\u73b0\u901a\u9053\u5360\u7528\u7ebf\u7d22\uff0c\u56fe\u50cf\u4e0d\u8db3\u4ee5\u5224\u65ad\uff0c\u5e94\u4fdd\u7559\u73b0\u573a\u6838\u67e5\u4efb\u52a1\u3002",
+      "evidence": [],
+      "move_permit": false
+    },
+    {
+      "id": "dark-route-2",
+      "camera": "PARK-REAR",
+      "zone": "\u540e\u95e8\u901a\u9053",
+      "track": "dark-route",
+      "category": "blocked_access",
+      "start": "2026-10-15T08:24:08+08:00",
+      "end": "2026-10-15T08:24:18+08:00",
+      "score": 0.35,
+      "quality": 0.25,
+      "summary": "\u6697\u5149\u753b\u9762\u51fa\u73b0\u901a\u9053\u5360\u7528\u7ebf\u7d22\uff0c\u56fe\u50cf\u4e0d\u8db3\u4ee5\u5224\u65ad\uff0c\u5e94\u4fdd\u7559\u73b0\u573a\u6838\u67e5\u4efb\u52a1\u3002",
+      "evidence": [],
+      "move_permit": false
+    },
+    {
+      "id": "shadow-1",
+      "camera": "REFUSE-A",
+      "zone": "A\u680b\u5783\u573e\u6536\u96c6\u95f4",
+      "track": "shadow",
+      "category": "waste_dumping",
+      "start": "2026-10-15T08:26:00+08:00",
+      "end": "2026-10-15T08:26:10+08:00",
+      "score": 0.25,
+      "quality": 0.9,
+      "summary": "\u9634\u5f71\u7591\u4f3c\u5783\u573e\u888b\uff0c\u68c0\u6d4b\u5206\u6570\u8f83\u4f4e\uff0c\u4fdd\u7559\u5728\u5168\u90e8\u4e8b\u4ef6\u4e2d\u3002",
+      "evidence": [
+        "shadow-frame-1.jpg"
+      ],
+      "move_permit": false
+    }
+  ]
+}
