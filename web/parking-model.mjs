@@ -20,16 +20,17 @@ export function predictPatch(rgba,model){
   return 1/(1+Math.exp(-z));
 }
 export function classifyScore(p){if(!Number.isFinite(p)||p<0||p>1)throw new Error('无效模型分数');return p<=.35?'free':p>=.65?'busy':'uncertain';}
-export function frameSummary(rows,predictions){const result={total:rows.length,free:0,busy:0,uncertain:0,pending:0};for(const row of rows){if(predictions.has(row.id))result[classifyScore(predictions.get(row.id))]++;else result.pending++;}return result;}
+// classify(id,score) lets risk-routed transfer models reuse the same counts and filters.
+export function frameSummary(rows,predictions,classify=(id,p)=>classifyScore(p)){const result={total:rows.length,free:0,busy:0,uncertain:0,pending:0};for(const row of rows){if(predictions.has(row.id))result[classify(row.id,predictions.get(row.id))]++;else result.pending++;}return result;}
 // Human completion is independent of model confidence and belongs to one snapshot.
 export function parkingReviewStatus(review){return review?.decision==='free'||review?.decision==='busy'?'confirmed':review?.decision==='uncertain'?'needs_evidence':'pending';}
 export function parkingReviewSummary(rows,reviews){const result={total:rows.length,confirmed:0,pending:0,needs_evidence:0};for(const row of rows)result[parkingReviewStatus(reviews[row.id])]++;return result;}
-export function filterParkingRows(rows,predictions,reviews,filter){return rows.filter(row=>{
+export function filterParkingRows(rows,predictions,reviews,filter,classify=(id,p)=>classifyScore(p)){return rows.filter(row=>{
  const status=parkingReviewStatus(reviews[row.id]);
  if(filter==='review')return status!=='confirmed';
  if(filter==='confirmed')return status==='confirmed';
  if(filter==='evidence')return status==='needs_evidence';
- if(filter==='model_uncertain')return !predictions.has(row.id)||classifyScore(predictions.get(row.id))==='uncertain';
+ if(filter==='model_uncertain')return !predictions.has(row.id)||classify(row.id,predictions.get(row.id))==='uncertain';
  if(filter==='errors')return predictions.has(row.id)&&Number(predictions.get(row.id)>=.5)!==row.label;
  return true;
 });}

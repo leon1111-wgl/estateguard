@@ -306,6 +306,7 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
 #parking .parking-snapshots { padding: 18px; }
 #parking .parking-snapshots > .panel-heading { align-items: flex-end; padding-bottom: 15px; border-bottom: 1px solid var(--line); }
 #parking .parking-session-field { min-width: 210px; max-width: 320px; }
+#parking .parking-heading-fields { display: flex; align-items: flex-end; gap: 10px; min-width: 0; }
 #parking .parking-playback { display: flex; align-items: center; gap: 18px; }
 #parking .parking-playback .toolbar { flex: 0 0 auto; }
 #parking .parking-playback .button { padding-inline: 10px; }
@@ -339,12 +340,19 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
 #parking #parking-detail h3 { font-size: 14px; font-weight: 500; }
 #parking #parking-detail dl { display: grid; grid-template-columns: auto 1fr; gap: 7px 12px; margin: 12px 0; }
 #parking #parking-detail dt { color: var(--muted); }
-#parking #parking-detail dd { margin: 0; text-align: right; overflow-wrap: anywhere; }
+#parking #parking-detail dd { margin: 0; text-align: left; overflow-wrap: anywhere; }
 #parking #parking-detail .badge { margin-right: 5px; }
 #parking .parking-review-fields { display: grid; gap: 11px; padding-top: 14px; margin-top: 14px; border-top: 1px solid var(--line); }
 #parking .parking-review-fields .button { justify-self: start; }
 #parking .parking-review-fields > p { margin: 0; }
 #parking .parking-upload-panel > p { font-size: 12px; color: var(--muted); }
+#parking .parking-model-panel, #parking #parking-onsite:not([hidden]) { display: grid; gap: 11px; }
+#parking .parking-model-panel > h2, #parking .parking-model-panel p { margin: 0; }
+#parking #parking-onsite { padding-top: 12px; border-top: 1px solid var(--line); }
+#parking #parking-onsite .toolbar .button { flex: 1 1 auto; }
+#parking-transfer-content td { overflow-wrap: normal; white-space: nowrap; }
+#parking-transfer-content h3, #parking-transfer-content details { margin-top: 20px; }
+#parking-transfer-content .table-wrap + p:not(.subtle) { margin-top: 16px; }
 #parking .parking-upload-panel > .subtle { margin: 9px 0 0; }
 #parking #parking-upload-result:not(:empty) { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; }
 #parking-evaluation { margin-top: 28px; }
@@ -369,6 +377,7 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
   #parking .parking-snapshots { padding: 13px; }
   #parking .parking-snapshots > .panel-heading { align-items: flex-start; }
   #parking .parking-session-field { min-width: 0; max-width: none; width: 100%; }
+  #parking .parking-heading-fields { flex-direction: column; align-items: stretch; width: 100%; }
   #parking .parking-playback .toolbar { width: 100%; }
   #parking .parking-playback .button { flex: 1; }
   #parking .parking-slider { width: 100%; }

@@ -26,7 +26,7 @@ const record=(decision,note)=>({decision,note,at:'2026-10-16T00:00:00.000Z'});
   page.on('pageerror',error=>report.page_errors.push(error.message));
   page.on('request',request=>{if(request.url().startsWith('http')&&new URL(request.url()).origin!==new URL(base).origin)report.external_requests.push(request.url());});
   page.on('dialog',dialog=>dialog.accept());
-  await page.goto(`${base}/#parking`);await page.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===53);
+  await page.goto(`${base}/#parking`);await page.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===53);await page.locator('#parking-model-choice').selectOption('mlp32');
   return page;
  };
  const run=async page=>{await page.locator('#parking-run').click();await page.waitForFunction(()=>document.querySelector('#parking-message').textContent.startsWith('当前快照分析完成'));};

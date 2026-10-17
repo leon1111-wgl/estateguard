@@ -7,6 +7,8 @@
 | TensorFlow.js | 4.22.0，https://github.com/tensorflow/tfjs | Apache-2.0，浏览器推理运行库 |
 | COCO-SSD 包 | 2.2.3，https://github.com/tensorflow/tfjs-models/tree/master/coco-ssd | Apache-2.0，检测前后处理 |
 | SSDLite MobileNet V2 导出权重 | Google TensorFlow.js 官方模型存储：https://storage.googleapis.com/tfjs-models/savedmodel/ssdlite_mobilenet_v2/model.json | TensorFlow 官方开源模型分发；Apache-2.0。通用 COCO 预训练，未进行本项目微调 |
+| ONNX Runtime Web | 1.30.0，npm `onnxruntime-web`（`ort.wasm.min.mjs`、`ort-wasm-simd-threaded.mjs/.wasm`），https://github.com/microsoft/onnxruntime | MIT，见 `web/vendor/onnxruntime-web/LICENSE.txt`；浏览器 WASM 推理运行库，未修改 |
+| DINOv2-small int8 ONNX | onnx-community/dinov2-small 提交 `8b1f705a3a7f6f062f6bdd21986c1583d3ef105d`，原模型 https://huggingface.co/facebook/dinov2-small | Apache-2.0；Oquab 等 arXiv:2304.07193。仅作冻结特征提取器，未微调；署名见 `web/models/dinov2-small/NOTICE.md` |
 | YellowSchoolBus.jpg 缩略图 | Raysonho @ Open Grid Scheduler / Grid Engine，https://commons.wikimedia.org/wiki/File:YellowSchoolBus.jpg | CC0-1.0；用于物体检测测试，非违规证据。2011 年拍摄，960px 缩略图未另作修改 |
 
 Apache-2.0 许可证全文位于 web/vendor/LICENSE-APACHE-2.0.txt。来源、实际文件大小和 SHA-256 位于 web/assets.lock.json。预训练模型并未提供本项目领域性能保证。
@@ -24,3 +26,9 @@ Apache-2.0 许可证全文位于 web/vendor/LICENSE-APACHE-2.0.txt。来源、�
 CNRPark 基础子集来自 Amato、Carrara、Falchi、Gennaro、Vairo 的[官方项目](http://cnrpark.it/)，按 [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/) 分发。本站含全部摄像头 B 测试原图、派生 32×32 模型输入、标签、快照索引和完整预测；完整署名、变更与机器可读数据库见 [NOTICE](web/data/parking/NOTICE.md) 和 [训练说明](docs/PARKING_DATA.md)。`web/data/parking/`、`docs/validation/parking-split.csv` 与含样本像素的测试 fixture 按数据许可处理，不受根目录代码 MIT 覆盖。独立训练的项目分类器代码及权重按 MIT 提供；原数据许可及署名保持。
 
 公开数据文件逐个大小和 SHA-256 记录在 `web/data/parking-assets.lock.json`；模型权重记录在 `web/assets.lock.json`。训练依赖 NumPy、Pillow，仅用于开发环境，不打包进浏览器。
+
+## CNR-EXT 保留测试与迁移分类头（2026-10-17）
+
+CNR-EXT 来自 Amato、Carrara、Falchi、Gennaro、Meghini、Vairo，*Deep learning for decentralized parking lot occupancy detection*，Expert Systems with Applications 72 (2017) 327–334，[数据主页](http://cnrpark.it/)，按 [ODbL 1.0](https://opendatacommons.org/licenses/odbl/1-0/) 使用。仓库只发布按固定规则选出的 960 张原始裁剪、派生 32×32 输入与快照索引（`web/data/parking-ext/`，署名见其 NOTICE），以及全部 144,965 张的逐样本模型分数（`docs/validation/parking-ext-predictions.csv.gz`，含样本标识、标签与原图哈希）。这些文件按数据许可处理，不受根目录 MIT 覆盖。完整 449,502,403 字节归档不随仓库分发，可按 `docs/PARKING_DATA.md` 中的地址与哈希重新下载。
+
+`web/models/parking-transfer/` 与 `web/models/parking-dinov2/` 是本项目在冻结特征上训练的线性分类头（MIT）。它们依赖的编码器分别为 Apache-2.0 的 SSDLite MobileNet V2 与 DINOv2-small，训练数据为 ODbL 的 CNRPark A。

@@ -16,7 +16,7 @@ const errors=[];
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
  const newPage=async options=>{const page=await browser.newPage(options);page.on('pageerror',e=>errors.push(e.message));page.on('dialog',d=>d.accept());return page;};
- const open=async page=>{await page.goto(`${base}/#parking`);await page.waitForFunction(()=>document.querySelectorAll('.parking-tile').length>0);};
+ const open=async page=>{await page.goto(`${base}/#parking`);await page.waitForFunction(()=>document.querySelectorAll('.parking-tile').length>0);await page.locator('#parking-model-choice').selectOption('mlp32');};
  const delayInputs=async(page,ms)=>page.route('**/data/parking/inputs/**',async route=>{await new Promise(r=>setTimeout(r,ms));await route.continue();});
  try{
   // A previously accepted near-8-MiB review grew beyond its own import limit.

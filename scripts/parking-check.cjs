@@ -9,7 +9,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
  const base=process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766',origin=new URL(base).origin;
  page.on('request',r=>{if(r.url().startsWith('http')&&new URL(r.url()).origin!==origin)external.push(r.url());});
  const out=path.join(__dirname,'../artifacts');fs.mkdirSync(out,{recursive:true});
- await page.goto(base+'/#parking');await page.waitForSelector('.parking-tile');
+ await page.goto(base+'/#parking');await page.waitForSelector('.parking-tile');await page.locator('#parking-model-choice').selectOption('mlp32');
  assert.equal(await page.locator('.parking-tile').count(),53);
  assert.match(await page.locator('#parking-model-status').textContent(),/已训练/);
  assert.equal(await page.locator('#parking-metrics .metric strong').nth(1).textContent(),'—');

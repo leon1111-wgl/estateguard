@@ -69,6 +69,76 @@
 
 数据 B 只有 2015-07-08 一天，时段和车位差异可能混合视角、车辆、遮挡等因素；没有因果标注，不能认定是光照造成。历史快照反复拍摄同一车位，图片数也不是独立车辆数。B 已经用于公开错例分析，后续据此开发模型须另设未参与选择的测试，不能把 B 继续描述成新模型的完全未见测试。
 
+## 冻结编码器迁移与跨视角保留测试 · 2026-10-17
+
+上面的 MLP32 在 B 视角漏判严重。本轮按“通用视觉编码器冻结 + 现场少量标注”的工业做法比较两种编码器，增加未参与任何选择的保留测试、风险分流与新相机自适应。实验协议在评分前写定，三次附录都早于 EXT 评分：[parking-transfer-protocol.md](validation/parking-transfer-protocol.md)。
+
+### 模型
+
+| 模型 | 编码器（冻结） | 可训练参数 | 浏览器运行 | 首次下载 |
+| --- | --- | ---: | --- | ---: |
+| MLP32 基线 | 无，32×32 像素统计特征 | 7,745 | 纯 JS | 0.2 MiB |
+| MobileNetV2 迁移头 | 现有 SSDLite MobileNet V2 的 COCO 检测骨干，`Conv_1` 全局平均，1,280 维 | 1,281 | TF.js WebGL | 19.1 MiB（与检测器共用） |
+| DINOv2-small 线性探针（默认） | DINOv2 ViT-S/14 自监督模型，int8 ONNX，112×112 输入，CLS 与图块均值拼接，768 维 | 769 | ONNX Runtime Web 单线程 WASM | 37.0 MiB |
+
+两个线性头都只用 CNRPark A 训练、按 A 验证交叉熵选 checkpoint（MobileNetV2 第 1 轮，DINOv2 第 39 轮），然后在 A 验证上拟合温度。DINOv2 的 112 输入只按单线程延迟预算选定。离线特征由浏览器调用网页同一模块提取：重新提取的 MobileNetV2 特征与首次提取逐位相同；验收中页面重算的两种特征与离线特征最大差均为 0。
+
+### 数据角色
+
+- A 验证 1,275 张：选 checkpoint、温度和失败基线阈值。
+- B 6,413 张：**已观察的开发比较**，按协议用其平衡正确率选默认模型（在 EXT 评分之前确定为 DINOv2）。
+- **CNR-EXT 144,965 张**：同一停车场另外 9 个视角（C1–C9），2015-11-12 至 2016-02-12 共 23 天，晴 63,178 / 阴 44,243 / 雨 37,544 张，占用 54.69%。没有用于训练、选模、阈值或默认模型。与 CNRPark 无像素级重复。**它不是新小区**：同一校园停车场、同一批作者采集。
+
+### 结果
+
+| 模型 | A 验证平衡正确率 | B 开发平衡正确率 | EXT 正确率 | EXT 平衡正确率 | EXT 有车报空闲 | EXT 空位报占用 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 多数类（全报占用） | — | 50.00% | 54.69% | 50.00% | 0 | 65,684 |
+| MLP32 基线 | — | 77.39% | 88.22% | 88.48% | 11,373（14.35%） | 5,710（8.69%） |
+| MobileNetV2 迁移头 | 98.22% | 80.23% | 94.04% | 94.32% | 6,848（8.64%） | 1,788（2.72%） |
+| **DINOv2 线性探针** | 99.77% | 85.90% | **95.56%** | **95.88%** | 5,969（7.53%） | 473（0.72%） |
+
+括号内分母分别为 EXT 实际占用 79,281 张、实际空闲 65,684 张。B 上 DINOv2 正确率 86.85%，有车报空闲 581、空位报占用 262（MLP32 为 1,134 / 351）。
+
+EXT 按天气的平衡正确率（MLP32 / MobileNetV2 / DINOv2）：晴 85.69% / 93.86% / 95.54%，阴 94.29% / 96.49% / 97.74%，雨 85.42% / 92.16% / 94.19%。按摄像头，DINOv2 最差的 C1 为 88.26%（MLP32 83.02%），其余 95.08%–97.89%。与 MLP32 相比，DINOv2 在 EXT 上改正 13,401 张、新增错误 2,760 张。
+
+这说明换用自监督基础模型的冻结特征，跨视角、跨季节、雨天的表现明显好于原小模型；同一视角 99.8% 与新视角 95.9% 之间仍有差距。EXT 似乎比 B 容易（MLP32 在 EXT 上也有 88%），所以不能把 EXT 数字当作 B 或其他小区的预期。温度校准在 A 上降低了校准误差，但在 EXT 上没有改善（DINOv2 ECE 0.0267 → 0.0283）。
+
+### 风险分流：保证不能想当然地带到新画面
+
+三态分流把校准概率低于阈值的车位自动判空闲、高于阈值的自动判占用，其余送人工。阈值按 Learn then Test（Clopper–Pearson 上界、Bonferroni，95% 置信）选择，目标为自动判空闲中错误 ≤ 1%、自动判占用中错误 ≤ 2%。
+
+- **训练视角阈值（失败基线）**：DINOv2 在 A 验证选出 ≤ 0.2 / ≥ 0.6。用到 EXT，自动判空闲实际错 6.02%（4,161 / 69,145），远超 1%；自动判占用 0.57%。B 上自动判空闲错 26.6%。
+- **逐样本现场校准（失败基线）**：用每个摄像头最早 20% 时段（EXT 为 5 个日期）的全部标注重选阈值，再检验最后 70% 时段（17 个日期）。DINOv2 在 1% / 2% / 5% 目标下，评测段自动判空闲实际错 3.71% / 5.48% / 7.76%，全部超标。B 上 5% 目标实际错 33.3%。原因是同一车位相隔 5 分钟的快照被当作独立证据，且时段、季节有漂移；这是独立找茬代理在页面复现后定位的。
+- **车位·日规则（网页采用）**：同一车位同一天只算一个单位，且标注须覆盖至少 2 个日期。1% 目标下 9 个 EXT 摄像头都不通过；2% 仅 C8 的占用侧通过；5% 下 7 个摄像头至少一侧通过，评测段合计自动判定 64.9%，按单张计自动判空闲错 2.71%（627 / 23,173）、自动判占用 0.11%。但检验的量是车位·日：空闲侧得到阈值的 4 个摄像头中，C4、C7、C9 在评测段分别为 5.17%、13.22%、7.43%，三个超过 5% 目标，合计 7.2%（185 / 2,553）；C7 按单张计也有 5.56%。MobileNetV2 空闲侧 5 个中 3 个超标，合计 8.6%。占用侧（10% 目标）DINOv2 合计 0.8%，没有超标。B 只有一天，按规则不放行。
+
+结论：11 月的校准数据不能代表冬季后续月份，检验通过不等于长期有效。网页默认全部送人工，校准后的阈值只说明“后续画面与校准期相似时”成立；实际部署需要持续随机抽检自动判定结果并定期重新校准，这部分尚未实现。
+
+### 新相机少样本自适应（L2-SP）
+
+每个相机的标注池中随机抽 k 张人工结论（10 个种子），从源分类头出发做 L2-SP 微调（λ=0.01，Adam 150 步），在评测段比较平衡正确率：
+
+| k | DINOv2 · EXT 9 相机平均 | DINOv2 · EXT 最差相机 | DINOv2 · B | MobileNetV2 · EXT 平均 | MobileNetV2 · B |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 | 95.10% | 87.49% | 82.91% | 93.79% | 78.84% |
+| 16 | 96.41% | 92.59% | 83.43% | 93.72% | 83.97% |
+| 64 | 96.78% | 94.07% | 85.65% | 94.20% | 86.13% |
+| 128 | 96.90% | 94.18% | 87.27% | 94.35% | 87.26% |
+
+少量现场标注对最差视角帮助最大（最差相机的评测段平衡正确率 87.5% → 94.2%）。B 上 MobileNetV2 自适应后有车报空闲比例上升（10.0% → 22.1%），因为 B 的上午标注池空位较多，偏置被拉向空闲；网页不阻止这种结果，只提示样本只含一种结论时偏差风险高，并要求自适应后用新的人工结论重新校准。
+
+### 浏览器实测
+
+本机 M1 Max、Chrome 155：DINOv2 单线程分析一个 53 车位快照 4.8 秒（约 90 ms/个，含读图），编码器从缓存初始化 216 ms；MobileNetV2 WebGL 约 16 ms/个。离线提取 157,549 张时 DINOv2 以 8 个单线程页面并行，中位 108–112 ms/张。GitHub Pages 不能设置跨源隔离头，所以网页只能单线程；更低端设备会更慢。
+
+### 发布了什么
+
+- 分类头：[`web/models/parking-dinov2/model.json`](../web/models/parking-dinov2/model.json)、[`web/models/parking-transfer/model.json`](../web/models/parking-transfer/model.json)；编码器与运行库哈希见 `web/assets.lock.json`。
+- 完整评测：[`web/data/parking-transfer/evaluation.json`](../web/data/parking-transfer/evaluation.json)（含训练日志、全部分解、分流检验明细、自适应每个种子）；B 逐样本：`b-predictions-{dinov2,mobilenet}.json`。
+- EXT 全部 144,965 张逐样本分数（MLP32、两个头的原始与校准分数）：[`parking-ext-predictions.csv.gz`](validation/parking-ext-predictions.csv.gz)，整体来源校验值写在评测 JSON 的 `cnr_ext.source_digest`。
+- 网页 EXT 子集：按“每个摄像头每种天气取最早一天、最接近 12:00 的快照”固定规则选出 27 个快照、960 张原图（[说明](../web/data/parking-ext/NOTICE.md)）。
+- `python scripts/verify_parking_transfer.py` 从发布文件重算 B 与全部 EXT 指标、核对分类头与资源哈希、按规则重新推导 EXT 子集。
+
 ## 可使用的工作流
 
 1. 打开「车位巡检」，按历史时刻查看真实车位图，点击「分析当前快照」。初始未分析项不计为空闲。
@@ -77,6 +147,8 @@
 4. 写下遮挡、阴影等判断依据，保存空闲或占用会完成该样本的人工复核；无法判断仍留在待办并标为需补证据。可「保存并继续」核对当前快照的下一项，失败不跳项；全部完成也不自动切换时刻。草稿不计入完成数，同一车位在下一时刻需要另行核对。
 5. 导出 JSON，之后恢复人工结论。待办与进度根据已保存的记录重算，恢复文件中的旧预测不会冒充本次推理。
 6. 上传自己的单车位裁剪图做本地测试。新相机没有校准或领域验证，完整停车场图也不会自动切出每个车位。
+7. 在「占用模型」中切换 DINOv2（默认）、MobileNetV2 或 MLP32；各模型结果分别保留。迁移模型在新摄像头上默认全部送人工；「现场校准」面板可用本摄像头已保存的人工结论做 L2-SP 自适应，或按车位·日规则检验分流阈值（需跨 2 个以上日期）。自适应用过的结论不能用于校准；修改这些结论、导入复核文件或改风险目标会使相关设置作废。导出文件记录每个模型的分数与各摄像头的现场设置。
+8. 「摄像头 C1…C9 · CNR-EXT 保留测试」会话提供 27 个保留测试快照，可直接对比三种模型。
 
 人工复核记录上限24 MiB，完整导出/恢复文件上限32 MiB；为后续新增预测预留空间，超限操作会保留已有记录并明确提示。复核状态保存在当前标签页内存，关闭前须导出。
 
@@ -102,9 +174,39 @@ python scripts/audit_parking_errors.py --recompute --output artifacts/parking-er
 node --test tests/parking-audit.test.mjs
 ```
 
+迁移模型与 CNR-EXT 保留测试（需要 Chrome 与 Playwright，另加 `onnxruntime==1.30.0` 仅用于开发核对，不参与训练）：
+
+```bash
+# 数据：CNRPark 解包到 artifacts/datasets/cnrpark-jpeg/；CNR-EXT 449,502,403 字节
+# SHA-256 84169527af6ad6aaf51729663b59283bc5f28368ff9ddd7856198eec226056d6
+curl -L --fail -o artifacts/datasets/cnr-ext/CNR-EXT-Patches-150x150.zip \
+  https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNR-EXT-Patches-150x150.zip
+curl -L --fail -o artifacts/datasets/cnr-ext/CNRPark+EXT.csv \
+  https://github.com/fabiocarrara/deep-parking/releases/download/archive/CNRPark+EXT.csv
+python scripts/prepare_cnr_ext.py --archive artifacts/datasets/cnr-ext/CNR-EXT-Patches-150x150.zip \
+  --csv artifacts/datasets/cnr-ext/CNRPark+EXT.csv --out artifacts/parking-transfer/ext
+python3 -m http.server 8766 --directory web   # 另开终端
+for enc in mobilenet dinov2; do
+  node scripts/extract_backbone_features.cjs --encoder $enc --workers 8 \
+    --ids docs/validation/parking-split.csv --images artifacts/datasets/cnrpark-jpeg --out artifacts/parking-transfer/cnrpark-$enc
+  node scripts/extract_backbone_features.cjs --encoder $enc --workers 8 \
+    --ids artifacts/parking-transfer/ext/ext-extract.csv --images artifacts/parking-transfer/ext/jpeg --out artifacts/parking-transfer/ext-$enc
+done
+python scripts/train_parking_transfer.py \
+  --features mobilenet=artifacts/parking-transfer/cnrpark-mobilenet,dinov2=artifacts/parking-transfer/cnrpark-dinov2 \
+  --ext artifacts/parking-transfer/ext --ext-features mobilenet=artifacts/parking-transfer/ext-mobilenet,dinov2=artifacts/parking-transfer/ext-dinov2
+python scripts/package_ext_subset.py --ext artifacts/parking-transfer/ext
+python scripts/verify_parking_transfer.py
+node scripts/parking-transfer-check.cjs
+```
+
+MobileNetV2 的 WebGL 数值可能随 GPU 驱动略有不同；本次在同一台机器上两次提取逐位一致。原始归档与解包图片只存放在被忽略的 `artifacts/datasets/`，本轮结束后已从本机删除，可按上述地址和哈希重新下载。
+
 脚本产生权重、全量测试预测、图片、划分清单、日志和 Python/JavaScript 数值对照样例；耗时随机器变化，其他平台浮点实现也可能有微小差别。发布新权重前需更新 `web/assets.lock.json` 对应条目并通过 `scripts/verify_assets.py`，不可覆盖哈希掩盖来源变化。原始训练图片不打包到网页，可由同一官方归档和 split CSV 重建。
 
 ## 下一轮如何改进
+
+2026-10-17 已完成更强轻量编码器比较与新的保留测试（见上文）。现在的首要问题是分流阈值随时间失效：需要对自动判定结果做随机抽检、监控漂移并自动撤销阈值，同时在离线回放中验证这一机制；其次是把车位·日规则扩展到跨摄像头/场地汇总，以及在真正的其他停车场上测试。以下为 2026-10-16 的计划，保留供对照。
 
 已完成全量错例按车位/时段分布与分数带覆盖审查。下一步给遮挡、尺度、光照等可见因素制定人工标注标准，区分观察和因果结论。比较更好的轻量图像编码器或已有停车模型时，保留当前基线与划分；B 结果已参与错误分析，后续若参考它开发，必须标成开发基准，并增加新的独立相机/场地测试，不能继续叫完全未见测试集。其次校准分数与复核策略，报告覆盖率以及明确分类里的残余错误；不能只以提高准确率或缩小复核量为目标。
 

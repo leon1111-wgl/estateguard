@@ -1,5 +1,5 @@
 {
-  "verified_date": "2026-10-16",
+  "verified_date": "2026-10-17",
   "model": "SSDLite MobileNet V2",
   "weights_bytes": 18034528,
   "files": [
@@ -82,6 +82,76 @@
       "sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
       "source": "scripts/train_parking.py; CNRPark camera A, seed 20261015",
       "license": "MIT (project model); source database ODbL-1.0; see docs/PARKING_DATA.md"
+    },
+    {
+      "path": "models/dinov2-small/model_quantized.onnx",
+      "bytes": 24446700,
+      "sha256": "c179f8f7f592449c4c1bca4cd124a7538021428c5ffb89afde9503935b197efb",
+      "source": "https://huggingface.co/onnx-community/dinov2-small/resolve/8b1f705a3a7f6f062f6bdd21986c1583d3ef105d/onnx/model_quantized.onnx",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/dinov2-small/config.json",
+      "bytes": 899,
+      "sha256": "50965b6c1dc4a9e38af8b5e8736cf059e56aa60d9047c2aef05f7e134371d02a",
+      "source": "https://huggingface.co/onnx-community/dinov2-small/resolve/8b1f705a3a7f6f062f6bdd21986c1583d3ef105d/config.json",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/dinov2-small/preprocessor_config.json",
+      "bytes": 436,
+      "sha256": "14e780d86fa1861f8751f868d7f45425b5feb55c38ca26f152ca5097ab30f828",
+      "source": "https://huggingface.co/onnx-community/dinov2-small/resolve/8b1f705a3a7f6f062f6bdd21986c1583d3ef105d/preprocessor_config.json",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/dinov2-small/NOTICE.md",
+      "bytes": 791,
+      "sha256": "dcd7d14ff243a44f167e673ac9ffb9b139c65b75dfd6736621db54383c6f60cd",
+      "source": "EstateGuard attribution notice",
+      "license": "Apache-2.0 notice"
+    },
+    {
+      "path": "vendor/onnxruntime-web/ort.wasm.min.mjs",
+      "bytes": 50126,
+      "sha256": "219e6a1fc8a9938268d18efca3c91d310bd2f4a59bbd13744df5b2b7fc6cee3b",
+      "source": "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.30.0.tgz (package/dist/ort.wasm.min.mjs)",
+      "license": "MIT"
+    },
+    {
+      "path": "vendor/onnxruntime-web/ort-wasm-simd-threaded.mjs",
+      "bytes": 24381,
+      "sha256": "e13f7f94fc51b4ca72b12faeb1ee95f4ace6dfbc8939bc718aabdc0a27c4299b",
+      "source": "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.30.0.tgz (package/dist/ort-wasm-simd-threaded.mjs)",
+      "license": "MIT"
+    },
+    {
+      "path": "vendor/onnxruntime-web/ort-wasm-simd-threaded.wasm",
+      "bytes": 14239897,
+      "sha256": "3398c10d07d229bd91b364548e130e0e51a8e5704b88c7c083ebbeb78842dee2",
+      "source": "https://registry.npmjs.org/onnxruntime-web/-/onnxruntime-web-1.30.0.tgz (package/dist/ort-wasm-simd-threaded.wasm)",
+      "license": "MIT"
+    },
+    {
+      "path": "vendor/onnxruntime-web/LICENSE.txt",
+      "bytes": 1073,
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "source": "https://raw.githubusercontent.com/microsoft/onnxruntime/v1.30.0/LICENSE",
+      "license": "MIT"
+    },
+    {
+      "path": "models/parking-transfer/model.json",
+      "bytes": 63267,
+      "sha256": "6c007e73b6899dd1a2e40449a37117efafdd2c83467c8d8d78cd999b551ca79b",
+      "source": "scripts/train_parking_transfer.py; CNRPark camera A, seed 20261015; frozen mobilenet features",
+      "license": "Apache-2.0 backbone; project head MIT; training data ODbL-1.0"
+    },
+    {
+      "path": "models/parking-dinov2/model.json",
+      "bytes": 47446,
+      "sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+      "source": "scripts/train_parking_transfer.py; CNRPark camera A, seed 20261015; frozen dinov2 features",
+      "license": "Apache-2.0 backbone; project head MIT; training data ODbL-1.0"
     }
   ]
 }

@@ -28,6 +28,7 @@ jobs:
       - run: python3 -m unittest discover -s tests/training -p 'test_*.py'
       - run: python3 scripts/verify_assets.py
       - run: python3 scripts/verify_parking.py
+      - run: python3 scripts/verify_parking_transfer.py
       - run: python3 scripts/audit_parking_errors.py --recompute --output artifacts/parking-error-audit-ci.json
       - run: python3 scripts/make_demo.py
       - run: node scripts/evaluate.mjs data/demo.json data/reference.json --write

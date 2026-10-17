@@ -181,3 +181,26 @@ node scripts/model-check.cjs
 - 独立界面设计师完成 1440px/390px 实际截图回归；选择错例后，当前车位进入网格滚动窗口，手机复核卡顶部 16px。展开车位分布表曾造成页面宽 513px，增加局部最小宽度约束后，页面宽 390px、表格容器宽 324px、内容宽 480px，仅在表内横滚。导出 B:12 的 102 张低分错例后，切到错误占用的空组合，旧“已导出”提示会重置；两端定向复查及独立 8 项验收均通过。保留既有视觉框架。
 
 证据：[原失败基线](validation/parking-error-audit-baseline.json)、[原图缺失仍能确认的基线](validation/parking-photo-baseline.json)、[独立端到端验收](validation/parking-error-audit-validation.json)、[全量冻结重算及分布](validation/parking-error-audit.json)、[桌面与手机回归](validation/parking-error-audit-ui-validation.json)。受控网络故障用于复现失败恢复，公开历史图片用于实际推理；没有接入真实物业监控。
+
+## 2026-10-17 · 冻结编码器迁移、CNR-EXT 保留测试与风险分流
+
+```bash
+node --test tests/*.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 -m unittest discover -s tests/training -p 'test_*.py'
+python3 scripts/verify_assets.py
+python3 scripts/verify_parking.py
+python3 scripts/verify_parking_transfer.py
+node scripts/parking-transfer-check.cjs
+node scripts/parking-check.cjs && node scripts/parking-review-check.cjs && node scripts/parking-critic-check.cjs && node scripts/parking-error-audit-check.cjs
+node scripts/model-check.cjs && node scripts/model-loading-check.cjs && node scripts/detection-threshold-check.cjs && node scripts/media-context-check.cjs && node scripts/critic-check.cjs && node scripts/browser-check.cjs
+```
+
+- 102 项 JS（不含工作区中另一轮未提交的 evidence-media 测试）、14 项 Python、10 项训练测试通过。新增测试覆盖：两个线性头在真实特征上的浏览器/Python 分数（差 ≤1e-12）、L2-SP 自适应逐步一致（≤1e-9）、Learn then Test 阈值与 Clopper–Pearson 上界、车位·日计数在全部 B 上与 Python 一致、DINOv2 预处理与池化、模型切换时汇总与筛选使用分流状态。
+- 资源：21 项模型/运行库/样本哈希（新增 DINOv2 int8 ONNX 与配置、ONNX Runtime Web 1.30.0 三个文件与 MIT 许可、两个线性头）通过。`verify_parking_transfer.py` 从发布文件重算 B 与全部 144,965 张 EXT 的 MLP32 与两个头指标，核对分类头/编码器哈希、默认模型规则，并按固定规则重推 27 个 EXT 子集快照。
+- 特征可复现：网页模块重新提取的 12,584 张 MobileNetV2 特征与首次提取 SHA-256 相同；DINOv2 1 个与 4 个并行页面、普通导入与校验后导入的 ORT 结果逐位相同。
+- 新浏览器验收（[报告](validation/parking-transfer-validation.json)）：编码器在 B 与 EXT 样本上与离线特征最大差 0；默认 DINOv2，B 首个快照页面与离线校准分数差 1.2e-15，未校准时 53 个车位全部送人工；12 条人工结论自适应后 25 个分数变化，清除后恢复原分数；B 单日数据校准被拒绝；修改已用结论与导入复核文件都会清除现场设置；C2 三个日期 27 个车位·日在 5% 目标下不通过；C8 EXT 快照三种模型与发布分数差 ≤5e-7（6 位有效数字）；上传单图、评测页 6 张表、390px 页面无横向滚动、无页面错误与跨站请求。
+- 原有检查：`model-check`（校车 0.99169，7 帧，张量 262→262）、`model-loading-check` 8/8、`detection-threshold-check` 7/7、`media-context-check` 10/10、`critic-check`、`browser-check`、`parking-check`（MLP32 浏览器与 Python 差 4.4e-16）、`parking-review-check` 9/9、`parking-critic-check`、`parking-error-audit-check` 8/8 通过。旧车位检查改为先显式选择 MLP32，断言未放宽；`parking-review-check` 的首个用例两次在 15 秒内未等到分析完成（一次在 load avg 24 满载时，一次紧接重负载的迁移检查之后）；随后单独连续 3 次均 9/9，孤立复现 6 次 MLP32 快照分析均在 0.3 秒内完成。根因未定位，记为偶发，后续若再现需记录当时的页面消息与网络请求。
+- 独立找茬与界面设计代理分别在 1440px/390px 实际操作，发现的问题见 IMPROVEMENT_LOG；修复后复核。
+
+未验证：其他小区或夜间画面、低端手机上的 DINOv2 单线程耗时、长期运行中的阈值漂移处理。
