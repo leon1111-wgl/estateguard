@@ -130,6 +130,7 @@ td { overflow-wrap: anywhere; }
 .metric:last-child { border: 0; }
 .metric strong { display: block; font-size: 25px; line-height: 1.4; font-weight: 550; color: var(--ink); font-variant-numeric: tabular-nums; }
 .metric span { color: var(--muted); font-size: 12px; }
+.metric .nowrap { white-space: nowrap; }
 .desk { display: grid; grid-template-columns: 284px minmax(0, 1fr); background: #fff; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
 .queue { border-right: 1px solid var(--line); background: #fafbfc; }
 .queue-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 16px 0; }

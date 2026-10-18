@@ -204,3 +204,25 @@ node scripts/model-check.cjs && node scripts/model-loading-check.cjs && node scr
 - 独立找茬与界面设计代理分别在 1440px/390px 实际操作，发现的问题见 IMPROVEMENT_LOG；修复后复核。
 
 未验证：其他小区或夜间画面、低端手机上的 DINOv2 单线程耗时、长期运行中的阈值漂移处理。
+
+## 2026-10-18 · 自动判定抽检与漂移撤销
+
+```bash
+node --test tests/*.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 -m unittest discover -s tests/training -p 'test_*.py'
+python3 scripts/verify_assets.py
+python3 scripts/verify_parking.py
+python3 scripts/verify_parking_transfer.py
+python3 scripts/replay_parking_audit.py --labels artifacts/datasets/cnr-ext/CNRPark+EXT.csv
+node scripts/parking-transfer-check.cjs
+node scripts/parking-check.cjs && node scripts/parking-review-check.cjs && node scripts/parking-critic-check.cjs && node scripts/parking-error-audit-check.cjs
+node scripts/model-check.cjs && node scripts/model-loading-check.cjs && node scripts/detection-threshold-check.cjs && node scripts/media-context-check.cjs && node scripts/critic-check.cjs && node scripts/browser-check.cjs
+```
+
+- 116 项 JS、14 项 Python、16 项训练测试通过。新增 8 项 JS（`parking-transfer-audit.test.mjs`）：哈希与 Python 一致（含中文），9 个 EXT 相机在 5% / 10% / 20% 下抽中的车位·日集合与 Python 逐项相同、嵌套且总比例接近 10%；CP 下界与 Python、闭式解一致；5% 目标下主规则与 x ≥ 4.94 + 0.0724n 在 n ≤ 400 内完全等价；C7、C8 的真实 20% 抽检序列在两种规则下的计数、证据值与撤销位置与 Python 相同；未核对按无错计、同一车位·日只计一次；合成数据 p = α 时误撤销 ≤ 3.5%；发布的回放复现基线 185 / 2,553。新增 6 项 Python：哈希定义、CP 下界、按出错次数分配水平与二项尾概率等价、主规则边界与误撤销、监视器计数、回放循环 f = 0 时等于 `routing_report` 且撤销从下一快照生效。
+- `replay_parking_audit.py` 先用发布的 6 位有效数字分数复现附录 3/4 的全部 54 组阈值与不抽检基线（阈值与 9 项计数逐项相同，否则停止），再回放；标签与官方 `CNRPark+EXT.csv`（SHA-256 `26416454…a470dc8`）144,965 行全部一致，核对后删除下载文件。合成数据比较重跑后与附录 5 表格一致。`verify_parking_transfer.py` 现在整份重算回放并与发布 JSON 逐项比对。
+- 浏览器验收（[报告](validation/parking-transfer-validation.json)）新增 C6 流程：分析 3 个快照后，为 116 个未抽中车位·日填入人工结论（验收脚本用数据集标签代填），5% 目标下占用侧通过（≥ 0.85）；9 个抽中车位·日显示「抽检」、隐藏模型概率、计入“含抽检”、在导出中 `audit=true` 且送人工，导出的抽检样本与按哈希独立计算的一致；在抽检筛选下“保存并继续”停留在抽检车位，快照内抽检全部确认后停在原车位并提示；勾选数据集标注时盲审车位不显示“一致/错判”；前 5 个保存为“错误”不撤销，第 6 个时证据值 64 ≥ 40 撤销占用侧，导出保存全部 9 个抽检及结论（撤销侧计数取自撤销记录），该侧不再自动判定，详情对阈值之间的车位也说明已撤销；6 条全部改回不恢复阈值；切换风险目标后撤销记录仍在，MobileNetV2 也受限制；切到 MLP32 时抽检筛选复位；导出后在新页面恢复、重新分析并校准，撤销记录被读入且旧证据不能重新通过阈值；390px 无横向滚动。原有的编码器对齐、默认全部送人工、自适应、单日拒绝、修改与导入作废、C2 三日不通过、C8 三模型分数对齐、上传、评测页（现 8 张表）与手机检查全部保持通过。独立找茬/界面代理的 12 项发现与复验时的 3 项次要问题见 IMPROVEMENT_LOG，修正后重新运行。
+- 原有检查：`parking-check`、`parking-critic-check`、`parking-review-check` 9/9、`parking-error-audit-check` 8/8、`model-check`（校车 0.99169，7 帧，张量 262→262）、`model-loading-check` 8/8、`detection-threshold-check` 7/7、`media-context-check` 10/10、`critic-check`、`browser-check` 通过。工作区里另一轮未提交、尚未接入页面的 `event-media-check` 失败 2/2（`web/evidence-media.mjs` 未被任何页面导入），与本轮无关，未改动。
+
+未验证：真实部署中抽检员的判断质量、撤销后重新校准的回放、其他停车场与夜间画面的漂移形态。

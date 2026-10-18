@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-17T01:52:45.367Z",
+  "checked_at": "2026-10-17T22:48:48.756Z",
   "base": "http://127.0.0.1:8766",
   "steps": {
     "encoder_parity": {
@@ -8,22 +8,22 @@
         "max_feature_diff": 0,
         "max_calibrated_diff": 2.220446049250313e-16,
         "backend": "webgl",
-        "median_embed_ms": 13,
-        "load_ms": 221.39999997615814
+        "median_embed_ms": 15.100000023841858,
+        "load_ms": 166
       },
       "dinov2": {
         "samples": 16,
         "max_feature_diff": 0,
         "max_calibrated_diff": 5.551115123125783e-16,
         "backend": "WASM · 1 线程",
-        "median_embed_ms": 89.60000002384186,
-        "load_ms": 363.7999999523163
+        "median_embed_ms": 87,
+        "load_ms": 364.89999997615814
       }
     },
     "default_unverified_b": {
       "default": "dinov2",
       "max_page_vs_offline_calibrated": 1.1657341758564144e-15,
-      "message": "当前快照分析完成（2015/07/08 08:05 · DINOv2-small 线性探针）：53 / 53 个车位，4807 ms（含图片读取，约 91 ms/个）；编码器加载 227 ms。本相机尚未完成风险校准，所有车位送人工复核；模型倾向与概率可作参考。"
+      "message": "当前快照分析完成（2015/07/08 08:05 · DINOv2-small 线性探针）：53 / 53 个车位，4685 ms（含图片读取，约 88 ms/个）；编码器加载 221 ms。本相机尚未完成风险校准，所有车位送人工复核；模型倾向与概率可作参考。"
     },
     "adaptation": {
       "labels": 12,
@@ -54,12 +54,36 @@
         "mlp32": 4.981372309087462e-7
       }
     },
+    "audit_revocation": {
+      "camera": "C6",
+      "reviewed_for_calibration": 116,
+      "t_busy": 0.85,
+      "spot_checks": 9,
+      "busy_checks": 9,
+      "frame_done_message": true,
+      "revoked_after": {
+        "sample_id": "C6-20151116-1147-310",
+        "source_time": "20151116 1147",
+        "units": 6,
+        "error_units": 6,
+        "statistic": 4.1588830833596715,
+        "limit": 3.6888794541139363,
+        "at": "2026-10-17T22:49:22.289Z",
+        "checked": 9
+      },
+      "recalibrated_t_busy": null,
+      "restored_page_t_busy": null,
+      "drift_evidence_from": "20151116",
+      "status_before": "摄像头 C6：已人工确认且已分析 116 条（占用 77 / 空闲 39）。影子对比（模型 0.5 阈值 vs 人工，116 条）：有车报空闲 3 条，空位报占用 0 条。在校准数据上通过检验（116 个车位·日，3 个日期）：空闲侧未通过；≥ 0.85 自动判占用。抽检：约 10% 车位·日按哈希随机抽中，其中本应自动判定的快照改送人工并标为「抽检」。占用侧抽中 9 个车位·日（已核对 0），出",
+      "phone_scroll_width": 390
+    },
     "upload": {
       "text": "C1-20151112-1209-184.jpg倾向空闲 · 校准后占用概率 0.09%（未校准 0.16%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。"
     },
     "results_page": {
-      "tables": 6,
-      "has_ext": true
+      "tables": 8,
+      "has_ext": true,
+      "has_audit_replay": true
     },
     "phone": {
       "parking_scroll_width": 390,

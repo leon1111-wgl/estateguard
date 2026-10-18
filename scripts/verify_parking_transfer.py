@@ -81,4 +81,15 @@ if 'cnr_ext' in evaluation:
         r=byid[s['id']];assert s['label']==int(r['label']) and all(s[k]==r[k] for k in ['camera','weather','date','time','slot']) and sha((WEB/'data/parking-ext'/s['image']).read_bytes())==s['source_sha256'],s['id']
     assert sum(len(frames[k]) for k in expected)==len(sub['samples'])
     summary+=f"; all {len(ext):,} EXT scores recomputed for MLP32 + {len(evaluation['models'])} heads; EXT subset {len(sub['frames'])} snapshots / {len(sub['samples'])} images follow the rule"
+replay_path=WEB/'data/parking-transfer/audit-replay.json'
+if replay_path.exists():
+    # Spot-check replay (protocol appendix 5): recompute everything from the published scores and compare.
+    from replay_parking_audit import build_report
+    assert '附录 5' in protocol,'Protocol appendix 5 missing'
+    published=load(replay_path);fresh,_=build_report(with_generic=True)
+    for k in ['source','audit','primary','fractions','rules','targets','reproduced','cameras','summary','generic']:
+        assert json.loads(json.dumps(fresh[k],ensure_ascii=False))==published[k],f'audit replay: {k} differs from a fresh recomputation'
+    labels=published['official_labels'];assert labels and labels['rows_matched']==evaluation['cnr_ext']['source']['count'] and labels['sha256']=='26416454cb8b184006431d0c149d31beabb8ef65d8eb2212cf4a39914a470dc8','audit replay: official label check missing'
+    p=next(g for g in published['summary'] if all(g[k]==v for k,v in published['primary'].items() if k!='model') and g['model']==published['primary']['model'])
+    summary+=f"; spot-check replay recomputed ({len(published['reproduced'])} thresholds reproduced, primary: {p['over_revoked']}/{p['over']} over-target revoked, {p['within_revoked']}/{p['within']} false)"
 print('PASS:',summary)

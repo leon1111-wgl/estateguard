@@ -116,3 +116,72 @@ def chronological_roles(frames):
     """frames: sorted unique frame keys. First 20% pool, next 10% gap, last 70% evaluation."""
     n=len(frames);pool=set(frames[:int(n*.2)]);gap=set(frames[int(n*.2):int(n*.3)])
     return {f:'pool' if f in pool else 'gap' if f in gap else 'eval' for f in frames}
+
+
+# Drift control (protocol appendix 5): unit-level random spot checks of automatic decisions and an
+# anytime-valid sequential revocation rule. Mirrors web/parking-transfer.mjs.
+AUDIT=dict(fraction=.1,delta=.05,salt='estateguard-audit-v1',rule='sprt')
+
+
+def audit_hash(text):
+    """32-bit FNV-1a over UTF-8 with the MurmurHash3 fmix32 finaliser, scaled to [0,1)."""
+    h=0x811c9dc5
+    for byte in text.encode():h=((h^byte)*0x01000193)&0xffffffff
+    h^=h>>16;h=(h*0x85ebca6b)&0xffffffff;h^=h>>13;h=(h*0xc2b2ae35)&0xffffffff;h^=h>>16
+    return h/2**32
+
+
+def audit_unit(camera,slot,date):return f'{camera}|{slot}|{date}'
+
+
+def is_audited(unit,fraction=AUDIT['fraction'],salt=AUDIT['salt']):
+    """Selection depends only on the camera·slot·date identifier, never on scores, labels or the model."""
+    return audit_hash(f'{salt}|{unit}')<fraction
+
+
+def cp_lower(x,n,level):
+    """One-sided Clopper-Pearson lower bound: largest l with P(Bin(n,l)>=x)<=level (x terms, not n-x)."""
+    if x<=0 or n==0:return 0.
+    lo,hi=0.,x/n
+    for _ in range(100):
+        mid=(lo+hi)/2
+        if 1-binom_cdf(x-1,n,mid)>level:hi=mid
+        else:lo=mid
+    return lo
+
+
+def audit_evidence(x,n,alpha,delta=AUDIT['delta'],rule=AUDIT['rule']):
+    """(statistic, revoke) for x error units among n spot-checked units.
+    sprt: log likelihood ratio of p1=2*alpha against alpha; revoking at log(2/delta) keeps the chance of ever
+    revoking a side that meets its target below delta/2 (Ville). cp: Clopper-Pearson lower bound at level
+    (delta/2)/(x(x+1)), spent over the error count so repeated looks stay valid; revoke when it exceeds alpha."""
+    if not 0<alpha<.5:raise ValueError('target must be in (0, 0.5)')
+    if rule=='sprt':
+        p1=2*alpha;llr=x*math.log(p1/alpha)+(n-x)*math.log((1-p1)/(1-alpha))
+        return llr,llr>=math.log(2/delta)
+    if rule=='cp':
+        lb=cp_lower(x,n,(delta/2)/(x*(x+1))) if x else 0.
+        return lb,lb>alpha
+    raise ValueError(f'unknown rule {rule}')
+
+
+def audit_monitor(events,alpha_free,alpha_busy,delta=AUDIT['delta'],rule=AUDIT['rule']):
+    """events: chronological dicts with unit, side ('free'/'busy') and wrong (True/False/None = not reviewed yet).
+    A unit counts once per side and is an error unit if any of its spot-checked snapshots on that side was wrong.
+    Unreviewed checks count as correct, which can only delay revocation. A side with no threshold (alpha None) is
+    ignored. Returns per-side counts and the first event index at which the rule revokes that side."""
+    out=dict(rule=rule,delta=delta)
+    for side,alpha in (('free',alpha_free),('busy',alpha_busy)):
+        units=set();bad=set();pending=0;revoked=None
+        if alpha is not None:
+            for i,e in enumerate(events):
+                if e['side']!=side:continue
+                units.add(e['unit'])
+                if e['wrong'] is None:pending+=1
+                elif e['wrong'] and e['unit'] not in bad:
+                    bad.add(e['unit']);stat,hit=audit_evidence(len(bad),len(units),alpha,delta,rule)
+                    if hit and revoked is None:revoked=dict(index=i,units=len(units),error_units=len(bad),statistic=stat)
+        out[side]=dict(alpha=alpha,units=len(units),error_units=len(bad),pending=pending,
+            statistic=None if alpha is None else audit_evidence(len(bad),len(units),alpha,delta,rule)[0],
+            limit=None if alpha is None else math.log(2/delta) if rule=='sprt' else alpha,revoked=revoked)
+    return out

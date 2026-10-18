@@ -93,3 +93,42 @@ export function dinoPool(hidden,tokens,dim=384){
  for(let j=0;j<dim;j++)out[dim+j]/=tokens-1;
  return Float32Array.from(out);
 }
+// Drift control (protocol appendix 5): unit-level random spot checks of automatic decisions and an
+// anytime-valid sequential revocation rule. Mirrors scripts/transfer_learning.py.
+export const AUDIT={fraction:.1,delta:.05,salt:'estateguard-audit-v1',rule:'sprt'};
+/** 32-bit FNV-1a over UTF-8 with the MurmurHash3 fmix32 finaliser, scaled to [0,1). */
+export function auditHash(value){
+ let h=0x811c9dc5;for(const byte of new TextEncoder().encode(value))h=Math.imul(h^byte,0x01000193)>>>0;
+ h^=h>>>16;h=Math.imul(h,0x85ebca6b)>>>0;h^=h>>>13;h=Math.imul(h,0xc2b2ae35)>>>0;h^=h>>>16;return (h>>>0)/4294967296;
+}
+export const auditUnit=(camera,slot,date)=>`${camera}|${slot}|${date}`;
+/** Selection depends only on the camera·slot·date identifier, never on scores, labels or the model. */
+export function isAudited(unit,fraction=AUDIT.fraction,salt=AUDIT.salt){return auditHash(`${salt}|${unit}`)<fraction;}
+/** One-sided Clopper-Pearson lower bound: largest l with P(Bin(n,l)>=x)<=level (x terms, not n-x). */
+export function cpLower(x,n,level){if(x<=0||n===0)return 0;let lo=0,hi=x/n;for(let i=0;i<100;i++){const mid=(lo+hi)/2;if(1-binomCdf(x-1,n,mid)>level)hi=mid;else lo=mid;}return lo;}
+/** [statistic, revoke] for x error units among n spot-checked units. sprt: log likelihood ratio of p1=2*alpha
+ * against alpha, revoking at log(2/delta) (Ville: a side meeting its target is ever revoked with chance <= delta/2).
+ * cp: Clopper-Pearson lower bound at level (delta/2)/(x(x+1)), spent over the error count; revoke above alpha. */
+export function auditEvidence(x,n,alpha,{delta=AUDIT.delta,rule=AUDIT.rule}={}){
+ if(!(alpha>0&&alpha<.5))throw new Error('抽检目标必须在 0 与 0.5 之间');
+ if(rule==='sprt'){const p1=2*alpha,llr=x*Math.log(p1/alpha)+(n-x)*Math.log((1-p1)/(1-alpha));return [llr,llr>=Math.log(2/delta)];}
+ if(rule==='cp'){const lb=x?cpLower(x,n,(delta/2)/(x*(x+1))):0;return [lb,lb>alpha];}
+ throw new Error(`未知撤销规则 ${rule}`);
+}
+/** events: chronological {unit,side:'free'|'busy',wrong:true|false|null (not reviewed yet)}. A unit counts once per
+ * side and is an error unit if any of its spot-checked snapshots on that side was wrong; unreviewed checks count as
+ * correct, which can only delay revocation. Sides without a threshold (alpha null) are ignored. Returns per-side
+ * counts and the first event index at which the rule revokes that side. */
+export function auditMonitor(events,{alpha_free,alpha_busy,delta=AUDIT.delta,rule=AUDIT.rule}={}){
+ const out={rule,delta};
+ for(const [side,alpha] of [['free',alpha_free],['busy',alpha_busy]]){
+  const units=new Set(),bad=new Set();let pending=0,revoked=null;
+  if(alpha!=null)events.forEach((e,i)=>{
+   if(e.side!==side)return;units.add(e.unit);
+   if(e.wrong===null)pending++;
+   else if(e.wrong&&!bad.has(e.unit)){bad.add(e.unit);const [statistic,hit]=auditEvidence(bad.size,units.size,alpha,{delta,rule});if(hit&&!revoked)revoked={index:i,units:units.size,error_units:bad.size,statistic};}
+  });
+  out[side]={alpha:alpha??null,units:units.size,error_units:bad.size,pending,statistic:alpha==null?null:auditEvidence(bad.size,units.size,alpha,{delta,rule})[0],limit:alpha==null?null:rule==='sprt'?Math.log(2/delta):alpha,revoked};
+ }
+ return out;
+}
