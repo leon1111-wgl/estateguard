@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-16T00:34:19.960Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Event evidence attachment only; actual COCO candidate from public CC0 still image. Not real-world violation validation.",
+  "browser": "155.0.8059.84",
+  "actual_inference": {
+    "bus_score": 0.9916937947273254,
+    "candidate_count": 1
+  },
+  "before": {
+    "event": "event:vision-track-1-1",
+    "file": "公开示例-校车.jpg",
+    "image": {
+      "src": "blob:http://127.0.0.1:8766/22058559-5627-4283-bf68-a2d154d47abb",
+      "complete": true,
+      "width": 960,
+      "height": 640
+    },
+    "video": null,
+    "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+    "message_error": false,
+    "draft_status": "open",
+    "draft_note": "公开图候选；正在核对可打开的原图。"
+  },
+  "after_bad_image": {
+    "event": "event:vision-track-1-1",
+    "file": "损坏替换.jpg",
+    "image": {
+      "src": "blob:http://127.0.0.1:8766/793da473-97a2-4f3a-9957-7d159c9740fa",
+      "complete": true,
+      "width": 0,
+      "height": 0
+    },
+    "video": null,
+    "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+    "message_error": false,
+    "draft_status": "open",
+    "draft_note": "公开图候选；正在核对可打开的原图。"
+  },
+  "old_image_url_still_readable": false,
+  "image_replacement_kept_previous_evidence": false,
+  "recovered_image": {
+    "event": "event:vision-track-1-1",
+    "file": "bus.jpg",
+    "image": {
+      "src": "blob:http://127.0.0.1:8766/f0e62255-d131-4fc6-9588-544f01381ce1",
+      "complete": true,
+      "width": 960,
+      "height": 640
+    },
+    "video": null,
+    "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+    "message_error": false,
+    "draft_status": "open",
+    "draft_note": "公开图候选；正在核对可打开的原图。"
+  },
+  "after_bad_video": {
+    "event": "event:vision-track-1-1",
+    "file": "损坏替换.mp4",
+    "image": null,
+    "video": {
+      "src": "blob:http://127.0.0.1:8766/69331bfb-ff65-4353-80e1-973e2999ede7",
+      "ready_state": 0,
+      "error": {
+        "code": 4,
+        "message": "PipelineStatus::DEMUXER_ERROR_COULD_NOT_OPEN: FFmpegDemuxer: open context failed"
+      }
+    },
+    "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+    "message_error": false,
+    "draft_status": "open",
+    "draft_note": "公开图候选；正在核对可打开的原图。"
+  },
+  "event_a": {
+    "event": "event:door-held-1",
+    "file": "bus.jpg",
+    "image": {
+      "src": "blob:http://127.0.0.1:8766/fc4ae634-595b-4fb5-b688-9e7fdc25c9e6",
+      "complete": true,
+      "width": 960,
+      "height": 640
+    },
+    "video": null,
+    "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+    "message_error": false,
+    "draft_status": "open",
+    "draft_note": ""
+  },
+  "event_b_initial": {
+    "event": "event:impact-1",
+    "image": null,
+    "video": null,
+    "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+    "message_error": false,
+    "draft_status": "open",
+    "draft_note": ""
+  },
+  "event_a_after_switch": {
+    "event": "event:door-held-1",
+    "file": "bus.jpg",
+    "image": {
+      "src": "blob:http://127.0.0.1:8766/fc4ae634-595b-4fb5-b688-9e7fdc25c9e6",
+      "complete": true,
+      "width": 960,
+      "height": 640
+    },
+    "video": null,
+    "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+    "message_error": false,
+    "draft_status": "open",
+    "draft_note": ""
+  },
+  "event_b_after_switch": {
+    "event": "event:impact-1",
+    "file": "B事件公开图.jpg",
+    "image": {
+      "src": "blob:http://127.0.0.1:8766/06af55a2-34d4-4e27-8b9d-408f8ddba8e1",
+      "complete": true,
+      "width": 960,
+      "height": 640
+    },
+    "video": null,
+    "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+    "message_error": false,
+    "draft_status": "open",
+    "draft_note": ""
+  },
+  "normal_event_isolation": true,
+  "page_errors": []
+}

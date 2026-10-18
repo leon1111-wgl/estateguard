@@ -1,0 +1,9 @@
+{
+  "status": "「held-timeout.jpg」读取失败：文件读取超时，请重新选择可打开的图片或短视频。 仍保留原证据「original.jpg」和复核草稿。",
+  "src": "blob:http://127.0.0.1:8766/6cd4bb06-43f6-4e4d-b4d1-18784690eb41",
+  "note": "timeout-review-draft",
+  "heldRevoked": true,
+  "timeout_ms": 10032,
+  "retry_succeeded": true,
+  "errors": []
+}

@@ -1,0 +1,518 @@
+{
+  "started_at": "2026-10-18T03:58:41.320Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Actual Chrome image/video decoding and actual COCO inference on a public CC0 photograph. Synthetic video verifies workflow only, not temporal violation accuracy.",
+  "checks": [
+    {
+      "name": "broken JPG preserves the previous evidence and review draft",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "event": "event:door-held-1",
+          "file": "原证据.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/945813e9-2bdc-42f6-957b-16c2c9781169",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "file": "原证据.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/945813e9-2bdc-42f6-957b-16c2c9781169",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "「损坏替换.jpg」读取失败：无法解码这张图片，请选择可打开的 JPEG、PNG 或 WebP。 仍保留原证据「原证据.jpg」和复核草稿。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": ""
+        }
+      }
+    },
+    {
+      "name": "broken MP4 preserves the previous evidence and review draft",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "event": "event:door-held-1",
+          "file": "原证据.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/4f680263-4e02-4724-875a-1d756a1a10d8",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "file": "原证据.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/4f680263-4e02-4724-875a-1d756a1a10d8",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "「损坏替换.mp4」读取失败：无法解码这段视频，请选择可播放的 MP4 或 WebM。 仍保留原证据「原证据.jpg」和复核草稿。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": ""
+        }
+      }
+    },
+    {
+      "name": "first failure leaves no pretend evidence and the same file can be selected again",
+      "passed": true,
+      "evidence": {
+        "failed": {
+          "event": "event:door-held-1",
+          "file": null,
+          "image": null,
+          "video": null,
+          "status": "「首次损坏.jpg」读取失败：无法解码这张图片，请选择可打开的 JPEG、PNG 或 WebP。 尚未载入可查看的证据，复核草稿已保留。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "actual_decode_attempts": 2,
+        "recovered": {
+          "event": "event:door-held-1",
+          "file": "首次可用证据.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/309a42ce-9ef2-4189-bbe5-8a526e8209f2",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "",
+          "save_disabled": false,
+          "file_input_value": ""
+        }
+      }
+    },
+    {
+      "name": "pending replacement keeps the original preview and permits drafting but blocks saving",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "event": "event:door-held-1",
+          "file": "核查中的原图.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/0a787fa4-073a-472d-8712-3d942a253d76",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "原草稿",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "pending": {
+          "event": "event:door-held-1",
+          "file": "核查中的原图.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/0a787fa4-073a-472d-8712-3d942a253d76",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "正在检查「等待解码.jpg」是否可打开。仍保留原证据「核查中的原图.jpg」和复核草稿。检查完成后可保存复核记录。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "原草稿",
+          "save_disabled": true,
+          "file_input_value": ""
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "file": "等待解码.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/0d3e7617-159e-4c2b-91e6-54ac86dbff68",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "读取期间继续填写的草稿",
+          "save_disabled": false,
+          "file_input_value": ""
+        }
+      }
+    },
+    {
+      "name": "newer evidence survives an older delayed success",
+      "passed": true,
+      "evidence": {
+        "latest": {
+          "event": "event:door-held-1",
+          "file": "最新选择.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/deb11604-cb4a-4017-9724-15322fcf96c3",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "最新草稿必须保留",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "file": "最新选择.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/deb11604-cb4a-4017-9724-15322fcf96c3",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "最新草稿必须保留",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "delayed_native_result": true
+      }
+    },
+    {
+      "name": "newer evidence survives an older delayed failure",
+      "passed": true,
+      "evidence": {
+        "latest": {
+          "event": "event:door-held-1",
+          "file": "最新选择.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/ebb68c14-aead-47a5-a508-801fcbead57a",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "最新草稿必须保留",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "file": "最新选择.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/ebb68c14-aead-47a5-a508-801fcbead57a",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "最新草稿必须保留",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "delayed_native_result": false
+      }
+    },
+    {
+      "name": "delayed evidence stays with its original event while another event remains editable",
+      "passed": true,
+      "evidence": {
+        "event_b_before": {
+          "event": "event:impact-1",
+          "file": "事件B原图.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/7b1fd377-7692-47e9-86cb-6eacaf195974",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "事件B草稿",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "event_b_after": {
+          "event": "event:impact-1",
+          "file": "事件B原图.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/7b1fd377-7692-47e9-86cb-6eacaf195974",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "事件B草稿",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "event_a": {
+          "event": "event:door-held-1",
+          "file": "事件A新图.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/38cedaec-4703-44dd-acaf-3889b92ff65c",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "事件A草稿",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "event_a_failed": {
+          "event": "event:door-held-1",
+          "file": "事件A新图.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/38cedaec-4703-44dd-acaf-3889b92ff65c",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "「事件A损坏图.jpg」读取失败：无法解码这张图片，请选择可打开的 JPEG、PNG 或 WebP。 仍保留原证据「事件A新图.jpg」和复核草稿。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "事件A草稿",
+          "save_disabled": false,
+          "file_input_value": ""
+        }
+      }
+    },
+    {
+      "name": "replacing the workspace invalidates pending attachments even when event IDs repeat",
+      "passed": true,
+      "evidence": {
+        "original": {
+          "event": "event:door-held-1",
+          "file": "旧工作区原图.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/a13e5e22-36f9-4a9c-adcd-be81534b6575",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "replacement": {
+          "event": "event:door-held-1",
+          "file": "新工作区证据.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/62350d12-c197-4b51-ae45-9e9b117db0f8",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "新工作区草稿",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "file": "新工作区证据.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/62350d12-c197-4b51-ae45-9e9b117db0f8",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "新工作区草稿",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "old_url_readable": false
+      }
+    },
+    {
+      "name": "a real short video can be viewed and a bad replacement preserves it",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "event": "event:door-held-1",
+          "file": "公开图片合成短片.mp4",
+          "image": null,
+          "video": {
+            "src": "blob:http://127.0.0.1:8766/ff1ee6a8-78fc-49c0-bef3-dec6d5bfcedc",
+            "ready_state": 4,
+            "width": 640,
+            "height": 426,
+            "duration": 1.539467,
+            "error": null
+          },
+          "status": "视频首帧已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "file": "公开图片合成短片.mp4",
+          "image": null,
+          "video": {
+            "src": "blob:http://127.0.0.1:8766/ff1ee6a8-78fc-49c0-bef3-dec6d5bfcedc",
+            "ready_state": 4,
+            "width": 640,
+            "height": 426,
+            "duration": 1.539467,
+            "error": null
+          },
+          "status": "「损坏短片.mp4」读取失败：无法解码这段视频，请选择可播放的 MP4 或 WebM。 仍保留原证据「公开图片合成短片.mp4」和复核草稿。",
+          "status_role": "status",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "open",
+          "note": "合成静态短片，仅核查媒体播放。",
+          "save_disabled": false,
+          "file_input_value": ""
+        }
+      }
+    },
+    {
+      "name": "actual COCO candidates keep readable evidence and handover restores records without media",
+      "passed": true,
+      "evidence": {
+        "real_inference": {
+          "bus_score": 0.9916937947273254,
+          "candidates": 1
+        },
+        "handoff": {
+          "event": "event:vision-track-1-1",
+          "file": "公开示例-校车.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/70df138f-4be4-486b-b9f7-6f95c7982096",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": "图片已解码，请核对画面是否对应本事件。",
+          "status_role": "status",
+          "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+          "status_value": "open",
+          "note": "",
+          "save_disabled": false,
+          "file_input_value": ""
+        },
+        "exported_keys": [
+          "format",
+          "version",
+          "batch",
+          "policy",
+          "decisions",
+          "audit",
+          "exported_at"
+        ],
+        "exported_bytes": 1397,
+        "restored": {
+          "event": "event:vision-track-1-1",
+          "file": null,
+          "image": null,
+          "video": null,
+          "status": "未载入本地证据。请选择与本事件对应的图片或视频。",
+          "status_role": "status",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "status_value": "needs_evidence",
+          "note": "已核查公开图，需现场资料补证。",
+          "save_disabled": false,
+          "file_input_value": ""
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.84",
+  "finished_at": "2026-10-18T03:58:48.323Z",
+  "passed": 10,
+  "failed": 0,
+  "ok": true
+}

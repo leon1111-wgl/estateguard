@@ -1,0 +1,140 @@
+{
+  "started_at": "2026-10-16T00:36:43.965Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Actual Chrome image/video decoding and actual COCO inference on a public CC0 photograph. Synthetic video verifies workflow only, not temporal violation accuracy.",
+  "checks": [
+    {
+      "name": "broken JPG preserves the previous evidence and review draft",
+      "passed": false,
+      "error": "failed replacement lost the original filename\n+ actual - expected\n\n+ '损坏替换.jpg'\n- '原证据.jpg'\n",
+      "evidence": {
+        "before": {
+          "event": "event:door-held-1",
+          "file": "原证据.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/5af3d820-ab4a-488c-a15e-23312c3c4258",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": null,
+          "status_role": null,
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": "C:\\fakepath\\原证据.jpg"
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "file": "损坏替换.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/bff93dbb-b224-40b0-bd9d-0a9f2b2c0f37",
+            "complete": true,
+            "width": 0,
+            "height": 0
+          },
+          "video": null,
+          "status": null,
+          "status_role": null,
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": "C:\\fakepath\\损坏替换.jpg"
+        },
+        "state": {
+          "event": "event:door-held-1",
+          "file": "损坏替换.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/bff93dbb-b224-40b0-bd9d-0a9f2b2c0f37",
+            "complete": true,
+            "width": 0,
+            "height": 0
+          },
+          "video": null,
+          "status": null,
+          "status_role": null,
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": "C:\\fakepath\\损坏替换.jpg"
+        }
+      }
+    },
+    {
+      "name": "broken MP4 preserves the previous evidence and review draft",
+      "passed": false,
+      "error": "failed replacement lost the original filename\n+ actual - expected\n\n+ '损坏替换.mp4'\n- '原证据.jpg'\n",
+      "evidence": {
+        "before": {
+          "event": "event:door-held-1",
+          "file": "原证据.jpg",
+          "image": {
+            "src": "blob:http://127.0.0.1:8766/c32d4f5d-47e3-4940-8111-8ccdf42e3c95",
+            "complete": true,
+            "width": 960,
+            "height": 640
+          },
+          "video": null,
+          "status": null,
+          "status_role": null,
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": "C:\\fakepath\\原证据.jpg"
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "file": "损坏替换.mp4",
+          "image": null,
+          "video": {
+            "src": "blob:http://127.0.0.1:8766/2bbc1744-4070-4e90-9e2f-0d6b5713173b",
+            "ready_state": 0,
+            "width": 0,
+            "height": 0,
+            "duration": null,
+            "error": 4
+          },
+          "status": null,
+          "status_role": null,
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": "C:\\fakepath\\损坏替换.mp4"
+        },
+        "state": {
+          "event": "event:door-held-1",
+          "file": "损坏替换.mp4",
+          "image": null,
+          "video": {
+            "src": "blob:http://127.0.0.1:8766/2bbc1744-4070-4e90-9e2f-0d6b5713173b",
+            "ready_state": 0,
+            "width": 0,
+            "height": 0,
+            "duration": null,
+            "error": 4
+          },
+          "status": null,
+          "status_role": null,
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "status_value": "needs_evidence",
+          "note": "已查看原图，等待补充证据。",
+          "save_disabled": false,
+          "file_input_value": "C:\\fakepath\\损坏替换.mp4"
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.84",
+  "finished_at": "2026-10-16T00:36:45.709Z",
+  "passed": 0,
+  "failed": 2,
+  "ok": false
+}
