@@ -252,3 +252,8 @@ node scripts/critic-check.cjs
 未验证：整个视频后续帧是否损坏、媒体与事件事实对应、跨会话可信媒体归档。附件超时限制 10 秒，失败可重新选择；不把这些工程检查作为领域检测精度。
 
 发布前接续核验：上一轮抽检提交 a8cbad4 尚未推送，本轮独立重新运行 16 项训练检查、模型资源校验和全部迁移/抽检回放重算，并完整执行 parking-transfer-check。真实编码器前向、C6 抽检撤销、导出恢复及三模型 EXT 对照均通过，无页面错误或跨站请求；未修改其模型或抽检规则。独立报告保存在 artifacts/review-a8cbad4/parking-transfer-validation.json。
+
+
+发布校验的补充说明：Linux 首次失败后，通过[严格诊断运行](https://github.com/leon1111-wgl/estateguard/actions/runs/39095950159)定位 CP 统计数值差，最大 7.9447e-13。比较器只允许明确路径下 CP statistic 的绝对误差 1e-12，且两个值在目标 alpha 同一侧；所有离散结果、阈值、SPRT 统计值与其他报告字段严格一致。完整报告的 elapsed_seconds 是本机运行耗时，检查类型与有限值，不要求两次耗时相同。回归测试保留真实 Linux 数值对，同时篡改计数、阈值、撤销时间/位置、类型、数组和非有限数，验证仍能阻止发布。原保存结果与模型文件均保持不变。
+
+比较器修复的本机验证：新增 10 项回归先失败后通过，完整 Python 检查 24/24；重新运行 verify_parking_transfer.py，通过全部 144,965 张 EXT 分数、54 组阈值与完整抽检回放。最终部署仍须由 Linux CI 对同一提交验证。
