@@ -1,0 +1,264 @@
+{
+  "scope": "独立值班员和部署工程师的真实浏览器复现。主基线为 c9251e2；numeric_drift 与 cold_export 是修复过程中继续找出的边界。人工结论为测试输入，不代表现场判断质量。",
+  "baseline_commit": "c9251e2dd45ecef464283d027246d680a78bc09b",
+  "b52": {
+    "before": {
+      "session": "B-20150708",
+      "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+      "selected": "B-20150708-1645-52",
+      "model": "mlp32",
+      "filter": "evidence",
+      "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+      "message": "已保存 2015/07/08 16:45 · B:52：需补证据。当前快照还剩 53 个待人工复核。离开前请导出。"
+    },
+    "after": {
+      "session": "B-20150708",
+      "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+      "selected": "B-20150708-0805-1",
+      "model": "dinov2",
+      "filter": "all",
+      "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+      "message": "已恢复人工复核。模型预测将通过当前模型重新分析，不采用导入文件中的分数。"
+    },
+    "exported_source": "B-20150708-1645",
+    "prediction": {
+      "id": "B-20150708-1645-52",
+      "dataset": "cnrpark",
+      "camera": "B",
+      "slot": "52",
+      "source_time": "20150708 1645",
+      "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+      "split": "test",
+      "image": "images/B-20150708-1645-52.jpg",
+      "source_sha256": "e22f5ff979fcf2e502f2316db76c5e1a10cfff6fecbe104593d98efb96dcb61b",
+      "predicted_occupied_score": 2.1880970806291324e-05,
+      "prediction": 0,
+      "review_state": "free",
+      "dataset_label": 1
+    },
+    "review": {
+      "decision": "uncertain",
+      "note": "B52 16:45 交班任务。",
+      "at": "2026-10-18T09:54:32.649Z"
+    }
+  },
+  "c8": {
+    "started_at": "2026-10-18T09:53:17.703Z",
+    "base": "http://127.0.0.1:8766",
+    "scope": "Real public-image inference and human-review handover. No model training or data download.",
+    "browser": "155.0.8059.84",
+    "before_export": {
+      "session": "C8-ext",
+      "frame": "2",
+      "time": "2015/11/21 12:02 · 雨天 · 第 3 / 3 张 · 距上一张约 5 天 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+      "model": "mobilenet",
+      "filter": "evidence",
+      "selected": "C8-20151121-1202-615",
+      "visible": 1,
+      "progress": "当前快照：已确认 0 / 54 · 待人工复核 54（其中需补证据 1）",
+      "note": "交班复现：本车位需补充现场信息，请接班后继续核查。",
+      "decision": "uncertain",
+      "message": "已保存 2015/11/21 12:02 · C8:615：需补证据。当前快照还剩 54 个待人工复核。离开前请导出。",
+      "review_message": "已保存 2015/11/21 12:02 · C8:615：需补证据。当前快照还剩 54 个待人工复核。"
+    },
+    "export": {
+      "keys": [
+        "format",
+        "version",
+        "model_sha256",
+        "reviews",
+        "dataset",
+        "source_frame",
+        "frame_summary",
+        "datasets",
+        "prediction_model",
+        "onsite",
+        "drift",
+        "predictions_by_model",
+        "review_summary",
+        "unanalysed_sample_ids",
+        "samples",
+        "failures",
+        "evidence_failures",
+        "scope"
+      ],
+      "source_frame": "C8-20151121-1202",
+      "prediction_model": {
+        "key": "mobilenet",
+        "name": "MobileNetV2 迁移头",
+        "model_sha256": "6c007e73b6899dd1a2e40449a37117efafdd2c83467c8d8d78cd999b551ca79b"
+      },
+      "review_summary": {
+        "total": 54,
+        "confirmed": 0,
+        "pending": 53,
+        "needs_evidence": 1
+      },
+      "prediction_count": 54,
+      "target_prediction": {
+        "id": "C8-20151121-1202-615",
+        "dataset": "cnr_ext",
+        "camera": "C8",
+        "slot": "615",
+        "source_time": "20151121 1202",
+        "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+        "split": "ext_holdout",
+        "image": "images/C8-20151121-1202-615.jpg",
+        "source_sha256": "2b8c4514eaa315046eb1d62ec36d70f486dfbce3b296b1bb7948adb06973f9b6",
+        "predicted_occupied_score": 0.0002196080773443204,
+        "calibrated_occupied_score": 1.701087809289741e-05,
+        "audit": false,
+        "prediction": 0,
+        "review_state": "uncertain",
+        "dataset_label": 0
+      },
+      "review": {
+        "decision": "uncertain",
+        "note": "交班复现：本车位需补充现场信息，请接班后继续核查。",
+        "at": "2026-10-18T09:53:19.976Z"
+      }
+    },
+    "after_reload": {
+      "session": "B-20150708",
+      "frame": "0",
+      "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+      "model": "dinov2",
+      "filter": "all",
+      "selected": "B-20150708-0805-1",
+      "visible": 53,
+      "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+      "note": null,
+      "decision": "pending",
+      "message": "已加载完整测试集：6413 张真实车位图片，121 个历史快照；另有 CNR-EXT 保留测试 960 张、27 个快照（9 个新视角，未参与训练与选模）。点击“分析当前快照”运行模型。",
+      "review_message": ""
+    },
+    "after_restore": {
+      "session": "B-20150708",
+      "frame": "0",
+      "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+      "model": "dinov2",
+      "filter": "all",
+      "selected": "B-20150708-0805-1",
+      "visible": 53,
+      "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+      "note": null,
+      "decision": "pending",
+      "message": "已恢复人工复核。模型预测将通过当前模型重新分析，不采用导入文件中的分数。",
+      "review_message": "人工复核已恢复，待办和进度已按保存的结论重新计算。"
+    },
+    "reexport": {
+      "source_frame": "B-20150708-0805",
+      "prediction_model": {
+        "key": "dinov2",
+        "name": "DINOv2-small 线性探针",
+        "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+      },
+      "review_summary": {
+        "total": 53,
+        "confirmed": 0,
+        "pending": 53,
+        "needs_evidence": 0
+      },
+      "review_count": 1,
+      "target_review": {
+        "decision": "uncertain",
+        "note": "交班复现：本车位需补充现场信息，请接班后继续核查。",
+        "at": "2026-10-18T09:53:19.976Z"
+      }
+    },
+    "context_retained": {
+      "session": false,
+      "frame": false,
+      "model": false,
+      "filter": false,
+      "selected": false
+    },
+    "manual_recovery": {
+      "session": "C8-ext",
+      "frame": "2",
+      "time": "2015/11/21 12:02 · 雨天 · 第 3 / 3 张 · 距上一张约 5 天 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+      "model": "mobilenet",
+      "filter": "evidence",
+      "selected": "C8-20151121-1202-615",
+      "visible": 1,
+      "progress": "当前快照：已确认 0 / 54 · 待人工复核 54（其中需补证据 1）",
+      "note": "交班复现：本车位需补充现场信息，请接班后继续核查。",
+      "decision": "uncertain",
+      "message": "已切换到 MobileNetV2 迁移头。请点击“分析当前快照”运行该模型。各模型结果分别保留，人工结论不受影响。",
+      "review_message": ""
+    },
+    "invalid_import": {
+      "session": "C8-ext",
+      "frame": "2",
+      "time": "2015/11/21 12:02 · 雨天 · 第 3 / 3 张 · 距上一张约 5 天 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+      "model": "mobilenet",
+      "filter": "evidence",
+      "selected": "C8-20151121-1202-615",
+      "visible": 1,
+      "progress": "当前快照：已确认 0 / 54 · 待人工复核 54（其中需补证据 1）",
+      "note": "交班复现：本车位需补充现场信息，请接班后继续核查。",
+      "decision": "uncertain",
+      "message": "恢复失败：复核文件版本或模型版本不匹配",
+      "review_message": ""
+    },
+    "legacy_import": {
+      "session": "C8-ext",
+      "frame": "2",
+      "time": "2015/11/21 12:02 · 雨天 · 第 3 / 3 张 · 距上一张约 5 天 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+      "model": "mobilenet",
+      "filter": "evidence",
+      "selected": "C8-20151121-1202-615",
+      "visible": 1,
+      "progress": "当前快照：已确认 0 / 54 · 待人工复核 54（其中需补证据 1）",
+      "note": "交班复现：本车位需补充现场信息，请接班后继续核查。",
+      "decision": "uncertain",
+      "message": "已恢复人工复核。模型预测将通过当前模型重新分析，不采用导入文件中的分数。",
+      "review_message": "人工复核已恢复，待办和进度已按保存的结论重新计算。"
+    },
+    "legacy_compatible": true,
+    "error": "locator.click: Timeout 120000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.parking-tile[data-sample-id=\"B-20150708-1645-52\"]')\u001b[22m\n\n    at artifacts/parking-handover-baseline.cjs:30:160",
+    "finished_at": "2026-10-18T09:55:20.683Z"
+  },
+  "prior_import_failures": {
+    "playback": {
+      "frame_after_import": "0",
+      "frame_after_timer": "1",
+      "play_label": "停止回放",
+      "imported": "人工复核已恢复，待办和进度已按保存的结论重新计算。"
+    },
+    "atomic_failure": {
+      "failure": "恢复失败：Cannot convert object to primitive value",
+      "previous_review_preserved": false,
+      "review_count": 0,
+      "drift": {
+        "B": {
+          "evidence_from": "20150708",
+          "history": []
+        }
+      }
+    }
+  },
+  "numeric_drift": {
+    "message": "恢复失败：d.slice is not a function",
+    "old_review_preserved": false,
+    "drift": {
+      "B": {
+        "evidence_from": 20150708,
+        "history": []
+      }
+    },
+    "errors": []
+  },
+  "cold_export": {
+    "view": {
+      "version": 1,
+      "sample_id": null,
+      "model_key": "dinov2",
+      "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+      "filter": "all",
+      "show_truth": false
+    },
+    "export_message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+    "import_message": "恢复失败：交接快照不存在或对应公开数据未加载，请检查文件或刷新后重试"
+  }
+}

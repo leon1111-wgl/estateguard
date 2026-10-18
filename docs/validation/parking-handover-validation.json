@@ -1,0 +1,728 @@
+{
+  "started_at": "2026-10-18T10:04:21.000Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "真实公开数据推理及交班状态恢复。导入分数不作为新推理；人工结论为验收输入。本轮没有训练、精度提升声明或新增数据下载。",
+  "checks": [
+    {
+      "name": "actual B52 inference exports and restores the exact review location and model",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "session": "B-20150708",
+          "frame": 104,
+          "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "evidence",
+          "truth": false,
+          "selected": "B-20150708-1645-52",
+          "visible": 1,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+          "note": "实际 B:52 16:45 交班，待补证据。",
+          "decision": "uncertain",
+          "message": "已保存 2015/07/08 16:45 · B:52：需补证据。当前快照还剩 53 个待人工复核。离开前请导出。",
+          "review_message": "已保存 2015/07/08 16:45 · B:52：需补证据。当前快照还剩 53 个待人工复核。",
+          "play": "false",
+          "run_disabled": false
+        },
+        "prediction": {
+          "id": "B-20150708-1645-52",
+          "dataset": "cnrpark",
+          "camera": "B",
+          "slot": "52",
+          "source_time": "20150708 1645",
+          "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+          "split": "test",
+          "image": "images/B-20150708-1645-52.jpg",
+          "source_sha256": "e22f5ff979fcf2e502f2316db76c5e1a10cfff6fecbe104593d98efb96dcb61b",
+          "predicted_occupied_score": 2.1880970806291324e-05,
+          "prediction": 0,
+          "review_state": "free",
+          "dataset_label": 1
+        },
+        "view": {
+          "version": 1,
+          "frame_id": "B-20150708-1645",
+          "sample_id": "B-20150708-1645-52",
+          "model_key": "mlp32",
+          "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+          "filter": "evidence",
+          "show_truth": false
+        },
+        "after": {
+          "session": "B-20150708",
+          "frame": 104,
+          "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "evidence",
+          "truth": false,
+          "selected": "B-20150708-1645-52",
+          "visible": 1,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+          "note": "实际 B:52 16:45 交班，待补证据。",
+          "decision": "uncertain",
+          "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。",
+          "play": "false",
+          "run_disabled": false
+        },
+        "grid_position": {
+          "grid_scroll_top": 2447,
+          "tile_top": 346.59375,
+          "tile_bottom": 588.375,
+          "grid_height": 590,
+          "page_scroll_y": 0
+        }
+      }
+    },
+    {
+      "name": "actual MobileNetV2 EXT inference restores a different camera, date, confirmed filter and truth switch",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "session": "C8-ext",
+          "frame": 2,
+          "time": "2015/11/21 12:02 · 雨天 · 第 3 / 3 张 · 距上一张约 5 天 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mobilenet",
+          "filter": "confirmed",
+          "truth": true,
+          "selected": "C8-20151121-1202-615",
+          "visible": 1,
+          "progress": "当前快照：已确认 1 / 54 · 待人工复核 53（其中需补证据 0）",
+          "note": "验收按公开标注填入人工结论，仅验证交班状态。",
+          "decision": "free",
+          "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+          "review_message": "已保存 2015/11/21 12:02 · C8:615：已确认空闲。当前快照还剩 53 个待人工复核。",
+          "play": "false",
+          "run_disabled": false
+        },
+        "predictions": 54,
+        "after": {
+          "session": "C8-ext",
+          "frame": 2,
+          "time": "2015/11/21 12:02 · 雨天 · 第 3 / 3 张 · 距上一张约 5 天 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mobilenet",
+          "filter": "confirmed",
+          "truth": true,
+          "selected": "C8-20151121-1202-615",
+          "visible": 1,
+          "progress": "当前快照：已确认 1 / 54 · 待人工复核 53（其中需补证据 0）",
+          "note": "验收按公开标注填入人工结论，仅验证交班状态。",
+          "decision": "free",
+          "message": "已恢复人工复核 1 条。已返回摄像头 C8 · 2015/11/21 12:02 · 车位 615。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 C8 · 2015/11/21 12:02 · 车位 615。",
+          "play": "false",
+          "run_disabled": false
+        }
+      }
+    },
+    {
+      "name": "legacy files with frame and model metadata locate a saved review and explain the fallback",
+      "passed": true,
+      "evidence": {
+        "after": {
+          "session": "C8-ext",
+          "frame": 2,
+          "time": "2015/11/21 12:02 · 雨天 · 第 3 / 3 张 · 距上一张约 5 天 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mobilenet",
+          "filter": "all",
+          "truth": false,
+          "selected": "C8-20151121-1202-615",
+          "visible": 54,
+          "progress": "当前快照：已确认 0 / 54 · 待人工复核 54（其中需补证据 1）",
+          "note": "交班验收：请继续核对本车位。",
+          "decision": "uncertain",
+          "message": "已恢复人工复核 1 条。已返回摄像头 C8 · 2015/11/21 12:02 · 车位 615。旧版文件未记录精确选中车位和筛选，已定位到该快照首个有人工记录的车位；若无记录则显示首个车位。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 C8 · 2015/11/21 12:02 · 车位 615。旧版文件未记录精确选中车位和筛选，已定位到该快照首个有人工记录的车位；若无记录则显示首个车位。",
+          "play": "false",
+          "run_disabled": false
+        }
+      }
+    },
+    {
+      "name": "minimal legacy review files keep the current location and say no bookmark was supplied",
+      "passed": true,
+      "evidence": {
+        "after": {
+          "session": "B-20150708",
+          "frame": 104,
+          "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-1645-52",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+          "note": "交班验收：请继续核对本车位。",
+          "decision": "uncertain",
+          "message": "已恢复人工复核 1 条。旧版文件没有交接位置，保留当前相机和快照；记录可能位于其他快照。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+          "review_message": "人工复核已恢复 1 条。旧版文件没有交接位置，保留当前相机和快照；记录可能位于其他快照。",
+          "play": "false",
+          "run_disabled": false
+        }
+      }
+    },
+    {
+      "name": "invalid bookmarks and malformed drift reject the whole import without losing the current draft",
+      "passed": true,
+      "evidence": {
+        "rejections": [
+          {
+            "name": "unknown frame",
+            "message": "恢复失败：交接快照记录不一致"
+          },
+          {
+            "name": "wrong frame sample",
+            "message": "恢复失败：交接车位不属于记录的快照"
+          },
+          {
+            "name": "unknown model",
+            "message": "恢复失败：交接模型记录不一致"
+          },
+          {
+            "name": "model hash",
+            "message": "恢复失败：交接模型记录不一致"
+          },
+          {
+            "name": "invalid filter",
+            "message": "恢复失败：交接筛选设置无效"
+          },
+          {
+            "name": "truth type",
+            "message": "恢复失败：交接筛选设置无效"
+          },
+          {
+            "name": "view version",
+            "message": "恢复失败：交接位置格式或版本无效"
+          },
+          {
+            "name": "core version",
+            "message": "恢复失败：复核文件版本或模型版本不匹配"
+          },
+          {
+            "name": "malformed drift",
+            "message": "恢复失败：抽检撤销记录格式无效，未替换本页记录"
+          }
+        ],
+        "final_reviews": {
+          "B-20150708-1645-52": {
+            "decision": "uncertain",
+            "note": "未保存的交班草稿必须保留",
+            "at": "2026-10-18T10:04:25.367Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "prediction-dependent filters fall back explicitly and never trust imported scores or thresholds",
+      "passed": true,
+      "evidence": {
+        "filters": [
+          {
+            "filter": "errors",
+            "state": {
+              "session": "B-20150708",
+              "frame": 104,
+              "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+              "model": "mobilenet",
+              "filter": "all",
+              "truth": false,
+              "selected": "B-20150708-1645-52",
+              "visible": 53,
+              "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+              "note": "交班验收：请继续核对本车位。",
+              "decision": "uncertain",
+              "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+              "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。",
+              "play": "false",
+              "run_disabled": false
+            }
+          },
+          {
+            "filter": "model_uncertain",
+            "state": {
+              "session": "B-20150708",
+              "frame": 104,
+              "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+              "model": "mobilenet",
+              "filter": "all",
+              "truth": false,
+              "selected": "B-20150708-1645-52",
+              "visible": 53,
+              "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+              "note": "交班验收：请继续核对本车位。",
+              "decision": "uncertain",
+              "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+              "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。",
+              "play": "false",
+              "run_disabled": false
+            }
+          },
+          {
+            "filter": "audit",
+            "state": {
+              "session": "B-20150708",
+              "frame": 104,
+              "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+              "model": "mobilenet",
+              "filter": "all",
+              "truth": false,
+              "selected": "B-20150708-1645-52",
+              "visible": 53,
+              "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+              "note": "交班验收：请继续核对本车位。",
+              "decision": "uncertain",
+              "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+              "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。",
+              "play": "false",
+              "run_disabled": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "a legal human filter that hides the bookmarked slot falls back without losing that slot",
+      "passed": true,
+      "evidence": {
+        "cases": [
+          {
+            "filter": "confirmed",
+            "decision": "uncertain",
+            "state": {
+              "session": "B-20150708",
+              "frame": 104,
+              "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+              "model": "mlp32",
+              "filter": "all",
+              "truth": false,
+              "selected": "B-20150708-1645-52",
+              "visible": 53,
+              "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+              "note": "交班验收：请继续核对本车位。",
+              "decision": "uncertain",
+              "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原人工筛选会隐藏交接车位，已切换“全部车位”以保留位置。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+              "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原人工筛选会隐藏交接车位，已切换“全部车位”以保留位置。",
+              "play": "false",
+              "run_disabled": false
+            }
+          },
+          {
+            "filter": "evidence",
+            "decision": "busy",
+            "state": {
+              "session": "B-20150708",
+              "frame": 104,
+              "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+              "model": "mlp32",
+              "filter": "all",
+              "truth": false,
+              "selected": "B-20150708-1645-52",
+              "visible": 53,
+              "progress": "当前快照：已确认 1 / 53 · 待人工复核 52（其中需补证据 0）",
+              "note": "交班验收：请继续核对本车位。",
+              "decision": "busy",
+              "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原人工筛选会隐藏交接车位，已切换“全部车位”以保留位置。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+              "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原人工筛选会隐藏交接车位，已切换“全部车位”以保留位置。",
+              "play": "false",
+              "run_disabled": false
+            }
+          },
+          {
+            "filter": "review",
+            "decision": "busy",
+            "state": {
+              "session": "B-20150708",
+              "frame": 104,
+              "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+              "model": "mlp32",
+              "filter": "all",
+              "truth": false,
+              "selected": "B-20150708-1645-52",
+              "visible": 53,
+              "progress": "当前快照：已确认 1 / 53 · 待人工复核 52（其中需补证据 0）",
+              "note": "交班验收：请继续核对本车位。",
+              "decision": "busy",
+              "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原人工筛选会隐藏交接车位，已切换“全部车位”以保留位置。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+              "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原人工筛选会隐藏交接车位，已切换“全部车位”以保留位置。",
+              "play": "false",
+              "run_disabled": false
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "malformed drift cannot erase or advance an existing sticky restriction or saved review",
+      "passed": true,
+      "evidence": {
+        "original_drift": {
+          "B": {
+            "evidence_from": "20150708",
+            "history": [
+              {
+                "model": "mobilenet",
+                "side": "free",
+                "threshold": 0.2,
+                "alpha": 0.05,
+                "sample_id": "B-20150708-1645-52",
+                "source_time": "20150708 1645",
+                "units": 10,
+                "error_units": 3,
+                "statistic": 4,
+                "limit": 3.6888794541139363,
+                "at": "2026-10-18T09:00:00.000Z",
+                "checked": [
+                  {
+                    "id": "B-20150708-1645-52",
+                    "wrong": true
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "rejections": [
+          {
+            "name": "不可转换车位编号",
+            "state": {
+              "session": "B-20150708",
+              "frame": 104,
+              "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+              "model": "mlp32",
+              "filter": "evidence",
+              "truth": false,
+              "selected": "B-20150708-1645-52",
+              "visible": 1,
+              "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+              "note": "已有撤销限制下的未保存草稿",
+              "decision": "uncertain",
+              "message": "恢复失败：抽检撤销记录格式无效，未替换本页记录",
+              "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。已读入 1 个摄像头的抽检撤销记录，重新校准仍只用撤销日期及之后的人工结论。",
+              "play": "false",
+              "run_disabled": false
+            }
+          },
+          {
+            "name": "数字日期",
+            "state": {
+              "session": "B-20150708",
+              "frame": 104,
+              "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+              "model": "mlp32",
+              "filter": "evidence",
+              "truth": false,
+              "selected": "B-20150708-1645-52",
+              "visible": 1,
+              "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+              "note": "已有撤销限制下的未保存草稿",
+              "decision": "uncertain",
+              "message": "恢复失败：抽检撤销记录格式无效，未替换本页记录",
+              "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。已读入 1 个摄像头的抽检撤销记录，重新校准仍只用撤销日期及之后的人工结论。",
+              "play": "false",
+              "run_disabled": false
+            }
+          },
+          {
+            "name": "数组来源时间",
+            "state": {
+              "session": "B-20150708",
+              "frame": 104,
+              "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+              "model": "mlp32",
+              "filter": "evidence",
+              "truth": false,
+              "selected": "B-20150708-1645-52",
+              "visible": 1,
+              "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+              "note": "已有撤销限制下的未保存草稿",
+              "decision": "uncertain",
+              "message": "恢复失败：抽检撤销记录格式无效，未替换本页记录",
+              "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。已读入 1 个摄像头的抽检撤销记录，重新校准仍只用撤销日期及之后的人工结论。",
+              "play": "false",
+              "run_disabled": false
+            }
+          }
+        ],
+        "final_drift": {
+          "B": {
+            "evidence_from": "20150708",
+            "history": [
+              {
+                "model": "mobilenet",
+                "side": "free",
+                "threshold": 0.2,
+                "alpha": 0.05,
+                "sample_id": "B-20150708-1645-52",
+                "source_time": "20150708 1645",
+                "units": 10,
+                "error_units": 3,
+                "statistic": 4,
+                "limit": 3.6888794541139363,
+                "at": "2026-10-18T09:00:00.000Z",
+                "checked": [
+                  {
+                    "id": "B-20150708-1645-52",
+                    "wrong": true
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "name": "restoring between playback ticks pauses playback before selecting the imported frame",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "",
+          "decision": "pending",
+          "message": "当前快照分析完成（2015/07/08 08:05 · MLP32）：53 / 53 个车位，101 ms（含图片读取，约 2 ms/个）。预测来自图片像素；原始标注只用于对照。",
+          "review_message": "",
+          "play": "true",
+          "run_disabled": false
+        },
+        "after": {
+          "session": "B-20150708",
+          "frame": 104,
+          "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "evidence",
+          "truth": false,
+          "selected": "B-20150708-1645-52",
+          "visible": 1,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+          "note": "交班验收：请继续核对本车位。",
+          "decision": "uncertain",
+          "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。",
+          "play": "false",
+          "run_disabled": false
+        },
+        "after_interval": {
+          "session": "B-20150708",
+          "frame": 104,
+          "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "evidence",
+          "truth": false,
+          "selected": "B-20150708-1645-52",
+          "visible": 1,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+          "note": "交班验收：请继续核对本车位。",
+          "decision": "uncertain",
+          "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。",
+          "play": "false",
+          "run_disabled": false
+        }
+      }
+    },
+    {
+      "name": "active snapshot inference rejects restoration without changing the current view",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "",
+          "decision": "pending",
+          "message": "已切换到 MLP32 基线。请点击“分析当前快照”运行该模型。各模型结果分别保留，人工结论不受影响。",
+          "review_message": "",
+          "play": "false",
+          "run_disabled": true
+        },
+        "rejected": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "",
+          "decision": "pending",
+          "message": "当前快照分析完成（2015/07/08 08:05 · MLP32）：52 / 53 个车位，15003 ms（含图片读取，约 283 ms/个）。读取失败项保留为未分析，可重试。",
+          "review_message": "",
+          "play": "false",
+          "run_disabled": false
+        }
+      }
+    },
+    {
+      "name": "analysis started during a delayed file read blocks the final import commit",
+      "passed": true,
+      "evidence": {
+        "before_release": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+          "note": "交班验收：请继续核对本车位。",
+          "decision": "uncertain",
+          "message": "正在读取交接文件，完成后将返回文件记录的位置。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。",
+          "play": "false",
+          "run_disabled": true
+        },
+        "after_rejection": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+          "note": "交班验收：请继续核对本车位。",
+          "decision": "uncertain",
+          "message": "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。",
+          "play": "false",
+          "run_disabled": true
+        },
+        "finished_predictions": 53
+      }
+    },
+    {
+      "name": "active local-image analysis rejects restoration and finishes its own result normally",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "",
+          "decision": "pending",
+          "message": "已切换到 MLP32 基线。请点击“分析当前快照”运行该模型。各模型结果分别保留，人工结论不受影响。",
+          "review_message": "",
+          "play": "false",
+          "run_disabled": false
+        },
+        "rejected": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "",
+          "decision": "pending",
+          "message": "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复",
+          "review_message": "",
+          "play": "false",
+          "run_disabled": false
+        }
+      }
+    },
+    {
+      "name": "the last selected handover wins even when an older real file read finishes later",
+      "passed": true,
+      "evidence": {
+        "latest": {
+          "session": "B-20150708",
+          "frame": 104,
+          "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "review",
+          "truth": false,
+          "selected": "B-20150708-1645-52",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "后选文件必须胜出",
+          "decision": "pending",
+          "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。",
+          "play": "false",
+          "run_disabled": false
+        },
+        "after": {
+          "session": "B-20150708",
+          "frame": 104,
+          "time": "2015/07/08 16:45 · 第 105 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "review",
+          "truth": false,
+          "selected": "B-20150708-1645-52",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "后选文件必须胜出",
+          "decision": "pending",
+          "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。",
+          "play": "false",
+          "run_disabled": false
+        }
+      }
+    },
+    {
+      "name": "cold-start export waits for the frame directory and then produces a restorable file",
+      "passed": true,
+      "evidence": {
+        "loading": {
+          "downloads": 0,
+          "message": "公开快照尚未加载完成，请稍后再导出",
+          "tiles": 0
+        },
+        "after_restore": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "dinov2",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "",
+          "decision": "pending",
+          "message": "已恢复人工复核 0 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+          "review_message": "人工复核已恢复 0 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。",
+          "play": "false",
+          "run_disabled": false
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.84",
+  "finished_at": "2026-10-18T10:04:46.358Z",
+  "passed": 14,
+  "failed": 0,
+  "ok": true
+}

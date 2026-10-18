@@ -42,7 +42,12 @@ const step=(name,value)=>{report.steps[name]=value;console.log(name,JSON.stringi
   // 2. Default model and an unverified camera: everything is routed to a person.
   await page.goto(base+'/#parking');await page.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===53);
   assert.equal(await page.locator('#parking-model-choice').inputValue(),'dinov2');
-  const run=async()=>{await page.locator('#parking-run').click();await page.waitForFunction(()=>/^当前快照分析完成/.test(document.querySelector('#parking-message').textContent));};
+  const run=async(target=page)=>{
+   const stamp=(await target.locator('#parking-time').textContent()).split(' · ')[0];
+   await target.locator('#parking-run').click();
+   // The previous frame's completion notice remains until the first new patch finishes.
+   await target.waitForFunction(stamp=>!document.querySelector('#parking-run').disabled&&document.querySelector('#parking-message').textContent.startsWith(`当前快照分析完成（${stamp} · `),stamp);
+  };
   const exportData=async()=>{const [d]=await Promise.all([page.waitForEvent('download'),page.locator('#parking-export').click()]);return JSON.parse(fs.readFileSync(await d.path(),'utf8'));};
   const compare=(data,key,ref,field)=>{let m=0;for(const r of data.samples){const x=ref(r.id);assert.ok(x,`missing reference ${r.id}`);m=Math.max(m,Math.abs((field==='mlp32'?r.predicted_occupied_score:r.calibrated_occupied_score)-Number(field?x[field]:x.calibrated)));}return m;};
   await run();const firstMessage=await page.locator('#parking-message').textContent();let data=await exportData();
@@ -178,7 +183,7 @@ const step=(name,value)=>{report.steps[name]=value;console.log(name,JSON.stringi
   const handover=path.join(out,'parking-transfer-audit-handover.json');fs.writeFileSync(handover,JSON.stringify(await exportData()));
   const next=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});next.setDefaultTimeout(180000);next.on('pageerror',e=>errors.push(e.message));next.on('dialog',d=>d.accept());
   await next.goto(base+'/#parking');await next.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===53);await next.locator('#parking-session').selectOption('C6-ext');await next.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===44);
-  for(let f=0;f<3;f++){await next.locator('#parking-frame').fill(String(f));await next.locator('#parking-frame').dispatchEvent('input');await next.locator('#parking-run').click();await next.waitForFunction(()=>/^当前快照分析完成/.test(document.querySelector('#parking-message').textContent));}
+  for(let f=0;f<3;f++){await next.locator('#parking-frame').fill(String(f));await next.locator('#parking-frame').dispatchEvent('input');await run(next);}
   await next.locator('#parking-import').setInputFiles(handover);await next.waitForFunction(()=>/人工复核已恢复/.test(document.querySelector('#parking-review-message').textContent));
   assert.match(await next.locator('#parking-review-message').textContent(),/已读入 1 个摄像头的抽检撤销记录/);
   await next.locator('#parking-risk-target').selectOption('0.05');await next.locator('#parking-calibrate').click();

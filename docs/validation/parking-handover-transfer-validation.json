@@ -1,0 +1,97 @@
+{
+  "checked_at": "2026-10-18T10:05:58.302Z",
+  "base": "http://127.0.0.1:8766",
+  "steps": {
+    "encoder_parity": {
+      "mobilenet": {
+        "samples": 16,
+        "max_feature_diff": 0,
+        "max_calibrated_diff": 2.220446049250313e-16,
+        "backend": "webgl",
+        "median_embed_ms": 14.5,
+        "load_ms": 155.80000007152557
+      },
+      "dinov2": {
+        "samples": 16,
+        "max_feature_diff": 0,
+        "max_calibrated_diff": 5.551115123125783e-16,
+        "backend": "WASM · 1 线程",
+        "median_embed_ms": 85.89999997615814,
+        "load_ms": 337
+      }
+    },
+    "default_unverified_b": {
+      "default": "dinov2",
+      "max_page_vs_offline_calibrated": 1.1657341758564144e-15,
+      "message": "当前快照分析完成（2015/07/08 08:05 · DINOv2-small 线性探针）：53 / 53 个车位，4601 ms（含图片读取，约 87 ms/个）；编码器加载 219 ms。本相机尚未完成风险校准，所有车位送人工复核；模型倾向与概率可作参考。"
+    },
+    "adaptation": {
+      "labels": 12,
+      "scores_changed": 25,
+      "correct_before": 51,
+      "correct_after": 50,
+      "note": "same snapshot includes the 12 adaptation slots; not an accuracy claim"
+    },
+    "evidence_rules": {
+      "one_date_refused": true,
+      "calibration_units": 12,
+      "edit_voids": true,
+      "import_clears": true
+    },
+    "ext_three_dates": {
+      "camera": "C2",
+      "units": 27,
+      "dates": 3,
+      "t_free": null,
+      "t_busy": null
+    },
+    "ext_snapshot_three_models": {
+      "session": "C8-ext",
+      "frame": "2015/11/12 11:54 · 晴天 · 第 1 / 3 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+      "max_diff_vs_published_6_significant_digits": {
+        "dinov2": 4.907387844976796e-07,
+        "mobilenet": 4.995056293033429e-07,
+        "mlp32": 4.981372309087462e-07
+      }
+    },
+    "audit_revocation": {
+      "camera": "C6",
+      "reviewed_for_calibration": 116,
+      "t_busy": 0.85,
+      "spot_checks": 9,
+      "busy_checks": 9,
+      "frame_done_message": true,
+      "revoked_after": {
+        "sample_id": "C6-20151116-1147-310",
+        "source_time": "20151116 1147",
+        "units": 6,
+        "error_units": 6,
+        "statistic": 4.1588830833596715,
+        "limit": 3.6888794541139363,
+        "at": "2026-10-18T10:06:31.311Z",
+        "checked": 9
+      },
+      "recalibrated_t_busy": null,
+      "restored_page_t_busy": null,
+      "drift_evidence_from": "20151116",
+      "status_before": "摄像头 C6：已人工确认且已分析 116 条（占用 77 / 空闲 39）。影子对比（模型 0.5 阈值 vs 人工，116 条）：有车报空闲 3 条，空位报占用 0 条。在校准数据上通过检验（116 个车位·日，3 个日期）：空闲侧未通过；≥ 0.85 自动判占用。抽检：约 10% 车位·日按哈希随机抽中，其中本应自动判定的快照改送人工并标为「抽检」。占用侧抽中 9 个车位·日（已核对 0），出",
+      "phone_scroll_width": 390
+    },
+    "upload": {
+      "text": "C1-20151112-1209-184.jpg倾向空闲 · 校准后占用概率 0.09%（未校准 0.16%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。"
+    },
+    "results_page": {
+      "tables": 8,
+      "has_ext": true,
+      "has_audit_replay": true
+    },
+    "phone": {
+      "parking_scroll_width": 390,
+      "results_scroll_width": 390
+    }
+  },
+  "ok": true,
+  "browser": "155.0.8059.84",
+  "page_errors": [],
+  "external_requests": []
+}

@@ -1,4 +1,5 @@
 import {predictPatch,classifyScore,frameSummary,parkingReviewSummary,parkingReviewStatus,filterParkingRows,nextParkingReviewId,exportParkingReview,importParkingReview,serializeParkingReview,MAX_PARKING_REVIEW_BYTES} from './parking-model.mjs';
+import {readParkingHandover} from './parking-handover.mjs';
 import {buildParkingAudit,filterParkingAudit,exportParkingAudit} from './parking-audit.mjs';
 import {validateHead,predictHead,routeScore,selectRouting,adaptHead,standardize,minimumEvidence,AUDIT,isAudited,auditMonitor} from './parking-transfer.mjs';
 import {ENCODERS,loadEncoder,decodeImage} from './parking-encoders.mjs';
@@ -66,7 +67,7 @@ function updateModelBar(){
  $('parking-model-data').textContent=transfer()?'CNRPark A 训练 · 冻结编码器 + 线性头':'CNRPark 基础子集';
 }
 async function loadCore(){
- if(model)return;if(corePromise)return corePromise;
+ if(corePromise)return corePromise;if(model)return;
  corePromise=(async()=>{
   $('parking-model-status').textContent='正在加载已训练的占用分类器…';
   const response=await fetch(new URL('./models/parking-occupancy/model.json',import.meta.url));if(!response.ok)throw new Error('分类器加载失败');
@@ -78,7 +79,7 @@ async function loadCore(){
  })().catch(e=>{corePromise=null;throw e;});return corePromise;
 }
 async function loadData(){
- if(manifest)return;if(dataPromise)return dataPromise;
+ if(dataPromise)return dataPromise;if(manifest)return;
  dataPromise=(async()=>{
   await loadCore();const next=await json(new URL('manifest.json',base));if(next.model_sha256!==evaluation.model_sha256)throw new Error('样本与模型版本不一致');
   manifest=next;for(const r of next.samples)r.base=base;samples=new Map(next.samples.map(r=>[r.id,r]));allFrames=[...next.frames];
@@ -96,6 +97,11 @@ function currentRows(){return frames[frameIndex]?.sample_ids.map(id=>samples.get
 function stopPlayback(){playSequence++;clearTimeout(playTimer);playTimer=null;$('parking-play').textContent='播放快照';$('parking-play').setAttribute('aria-pressed','false');}
 function setSession(){stopPlayback();reviewNotice('');frames=allFrames.filter(f=>f.session===$('parking-session').value);frameIndex=0;selected=null;$('parking-frame').max=String(Math.max(0,frames.length-1));render();}
 function chooseFrame(index){reviewNotice('');const slot=samples.get(selected)?.slot;frameIndex=Math.max(0,Math.min(frames.length-1,index));selected=currentRows().find(r=>r.slot===slot)?.id||null;render();}
+function revealSelectedTile(){
+ const grid=$('parking-grid'),tile=grid.querySelector('.parking-tile[aria-pressed="true"]');
+ if(!tile)return;const g=grid.getBoundingClientRect(),t=tile.getBoundingClientRect();
+ if(t.top<g.top)grid.scrollTop-=g.top-t.top+2;else if(t.bottom>g.bottom)grid.scrollTop+=t.bottom-g.bottom+2;
+}
 function render(){
  if(!manifest||!frames.length)return;const f=frames[frameIndex],rows=currentRows(),summary=frameSummary(rows,predictions,stateOf),hasAny=rows.some(r=>predictions.has(r.id));
  $('parking-frame').value=String(frameIndex);$('parking-prev').disabled=running||frameIndex===0;$('parking-next').disabled=running||frameIndex===frames.length-1;
@@ -138,7 +144,7 @@ function renderDetail(){
  const d=drafts.get(r.id)||reviews[r.id]||{decision:'pending',note:''};$('parking-decision').value=d.decision;$('parking-note').value=d.note;
 }
 async function pixels(url){const image=new Image();image.src=url;let timer;try{await Promise.race([image.decode(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('图片读取超时，请重试')),15000);})]);}catch(error){image.src='';throw error;}finally{clearTimeout(timer);}if(image.naturalWidth*image.naturalHeight>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');const c=document.createElement('canvas');c.width=image.naturalWidth;c.height=image.naturalHeight;if(c.width*c.height>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0);const source=ctx.getImageData(0,0,c.width,c.height).data;const out=new Uint8ClampedArray(4096);for(let y=0;y<32;y++)for(let x=0;x<32;x++){const sx=Math.floor((x+.5)*c.width/32),sy=Math.floor((y+.5)*c.height/32),i=(sy*c.width+sx)*4;out.set(source.subarray(i,i+4),(y*32+x)*4);}return out;}
-function busy(value){running=value;$('parking-stop').hidden=!value;for(const id of ['parking-run','parking-session','parking-frame','parking-upload','parking-save','parking-save-next','parking-model-choice'])$(id).disabled=value;render();}
+function busy(value){running=value;$('parking-stop').hidden=!value;for(const id of ['parking-run','parking-session','parking-frame','parking-upload','parking-save','parking-save-next','parking-model-choice','parking-import'])$(id).disabled=value;render();}
 // Encoders are cached per page; loading reports verified bytes and can be cancelled from the stop button.
 function ensureEncoder(key){
  if(encoders[key])return Promise.resolve(encoders[key]);
@@ -182,7 +188,9 @@ $('parking-prev').addEventListener('click',()=>{stopPlayback();chooseFrame(frame
 for(const id of ['parking-filter','parking-show-truth'])$(id).addEventListener('change',render);
 for(const id of ['parking-note','parking-decision'])$(id).addEventListener('input',()=>{if(selected){stopPlayback();drafts.set(selected,{decision:$('parking-decision').value,note:$('parking-note').value});changed=true;}});
 const context=()=>({model_sha256:evaluation.model_sha256,sample_ids:[...samples.keys()]});
-function reviewDocument(nextReviews=reviews){const out=exportParkingReview(context(),nextReviews);out.dataset=manifest.dataset;out.source_frame=frames[frameIndex]?.id;out.frame_summary=frameSummary(currentRows(),predictions,stateOf);out.datasets={cnrpark:manifest.dataset,cnr_ext:extManifest?.dataset||null};out.prediction_model={key:current,name:current==='mlp32'?'MLP32':ENCODERS[current].label,model_sha256:current==='mlp32'?evaluation.model_sha256:transferEvaluation.models[current].model_sha256};out.onsite=Object.fromEntries(['mobilenet','dinov2'].map(key=>[key,Object.fromEntries([...new Set([...Object.keys(adaptations[key]),...Object.keys(onsiteRouting[key])])].map(camera=>{const a=adaptations[key][camera],o=onsiteRouting[key][camera];return [camera,{adaptation:a?{labels:a.n,occupied:a.busy,lam:a.lam,lr:a.lr,steps:a.steps,sample_ids:[...a.used],at:a.at}:null,routing:o?{...o.routing,tests:undefined,sample_ids:o.ids,at:o.at,audit:auditExport(camera,key)}:null}];}))]));out.drift=structuredClone(driftLog);out.predictions_by_model={mlp32:[...sets.mlp32].map(([id,score])=>({id,score})),...Object.fromEntries(['mobilenet','dinov2'].map(key=>[key,[...sets[key]].map(([id,score])=>({id,score,calibrated:calibratedSets[key].get(id),adapted:!!adaptations[key][samples.get(id).camera]}))]))};out.review_summary=parkingReviewSummary(currentRows(),nextReviews);out.unanalysed_sample_ids=currentRows().filter(r=>!predictions.has(r.id)).map(r=>r.id);out.samples=[...predictions].map(([id,score])=>{const r=samples.get(id);return {id,dataset:r.base===extBase?'cnr_ext':'cnrpark',camera:r.camera,slot:r.slot,source_time:`${r.date} ${r.time}`,source_timezone:manifest.dataset.timezone,split:r.split,image:r.image,source_sha256:r.source_sha256,predicted_occupied_score:score,...(transfer()?{calibrated_occupied_score:calibratedSets[current].get(id),audit:!!auditSide(id)}:{}),prediction:Number(score>=.5),review_state:stateOf(id,score),dataset_label:r.label};});out.failures=[...failures].map(([id,error])=>({id,error}));out.evidence_failures=[...evidenceFailures].map(([id,error])=>({id,image:samples.get(id).image,error}));out.scope='停车位占用分类；真实历史快照；非连续视频，不判断违停或停留时长。';return out;}
+const handoverContext=()=>({frames:allFrames,current_model:current,models:{mlp32:evaluation.model_sha256,...Object.fromEntries(['mobilenet','dinov2'].filter(key=>heads[key]).map(key=>[key,transferEvaluation.models[key].model_sha256]))}});
+function savedView(){if(!frames[frameIndex])throw new Error('公开快照尚未加载完成，请稍后再导出');return {version:1,frame_id:frames[frameIndex].id,sample_id:selected,model_key:current,model_sha256:handoverContext().models[current],filter:$('parking-filter').value,show_truth:$('parking-show-truth').checked};}
+function reviewDocument(nextReviews=reviews){const out=exportParkingReview(context(),nextReviews);out.dataset=manifest.dataset;out.source_frame=frames[frameIndex]?.id;out.view=savedView();out.frame_summary=frameSummary(currentRows(),predictions,stateOf);out.datasets={cnrpark:manifest.dataset,cnr_ext:extManifest?.dataset||null};out.prediction_model={key:current,name:current==='mlp32'?'MLP32':ENCODERS[current].label,model_sha256:current==='mlp32'?evaluation.model_sha256:transferEvaluation.models[current].model_sha256};out.onsite=Object.fromEntries(['mobilenet','dinov2'].map(key=>[key,Object.fromEntries([...new Set([...Object.keys(adaptations[key]),...Object.keys(onsiteRouting[key])])].map(camera=>{const a=adaptations[key][camera],o=onsiteRouting[key][camera];return [camera,{adaptation:a?{labels:a.n,occupied:a.busy,lam:a.lam,lr:a.lr,steps:a.steps,sample_ids:[...a.used],at:a.at}:null,routing:o?{...o.routing,tests:undefined,sample_ids:o.ids,at:o.at,audit:auditExport(camera,key)}:null}];}))]));out.drift=structuredClone(driftLog);out.predictions_by_model={mlp32:[...sets.mlp32].map(([id,score])=>({id,score})),...Object.fromEntries(['mobilenet','dinov2'].map(key=>[key,[...sets[key]].map(([id,score])=>({id,score,calibrated:calibratedSets[key].get(id),adapted:!!adaptations[key][samples.get(id).camera]}))]))};out.review_summary=parkingReviewSummary(currentRows(),nextReviews);out.unanalysed_sample_ids=currentRows().filter(r=>!predictions.has(r.id)).map(r=>r.id);out.samples=[...predictions].map(([id,score])=>{const r=samples.get(id);return {id,dataset:r.base===extBase?'cnr_ext':'cnrpark',camera:r.camera,slot:r.slot,source_time:`${r.date} ${r.time}`,source_timezone:manifest.dataset.timezone,split:r.split,image:r.image,source_sha256:r.source_sha256,predicted_occupied_score:score,...(transfer()?{calibrated_occupied_score:calibratedSets[current].get(id),audit:!!auditSide(id)}:{}),prediction:Number(score>=.5),review_state:stateOf(id,score),dataset_label:r.label};});out.failures=[...failures].map(([id,error])=>({id,error}));out.evidence_failures=[...evidenceFailures].map(([id,error])=>({id,image:samples.get(id).image,error}));out.scope='停车位占用分类；真实历史快照；非连续视频，不判断违停或停留时长。';return out;}
 function saveReview(advance){
  if(!selected||running)return;
  // A rejected save must also hold the current snapshot for corrections.
@@ -215,10 +223,44 @@ function saveReview(advance){
 }
 $('parking-save').addEventListener('click',()=>saveReview(false));
 $('parking-save-next').addEventListener('click',()=>saveReview(true));
-$('parking-export').addEventListener('click',()=>{if(!manifest)return;try{if(drafts.size)throw new Error('还有未保存的车位草稿，请先保存复核记录。');const payload=serializeParkingReview(reviewDocument(),context());download('estateguard-parking-review.json',payload);changed=false;notice('已导出模型版本、样本来源、预测、原始标签和人工结论。');}catch(e){notice(e.message,true);}});
+$('parking-export').addEventListener('click',()=>{if(!manifest){notice('公开快照尚未加载完成，请稍后再导出',true);return;}try{if(drafts.size)throw new Error('还有未保存的车位草稿，请先保存复核记录。');const payload=serializeParkingReview(reviewDocument(),context());download('estateguard-parking-review.json',payload);changed=false;notice('已导出模型版本、样本来源、预测、原始标签和人工结论。');}catch(e){notice(e.message,true);}});
 // Import only validated human decisions; never trust imported model predictions as new inference.
 const importLabel=document.createElement('label');importLabel.className='button file-button';importLabel.textContent='恢复车位复核';const importer=document.createElement('input');importer.type='file';importer.accept='.json,application/json';importer.id='parking-import';importLabel.append(importer);$('parking-export').before(importLabel);
-importer.addEventListener('change',async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;const ticket=++importSequence;try{if(file.size>MAX_PARKING_REVIEW_BYTES)throw new Error('复核文件超过 32 MiB');await loadData();if(ticket!==importSequence)return;const data=JSON.parse(await file.text());if(ticket!==importSequence)return;const next=importParkingReview(data,context());if((changed||drafts.size)&&!confirm('恢复将替换本页人工记录。请先导出已有记录。继续恢复？'))return;for(const key of Object.keys(reviews))delete reviews[key];Object.assign(reviews,next);drafts.clear();changed=false;const cleared=clearOnsite(),restored=mergeDrift(data.drift);reviewNotice(`人工复核已恢复，待办和进度已按保存的结论重新计算。${cleared?'原有现场自适应与阈值已清除，需按恢复后的结论重新设置。':''}${restored?`已读入 ${restored} 个摄像头的抽检撤销记录，重新校准仍只用撤销日期及之后的人工结论。`:''}`);render();notice('已恢复人工复核。模型预测将通过当前模型重新分析，不采用导入文件中的分数。');}catch(e){if(ticket===importSequence)notice(`恢复失败：${e.message}`,true);}});
+const importBusy=()=>running||analysisPromise||uploadPending;
+importer.addEventListener('change',async e=>{
+ const file=e.target.files[0];e.target.value='';if(!file)return;const ticket=++importSequence;
+ try{
+  if(importBusy())throw new Error('正在分析或读取图片，请等待完成或停止后再恢复');
+  if(file.size>MAX_PARKING_REVIEW_BYTES)throw new Error('复核文件超过 32 MiB');
+  notice('正在读取交接文件，完成后将返回文件记录的位置。');
+  await loadData();if(ticket!==importSequence)return;
+  const data=JSON.parse(await file.text());if(ticket!==importSequence)return;
+  if(importBusy())throw new Error('正在分析或读取图片，请等待完成或停止后再恢复');
+  const next=importParkingReview(data,context()),handover=readParkingHandover(data,handoverContext(),next);
+  // Stage sticky drift restrictions too: malformed metadata must not erase valid work.
+  const nextDrift=structuredClone(driftLog);let restored;
+  try{restored=mergeDrift(data.drift,nextDrift);}catch{throw new Error('抽检撤销记录格式无效，未替换本页记录');}
+  if((changed||drafts.size)&&!confirm('恢复将替换本页人工记录。请先导出已有记录。继续恢复？')){notice('已取消恢复，本页记录和位置保持不变。');return;}
+  // No await after this check: apply the prepared handover as one synchronous change.
+  if(ticket!==importSequence)return;
+  if(importBusy())throw new Error('正在分析或读取图片，请等待完成或停止后再恢复');
+  stopPlayback();analysisSequence++;errorJumpSequence++;
+  const cleared=clearOnsite();
+  for(const key of Object.keys(reviews))delete reviews[key];Object.assign(reviews,next);drafts.clear();
+  for(const key of Object.keys(driftLog))delete driftLog[key];Object.assign(driftLog,nextDrift);
+  if(handover){
+   const {view,session}=handover;modelChosenByUser=true;current=view.model_key;predictions=sets[current];$('parking-model-choice').value=current;
+   $('parking-session').value=session;frames=allFrames.filter(f=>f.session===session);frameIndex=frames.findIndex(f=>f.id===view.frame_id);
+   $('parking-frame').max=String(Math.max(0,frames.length-1));selected=view.sample_id;$('parking-filter').value=view.filter;$('parking-show-truth').checked=view.show_truth;
+  }
+  changed=false;updateModelBar();render();
+  const f=frames[frameIndex],r=samples.get(selected),position=handover?`已返回摄像头 ${f.camera} · ${walltime(f)}${r?` · 车位 ${r.slot}`:''}。`:'旧版文件没有交接位置，保留当前相机和快照；记录可能位于其他快照。';
+  const message=`已恢复人工复核 ${Object.keys(next).length} 条。${position}`;
+  reviewNotice(`人工复核已恢复 ${Object.keys(next).length} 条。${position}${handover?.notes.join('')||''}${cleared?'原有现场自适应与阈值已清除，需按恢复后的结论重新设置。':''}${restored?`已读入 ${restored} 个摄像头的抽检撤销记录，重新校准仍只用撤销日期及之后的人工结论。`:''}`);
+  notice(`${message}${handover?.notes.join('')||''}未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。`);
+  revealSelectedTile();
+ }catch(e){if(ticket===importSequence)notice(`恢复失败：${e.message}`,true);}
+});
 $('parking-upload').addEventListener('change',async e=>{const file=e.target.files[0],ticket=++uploadSequence;e.target.value='';if(!file)return;let url;try{if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>10*1024*1024)throw new Error('请选择不超过 10 MB 的 JPEG、PNG 或 WebP 单车位裁剪图');$('parking-upload-result').textContent='正在分析本地车位图片…';uploadPending=true;await loadCore();url=URL.createObjectURL(file);const key=current;let html;
  if(key==='mlp32'){const data=await pixels(url);if(ticket!==uploadSequence){URL.revokeObjectURL(url);return;}const score=predictPatch(data,model);html=`<p>${labels[classifyScore(score)]} · 占用分数 ${(score*100).toFixed(2)}% · MLP32</p>`;}
  else{const encoder=await ensureEncoder(key),bitmap=await decodeImage(url);let z;try{z=await encoder.embed(bitmap);}finally{bitmap.close();}if(ticket!==uploadSequence){URL.revokeObjectURL(url);return;}const {score,calibrated}=predictHead(z,heads[key]);html=`<p>${calibrated>=.5?'倾向占用':'倾向空闲'} · 校准后占用概率 ${(calibrated*100).toFixed(2)}%（未校准 ${(score*100).toFixed(2)}%）· ${text(ENCODERS[key].label)}</p><p class="subtle">新画面没有现场风险校准，按规则应送人工复核。</p>`;}
@@ -243,8 +285,7 @@ async function openAuditSample(id){
  frameIndex=frames.findIndex(f=>f.sample_ids.includes(id));$('parking-filter').value='all';$('parking-show-truth').checked=true;selected=id;
  location.hash='parking';render();await runCurrent();
  if(ticket!==errorJumpSequence||selected!==id||location.hash!=='#parking')return;
- const grid=$('parking-grid'),tile=[...grid.querySelectorAll('.parking-tile')].find(el=>el.dataset.sampleId===id);
- if(tile){const g=grid.getBoundingClientRect(),t=tile.getBoundingClientRect();if(t.top<g.top)grid.scrollTop-=g.top-t.top+2;else if(t.bottom>g.bottom)grid.scrollTop+=t.bottom-g.bottom+2;}
+ revealSelectedTile();
  if(matchMedia('(max-width:650px)').matches)document.querySelector('.parking-review')?.scrollIntoView({block:'start'});
 }
 function renderErrorAudit(){
@@ -383,13 +424,15 @@ function auditText(o,a){
  return `抽检：约 ${AUDIT.fraction*100}% 车位·日按哈希随机抽中，其中本应自动判定的快照改送人工并标为「抽检」。${[side('free'),side('busy')].filter(Boolean).join('；')}。${replay?`离线回放（EXT，5% 目标、${AUDIT.fraction*100}% 抽检）中 ${replay.over} 个超标的阈值只撤销了 ${replay.over_revoked} 个，残余自动判空闲仍有 ${pct(replay.free_pooled?.unit_error_rate)} 车位·日出错；抽检不能单独保证自动判定可靠。`:''}`;
 }
 // Restored drift records only restrict calibration, so a file can add them but never remove the page's own.
-function mergeDrift(src){
+function mergeDrift(src,target){
  if(!src||typeof src!=='object'||Array.isArray(src))return 0;const cameras=new Set([...samples.values()].map(r=>r.camera));let n=0;
  for(const [camera,log] of Object.entries(src)){
-  if(!cameras.has(camera)||!/^\d{8}$/.test(log?.evidence_from)||!Array.isArray(log.history))continue;
-  const cur=driftLog[camera]||(driftLog[camera]={evidence_from:log.evidence_from,history:[]});if(cur.evidence_from<log.evidence_from)cur.evidence_from=log.evidence_from;
+  if(!cameras.has(camera))continue;
+  if(!log||typeof log.evidence_from!=='string'||!/^\d{8}$/.test(log.evidence_from)||!Array.isArray(log.history))throw new Error('抽检撤销日期或历史格式无效');
+  const cur=target[camera]||(target[camera]={evidence_from:log.evidence_from,history:[]});if(cur.evidence_from<log.evidence_from)cur.evidence_from=log.evidence_from;
   for(const h of log.history.slice(0,1000)){
-   if(!h||!['free','busy'].includes(h.side)||!['mobilenet','dinov2'].includes(h.model)||!/^\d{8} \d{4}$/.test(h.source_time))continue;
+   if(!h||!['free','busy'].includes(h.side)||!['mobilenet','dinov2'].includes(h.model))continue;
+   if(typeof h.source_time!=='string'||!/^\d{8} \d{4}$/.test(h.source_time))throw new Error('抽检撤销采样时间格式无效');
    const item={model:h.model,side:h.side,threshold:Number(h.threshold),alpha:Number(h.alpha),sample_id:String(h.sample_id??''),source_time:h.source_time,units:Number(h.units)||0,error_units:Number(h.error_units)||0,statistic:Number(h.statistic),limit:Number(h.limit),at:String(h.at??''),checked:Array.isArray(h.checked)?h.checked.slice(0,5000).filter(c=>typeof c?.id==='string').map(c=>({id:c.id,wrong:typeof c.wrong==='boolean'?c.wrong:null})):[]};
    if(!cur.history.some(x=>x.model===item.model&&x.side===item.side&&x.sample_id===item.sample_id&&x.at===item.at))cur.history.push(item);
   }

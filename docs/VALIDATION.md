@@ -257,3 +257,30 @@ node scripts/critic-check.cjs
 发布校验的补充说明：Linux 首次失败后，通过[严格诊断运行](https://github.com/leon1111-wgl/estateguard/actions/runs/39095950159)定位 CP 统计数值差，最大 7.9447e-13。比较器只允许明确路径下 CP statistic 的绝对误差 1e-12，且两个值在目标 alpha 同一侧；所有离散结果、阈值、SPRT 统计值与其他报告字段严格一致。完整报告的 elapsed_seconds 是本机运行耗时，检查类型与有限值，不要求两次耗时相同。回归测试保留真实 Linux 数值对，同时篡改计数、阈值、撤销时间/位置、类型、数组和非有限数，验证仍能阻止发布。原保存结果与模型文件均保持不变。
 
 比较器修复的本机验证：新增 10 项回归先失败后通过，完整 Python 检查 24/24；重新运行 verify_parking_transfer.py，通过全部 144,965 张 EXT 分数、54 组阈值与完整抽检回放。最终部署仍须由 Linux CI 对同一提交验证。
+
+
+## 2026-10-18 · 停车交班位置与失败保护
+
+```bash
+node --test tests/*.test.mjs
+node scripts/parking-handover-check.cjs
+node scripts/parking-review-check.cjs
+node scripts/parking-critic-check.cjs
+node scripts/parking-error-audit-check.cjs
+node scripts/parking-transfer-check.cjs
+node scripts/model-check.cjs
+python3 scripts/verify_assets.py
+```
+
+- 全部 121 项 JS 通过，新增 5 项交接校验涵盖精确位置、模型版本、人工与模型筛选、旧格式、跨快照和损坏字段。
+- [独立旧版复现](validation/parking-handover-baseline.json)保留 B52/C8 丢失交接位置、回放不停及损坏撤销记录半覆盖的问题，也记录开发中发现的数字日期和冷启动导出问题。
+- [真实 Chrome 交接验收](validation/parking-handover-validation.json) 14/14：真实 MLP32 B52 与 MobileNetV2 C8 54 张图片推理、精确恢复、两级旧文件兼容、坏位置/模型/JSON、模型筛选回退、回放停止、推理及本地图片分析中拒绝、迟到文件隔离、已有非空撤销限制和草稿保留、读取期间才开始分析的最终拒绝、人工筛选隐藏车位的解释、冷启动未就绪时禁止导出。页面错误与跨站请求均为 0。
+- 新页导入后 `samples.length=0`，没有装入文件中的预测或阈值。B52 的真实低分漏判保留；人工复核的测试输入不作为模型准确率。并发检查只暂停真实文件读取、网络请求或原生图片解码返回，不伪造推理结果。
+- 原 `parking-review-check` 9/9、`parking-critic-check`、`parking-error-audit-check` 8/8 通过；通用模型实际运行 7 帧，张量 262→262，校车分数 0.9916937947，0 跨站请求；21 项模型资源哈希校验通过。
+- [设计师最终复验](validation/parking-handover-ui-validation.json) 6 个桌面/手机场景通过：1440 / 390px 无横向溢出，B52 完整滚入网格可视区域，页面滚动位置不变；原布局、按钮和复核能力保持。截图位于本地 `artifacts/parking-handover-designer-after-final-*`。
+
+限制：仅验证公开历史快照和手动交接，不验证真实值班员判断质量。没有改训练、模型权重或校准算法；没有共享账号、服务器同步、媒体归档或文件签名。
+
+迁移验收首次在恢复步骤超时（[诊断证据](validation/parking-handover-review-diagnostic.json)）。独立延迟真实第二帧输入后复现：旧等待只检查“当前快照分析完成”前缀，会读取上一帧残留提示，此时分析按钮仍禁用；提前导入被新的忙碌保护正确拒绝。验收脚本现同时等待当前日期时刻匹配且按钮恢复可用，原模型、校准和撤销断言保持不变。此修正属于验收时序，不是放宽产品要求。
+
+强化等待后的[完整迁移回归](validation/parking-handover-transfer-validation.json)通过：真实 DINOv2/MobileNetV2 前向与离线特征对齐、现场自适应与校准、C8 三模型、C6 随机抽检和第六个错误撤销、跨模型限制、导出至新页面恢复后旧证据不能重新启用撤销阈值、上传、8 张评测表和 390px。页面错误、外部请求均为空。独立代码审查最终无阻断。

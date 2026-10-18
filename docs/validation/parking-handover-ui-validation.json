@@ -1,0 +1,332 @@
+{
+  "started_at": "2026-10-18T10:03:15.682Z",
+  "scope": "Focused independent designer recheck after grid-only reveal fix. Fixtures exported through UI, one real MLP32 inference for B52; no product edits. Initial before/after page-scroll measurements precede manual screenshot scrolling.",
+  "views": [
+    {
+      "width": 1440,
+      "scenario": "b52-all",
+      "initialScrollY": 78,
+      "state": {
+        "pageScrollY": 78,
+        "width": 1440,
+        "docWidth": 1440,
+        "gridScrollTop": 2791,
+        "gridRect": {
+          "top": 601.5,
+          "bottom": 1191.5,
+          "left": 251,
+          "right": 1075,
+          "width": 824,
+          "height": 590
+        },
+        "tileRect": {
+          "top": 918.625,
+          "bottom": 1189,
+          "left": 863.5,
+          "right": 1055,
+          "width": 191.5,
+          "height": 270.375
+        },
+        "selectedVisibleInGrid": true,
+        "selected": "B-20150708-1645-52",
+        "session": "B-20150708",
+        "frame": "104",
+        "model": "mlp32",
+        "filter": "all",
+        "truth": true,
+        "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+        "messageRect": {
+          "top": 128.578125,
+          "bottom": 169.765625,
+          "left": 232,
+          "right": 1412,
+          "width": 1180,
+          "height": 41.1875
+        },
+        "progress": "当前快照：已确认 1 / 53 · 待人工复核 52（其中需补证据 0）",
+        "reviewMessage": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。",
+        "runDisabled": false,
+        "saveDisabled": false
+      },
+      "screenshots": {
+        "natural": "parking-handover-designer-after-final-b52-all-natural-1440.png",
+        "grid": "parking-handover-designer-after-final-b52-all-grid-1440.png",
+        "detail": "parking-handover-designer-after-final-b52-all-detail-1440.png"
+      }
+    },
+    {
+      "width": 1440,
+      "scenario": "b52-model-filter",
+      "initialScrollY": 78,
+      "state": {
+        "pageScrollY": 78,
+        "width": 1440,
+        "docWidth": 1440,
+        "gridScrollTop": 2791,
+        "gridRect": {
+          "top": 620.6875,
+          "bottom": 1210.6875,
+          "left": 251,
+          "right": 1075,
+          "width": 824,
+          "height": 590
+        },
+        "tileRect": {
+          "top": 937.8125,
+          "bottom": 1208.1875,
+          "left": 863.5,
+          "right": 1055,
+          "width": 191.5,
+          "height": 270.375
+        },
+        "selectedVisibleInGrid": true,
+        "selected": "B-20150708-1645-52",
+        "session": "B-20150708",
+        "frame": "104",
+        "model": "mlp32",
+        "filter": "all",
+        "truth": true,
+        "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+        "messageRect": {
+          "top": 128.578125,
+          "bottom": 188.953125,
+          "left": 232,
+          "right": 1412,
+          "width": 1180,
+          "height": 60.375
+        },
+        "progress": "当前快照：已确认 1 / 53 · 待人工复核 52（其中需补证据 0）",
+        "reviewMessage": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。",
+        "runDisabled": false,
+        "saveDisabled": false
+      },
+      "screenshots": {
+        "natural": "parking-handover-designer-after-final-b52-model-filter-natural-1440.png",
+        "grid": "parking-handover-designer-after-final-b52-model-filter-grid-1440.png",
+        "detail": "parking-handover-designer-after-final-b52-model-filter-detail-1440.png"
+      }
+    },
+    {
+      "width": 1440,
+      "scenario": "c7-evidence",
+      "initialScrollY": 78,
+      "state": {
+        "pageScrollY": 78,
+        "width": 1440,
+        "docWidth": 1440,
+        "gridScrollTop": 0,
+        "gridRect": {
+          "top": 601.5,
+          "bottom": 847.28125,
+          "left": 251,
+          "right": 1075,
+          "width": 824,
+          "height": 245.78125
+        },
+        "tileRect": {
+          "top": 603.5,
+          "bottom": 845.28125,
+          "left": 253,
+          "right": 444.5,
+          "width": 191.5,
+          "height": 241.78125
+        },
+        "selectedVisibleInGrid": true,
+        "selected": "C7-20151121-1148-206",
+        "session": "C7-ext",
+        "frame": "2",
+        "model": "mlp32",
+        "filter": "evidence",
+        "truth": false,
+        "message": "已恢复人工复核 1 条。已返回摄像头 C7 · 2015/11/21 11:48 · 车位 206。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+        "messageRect": {
+          "top": 128.578125,
+          "bottom": 169.765625,
+          "left": 232,
+          "right": 1412,
+          "width": 1180,
+          "height": 41.1875
+        },
+        "progress": "当前快照：已确认 0 / 46 · 待人工复核 46（其中需补证据 1）",
+        "reviewMessage": "人工复核已恢复 1 条。已返回摄像头 C7 · 2015/11/21 11:48 · 车位 206。",
+        "runDisabled": false,
+        "saveDisabled": false
+      },
+      "screenshots": {
+        "natural": "parking-handover-designer-after-final-c7-evidence-natural-1440.png",
+        "grid": "parking-handover-designer-after-final-c7-evidence-grid-1440.png",
+        "detail": "parking-handover-designer-after-final-c7-evidence-detail-1440.png"
+      }
+    },
+    {
+      "width": 390,
+      "scenario": "b52-all",
+      "initialScrollY": 159,
+      "state": {
+        "pageScrollY": 159,
+        "width": 390,
+        "docWidth": 390,
+        "gridScrollTop": 5791,
+        "gridRect": {
+          "top": 976.1875,
+          "bottom": 1376.1875,
+          "left": 30,
+          "right": 360,
+          "width": 330,
+          "height": 400
+        },
+        "tileRect": {
+          "top": 1125.5,
+          "bottom": 1373.6875,
+          "left": 191,
+          "right": 340,
+          "width": 149,
+          "height": 248.1875
+        },
+        "selectedVisibleInGrid": true,
+        "selected": "B-20150708-1645-52",
+        "session": "B-20150708",
+        "frame": "104",
+        "model": "mlp32",
+        "filter": "all",
+        "truth": true,
+        "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+        "messageRect": {
+          "top": 210.953125,
+          "bottom": 290.515625,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 79.5625
+        },
+        "progress": "当前快照：已确认 1 / 53 · 待人工复核 52（其中需补证据 0）",
+        "reviewMessage": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。",
+        "runDisabled": false,
+        "saveDisabled": false
+      },
+      "screenshots": {
+        "natural": "parking-handover-designer-after-final-b52-all-natural-390.png",
+        "grid": "parking-handover-designer-after-final-b52-all-grid-390.png",
+        "detail": "parking-handover-designer-after-final-b52-all-detail-390.png"
+      }
+    },
+    {
+      "width": 390,
+      "scenario": "b52-model-filter",
+      "initialScrollY": 159,
+      "state": {
+        "pageScrollY": 159,
+        "width": 390,
+        "docWidth": 390,
+        "gridScrollTop": 5791,
+        "gridRect": {
+          "top": 995.375,
+          "bottom": 1395.375,
+          "left": 30,
+          "right": 360,
+          "width": 330,
+          "height": 400
+        },
+        "tileRect": {
+          "top": 1144.6875,
+          "bottom": 1392.875,
+          "left": 191,
+          "right": 340,
+          "width": 149,
+          "height": 248.1875
+        },
+        "selectedVisibleInGrid": true,
+        "selected": "B-20150708-1645-52",
+        "session": "B-20150708",
+        "frame": "104",
+        "model": "mlp32",
+        "filter": "all",
+        "truth": true,
+        "message": "已恢复人工复核 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+        "messageRect": {
+          "top": 210.953125,
+          "bottom": 309.703125,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 98.75
+        },
+        "progress": "当前快照：已确认 1 / 53 · 待人工复核 52（其中需补证据 0）",
+        "reviewMessage": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 16:45 · 车位 52。原筛选依赖模型结果，已切换“全部车位”；请重新分析后再筛选模型结果。",
+        "runDisabled": false,
+        "saveDisabled": false
+      },
+      "screenshots": {
+        "natural": "parking-handover-designer-after-final-b52-model-filter-natural-390.png",
+        "grid": "parking-handover-designer-after-final-b52-model-filter-grid-390.png",
+        "detail": "parking-handover-designer-after-final-b52-model-filter-detail-390.png"
+      }
+    },
+    {
+      "width": 390,
+      "scenario": "c7-evidence",
+      "initialScrollY": 159,
+      "state": {
+        "pageScrollY": 159,
+        "width": 390,
+        "docWidth": 390,
+        "gridScrollTop": 0,
+        "gridRect": {
+          "top": 976.1875,
+          "bottom": 1201.375,
+          "left": 30,
+          "right": 360,
+          "width": 330,
+          "height": 225.1875
+        },
+        "tileRect": {
+          "top": 978.1875,
+          "bottom": 1199.375,
+          "left": 32,
+          "right": 181,
+          "width": 149,
+          "height": 221.1875
+        },
+        "selectedVisibleInGrid": true,
+        "selected": "C7-20151121-1148-206",
+        "session": "C7-ext",
+        "frame": "2",
+        "model": "mlp32",
+        "filter": "evidence",
+        "truth": false,
+        "message": "已恢复人工复核 1 条。已返回摄像头 C7 · 2015/11/21 11:48 · 车位 206。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+        "messageRect": {
+          "top": 210.953125,
+          "bottom": 290.515625,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 79.5625
+        },
+        "progress": "当前快照：已确认 0 / 46 · 待人工复核 46（其中需补证据 1）",
+        "reviewMessage": "人工复核已恢复 1 条。已返回摄像头 C7 · 2015/11/21 11:48 · 车位 206。",
+        "runDisabled": false,
+        "saveDisabled": false
+      },
+      "screenshots": {
+        "natural": "parking-handover-designer-after-final-c7-evidence-natural-390.png",
+        "grid": "parking-handover-designer-after-final-c7-evidence-grid-390.png",
+        "detail": "parking-handover-designer-after-final-c7-evidence-detail-390.png"
+      }
+    }
+  ],
+  "pageErrors": [],
+  "blockers": [],
+  "ok": true,
+  "finished_at": "2026-10-18T10:03:23.043Z",
+  "visual_review": {
+    "inspected": [
+      "parking-handover-designer-after-final-b52-all-grid-390.png",
+      "parking-handover-designer-after-final-b52-model-filter-grid-1440.png",
+      "parking-handover-designer-after-final-c7-evidence-grid-390.png",
+      "parking-handover-designer-after-final-b52-model-filter-natural-390.png"
+    ],
+    "conclusion": "Selected B52 and C7 tiles are fully visible within their scrollable grids. Blue selection, restored human status, and original photo remain readable. Mobile natural viewport retains the restoration notice and rerun action; no layout redesign or page scrolling introduced.",
+    "previous_issue_resolved": true
+  }
+}
