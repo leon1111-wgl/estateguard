@@ -2,7 +2,7 @@
 Recomputes B and CNR-EXT metrics from per-sample scores, checks heads, hashes, routing and the
 label-independent EXT inspector subset.
 """
-import collections,csv,gzip,hashlib,io,json,math
+import collections,csv,gzip,hashlib,io,json,math,platform,sys
 from pathlib import Path
 import numpy as np
 
@@ -19,6 +19,39 @@ def same(report,expected,label):
     for k,v in expected.items():
         got=report[k]
         assert (math.isclose(got,v,rel_tol=0,abs_tol=1e-12) if isinstance(v,float) else got==v),f'{label}: {k} {got} != {v}'
+
+def exact_diff(actual,expected,path,limit=20):
+    """Describe exact JSON differences; diagnostics never change the equality decision."""
+    details=[];counts=dict(total=0,numeric=0,non_numeric=0);largest=None
+    def record(where,description,a=None,b=None):
+        nonlocal largest
+        counts['total']+=1
+        if type(a) in (int,float) and type(b) in (int,float):
+            counts['numeric']+=1
+            if math.isfinite(a) and math.isfinite(b):
+                delta=a-b;absolute=abs(delta);scale=max(abs(a),abs(b))
+                description+=f'; delta={delta!r}, abs_delta={absolute!r}, relative_delta={absolute/scale if scale else 0!r}'
+                if largest is None or absolute>largest[0]:largest=(absolute,where)
+                if isinstance(a,float) or isinstance(b,float):description+=f'; fresh_hex={float(a).hex()}, published_hex={float(b).hex()}'
+        else:counts['non_numeric']+=1
+        if len(details)<limit:details.append(f'{where}: {description}')
+    def visit(a,b,where):
+        if a==b:return
+        if isinstance(a,dict) and isinstance(b,dict):
+            for key in sorted(a.keys()|b.keys()):
+                child=f'{where}[{json.dumps(key,ensure_ascii=False)}]'
+                if key not in a:record(child,'missing from fresh result')
+                elif key not in b:record(child,'missing from published result')
+                else:visit(a[key],b[key],child)
+        elif isinstance(a,list) and isinstance(b,list):
+            if len(a)!=len(b):record(where,f'list length: fresh={len(a)}, published={len(b)}',len(a),len(b))
+            for i,(av,bv) in enumerate(zip(a,b)):visit(av,bv,f'{where}[{i}]')
+        else:record(where,f'fresh={a!r} ({type(a).__name__}), published={b!r} ({type(b).__name__})',a,b)
+    visit(actual,expected,path)
+    summary=f'{path}: differences={counts["total"]}, numeric={counts["numeric"]}, non_numeric={counts["non_numeric"]}'
+    if largest is not None:summary+=f', max_abs_delta={largest[0]!r} at {largest[1]}'
+    if counts['total']>len(details):details.append(f'... {counts["total"]-len(details)} further differences omitted')
+    return '\n'.join([summary,*details])
 
 def route(p,t_free,t_busy):return 'free' if t_free is not None and p<=t_free else 'busy' if t_busy is not None and p>=t_busy else 'review'
 
@@ -87,8 +120,12 @@ if replay_path.exists():
     from replay_parking_audit import build_report
     assert '附录 5' in protocol,'Protocol appendix 5 missing'
     published=load(replay_path);fresh,_=build_report(with_generic=True)
+    differences=[]
     for k in ['source','audit','primary','fractions','rules','targets','reproduced','cameras','summary','generic']:
-        assert json.loads(json.dumps(fresh[k],ensure_ascii=False))==published[k],f'audit replay: {k} differs from a fresh recomputation'
+        actual=json.loads(json.dumps(fresh[k],ensure_ascii=False))
+        if actual!=published[k]:differences.append(exact_diff(actual,published[k],f'audit replay[{json.dumps(k)}]'))
+    assert not differences,('audit replay differs from a fresh recomputation (exact comparison; no tolerance)\n'
+        f'Python={sys.version}; NumPy={np.__version__}; platform={platform.platform()}; machine={platform.machine()}\n'+'\n'.join(differences))
     labels=published['official_labels'];assert labels and labels['rows_matched']==evaluation['cnr_ext']['source']['count'] and labels['sha256']=='26416454cb8b184006431d0c149d31beabb8ef65d8eb2212cf4a39914a470dc8','audit replay: official label check missing'
     p=next(g for g in published['summary'] if all(g[k]==v for k,v in published['primary'].items() if k!='model') and g['model']==published['primary']['model'])
     summary+=f"; spot-check replay recomputed ({len(published['reproduced'])} thresholds reproduced, primary: {p['over_revoked']}/{p['over']} over-target revoked, {p['within_revoked']}/{p['within']} false)"
