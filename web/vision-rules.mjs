@@ -1,8 +1,9 @@
 /** Deterministic, auditable rules on actual model detections. No learned behavior classifier. */
 const vehicles=new Set(['car','truck','bus','motorcycle']);
 const furniture=new Set(['couch','chair','bed','dining table','refrigerator','suitcase']);
+export const VISION_RULE_SETTINGS=Object.freeze({rules_version:'vision-rules-v2-stable-dwell',tracking_max_gap_seconds:1.6,parking_max_center_distance:.06,parking_min_samples:3});
 export function boxIoU(a,b){const w=Math.max(0,Math.min(a[0]+a[2],b[0]+b[2])-Math.max(a[0],b[0]));const h=Math.max(0,Math.min(a[1]+a[3],b[1]+b[3])-Math.max(a[1],b[1]));const intersection=w*h;return intersection/(a[2]*a[3]+b[2]*b[3]-intersection||1);}
-export function trackDetections(frames,maxGap=1.6){
+export function trackDetections(frames,maxGap=VISION_RULE_SETTINGS.tracking_max_gap_seconds){
  const tracks=[];
  for(const frame of frames){
   const used=new Set();
@@ -17,6 +18,22 @@ export function trackDetections(frames,maxGap=1.6){
 }
 const centre=b=>[b[0]+b[2]/2,b[1]+b[3]/2];
 const inside=(box,roi)=>{const [x,y]=centre(box);return x>=roi[0]&&x<=roi[0]+roi[2]&&y>=roi[1]&&y<=roi[1]+roi[3];};
+// Keep a bounded, continuous window. Small adjacent steps must not chain into a long moving stay.
+function stableRuns(samples,dwell){
+ const result=[];let window=[];
+ const qualifies=()=>window.length>=VISION_RULE_SETTINGS.parking_min_samples&&window.at(-1).time-window[0].time>=dwell;
+ const finish=()=>{if(qualifies())result.push(window);window=[];};
+ for(const sample of samples){
+  if(window.length&&(sample.time<=window.at(-1).time||sample.time-window.at(-1).time>VISION_RULE_SETTINGS.tracking_max_gap_seconds))finish();
+  const point=centre(sample.bbox),conflicts=()=>window.some(s=>{const p=centre(s.bbox);return Math.hypot(point[0]-p[0],point[1]-p[1])>VISION_RULE_SETTINGS.parking_max_center_distance;});
+  if(conflicts()){
+   if(qualifies())finish();
+   else while(conflicts())window.shift();
+  }
+  window.push(sample);
+ }
+ finish();return result;
+}
 export function makeCandidates(tracks,config){
  const {roi,rule}=config;
  if(!['objects','access','lift','parking','direction'].includes(rule))throw new Error('未知场景规则');
@@ -29,15 +46,14 @@ export function makeCandidates(tracks,config){
   const runs=[];let current=[];
   for(const sample of track.samples){if(inside(sample.bbox,roi)){current.push(sample);}else if(current.length){runs.push(current);current=[];}}
   if(current.length)runs.push(current);
-  for(const samples of runs){
+  const parking=rule==='parking';
+  const segments=parking&&config.is_video&&vehicles.has(track.class)?runs.flatMap(run=>stableRuns(run,config.dwell_seconds)):parking?[]:runs;
+  for(const [segmentIndex,samples] of segments.entries()){
    const first=samples[0],last=samples.at(-1),span=last.time-first.time;
    let category=null,why='';
    if(rule==='access'&&vehicles.has(track.class)){category='blocked_access';why='车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。';}
    if(rule==='lift'&&furniture.has(track.class)&&samples.some(s=>s.bbox[2]*s.bbox[3]>=.04)){category='bulky_load';why='检测到支持类别的物品，且画面占比达到示例阈值。是否为客梯、是否允许搬运，需人工确认。';}
-   if(rule==='parking'&&config.is_video&&vehicles.has(track.class)&&samples.length>=3&&span>=config.dwell_seconds){
-    const origin=centre(first.bbox);const movement=Math.max(...samples.map(s=>Math.hypot(centre(s.bbox)[0]-origin[0],centre(s.bbox)[1]-origin[1])));
-    if(movement<=.06){category='illegal_parking';why=`采样中车辆在指定区域内持续约 ${span.toFixed(1)} 秒，中心位移未超过画面对角坐标的 0.06。不是连续停车时长的证明。`;}
-   }
+   if(parking){category='illegal_parking';why=`采样中车辆在指定区域内有约 ${span.toFixed(1)} 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 ${VISION_RULE_SETTINGS.parking_max_center_distance}。驶入、驶离及其他停留片段分别处理。`;}
    if(rule==='direction'&&config.is_video&&vehicles.has(track.class)&&samples.length>=3){
     const a=centre(first.bbox),b=centre(last.bbox),vector={right:[1,0],left:[-1,0],down:[0,1],up:[0,-1]}[config.expected_direction];
     if(!vector)throw new Error('请选择预期行驶方向');
@@ -45,7 +61,7 @@ export function makeCandidates(tracks,config){
    }
    if(!category)continue;
    const base=Date.parse(config.started_at);const id=`vision-${track.id}-${candidates.length+1}`;
-   candidates.push({id,camera:config.camera,zone:config.zone,track:track.id,category,start:new Date(base+first.time*1000).toISOString(),end:new Date(base+Math.max(first.time+.001,last.time)*1000).toISOString(),score:Math.max(...samples.map(s=>s.score)),quality:.4,summary:`模型检测：${track.class}；${samples.length} 个采样帧。${why} 单图时间窗仅为格式占位，不表示停留时间。`,evidence:samples.slice(0,20).map(s=>`${config.media_name} @ ${s.time.toFixed(2)}s`)});
+   candidates.push({id,camera:config.camera,zone:config.zone,track:track.id,...(parking?{stable_segment_id:`${track.id}-stay-${segmentIndex+1}`} : {}),category,start:new Date(base+first.time*1000).toISOString(),end:new Date(base+Math.max(first.time+.001,last.time)*1000).toISOString(),score:Math.max(...samples.map(s=>s.score)),quality:.4,summary:`模型检测：${track.class}；${samples.length} 个采样帧。${why} ${config.is_video?'时间范围来自稀疏采样，不证明连续停留。':'单图时间窗仅为格式占位，不表示停留时间。'}`,evidence:samples.slice(0,20).map(s=>`${config.media_name} @ ${s.time.toFixed(2)}s`)});
   }
  }
  return candidates;

@@ -22,6 +22,7 @@ JSON，版本 1。最多 5 MiB、10,000 条记录。见 `data/demo.json`。导�
 
 - `id` 必须唯一；`camera`、`zone`、`track` 非空。track 仅为来源侧匿名目标编号，不是住户身份。
 - 八类事件键：bulky_load、door_obstruction、lift_impact、illegal_parking、blocked_access、wrong_way、waste_dumping、waste_overflow。
+- `stable_segment_id` 可选，仅用于 `illegal_parking`，须为 1–100 字的非空字符串。来源应在同一轨迹的全部区域访问中为各稳定段分配不同标识；同摄像头、区域、轨迹和类别下，不同标识以及有/无标识的观察分开合并。它不替换 `track`，随工作区导出恢复保留。旧输入不含该字段时维持原合并语义；标识不是停车事实或来源认证。
 - 时间需含时区，真实日历日期，结束晚于开始，每个区间最长 24 小时。界面统一显示 UTC+8 和日期。
 - score、quality 是 [0,1] 的有限数值。quality 由来源提供，不默认是校准过的质量模型分数。
 - 浏览器视觉模块输出 quality=0.4，作为保守的人工复核标记。单图时间窗为 1ms 格式占位，不代表持续行为。视频区间由稀疏采样估计，不作为连续停留证明。
@@ -39,6 +40,8 @@ JSON，版本 1。最多 5 MiB、10,000 条记录。见 `data/demo.json`。导�
 `format: estateguard-detections`；包含模型/运行库版本、后端、来源文件元数据、阈值、区域、场景参数、逐帧检测框、匿名轨迹、规则候选与实际耗时。它是视觉模块的可复查原始输出；用「送入事件复核」产生兼容的观察批次。
 
 2026-10-16 起的报告在 `params` 中保存实际 `minimum_score`、`nms_iou_threshold`、`postprocess` 补丁标识、`max_detections`、`offset_seconds`、`sample_interval_seconds`、`max_frames`。片段起点为相对原素材的秒数，图片实际为 0；`started_at` 是原素材开始时间，候选绝对时间在此基础上加采样秒数。旧报告缺失这些字段时不得假定当时用了默认值，无法完整重现其检测设置。报告不包含原始媒体，当前也没有从检测报告一键恢复分析设置的入口。
+
+2026-10-19 起增加 `rules_version: vision-rules-v2-stable-dwell`、`tracking_max_gap_seconds: 1.6`、`parking_max_center_distance: 0.06`（片段内归一化检测中心最大两两距离）及 `parking_min_samples: 3`。停车候选只包含达标稳定段的时间、分数与证据，使用 `stable_segment_id` 保持下游分段。旧报告缺少这些字段时不能按新规则解释已有结果；需要原始媒体重新分析。
 
 素材确认版本增加 `media.width`、`media.height`（原始尺寸）以及 `params.context_confirmed`。顶层 `context_confirmation` 为 `{media_revision, confirmed_at}`，只有规则分析通过当前素材核对时才有值；通用检测为 `null`。`media_revision` 只是本标签页内成功替换素材的计数，不是跨会话文件标识；`confirmed_at` 是勾选时间，不是拍摄时间，也不是受认证的审计凭证。
 

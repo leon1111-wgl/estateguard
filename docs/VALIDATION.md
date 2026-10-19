@@ -285,6 +285,31 @@ python3 scripts/verify_assets.py
 
 强化等待后的[完整迁移回归](validation/parking-handover-transfer-validation.json)通过：真实 DINOv2/MobileNetV2 前向与离线特征对齐、现场自适应与校准、C8 三模型、C6 随机抽检和第六个错误撤销、跨模型限制、导出至新页面恢复后旧证据不能重新启用撤销阈值、上传、8 张评测表和 390px。页面错误、外部请求均为空。独立代码审查最终无阻断。
 
+
+## 2026-10-19 · 驶入后稳定停留与事件分段
+
+浏览器依赖按本文开头配置，先在 8766 启动静态服务：
+
+```bash
+node --test tests/*.test.mjs
+node scripts/vision-dwell-check.cjs
+node scripts/model-check.cjs
+node scripts/media-context-check.cjs
+node scripts/critic-check.cjs
+node scripts/browser-check.cjs
+python3 scripts/verify_assets.py
+node scripts/evaluate.mjs
+```
+
+- 全部 131 项 JS 通过。新增 10 项验证已保存的真实检测框、先停再离开、两次停稳、缓慢连续移动、往返摆动、ROI 离开重入、丢检、不同轨迹、单图、恰好/不足时长、1.6/1.6001 秒间隙边界、短窗口冲突后恢复、错误片段标识、旧格式与同段重复合并、人工记录及导出恢复。两次各 2 秒的停留送审后仍为两个事件，不会跨过 3 秒宽限期。
+- [旧版 2/5 基线](validation/vision-dwell-baseline.json)与[修复后 5/5](validation/vision-dwell-validation.json)使用同一组视频 SHA-256；三段各实际推理 11 帧。驶入停稳从没有候选变为 3–10 秒的一个稳定段，8 个证据采样，分数仅取稳定段最大值；原地静止 1 条、持续移动 0 条。视频摘要不再显示单图占位说明。
+- 正式 `vision-dwell-check.cjs` 自行用现有 CC0 图片生成视频，无额外素材下载。视频保留在忽略的 `artifacts/`；设置 `VISION_DWELL_REUSE_FIXTURES=1` 可校验 manifest 哈希后重复使用完全相同的文件。新生成视频编码受浏览器和机器调度影响，保存实际哈希及检测框，不能宣称跨机器逐位相同。
+- 真实模型候选送入事件复核、保存需补证据、导出及恢复后，原始观察（含片段标识）、规则、人工结论、审查历史完全一致。JSON 不含媒体；恢复后明确要求另行打开本地证据。页面错误和跨站请求为 0。
+- 原模型回归校车分数 0.9916937947、实际 7 帧、张量 262→262；素材上下文 10/10、原 `critic-check`、`browser-check` 通过；21 项模型资产哈希通过。固定合成班次重算与已提交 data/web 输出无差异。
+- [独立设计师报告](validation/vision-dwell-ui-validation.json)：1440 / 390px 各真实推理 11 帧后送审、保存、导出；7 秒稳定段与证据一致，无页面溢出，页面错误 0。截图位于本地 `artifacts/rule-review-20261019-designer-after-*`，已由设计师和主代理查看。独立代码审查相关 59 项通过，无阻塞项。
+
+数据边界：现有 CC0 图片是真实公开照片，移动轨迹和测试时间由脚本构造；COCO 推理为真实运行。它们验证规则和交接，不是有人工停车标注的现场评测，不产生训练、违规识别精度或部署收益结论。极慢移动、遮挡、镜头运动与目标串号仍需真实视频验证。
+
 ## 2026-10-19 · 检测器升级（D-FINE-N 默认）
 
 ```bash
@@ -306,5 +331,7 @@ node scripts/parking-transfer-check.cjs && node scripts/parking-check.cjs && nod
 - 近重复去重按协议附录 3 用已保存检测复算：测试半 AP 42.0 → 41.3，工作点 12 类召回 / 精确率 54.6% / 86.8% → 54.4% / 87.1%，客梯大件 6 类精确率 72.4% → 73.4%；默认规则重核仍全部满足，`verify_detector_eval.py` 核对该重核。
 - 新浏览器验收（[报告](validation/detector-validation.json)）：页面按评测记录默认 D-FINE、分数下限 0.6；未手动改动时切换检测器分数下限随之变化，手动输入的值不被覆盖；选“客梯内的可识别大件”时显示 6 类精确率提醒；CC0 校车上 D-FINE 大巴 0.965、SSDLite 0.992，两框 IoU > 0.8；切换后复用已加载模型、分数下限随检测器恢复；“指定通道内的车辆”规则生成候选；报告记录检测器、后处理与 NMS 设置；评测页两张表；390px 无横向滚动；无页面错误与跨站请求。
 - 原有检查固定 `?detector=ssdlite` 后全部通过（`detection-threshold-check` 在一次连续全量运行中于准备阶段等待示例图 30 秒超时，未进入用例；随后单独连续两次 7/7，未见页面错误，根因未定位）：`model-check`（校车 0.99169，7 帧，张量 262→262）、`model-loading-check` 8/8、`detection-threshold-check` 7/7、`media-context-check` 10/10、`critic-check`、`browser-check`、`event-media-check` 10/10；车位 `parking-transfer-check`（ORT 运行时改为共享后，DINOv2 与离线特征最大差仍为 0）、`parking-check`、`parking-review-check` 9/9、`parking-error-audit-check` 8/8、`parking-critic-check`。
+
+- 与 origin/main 的“驶入后稳定停留”提交合并后重跑：136 项 JS 与全部审计、合成数据再生成一致；15 项浏览器检查通过。新的 `vision-dwell-check` 按 SSDLite 写成（断言 CC0 校车短片只有 1 个候选），在 D-FINE 默认下得到 2 个候选——第二个是照片边缘那辆被 D-FINE 检出（约 0.67 分）、SSDLite 漏掉（约 0.17 分）的真实大巴；与其他旧检查一样以 `?detector=ssdlite` 固定后 5/5，断言未改。`detector-check` 在连续全量运行中一次于手机页等待评测记录 30 秒超时，单独重跑通过。
 
 未验证：小区监控、夜间、客梯或鱼眼画面上的检出率与每小时误报；低端手机上单线程 WASM 的耗时；大件类别按类调阈值的效果。

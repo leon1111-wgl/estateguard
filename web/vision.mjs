@@ -1,9 +1,9 @@
-import {trackDetections,makeCandidates} from './vision-rules.mjs';
+import {trackDetections,makeCandidates,VISION_RULE_SETTINGS} from './vision-rules.mjs';
 import {createModelAssetLoader,registerModelRoute} from './model-assets.mjs';
 import {loadDfineDetector} from './detector-dfine.mjs';
 import {parseRecordingTime,confirmContext,isContextConfirmed,validateContext,reusableScene,restoreScene} from './media-context.mjs';
 const $=id=>document.getElementById(id);
-const inferenceSettings=Object.freeze({sample_interval_seconds:1,max_frames:20});
+const inferenceSettings=Object.freeze({sample_interval_seconds:1,max_frames:20,...VISION_RULE_SETTINGS});
 // Both detectors return COCO-SSD-shaped boxes, so tracking and rules are shared; settings are recorded per run.
 const DETECTORS=Object.freeze({
  ssdlite:{name:'COCO-SSD 2.2.3 / SSDLite MobileNet V2',short:'COCO-SSD · SSDLite MobileNet V2',scoreHelp:'只保留达到下限的检测结果；重叠框按固定规则合并。',runtime:'TensorFlow.js 4.22.0',settings:Object.freeze({max_detections:50,nms_iou_threshold:.5,postprocess:'coco-ssd-2.2.3-fixed-nms-v1'})},
