@@ -1,0 +1,428 @@
+{
+  "started_at": "2026-10-19T14:15:56.086Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Real browser decoding and original COCO-SSD weights on synthetic movement of an existing CC0 photograph. Validates rule segmentation and human-review handover, not real-world parking accuracy.",
+  "checks": [
+    {
+      "name": "stationary control produces one sampled-dwell candidate",
+      "passed": true,
+      "evidence": {
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "合成规则验收镜头",
+            "zone": "完整画面测试区域",
+            "track": "track-1",
+            "stable_segment_id": "track-1-stay-1",
+            "category": "illegal_parking",
+            "start": "2026-10-19T00:00:00.000Z",
+            "end": "2026-10-19T00:00:10.000Z",
+            "score": 0.9967339038848877,
+            "quality": 0.4,
+            "summary": "模型检测：bus；11 个采样帧。采样中车辆在指定区域内有约 10.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+            "evidence": [
+              "vision-dwell-stationary.mp4 @ 0.00s",
+              "vision-dwell-stationary.mp4 @ 1.00s",
+              "vision-dwell-stationary.mp4 @ 2.00s",
+              "vision-dwell-stationary.mp4 @ 3.00s",
+              "vision-dwell-stationary.mp4 @ 4.00s",
+              "vision-dwell-stationary.mp4 @ 5.00s",
+              "vision-dwell-stationary.mp4 @ 6.00s",
+              "vision-dwell-stationary.mp4 @ 7.00s",
+              "vision-dwell-stationary.mp4 @ 8.00s",
+              "vision-dwell-stationary.mp4 @ 9.00s",
+              "vision-dwell-stationary.mp4 @ 10.00s"
+            ]
+          }
+        ],
+        "frame_count": 11
+      }
+    },
+    {
+      "name": "continuous movement remains outside the dwell review queue",
+      "passed": true,
+      "evidence": {
+        "frame_count": 11,
+        "bus_samples": [
+          {
+            "time": 0,
+            "bbox": [
+              0.13170553743839264,
+              0.36614561080932617,
+              0.4940515607595444,
+              0.38694870471954346
+            ],
+            "score": 0.9961990714073181
+          },
+          {
+            "time": 1,
+            "bbox": [
+              0.13621214032173157,
+              0.36848026514053345,
+              0.5118013322353363,
+              0.38373100757598877
+            ],
+            "score": 0.996927797794342
+          },
+          {
+            "time": 2,
+            "bbox": [
+              0.16031476855278015,
+              0.3675227463245392,
+              0.49861255288124084,
+              0.38536879420280457
+            ],
+            "score": 0.9972355961799622
+          },
+          {
+            "time": 3,
+            "bbox": [
+              0.1839696168899536,
+              0.36532503366470337,
+              0.49176037311553955,
+              0.3851889371871948
+            ],
+            "score": 0.9966627955436707
+          },
+          {
+            "time": 4,
+            "bbox": [
+              0.19714367389678955,
+              0.3652834892272949,
+              0.5048794746398926,
+              0.38366568088531494
+            ],
+            "score": 0.9970533847808838
+          },
+          {
+            "time": 5,
+            "bbox": [
+              0.2172461301088333,
+              0.36714041233062744,
+              0.49803970754146576,
+              0.38560426235198975
+            ],
+            "score": 0.997000515460968
+          },
+          {
+            "time": 6,
+            "bbox": [
+              0.241850808262825,
+              0.36939799785614014,
+              0.48651276528835297,
+              0.3821069002151489
+            ],
+            "score": 0.9976363182067871
+          },
+          {
+            "time": 7,
+            "bbox": [
+              0.2577390670776367,
+              0.36912187933921814,
+              0.5005810260772705,
+              0.38201001286506653
+            ],
+            "score": 0.9975119829177856
+          },
+          {
+            "time": 8,
+            "bbox": [
+              0.27019408345222473,
+              0.3681268095970154,
+              0.49498113989830017,
+              0.382107138633728
+            ],
+            "score": 0.9964926838874817
+          },
+          {
+            "time": 9,
+            "bbox": [
+              0.28978094458580017,
+              0.3677617609500885,
+              0.5030888617038727,
+              0.38228949904441833
+            ],
+            "score": 0.9967831373214722
+          },
+          {
+            "time": 10,
+            "bbox": [
+              0.30707237124443054,
+              0.3664376735687256,
+              0.5040083229541779,
+              0.38101887702941895
+            ],
+            "score": 0.9959447979927063
+          }
+        ],
+        "candidates": []
+      }
+    },
+    {
+      "name": "arrival followed by a stable stop includes only the stopped interval",
+      "passed": true,
+      "evidence": {
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "合成规则验收镜头",
+            "zone": "完整画面测试区域",
+            "track": "track-1",
+            "stable_segment_id": "track-1-stay-1",
+            "category": "illegal_parking",
+            "start": "2026-10-19T00:00:03.000Z",
+            "end": "2026-10-19T00:00:10.000Z",
+            "score": 0.9967302083969116,
+            "quality": 0.4,
+            "summary": "模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+            "evidence": [
+              "vision-dwell-arrive-stop.mp4 @ 3.00s",
+              "vision-dwell-arrive-stop.mp4 @ 4.00s",
+              "vision-dwell-arrive-stop.mp4 @ 5.00s",
+              "vision-dwell-arrive-stop.mp4 @ 6.00s",
+              "vision-dwell-arrive-stop.mp4 @ 7.00s",
+              "vision-dwell-arrive-stop.mp4 @ 8.00s",
+              "vision-dwell-arrive-stop.mp4 @ 9.00s",
+              "vision-dwell-arrive-stop.mp4 @ 10.00s"
+            ]
+          }
+        ],
+        "bus_samples": [
+          {
+            "time": 0,
+            "bbox": [
+              0.13170553743839264,
+              0.36614561080932617,
+              0.4940515607595444,
+              0.38694870471954346
+            ],
+            "score": 0.9961990714073181
+          },
+          {
+            "time": 1,
+            "bbox": [
+              0.18696147203445435,
+              0.36623114347457886,
+              0.5027154684066772,
+              0.384901762008667
+            ],
+            "score": 0.9962981343269348
+          },
+          {
+            "time": 2,
+            "bbox": [
+              0.2394942343235016,
+              0.36902040243148804,
+              0.5062236487865448,
+              0.3807194232940674
+            ],
+            "score": 0.9976100921630859
+          },
+          {
+            "time": 3,
+            "bbox": [
+              0.30685728788375854,
+              0.3682094216346741,
+              0.505932092666626,
+              0.3809690475463867
+            ],
+            "score": 0.9965785145759583
+          },
+          {
+            "time": 4,
+            "bbox": [
+              0.32025933265686035,
+              0.3689816892147064,
+              0.4970206022262573,
+              0.3795912563800812
+            ],
+            "score": 0.9964675903320312
+          },
+          {
+            "time": 5,
+            "bbox": [
+              0.31776317954063416,
+              0.3692263960838318,
+              0.5000108778476715,
+              0.379067063331604
+            ],
+            "score": 0.9963873624801636
+          },
+          {
+            "time": 6,
+            "bbox": [
+              0.32035601139068604,
+              0.3701643943786621,
+              0.4966243505477905,
+              0.37781834602355957
+            ],
+            "score": 0.9966272711753845
+          },
+          {
+            "time": 7,
+            "bbox": [
+              0.3202601671218872,
+              0.3703635334968567,
+              0.4965047836303711,
+              0.3784273862838745
+            ],
+            "score": 0.9967302083969116
+          },
+          {
+            "time": 8,
+            "bbox": [
+              0.32014769315719604,
+              0.3702808618545532,
+              0.49660587310791016,
+              0.37823033332824707
+            ],
+            "score": 0.9966546297073364
+          },
+          {
+            "time": 9,
+            "bbox": [
+              0.32041552662849426,
+              0.3700275421142578,
+              0.49635574221611023,
+              0.37851858139038086
+            ],
+            "score": 0.9966388940811157
+          },
+          {
+            "time": 10,
+            "bbox": [
+              0.3203589618206024,
+              0.3700624704360962,
+              0.49641552567481995,
+              0.37868547439575195
+            ],
+            "score": 0.9966212511062622
+          }
+        ],
+        "params": {
+          "rule": "parking",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "合成规则验收镜头",
+          "zone": "完整画面测试区域",
+          "started_at": "2026-10-19T08:00:00+08:00",
+          "media_name": "vision-dwell-arrive-stop.mp4",
+          "dwell_seconds": 5,
+          "is_video": true,
+          "expected_direction": "right",
+          "minimum_score": 0.5,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "context_confirmed": true
+        },
+        "stable_interval": [
+          3,
+          10
+        ],
+        "stable_max_displacement": 0.008946688022972254
+      }
+    },
+    {
+      "name": "video candidate explanations do not contain a single-image placeholder",
+      "passed": true,
+      "evidence": {
+        "summaries": [
+          "模型检测：bus；11 个采样帧。采样中车辆在指定区域内有约 10.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+          "模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。"
+        ]
+      }
+    },
+    {
+      "name": "stable-interval candidates survive human review and JSON handover without media",
+      "passed": true,
+      "evidence": {
+        "restore_message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "observation": {
+          "id": "vision-track-1-1",
+          "camera": "合成规则验收镜头",
+          "zone": "完整画面测试区域",
+          "track": "track-1",
+          "stable_segment_id": "track-1-stay-1",
+          "category": "illegal_parking",
+          "start": "2026-10-19T00:00:03.000Z",
+          "end": "2026-10-19T00:00:10.000Z",
+          "score": 0.9967302083969116,
+          "quality": 0.4,
+          "summary": "模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+          "evidence": [
+            "vision-dwell-arrive-stop.mp4 @ 3.00s",
+            "vision-dwell-arrive-stop.mp4 @ 4.00s",
+            "vision-dwell-arrive-stop.mp4 @ 5.00s",
+            "vision-dwell-arrive-stop.mp4 @ 6.00s",
+            "vision-dwell-arrive-stop.mp4 @ 7.00s",
+            "vision-dwell-arrive-stop.mp4 @ 8.00s",
+            "vision-dwell-arrive-stop.mp4 @ 9.00s",
+            "vision-dwell-arrive-stop.mp4 @ 10.00s"
+          ]
+        },
+        "decision": {
+          "status": "needs_evidence",
+          "note": "合成短片仅验证停稳片段，实际停车处置仍需现场证据。",
+          "at": "2026-10-19T14:16:04.208Z"
+        },
+        "exported_bytes": 1882
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.84",
+  "fixtures": {
+    "source": "web/samples/bus.jpg",
+    "source_sha256": "34ff1128eb83891e0ae38c6323022af6a4dc6a035d150c106201088b093499bd",
+    "canvas": [
+      960,
+      640
+    ],
+    "photo_size": [
+      576,
+      384
+    ],
+    "photo_y": 120,
+    "start_x": 40,
+    "end_x": 220,
+    "arrival_stops_at": 3,
+    "nominal_duration_seconds": 10.4,
+    "videos": {
+      "stationary": {
+        "file": "vision-dwell-stationary.mp4",
+        "type": "video/mp4",
+        "bytes": 433261,
+        "sha256": "ddd5588a1216e705e5fff77260bb07d091a13ec58f71a807f382dcc5a4b8e73c"
+      },
+      "arrive-stop": {
+        "file": "vision-dwell-arrive-stop.mp4",
+        "type": "video/mp4",
+        "bytes": 449821,
+        "sha256": "64a18edd740e4a6929e6e456ae249c87d0e8cb969bd85c3f46679c0b6c49a768"
+      },
+      "moving": {
+        "file": "vision-dwell-moving.mp4",
+        "type": "video/mp4",
+        "bytes": 398649,
+        "sha256": "b0d3ff06cc3559f56b106d264c1c88155b7381257012d65fe57b688fda2b6ec6"
+      }
+    }
+  },
+  "finished_at": "2026-10-19T14:16:04.532Z",
+  "passed": 5,
+  "failed": 0,
+  "ok": true
+}

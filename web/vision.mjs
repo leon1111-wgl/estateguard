@@ -1,8 +1,8 @@
-import {trackDetections,makeCandidates} from './vision-rules.mjs';
+import {trackDetections,makeCandidates,VISION_RULE_SETTINGS} from './vision-rules.mjs';
 import {createModelAssetLoader,registerModelRoute} from './model-assets.mjs';
 import {parseRecordingTime,confirmContext,isContextConfirmed,validateContext,reusableScene,restoreScene} from './media-context.mjs';
 const $=id=>document.getElementById(id);
-const inferenceSettings=Object.freeze({sample_interval_seconds:1,max_frames:20,max_detections:50,nms_iou_threshold:.5,postprocess:'coco-ssd-2.2.3-fixed-nms-v1'});
+const inferenceSettings=Object.freeze({sample_interval_seconds:1,max_frames:20,max_detections:50,nms_iou_threshold:.5,postprocess:'coco-ssd-2.2.3-fixed-nms-v1',...VISION_RULE_SETTINGS});
 const names={person:'人员',bicycle:'自行车',car:'小汽车',motorcycle:'摩托车',bus:'公交 / 大巴',truck:'卡车',chair:'椅子',couch:'沙发',bed:'床',suitcase:'行李箱','dining table':'餐桌',refrigerator:'冰箱',backpack:'背包',handbag:'手提包',bottle:'瓶子',cat:'猫',dog:'狗',tv:'电视'};
 let model=null,modelPromise=null,modelController=null,modelLoadStats=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0;
 let mediaRevision=0,geometry=null,contextConfirmation=null,savedScene=null,savedSceneRevision=0,contextHint='';

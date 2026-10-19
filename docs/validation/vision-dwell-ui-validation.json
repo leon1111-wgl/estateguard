@@ -1,0 +1,396 @@
+{
+  "started_at": "2026-10-19T14:15:09.206Z",
+  "scope": "Independent actual Chrome 1440/390 UI regression using the existing CC0 bus synthetic arrive-stop video, real COCO inference, explicit test time and saved review. Synthetic motion ends at 3 seconds. No field parking accuracy or violation claim.",
+  "views": [
+    {
+      "width": 1440,
+      "readyScreenshot": "rule-review-20261019-designer-after-ready-1440.png",
+      "detection": {
+        "frame_count": 11,
+        "params": {
+          "rule": "parking",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "CC0校车合成规则验收",
+          "zone": "整幅测试区域·非真实停车现场",
+          "started_at": "2026-10-19T08:30:00+08:00",
+          "media_name": "vision-dwell-arrive-stop.mp4",
+          "dwell_seconds": 5,
+          "is_video": true,
+          "expected_direction": "right",
+          "minimum_score": 0.5,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "context_confirmed": true
+        },
+        "candidate": {
+          "id": "vision-track-1-1",
+          "camera": "CC0校车合成规则验收",
+          "zone": "整幅测试区域·非真实停车现场",
+          "track": "track-1",
+          "stable_segment_id": "track-1-stay-1",
+          "category": "illegal_parking",
+          "start": "2026-10-19T00:30:03.000Z",
+          "end": "2026-10-19T00:30:10.000Z",
+          "score": 0.9967302083969116,
+          "quality": 0.4,
+          "summary": "模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+          "evidence": [
+            "vision-dwell-arrive-stop.mp4 @ 3.00s",
+            "vision-dwell-arrive-stop.mp4 @ 4.00s",
+            "vision-dwell-arrive-stop.mp4 @ 5.00s",
+            "vision-dwell-arrive-stop.mp4 @ 6.00s",
+            "vision-dwell-arrive-stop.mp4 @ 7.00s",
+            "vision-dwell-arrive-stop.mp4 @ 8.00s",
+            "vision-dwell-arrive-stop.mp4 @ 9.00s",
+            "vision-dwell-arrive-stop.mp4 @ 10.00s"
+          ]
+        },
+        "start_seconds": 3,
+        "end_seconds": 10,
+        "evidence_seconds": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "excluded_arrival_seconds": [
+          0,
+          1,
+          2
+        ]
+      },
+      "analysis": {
+        "width": 1440,
+        "docWidth": 1440,
+        "hash": "#analyze",
+        "message": "分析完成：11 帧、1 条匿名轨迹、1 个待核实候选。",
+        "summary": "11采样帧1匿名轨迹1规则候选23 ms平均推理",
+        "explanation": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+        "queueCount": "9",
+        "detail": "优先核查高风险类别电梯门受阻LIFT-A · A栋客梯 · door-heldevent:door-held-1优先安排人工检查，尚不代表违规已确认。观察时间2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例34 秒输入时间窗覆盖（非实测停留）88 / 100最大输入分数90 / 100最低输入质量来源描述预约搬家过程中，推车疑似阻挡电梯关门；预约不能豁免挡门风险。原创合成场景，无真实住户或监控，不是模型推理结果或实地部署测量。证据引用（媒体需另行打开）door-held-frame-1.jpgdoor-held-frame-2.jpgdoor-held-frame-3.jpgdoor-held-frame-4.jpg打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。未载入本地证据。请选择与本事件对应的图片或视频。下一步检查查看完整开关门片段，由值班人员核查障碍。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "evidence": [
+          "door-held-frame-1.jpg",
+          "door-held-frame-2.jpg",
+          "door-held-frame-3.jpg",
+          "door-held-frame-4.jpg"
+        ],
+        "time": "2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例",
+        "mediaStatus": "未载入本地证据。请选择与本事件对应的图片或视频。",
+        "saveDisabled": false
+      },
+      "analysisScreenshot": "rule-review-20261019-designer-after-result-1440.png",
+      "handoff": {
+        "width": 1440,
+        "docWidth": 1440,
+        "hash": "#workspace",
+        "message": "候选已送入复核，原始素材可在事件详情中查看。",
+        "summary": "11采样帧1匿名轨迹1规则候选23 ms平均推理",
+        "explanation": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+        "queueCount": "1",
+        "detail": "证据不足疑似不当停车CC0校车合成规则验收 · 整幅测试区域·非真实停车现场 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/19 08:30:03 → 2026/10/19 08:30:10（UTC+8）顺序示意，非时间比例7 秒输入时间窗覆盖（非实测停留）100 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。真实浏览器推理：COCO-SSD 2.2.3 / SSDLite MobileNet V2。来源：vision-dwell-arrive-stop.mp4。规则：parking；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）vision-dwell-arrive-stop.mp4 @ 3.00svision-dwell-arrive-stop.mp4 @ 4.00svision-dwell-arrive-stop.mp4 @ 5.00svision-dwell-arrive-stop.mp4 @ 6.00svision-dwell-arrive-stop.mp4 @ 7.00svision-dwell-arrive-stop.mp4 @ 8.00svision-dwell-arrive-stop.mp4 @ 9.00svision-dwell-arrive-stop.mp4 @ 10.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。视频首帧已解码，请核对画面是否对应本事件。vision-dwell-arrive-stop.mp4下一步检查核对车位标识、临时装卸许可和停留证据。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "evidence": [
+          "vision-dwell-arrive-stop.mp4 @ 3.00s",
+          "vision-dwell-arrive-stop.mp4 @ 4.00s",
+          "vision-dwell-arrive-stop.mp4 @ 5.00s",
+          "vision-dwell-arrive-stop.mp4 @ 6.00s",
+          "vision-dwell-arrive-stop.mp4 @ 7.00s",
+          "vision-dwell-arrive-stop.mp4 @ 8.00s",
+          "vision-dwell-arrive-stop.mp4 @ 9.00s",
+          "vision-dwell-arrive-stop.mp4 @ 10.00s"
+        ],
+        "time": "2026/10/19 08:30:03 → 2026/10/19 08:30:10（UTC+8）顺序示意，非时间比例",
+        "mediaStatus": "视频首帧已解码，请核对画面是否对应本事件。",
+        "saveDisabled": false
+      },
+      "handoffScreenshot": "rule-review-20261019-designer-after-handoff-1440.png",
+      "evidenceScreenshot": "rule-review-20261019-designer-after-evidence-1440.png",
+      "saved": {
+        "width": 1440,
+        "docWidth": 1440,
+        "hash": "#workspace",
+        "message": "候选已送入复核，原始素材可在事件详情中查看。",
+        "summary": "11采样帧1匿名轨迹1规则候选23 ms平均推理",
+        "explanation": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+        "queueCount": "1",
+        "detail": "待补充证据疑似不当停车CC0校车合成规则验收 · 整幅测试区域·非真实停车现场 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/19 08:30:03 → 2026/10/19 08:30:10（UTC+8）顺序示意，非时间比例7 秒输入时间窗覆盖（非实测停留）100 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。真实浏览器推理：COCO-SSD 2.2.3 / SSDLite MobileNet V2。来源：vision-dwell-arrive-stop.mp4。规则：parking；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）vision-dwell-arrive-stop.mp4 @ 3.00svision-dwell-arrive-stop.mp4 @ 4.00svision-dwell-arrive-stop.mp4 @ 5.00svision-dwell-arrive-stop.mp4 @ 6.00svision-dwell-arrive-stop.mp4 @ 7.00svision-dwell-arrive-stop.mp4 @ 8.00svision-dwell-arrive-stop.mp4 @ 9.00svision-dwell-arrive-stop.mp4 @ 10.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。视频首帧已解码，请核对画面是否对应本事件。vision-dwell-arrive-stop.mp4下一步检查核对车位标识、临时装卸许可和停留证据。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据合成短片规则验收：只记录停车稳定子段，仍需真实现场依据；此素材不证明真实违停。保存复核记录复核历史 · 1 条2026/10/19 22:15:13 · 待补充证据：合成短片规则验收：只记录停车稳定子段，仍需真实现场依据；此素材不证明真实违停。",
+        "evidence": [
+          "vision-dwell-arrive-stop.mp4 @ 3.00s",
+          "vision-dwell-arrive-stop.mp4 @ 4.00s",
+          "vision-dwell-arrive-stop.mp4 @ 5.00s",
+          "vision-dwell-arrive-stop.mp4 @ 6.00s",
+          "vision-dwell-arrive-stop.mp4 @ 7.00s",
+          "vision-dwell-arrive-stop.mp4 @ 8.00s",
+          "vision-dwell-arrive-stop.mp4 @ 9.00s",
+          "vision-dwell-arrive-stop.mp4 @ 10.00s"
+        ],
+        "time": "2026/10/19 08:30:03 → 2026/10/19 08:30:10（UTC+8）顺序示意，非时间比例",
+        "mediaStatus": "视频首帧已解码，请核对画面是否对应本事件。",
+        "saveDisabled": false
+      },
+      "export": {
+        "format": "estateguard-workspace",
+        "observations": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "CC0校车合成规则验收",
+            "zone": "整幅测试区域·非真实停车现场",
+            "track": "track-1",
+            "stable_segment_id": "track-1-stay-1",
+            "category": "illegal_parking",
+            "start": "2026-10-19T00:30:03.000Z",
+            "end": "2026-10-19T00:30:10.000Z",
+            "score": 0.9967302083969116,
+            "quality": 0.4,
+            "summary": "模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+            "evidence": [
+              "vision-dwell-arrive-stop.mp4 @ 3.00s",
+              "vision-dwell-arrive-stop.mp4 @ 4.00s",
+              "vision-dwell-arrive-stop.mp4 @ 5.00s",
+              "vision-dwell-arrive-stop.mp4 @ 6.00s",
+              "vision-dwell-arrive-stop.mp4 @ 7.00s",
+              "vision-dwell-arrive-stop.mp4 @ 8.00s",
+              "vision-dwell-arrive-stop.mp4 @ 9.00s",
+              "vision-dwell-arrive-stop.mp4 @ 10.00s"
+            ]
+          }
+        ],
+        "decisions": {
+          "event:vision-track-1-1": {
+            "status": "needs_evidence",
+            "note": "合成短片规则验收：只记录停车稳定子段，仍需真实现场依据；此素材不证明真实违停。",
+            "at": "2026-10-19T14:15:13.210Z"
+          }
+        },
+        "audit": [
+          {
+            "event_id": "event:vision-track-1-1",
+            "status": "needs_evidence",
+            "note": "合成短片规则验收：只记录停车稳定子段，仍需真实现场依据；此素材不证明真实违停。",
+            "at": "2026-10-19T14:15:13.210Z"
+          }
+        ]
+      },
+      "savedScreenshot": "rule-review-20261019-designer-after-saved-1440.png"
+    },
+    {
+      "width": 390,
+      "readyScreenshot": "rule-review-20261019-designer-after-ready-390.png",
+      "detection": {
+        "frame_count": 11,
+        "params": {
+          "rule": "parking",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "CC0校车合成规则验收",
+          "zone": "整幅测试区域·非真实停车现场",
+          "started_at": "2026-10-19T08:30:00+08:00",
+          "media_name": "vision-dwell-arrive-stop.mp4",
+          "dwell_seconds": 5,
+          "is_video": true,
+          "expected_direction": "right",
+          "minimum_score": 0.5,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "context_confirmed": true
+        },
+        "candidate": {
+          "id": "vision-track-1-1",
+          "camera": "CC0校车合成规则验收",
+          "zone": "整幅测试区域·非真实停车现场",
+          "track": "track-1",
+          "stable_segment_id": "track-1-stay-1",
+          "category": "illegal_parking",
+          "start": "2026-10-19T00:30:03.000Z",
+          "end": "2026-10-19T00:30:10.000Z",
+          "score": 0.9967302083969116,
+          "quality": 0.4,
+          "summary": "模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+          "evidence": [
+            "vision-dwell-arrive-stop.mp4 @ 3.00s",
+            "vision-dwell-arrive-stop.mp4 @ 4.00s",
+            "vision-dwell-arrive-stop.mp4 @ 5.00s",
+            "vision-dwell-arrive-stop.mp4 @ 6.00s",
+            "vision-dwell-arrive-stop.mp4 @ 7.00s",
+            "vision-dwell-arrive-stop.mp4 @ 8.00s",
+            "vision-dwell-arrive-stop.mp4 @ 9.00s",
+            "vision-dwell-arrive-stop.mp4 @ 10.00s"
+          ]
+        },
+        "start_seconds": 3,
+        "end_seconds": 10,
+        "evidence_seconds": [
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "excluded_arrival_seconds": [
+          0,
+          1,
+          2
+        ]
+      },
+      "analysis": {
+        "width": 390,
+        "docWidth": 390,
+        "hash": "#analyze",
+        "message": "分析完成：11 帧、1 条匿名轨迹、1 个待核实候选。",
+        "summary": "11采样帧1匿名轨迹1规则候选28 ms平均推理",
+        "explanation": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+        "queueCount": "9",
+        "detail": "优先核查高风险类别电梯门受阻LIFT-A · A栋客梯 · door-heldevent:door-held-1优先安排人工检查，尚不代表违规已确认。观察时间2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例34 秒输入时间窗覆盖（非实测停留）88 / 100最大输入分数90 / 100最低输入质量来源描述预约搬家过程中，推车疑似阻挡电梯关门；预约不能豁免挡门风险。原创合成场景，无真实住户或监控，不是模型推理结果或实地部署测量。证据引用（媒体需另行打开）door-held-frame-1.jpgdoor-held-frame-2.jpgdoor-held-frame-3.jpgdoor-held-frame-4.jpg打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。未载入本地证据。请选择与本事件对应的图片或视频。下一步检查查看完整开关门片段，由值班人员核查障碍。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "evidence": [
+          "door-held-frame-1.jpg",
+          "door-held-frame-2.jpg",
+          "door-held-frame-3.jpg",
+          "door-held-frame-4.jpg"
+        ],
+        "time": "2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例",
+        "mediaStatus": "未载入本地证据。请选择与本事件对应的图片或视频。",
+        "saveDisabled": false
+      },
+      "analysisScreenshot": "rule-review-20261019-designer-after-result-390.png",
+      "handoff": {
+        "width": 390,
+        "docWidth": 390,
+        "hash": "#workspace",
+        "message": "候选已送入复核，原始素材可在事件详情中查看。",
+        "summary": "11采样帧1匿名轨迹1规则候选28 ms平均推理",
+        "explanation": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+        "queueCount": "1",
+        "detail": "证据不足疑似不当停车CC0校车合成规则验收 · 整幅测试区域·非真实停车现场 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/19 08:30:03 → 2026/10/19 08:30:10（UTC+8）顺序示意，非时间比例7 秒输入时间窗覆盖（非实测停留）100 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。真实浏览器推理：COCO-SSD 2.2.3 / SSDLite MobileNet V2。来源：vision-dwell-arrive-stop.mp4。规则：parking；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）vision-dwell-arrive-stop.mp4 @ 3.00svision-dwell-arrive-stop.mp4 @ 4.00svision-dwell-arrive-stop.mp4 @ 5.00svision-dwell-arrive-stop.mp4 @ 6.00svision-dwell-arrive-stop.mp4 @ 7.00svision-dwell-arrive-stop.mp4 @ 8.00svision-dwell-arrive-stop.mp4 @ 9.00svision-dwell-arrive-stop.mp4 @ 10.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。视频首帧已解码，请核对画面是否对应本事件。vision-dwell-arrive-stop.mp4下一步检查核对车位标识、临时装卸许可和停留证据。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "evidence": [
+          "vision-dwell-arrive-stop.mp4 @ 3.00s",
+          "vision-dwell-arrive-stop.mp4 @ 4.00s",
+          "vision-dwell-arrive-stop.mp4 @ 5.00s",
+          "vision-dwell-arrive-stop.mp4 @ 6.00s",
+          "vision-dwell-arrive-stop.mp4 @ 7.00s",
+          "vision-dwell-arrive-stop.mp4 @ 8.00s",
+          "vision-dwell-arrive-stop.mp4 @ 9.00s",
+          "vision-dwell-arrive-stop.mp4 @ 10.00s"
+        ],
+        "time": "2026/10/19 08:30:03 → 2026/10/19 08:30:10（UTC+8）顺序示意，非时间比例",
+        "mediaStatus": "视频首帧已解码，请核对画面是否对应本事件。",
+        "saveDisabled": false
+      },
+      "handoffScreenshot": "rule-review-20261019-designer-after-handoff-390.png",
+      "evidenceScreenshot": "rule-review-20261019-designer-after-evidence-390.png",
+      "saved": {
+        "width": 390,
+        "docWidth": 390,
+        "hash": "#workspace",
+        "message": "候选已送入复核，原始素材可在事件详情中查看。",
+        "summary": "11采样帧1匿名轨迹1规则候选28 ms平均推理",
+        "explanation": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+        "queueCount": "1",
+        "detail": "待补充证据疑似不当停车CC0校车合成规则验收 · 整幅测试区域·非真实停车现场 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/19 08:30:03 → 2026/10/19 08:30:10（UTC+8）顺序示意，非时间比例7 秒输入时间窗覆盖（非实测停留）100 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。真实浏览器推理：COCO-SSD 2.2.3 / SSDLite MobileNet V2。来源：vision-dwell-arrive-stop.mp4。规则：parking；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）vision-dwell-arrive-stop.mp4 @ 3.00svision-dwell-arrive-stop.mp4 @ 4.00svision-dwell-arrive-stop.mp4 @ 5.00svision-dwell-arrive-stop.mp4 @ 6.00svision-dwell-arrive-stop.mp4 @ 7.00svision-dwell-arrive-stop.mp4 @ 8.00svision-dwell-arrive-stop.mp4 @ 9.00svision-dwell-arrive-stop.mp4 @ 10.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。视频首帧已解码，请核对画面是否对应本事件。vision-dwell-arrive-stop.mp4下一步检查核对车位标识、临时装卸许可和停留证据。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据合成短片规则验收：只记录停车稳定子段，仍需真实现场依据；此素材不证明真实违停。保存复核记录复核历史 · 1 条2026/10/19 22:15:16 · 待补充证据：合成短片规则验收：只记录停车稳定子段，仍需真实现场依据；此素材不证明真实违停。",
+        "evidence": [
+          "vision-dwell-arrive-stop.mp4 @ 3.00s",
+          "vision-dwell-arrive-stop.mp4 @ 4.00s",
+          "vision-dwell-arrive-stop.mp4 @ 5.00s",
+          "vision-dwell-arrive-stop.mp4 @ 6.00s",
+          "vision-dwell-arrive-stop.mp4 @ 7.00s",
+          "vision-dwell-arrive-stop.mp4 @ 8.00s",
+          "vision-dwell-arrive-stop.mp4 @ 9.00s",
+          "vision-dwell-arrive-stop.mp4 @ 10.00s"
+        ],
+        "time": "2026/10/19 08:30:03 → 2026/10/19 08:30:10（UTC+8）顺序示意，非时间比例",
+        "mediaStatus": "视频首帧已解码，请核对画面是否对应本事件。",
+        "saveDisabled": false
+      },
+      "export": {
+        "format": "estateguard-workspace",
+        "observations": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "CC0校车合成规则验收",
+            "zone": "整幅测试区域·非真实停车现场",
+            "track": "track-1",
+            "stable_segment_id": "track-1-stay-1",
+            "category": "illegal_parking",
+            "start": "2026-10-19T00:30:03.000Z",
+            "end": "2026-10-19T00:30:10.000Z",
+            "score": 0.9967302083969116,
+            "quality": 0.4,
+            "summary": "模型检测：bus；8 个采样帧。采样中车辆在指定区域内有约 7.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+            "evidence": [
+              "vision-dwell-arrive-stop.mp4 @ 3.00s",
+              "vision-dwell-arrive-stop.mp4 @ 4.00s",
+              "vision-dwell-arrive-stop.mp4 @ 5.00s",
+              "vision-dwell-arrive-stop.mp4 @ 6.00s",
+              "vision-dwell-arrive-stop.mp4 @ 7.00s",
+              "vision-dwell-arrive-stop.mp4 @ 8.00s",
+              "vision-dwell-arrive-stop.mp4 @ 9.00s",
+              "vision-dwell-arrive-stop.mp4 @ 10.00s"
+            ]
+          }
+        ],
+        "decisions": {
+          "event:vision-track-1-1": {
+            "status": "needs_evidence",
+            "note": "合成短片规则验收：只记录停车稳定子段，仍需真实现场依据；此素材不证明真实违停。",
+            "at": "2026-10-19T14:15:16.789Z"
+          }
+        },
+        "audit": [
+          {
+            "event_id": "event:vision-track-1-1",
+            "status": "needs_evidence",
+            "note": "合成短片规则验收：只记录停车稳定子段，仍需真实现场依据；此素材不证明真实违停。",
+            "at": "2026-10-19T14:15:16.789Z"
+          }
+        ]
+      },
+      "savedScreenshot": "rule-review-20261019-designer-after-saved-390.png"
+    }
+  ],
+  "pageErrors": [],
+  "blockers": [],
+  "ok": true,
+  "finished_at": "2026-10-19T14:15:17.059Z",
+  "visual_review": {
+    "inspected": [
+      "rule-review-20261019-designer-after-handoff-1440.png",
+      "rule-review-20261019-designer-after-handoff-390.png",
+      "rule-review-20261019-designer-after-evidence-390.png",
+      "rule-review-20261019-designer-after-saved-390.png"
+    ],
+    "conclusion": "Both widths show 08:30:03–08:30:10 and a 7-second stable segment, with evidence timestamps 3–10 only. Video description no longer contains single-image placeholder language. Evidence labels and Chinese text wrap within the existing approved layout.",
+    "additional_saved_state_check": "The exported 390px workspace was restored and saved again: decision-status value needs_evidence, selected label 待补充证据, and event badge 待补充证据 agree.",
+    "remaining_scope": "Unused dwell validation in object detection remains intentionally deferred by root; not changed or retested as a fix in this iteration.",
+    "product_files_changed": false
+  }
+}

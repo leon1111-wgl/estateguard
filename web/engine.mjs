@@ -53,6 +53,7 @@ export function validateBatch(batch){
   for(const key of ['id','camera','zone','track'])textValue(r[key],`Record ${i+1} ${key}`,100);
   requireValue(!ids.has(r.id),`Duplicate observation id: ${r.id}`); ids.add(r.id);
   requireValue(Object.hasOwn(categories,r.category),`Record ${r.id}: unknown category.`);
+  if(r.stable_segment_id!==undefined)requireValue(r.category==='illegal_parking'&&typeof r.stable_segment_id==='string'&&r.stable_segment_id.trim().length>0&&r.stable_segment_id.length<=100,'稳定片段标识仅用于停车观察，必须为 1–100 字的非空字符串。');
   timeValue(r.start,`${r.id} start`); timeValue(r.end,`${r.id} end`);
   requireValue(Date.parse(r.end)>Date.parse(r.start),`${r.id}: end must be later than start.`);
   requireValue(Date.parse(r.end)-Date.parse(r.start)<=86400000,`${r.id}: intervals longer than 24 hours must be split.`);
@@ -80,12 +81,12 @@ function finishEvent(rows,policy){
  else if(score<policy.score_threshold){routing=urgent?'insufficient_evidence':'below_threshold';reason=urgent?'Low-score urgent-category cue retained for manual triage.':'Below this site’s review threshold; retained for audit.';}
  else if(first.category==='illegal_parking'&&observed_seconds<policy.parking_grace_seconds){routing='short_observation';reason='Observed coverage is shorter than the site’s parking grace period; gaps are excluded.';}
  else if(urgent){routing='urgent_review';reason='Prioritised for a human check; this is not a confirmed violation.';}
- return {id:`event:${first.id}`,camera:first.camera,zone:first.zone,track:first.track,category:first.category,start:new Date(Math.min(...rows.map(r=>Date.parse(r.start)))).toISOString(),end:new Date(Math.max(...rows.map(r=>Date.parse(r.end)))).toISOString(),score,quality,urgent,routing,reason,observed_seconds,evidence,observation_ids:rows.map(r=>r.id),summaries:[...new Set(rows.map(r=>r.summary))]};
+ return {id:`event:${first.id}`,camera:first.camera,zone:first.zone,track:first.track,...(first.stable_segment_id!==undefined?{stable_segment_id:first.stable_segment_id}:{}),category:first.category,start:new Date(Math.min(...rows.map(r=>Date.parse(r.start)))).toISOString(),end:new Date(Math.max(...rows.map(r=>Date.parse(r.end)))).toISOString(),score,quality,urgent,routing,reason,observed_seconds,evidence,observation_ids:rows.map(r=>r.id),summaries:[...new Set(rows.map(r=>r.summary))]};
 }
 export function buildEvents(input,policy=defaultPolicy){
  const batch=validateBatch(input); validatePolicy(policy);
  const groups=new Map();
- for(const r of batch.observations){const key=JSON.stringify([r.camera,r.zone,r.track,r.category]);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(r);}
+ for(const r of batch.observations){const key=JSON.stringify([r.camera,r.zone,r.track,r.category,r.stable_segment_id??null]);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(r);}
  const events=[];
  for(const rows of groups.values()){
   rows.sort((a,b)=>Date.parse(a.start)-Date.parse(b.start)||a.id.localeCompare(b.id));
