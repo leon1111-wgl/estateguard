@@ -1,0 +1,68 @@
+{
+  "checked_at": "2026-10-19T14:30:37.868Z",
+  "base": "http://127.0.0.1:8767",
+  "steps": {
+    "default": {
+      "detector": "dfine",
+      "score": "0.6",
+      "help": "COCO 通用照片：AP 42.0（物业相关 12 类 44.5）；参考机约 252 ms/张。建议下限 0.6，当前默认。不代表小区监控效果。"
+    },
+    "sample_both_detectors": {
+      "dfine": {
+        "bus_score": 0.9651602077977631,
+        "bus_bbox": [
+          0.14125004410743713,
+          0.30271363258361816,
+          0.8241178393363953,
+          0.6320297718048096
+        ],
+        "detections": 3,
+        "backend": "WASM · 1 线程",
+        "inference_ms": 273.2999999523163,
+        "model_loading": {
+          "network_bytes": 29776700,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 29776700,
+          "load_ms": 478.6999999284744,
+          "initialization_ms": 369.2000000476837,
+          "reused_in_memory": false
+        }
+      },
+      "ssdlite": {
+        "bus_score": 0.9916937947273254,
+        "bus_bbox": [
+          0.13031357526779175,
+          0.29490771889686584,
+          0.8503782749176025,
+          0.6453458964824677
+        ],
+        "detections": 1,
+        "backend": "webgl",
+        "inference_ms": 36.200000047683716,
+        "model_loading": {
+          "network_bytes": 20041229,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 20041229,
+          "load_ms": 906.3999999761581,
+          "initialization_ms": 734.6000000238419,
+          "reused_in_memory": false
+        }
+      },
+      "bus_iou": 0.9491222227585174
+    },
+    "rule_and_reuse": {
+      "reused_in_memory": true,
+      "candidates": 2,
+      "first": "blocked_access"
+    },
+    "results_and_phone": {
+      "tables": 2,
+      "analyze_scroll_width": 390,
+      "results_scroll_width": 390
+    }
+  },
+  "ok": true,
+  "browser": "155.0.8059.84"
+}

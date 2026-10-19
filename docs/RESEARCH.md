@@ -45,3 +45,11 @@
 | Amato、Carrara、Falchi、Gennaro、Meghini、Vairo，**Deep learning for decentralized parking lot occupancy detection**，ESWA 72 (2017) 327–334，[doi:10.1016/j.eswa.2016.10.055](https://doi.org/10.1016/j.eswa.2016.10.055) | 数据主页引用 | 使用其公开 CNR-EXT 数据作保留测试 | 未复现论文的 mAlexNet 或其报告指标 |
 
 采用理由：物业现场标注少、相机多，工业上常用“冻结通用编码器 + 轻量头 + 现场少量标注”的方式快速上线；分流阈值必须带置信度保证，才能决定哪些车位可以不看。本项目的实测结果显示，在训练视角上得到的保证换到新视角会失效，需要现场重新校准，见 [PARKING_DATA.md](PARKING_DATA.md)。
+
+## 2026-10-19 · 实时检测 Transformer
+
+| 来源 | 证据层级 | 已实现 | 未做 |
+| --- | --- | --- | --- |
+| Peng、Li、Wu、Zhang、Sun、Wu，**D-FINE: Redefine Regression Task in DETRs as Fine-grained Distribution Refinement**，[arXiv:2410.13842](https://arxiv.org/abs/2410.13842)（2024-10 预印本；官方仓库未注明会议）；官方实现 [Peterande/D-FINE](https://github.com/Peterande/D-FINE)（Apache-2.0） | 已读 arXiv 摘要页与官方仓库 README/许可 | 用官方 N 版 COCO 权重导出 ONNX，在浏览器单线程运行，与 SSDLite 在 COCO val2017 上同协议比较 | 未训练、未在小区数据微调；未比较 RT-DETRv2、RF-DETR 等（体积 80–108 MB，不适合网页） |
+
+社区转换的 `onnx-community/dfine_n_coco-ONNX` 在本项目冒烟测试中给出明显偏低的分数，与官方 PyTorch 权重不一致；改为自行导出并记录与 PyTorch 的数值差。COCO 是通用照片数据集，论文与本项目的 COCO 数字都不能代表小区监控画面上的检出率。

@@ -40,7 +40,7 @@ const controls=page=>page.evaluate(()=>({
    const original=Cache.prototype.put;window.__modelCachePutEntered=false;
    Cache.prototype.put=async function(request,response){const url=typeof request==='string'?request:request.url;if(url.includes('/vendor/tf.min.js')&&!window.__modelCachePutEntered){window.__modelCachePutEntered=true;await new Promise(resolve=>window.__releaseModelCachePut=resolve);}return original.call(this,request,response);};
   });
-  await page.goto(`${base}/#analyze`);await prepareSample(page);return page;
+  await page.goto(`${base}/?detector=ssdlite#analyze`);await prepareSample(page);return page;
  };
  const bounded=async(promise,label,ms=15000)=>{let timer;try{return await Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error(`Timed out waiting for ${label}`)),ms);})]);}finally{clearTimeout(timer);}};
  const holdShard=async(page,assetPath=shardPath)=>{

@@ -295,6 +295,7 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
   .analysis-stats > div { min-width: 0; padding: 0 8px; }
   .analysis-stats strong { font-size: 18px; }
   #vision-results { padding: 16px 13px; }
+  #detector-evaluation-content .table-wrap::before { content: "左右滑动查看完整对比"; display: block; margin-bottom: 8px; font-size: 10px; color: #69717d; }
   #vision-results .table-wrap::before { content: "左右滑动查看完整检测记录"; display: block; margin-bottom: 8px; font-size: 10px; color: #69717d; }
   #vision-results table { min-width: 560px; }
   .help-strip summary > span { display: block; margin: 5px 0 0 14px; }
@@ -352,8 +353,9 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
 #parking .parking-model-panel > h2, #parking .parking-model-panel p { margin: 0; }
 #parking #parking-onsite { padding-top: 12px; border-top: 1px solid var(--line); }
 #parking #parking-onsite .toolbar .button { flex: 1 1 auto; }
-#parking-transfer-content td { overflow-wrap: normal; white-space: nowrap; }
-#parking-transfer-content h3, #parking-transfer-content details { margin-top: 20px; }
+#parking-transfer-content td, #detector-evaluation-content td { overflow-wrap: normal; white-space: nowrap; }
+#parking-transfer-content h3, #parking-transfer-content details, #detector-evaluation-content details { margin-top: 20px; }
+#detector-evaluation-content details + p { margin-top: 16px; }
 #parking-transfer-content .table-wrap + p:not(.subtle) { margin-top: 16px; }
 #parking .parking-upload-panel > .subtle { margin: 9px 0 0; }
 #parking #parking-upload-result:not(:empty) { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; }

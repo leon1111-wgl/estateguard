@@ -1,0 +1,24 @@
+{
+ "source": "ustc-community/dfine-nano-coco@066438d3d8f0da137a37b38fdf3368fd4afceced",
+ "weights_sha256": "19e06bdc873da819920a8d373b879721a5b9759d822f8213220bb09abbdab58b",
+ "onnx_sha256": "6de4f704687464d7cca9fae94d33aeea406f89a7e4c560a29acd317cc9cdf344",
+ "onnx_bytes": 15462296,
+ "opset": 17,
+ "exporter": "torch.onnx.export(dynamo=False)",
+ "torch": "2.14.1",
+ "transformers": "5.20.1",
+ "onnx": "1.23.2",
+ "onnxruntime": "1.30.0",
+ "python": "3.12.14",
+ "parity_vs_pytorch_on_bus": {
+  "logits": 0.00017833709716796875,
+  "boxes": 7.331371307373047e-06
+ },
+ "bus_score": 0.964451789855957,
+ "bus_box": [
+  0.553288996219635,
+  0.6188279390335083,
+  0.824877142906189,
+  0.6322283148765564
+ ]
+}

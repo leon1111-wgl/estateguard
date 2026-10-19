@@ -5,7 +5,7 @@ const fs=require('node:fs'),path=require('node:path');
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
  const page=await browser.newPage();page.on('dialog',d=>d.accept());const base=process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766';
- await page.goto(base+'/#workspace');await page.waitForSelector('.event-button');await page.locator('#queue-filter').selectOption('all');await page.locator('[data-event="event:move-booked-1"]').click();
+ await page.goto(base+'/?detector=ssdlite#workspace');await page.waitForSelector('.event-button');await page.locator('#queue-filter').selectOption('all');await page.locator('[data-event="event:move-booked-1"]').click();
  await page.locator('#decision-status').selectOption('confirmed_concern');await page.locator('#decision-note').fill('现场复核发现预约已过期，需要跟进。');await page.getByRole('button',{name:'保存复核记录',exact:true}).click();await page.locator('#queue-filter').selectOption('review');assert.equal(await page.locator('.event-button').count(),10);assert.equal(await page.locator('.metric strong').nth(2).textContent(),'10');
  await page.locator('[data-event="event:move-booked-1"]').click();await page.locator('#decision-status').selectOption('resolved');await page.locator('#decision-note').fill('已确认完成处理。');await page.getByRole('button',{name:'保存复核记录',exact:true}).click();assert.equal(await page.locator('.event-button').count(),9);
  await page.locator('[data-nav="analyze"]').click();

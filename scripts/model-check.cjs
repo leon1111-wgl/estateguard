@@ -9,7 +9,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
  page.on('request',r=>{if(r.url().startsWith('http')&&new URL(r.url()).origin!==origin)external.push(r.url());});
  const out=path.join(__dirname,'../artifacts');fs.mkdirSync(out,{recursive:true});
  const confirmContext=async()=>{await page.locator('#vision-camera').fill('模型运行回归');await page.locator('#vision-zone').fill('测试区域');await page.locator('#vision-start').fill('2026-10-16T08:00');await page.locator('#vision-context-confirmed').check();};
- await page.goto(base);await page.locator('#sample-image').click();await page.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);await page.locator('#vision-rule').selectOption('access');
+ await page.goto(base+'/?detector=ssdlite');await page.locator('#sample-image').click();await page.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);await page.locator('#vision-rule').selectOption('access');
  await confirmContext();
  const run=async()=>{await page.locator('#run-analysis').click();await page.waitForFunction(()=>document.querySelector('#vision-message').textContent.startsWith('分析完成')||document.querySelector('#vision-message').textContent.startsWith('分析失败'),{},{timeout:120000});assert.match(await page.locator('#vision-message').textContent(),/^分析完成/);};
  const report=async name=>{const [d]=await Promise.all([page.waitForEvent('download'),page.locator('#download-detections').click()]);const text=fs.readFileSync(await d.path(),'utf8');fs.writeFileSync(path.join(out,name),text);return JSON.parse(text);};

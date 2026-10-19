@@ -1,0 +1,69 @@
+{
+  "started_at": "2026-10-19T14:25:10.819Z",
+  "base": "http://127.0.0.1:8767",
+  "cases": [
+    {
+      "name": "cancelling a stalled D-FINE download unlocks controls within one second and a retry succeeds",
+      "status": "passed",
+      "evidence": {
+        "unlock_ms": 82,
+        "retry": {
+          "score": 0.9651602077977631,
+          "model_loading": {
+            "network_bytes": 15462296,
+            "cache_bytes": 14314404,
+            "cache_available": true,
+            "resource_bytes": 29776700,
+            "load_ms": 537.7000000476837,
+            "initialization_ms": 382,
+            "reused_in_memory": false
+          }
+        }
+      },
+      "duration_ms": 1397
+    },
+    {
+      "name": "a failed model download is reported and the next run recovers",
+      "status": "passed",
+      "evidence": {
+        "message": "分析失败：模型资源下载失败 (500)，可重试。",
+        "failures": 1,
+        "retry_score": 0.9651602077977631
+      },
+      "duration_ms": 1192
+    },
+    {
+      "name": "a stalled asset list times out after 30 s instead of waiting forever",
+      "status": "passed",
+      "evidence": {
+        "message": "分析失败：模型清单加载超时，请检查网络后重试。",
+        "elapsed_ms": 30043
+      },
+      "duration_ms": 30349
+    },
+    {
+      "name": "cancelling the parking page that started the shared runtime download leaves it running for the analyze page",
+      "status": "passed",
+      "evidence": {
+        "survivor": "analyze",
+        "bus": 0.9651602077977631
+      },
+      "duration_ms": 1619
+    },
+    {
+      "name": "cancelling the analyze page that started the shared runtime download leaves it running for the parking page",
+      "status": "passed",
+      "evidence": {
+        "survivor": "parking",
+        "message": "当前快照分析完成（2015/07/08 08:05 · DINOv2-small 线性探针）：53 / 53 个车位，4817 ms（含图片读取，约 91 ms"
+      },
+      "duration_ms": 5943
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.84",
+  "passed": 5,
+  "failed": 0,
+  "ok": true
+}

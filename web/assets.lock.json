@@ -1,5 +1,5 @@
 {
-  "verified_date": "2026-10-17",
+  "verified_date": "2026-10-19",
   "model": "SSDLite MobileNet V2",
   "weights_bytes": 18034528,
   "files": [
@@ -152,6 +152,41 @@
       "sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
       "source": "scripts/train_parking_transfer.py; CNRPark camera A, seed 20261015; frozen dinov2 features",
       "license": "Apache-2.0 backbone; project head MIT; training data ODbL-1.0"
+    },
+    {
+      "path": "models/dfine-n/model.onnx",
+      "bytes": 15462296,
+      "sha256": "6de4f704687464d7cca9fae94d33aeea406f89a7e4c560a29acd317cc9cdf344",
+      "source": "scripts/export_dfine_onnx.py from https://huggingface.co/ustc-community/dfine-nano-coco/resolve/066438d3d8f0da137a37b38fdf3368fd4afceced/model.safetensors",
+      "license": "Apache-2.0 (derivative export)"
+    },
+    {
+      "path": "models/dfine-n/config.json",
+      "bytes": 6557,
+      "sha256": "7edf2d96d3deb10aa4ec920be0e8e444b617454545bb58093e32bd8e2b96fa2f",
+      "source": "https://huggingface.co/ustc-community/dfine-nano-coco/resolve/066438d3d8f0da137a37b38fdf3368fd4afceced/config.json",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/dfine-n/preprocessor_config.json",
+      "bytes": 444,
+      "sha256": "cd38cd59999e7a95d68e487fbe5132df3d4e5c32a0836add57e6126ba0c4eaf1",
+      "source": "https://huggingface.co/ustc-community/dfine-nano-coco/resolve/066438d3d8f0da137a37b38fdf3368fd4afceced/preprocessor_config.json",
+      "license": "Apache-2.0"
+    },
+    {
+      "path": "models/dfine-n/NOTICE.md",
+      "bytes": 1352,
+      "sha256": "9bea507eca2b06ad7eb8ff03e01bb1fe791430ff839ff2a55f190b99ad49d193",
+      "source": "EstateGuard attribution notice",
+      "license": "Apache-2.0 notice"
+    },
+    {
+      "path": "models/dfine-n/export.json",
+      "bytes": 701,
+      "sha256": "c3ed8bfb1e598a5da534b984323c53597bdc633e7ede6c459517b205ae138add",
+      "source": "scripts/export_dfine_onnx.py parity report",
+      "license": "MIT"
     }
   ]
 }

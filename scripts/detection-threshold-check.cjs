@@ -16,7 +16,7 @@ const confirmContext=async page=>{await page.locator('#vision-camera').fill('阈
  try{
   const page=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});page.setDefaultTimeout(30000);page.on('pageerror',error=>report.page_errors.push(error.message));
   page.on('request',request=>{if(request.url().startsWith('http')&&new URL(request.url()).origin!==new URL(base).origin)report.external_requests.push(request.url());});
-  await page.goto(`${base}/#analyze`);await page.locator('#sample-image').click();await page.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);
+  await page.goto(`${base}/?detector=ssdlite#analyze`);await page.locator('#sample-image').click();await page.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);
   await page.locator('#vision-rule').selectOption('access');await confirmContext(page);
   const run=async(score,fixture,target=page)=>{
    await target.locator('#vision-score').fill(String(score));await target.locator('#run-analysis').click();
@@ -32,7 +32,7 @@ const confirmContext=async page=>{await page.locator('#vision-camera').fill('阈
   upstream.on('request',request=>{if(request.url().startsWith('http')&&new URL(request.url()).origin!==new URL(base).origin)report.external_requests.push(request.url());});
   const legacyLock=structuredClone(assetLock),legacyAsset=legacyLock.files.find(row=>row.path==='vendor/coco-ssd.min.js');legacyAsset.sha256=upstreamHash;legacyAsset.bytes=upstreamBytes.length;
   await upstream.route('**/assets.lock.json',route=>route.fulfill({json:legacyLock}));await upstream.route('**/vendor/coco-ssd.min.js',route=>route.fulfill({body:upstreamBytes,contentType:'text/javascript'}));
-  await upstream.goto(`${base}/#analyze`);await upstream.locator('#sample-image').click();await upstream.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);await upstream.locator('#vision-rule').selectOption('access');
+  await upstream.goto(`${base}/?detector=ssdlite#analyze`);await upstream.locator('#sample-image').click();await upstream.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);await upstream.locator('#vision-rule').selectOption('access');
   await confirmContext(upstream);
   const baseline=await run(.5,'public-bus-original-coco-ssd-2.2.3',upstream);
   check('default threshold matches actual upstream inference box by box and score by score',()=>{assert.equal(upstreamHash,report.baseline_vendor_sha256);assert.equal(normal.detections.length,baseline.detections.length);assert.equal(normal.candidates.length,baseline.candidates.length);assert.equal(normal.detections.length,1);for(let i=0;i<baseline.detections.length;i++){assert.equal(normal.detections[i].class,baseline.detections[i].class);assert.ok(Math.abs(normal.detections[i].score-baseline.detections[i].score)<1e-6);assert.ok(normal.detections[i].bbox.every((value,index)=>Math.abs(value-baseline.detections[i].bbox[index])<1e-6));}});
@@ -62,7 +62,7 @@ const confirmContext=async page=>{await page.locator('#vision-camera').fill('阈
   const mixed=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});mixed.on('pageerror',error=>report.page_errors.push(error.message));
   const previousLock=structuredClone(assetLock),previousAsset=previousLock.files.find(row=>row.path==='vendor/coco-ssd.min.js');previousAsset.sha256=upstreamHash;previousAsset.bytes=upstreamBytes.length;for(const key of ['local_patch','upstream_sha256','reproduce'])delete previousAsset[key];
   await mixed.route('**/assets.lock.json',route=>route.fulfill({json:previousLock}));await mixed.route('**/vendor/coco-ssd.min.js',route=>route.fulfill({body:upstreamBytes,contentType:'text/javascript'}));
-  await mixed.goto(`${base}/#analyze`);await mixed.locator('#sample-image').click();await mixed.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);await mixed.locator('#vision-rule').selectOption('access');await confirmContext(mixed);await mixed.locator('#vision-score').fill('.95');await mixed.locator('#run-analysis').click();
+  await mixed.goto(`${base}/?detector=ssdlite#analyze`);await mixed.locator('#sample-image').click();await mixed.waitForFunction(()=>!document.querySelector('#run-analysis').disabled);await mixed.locator('#vision-rule').selectOption('access');await confirmContext(mixed);await mixed.locator('#vision-score').fill('.95');await mixed.locator('#run-analysis').click();
   await mixed.waitForFunction(()=>/^(分析完成|分析失败)/.test(document.querySelector('#vision-message').textContent),null,{timeout:120000});
   const mixture=await mixed.evaluate(()=>({message:document.querySelector('#vision-message').textContent,run_disabled:document.querySelector('#run-analysis').disabled,file_disabled:document.querySelector('#analysis-file').disabled,rule_disabled:document.querySelector('#vision-rule').disabled,send_disabled:document.querySelector('#send-candidates').disabled,results_hidden:document.querySelector('#vision-results').hidden}));
   if(mixture.message.startsWith('分析完成')){const[download]=await Promise.all([mixed.waitForEvent('download'),mixed.locator('#download-detections').click()]);mixture.incorrect_report=JSON.parse(fs.readFileSync(await download.path()));}

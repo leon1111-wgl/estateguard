@@ -7,7 +7,7 @@ const path=require('node:path');
  const page=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('dialog',dialog=>dialog.accept());
  const base=process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766';const out=path.join(__dirname,'../artifacts');fs.mkdirSync(out,{recursive:true});
- await page.goto(base+'/#workspace');await page.waitForSelector('.event-button');
+ await page.goto(base+'/?detector=ssdlite#workspace');await page.waitForSelector('.event-button');
  assert.equal(await page.locator('.event-button').count(),9);
  await page.locator('#decision-status').selectOption('needs_evidence');await page.locator('#decision-note').fill('请值班员核查完整开关门片段。');
  await page.locator('.event-button').nth(1).click();await page.locator('.event-button').nth(0).click();assert.equal(await page.locator('#decision-note').inputValue(),'请值班员核查完整开关门片段。');

@@ -16,14 +16,25 @@ EstateGuard 将轻量视觉推理、场景规则、事件合并与人工复核�
 | --- | --- |
 | 公开数据车位巡检 | CNRPark 真实历史快照与 CNR-EXT 保留测试快照；三种占用模型可切换：DINOv2-small 线性探针（默认）、复用检测骨干的 MobileNetV2 迁移头、7,745 参数 MLP32 基线；逐时刻回放、全测试错例、人工结论恢复 |
 | 风险控制与现场适配 | 温度校准后的三态分流（自动判空闲 / 自动判占用 / 送人工），阈值须用本摄像头跨天人工结论按“车位·日”检验；人工结论驱动的 L2-SP 少样本自适应，全部在浏览器本地计算 |
-| 本地视觉推理 | 本站自托管 COCO-SSD / SSDLite MobileNet V2，识别 COCO 物体类别，显示检测框和分数 |
+| 本地视觉推理 | 本站自托管两种检测器：默认 D-FINE-N（2024 实时检测 Transformer，ONNX Runtime Web），可切换回 SSDLite MobileNet V2；识别 COCO 80 类物体，显示检测框和分数。COCO val2017 测试半 AP 42.0 对 25.4 |
 | 图片与短视频 | JPEG/PNG/WebP、MP4/WebM；每秒采样一帧，单次最多 20 秒，可选片段起点 |
 | 场景规则 | 用户指定区域内车辆、持续停留、疑似逆向移动、支持类别的大件物品 |
 | 事件处理 | 按摄像头、区域、匿名轨迹、类别合并；预约例外、高风险低分线索和证据不足分别处理 |
 | 人工复核 | 查看本地媒体，确认或排除线索、补充证据、完成处置；保留草稿、理由与历史 |
 | 交接与评测 | 检测 JSON、可恢复的工作区 JSON、中文交接单；事件级基线比较、标注冲突与视频划分泄漏检查 |
 
-**现在包含两条真实推理链路：通用预训练检测器，以及车位占用分类（冻结视觉基础模型 + 本项目训练的线性头，另保留从零训练的小模型基线）。** 物体检测不等于违规识别。挡门动作、碰撞损伤、垃圾投放和精细大件分类尚无专用模型验证。八类事件都可以导入、复核；当前自动分析只覆盖上表的规则候选，不会自动认定损坏、身份或责任。
+**现在包含两条真实推理链路：通用预训练检测器（D-FINE-N 默认，SSDLite 可选），以及车位占用分类（冻结视觉基础模型 + 本项目训练的线性头，另保留从零训练的小模型基线）。** 物体检测不等于违规识别。挡门动作、碰撞损伤、垃圾投放和精细大件分类尚无专用模型验证。八类事件都可以导入、复核；当前自动分析只覆盖上表的规则候选，不会自动认定损坏、身份或责任。
+
+### 检测器升级（2026-10-19）
+
+默认检测器从 2018 年的 SSDLite MobileNet V2 换成 D-FINE-N（官方 COCO 权重，本项目导出 ONNX，浏览器单线程运行）。在 COCO val2017 预先划分的测试半（2,500 张）上：
+
+| 检测器 | AP | 小目标 AP | 物业相关 12 类平均 AP | 12 类召回 / 精确率 | 本机单张 P95 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| SSDLite（分数 ≥ 0.5） | 25.4 | 2.7 | 29.3 | 35.3% / 86.9% | 38 ms（WebGL） |
+| **D-FINE-N**（分数 ≥ 0.6，开发半选定） | **42.0** | **22.6** | **44.5** | **54.6% / 86.8%** | 252 ms（单线程 WASM） |
+
+召回提高明显，但床、餐桌、沙发、卡车等大件类别的精确率下降（例如餐桌 83.3% → 61.1%）；客梯规则用到的 6 类合并精确率 87.9% → 72.4%，误检 52 → 245，选该规则时页面会提示。上表为预先固定的原始结果；网页另加近重复框去重（评测后由找茬发现），复算 AP 41.3、12 类召回 / 精确率 54.4% / 87.1%。COCO 是通用照片，不代表小区监控画面。默认规则、逐类结果和失败项见[检测器协议](docs/validation/detector-upgrade-protocol.md)与[模型卡](docs/MODEL_CARD.md)。
 
 ## 先体验公开数据
 
@@ -57,7 +68,7 @@ EstateGuard 将轻量视觉推理、场景规则、事件合并与人工复核�
 
 换入新素材后，来源和时间清空，片段起点归零、关注区域恢复整幅。来自同一现场的下一份素材可点击「沿用上次现场设置」，再填写这份素材的时间并核对画面；原始尺寸不同时需要重新框选。失败替换会保留上一份素材、设置和已完成报告。现场设置只在当前标签页内存中保留，尚不支持具名预设或从检测报告恢复设置。
 
-首次通用检测会读取约19.1 MiB的运行脚本、模型结构与权重；车位巡检默认的 DINOv2 首次分析另需约 37.0 MiB（模型与 WASM 运行库），页面会先提示体积。页面显示实际读取进度、下载量与缓存复用量；可「取消加载」，保留素材和设置后重试。公共模型资源校验后缓存在本机，刷新可复用；缓存不可用时仍能运行。缓存不包含用户图片、视频或复核记录。
+默认的 D-FINE-N 首次检测读取约 28.4 MiB（模型与 WASM 运行库，与车位 DINOv2 共用运行库），SSDLite 约 19.1 MiB；车位巡检默认的 DINOv2 首次分析另需约 37.0 MiB（模型与 WASM 运行库），页面会先提示体积。页面显示实际读取进度、下载量与缓存复用量；可「取消加载」，保留素材和设置后重试。公共模型资源校验后缓存在本机，刷新可复用；缓存不可用时仍能运行。缓存不包含用户图片、视频或复核记录。
 
 检测分数下限与重叠框合并规则已分开，避免提高分数时同一物体反而产生重复候选。检测 JSON 保存实际分数、重叠阈值、处理版本和采样设置；原版对照与失败用例见[验证记录](docs/VALIDATION.md)。这属于后处理修正，没有重新训练通用模型。
 
@@ -80,13 +91,14 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 python3 scripts/verify_assets.py
 python3 scripts/verify_parking.py
 python3 scripts/verify_parking_transfer.py
+python3 scripts/verify_detector_eval.py
 node scripts/evaluate.mjs
 python3 scripts/audit_annotations.py data/annotations-example.json
 ```
 
 标注审计退出码：`0` 无发现，`1` 存在需检查的问题，`2` 文件或输入结构错误。分歧不会自动投票改成“真值”。
 
-浏览器检查为可选开发依赖：安装 Playwright 及 Chromium 后运行 `node scripts/browser-check.cjs`、`node scripts/model-check.cjs`、`node scripts/parking-check.cjs`、`node scripts/parking-transfer-check.cjs`。已有 Chrome 可通过 `CHROME_PATH` 指定；运行前启动本地服务。详见[验证记录](docs/VALIDATION.md)。
+浏览器检查为可选开发依赖：安装 Playwright 及 Chromium 后运行 `node scripts/browser-check.cjs`、`node scripts/model-check.cjs`、`node scripts/parking-check.cjs`、`node scripts/parking-transfer-check.cjs`、`node scripts/detector-check.cjs`。已有 Chrome 可通过 `CHROME_PATH` 指定；运行前启动本地服务。详见[验证记录](docs/VALIDATION.md)。
 
 ## 效果如何理解
 
