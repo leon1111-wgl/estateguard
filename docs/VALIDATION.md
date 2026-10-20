@@ -38,7 +38,9 @@ node scripts/model-check.cjs
 
 ## 发布核验
 
-- 应用提交 `3a67c8e` 的 [验证与发布工作流](https://github.com/leon1111-wgl/estateguard/actions/runs/38756970035) 成功；主页提交 `439edf8` 的 [发布工作流](https://github.com/leon1111-wgl/leon1111-wgl/actions/runs/38757048656) 成功。
+> 2026-10-20 为清除 GitHub 贡献者缓存重建了仓库，此前的 Actions 运行记录随旧仓库转为私有。下文引用的运行在 `validation/ci-runs/` 保存了摘要（运行编号、提交、各任务与步骤的结论）；`validation/event-media-release-diagnostic.json` 里的运行链接同样以这些摘要为准。
+
+- 应用提交 `3a67c8e` 的 [验证与发布工作流](validation/ci-runs/38756970035.json) 成功；主页提交 `439edf8` 的 [发布工作流](https://github.com/leon1111-wgl/leon1111-wgl/actions/runs/38757048656) 成功。
 - 应用 HTML、CSS、四个逻辑模块、模型结构，以及个人主页 HTML，共 8 个线上文件与本地字节一致，见 `validation/deployed-assets.json`。
 - 在公开 GitHub Pages 地址重新运行真实模型图片/视频验证、送审、排除、张量稳定与手机布局检查，全部通过；见 `validation/deployed-model-validation.json`。个人主页的项目入口在桌面与 390px 下可见且无页面横向溢出。
 - 第一次线上模型加载超过 120 秒的测试等待时间；放宽等待并重试后通过。这是已发现的首次使用体验问题，不能由一次较快重试推断所有用户的加载速度。后续须改进下载进度、缓存与弱网恢复。
@@ -254,7 +256,7 @@ node scripts/critic-check.cjs
 发布前接续核验：上一轮抽检提交 e997ce3 尚未推送，本轮独立重新运行 16 项训练检查、模型资源校验和全部迁移/抽检回放重算，并完整执行 parking-transfer-check。真实编码器前向、C6 抽检撤销、导出恢复及三模型 EXT 对照均通过，无页面错误或跨站请求；未修改其模型或抽检规则。独立报告保存在 artifacts/review-e997ce3/parking-transfer-validation.json。
 
 
-发布校验的补充说明：Linux 首次失败后，通过[严格诊断运行](https://github.com/leon1111-wgl/estateguard/actions/runs/39095950159)定位 CP 统计数值差，最大 7.9447e-13。比较器只允许明确路径下 CP statistic 的绝对误差 1e-12，且两个值在目标 alpha 同一侧；所有离散结果、阈值、SPRT 统计值与其他报告字段严格一致。完整报告的 elapsed_seconds 是本机运行耗时，检查类型与有限值，不要求两次耗时相同。回归测试保留真实 Linux 数值对，同时篡改计数、阈值、撤销时间/位置、类型、数组和非有限数，验证仍能阻止发布。原保存结果与模型文件均保持不变。
+发布校验的补充说明：Linux 首次失败后，通过[严格诊断运行](validation/ci-runs/39095950159.json)定位 CP 统计数值差，最大 7.9447e-13。比较器只允许明确路径下 CP statistic 的绝对误差 1e-12，且两个值在目标 alpha 同一侧；所有离散结果、阈值、SPRT 统计值与其他报告字段严格一致。完整报告的 elapsed_seconds 是本机运行耗时，检查类型与有限值，不要求两次耗时相同。回归测试保留真实 Linux 数值对，同时篡改计数、阈值、撤销时间/位置、类型、数组和非有限数，验证仍能阻止发布。原保存结果与模型文件均保持不变。
 
 比较器修复的本机验证：新增 10 项回归先失败后通过，完整 Python 检查 24/24；重新运行 verify_parking_transfer.py，通过全部 144,965 张 EXT 分数、54 组阈值与完整抽检回放。最终部署仍须由 Linux CI 对同一提交验证。
 

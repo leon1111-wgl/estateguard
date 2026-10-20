@@ -1,0 +1,122 @@
+{
+  "note": "2026-10-20 重建仓库（清除 GitHub 贡献者缓存）后，此前的 Actions 运行记录随旧仓库转为私有，原链接无法公开访问。这里保存该次运行的摘要，由 GitHub API 导出；head_sha 是运行当时的提交编号。",
+  "original_url": "https://github.com/leon1111-wgl/estateguard/actions/runs/38756970035",
+  "run": {
+    "conclusion": "success",
+    "created_at": "2026-10-15T15:03:41Z",
+    "display_title": "Build Chinese estate inspection workspace with local model inference",
+    "event": "push",
+    "head_branch": "main",
+    "head_sha": "3a67c8ee9955db60b1e3fc4cd86bb4fd296af6a2",
+    "id": 38756970035,
+    "name": "Verify and publish EstateGuard",
+    "run_attempt": 1,
+    "run_started_at": "2026-10-15T15:03:41Z",
+    "status": "completed",
+    "updated_at": "2026-10-15T15:05:30Z"
+  },
+  "jobs": [
+    {
+      "completed_at": "2026-10-15T15:04:01Z",
+      "conclusion": "success",
+      "name": "verify",
+      "runner_os": "ubuntu-latest",
+      "started_at": "2026-10-15T15:03:45Z",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v5"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run node --test tests/*.test.mjs"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run python3 -m unittest discover -s tests -p 'test_*.py'"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run python3 scripts/verify_assets.py"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run python3 scripts/make_demo.py"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run node scripts/evaluate.mjs data/demo.json data/reference.json --write"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run git diff --exit-code -- data web/demo.json web/benchmark.json"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-python@v5"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job"
+        }
+      ]
+    },
+    {
+      "completed_at": "2026-10-15T15:05:26Z",
+      "conclusion": "success",
+      "name": "deploy",
+      "runner_os": "ubuntu-latest",
+      "started_at": "2026-10-15T15:04:07Z",
+      "steps": [
+        {
+          "conclusion": "success",
+          "name": "Set up job"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/configure-pages@v5"
+        },
+        {
+          "conclusion": "success",
+          "name": "Run actions/upload-pages-artifact@v4"
+        },
+        {
+          "conclusion": "success",
+          "name": "Deploy"
+        },
+        {
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6"
+        },
+        {
+          "conclusion": "success",
+          "name": "Complete job"
+        }
+      ]
+    }
+  ]
+}
