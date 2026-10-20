@@ -1,0 +1,337 @@
+{
+  "started_at": "2026-10-20T02:15:10.814Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Actual D-FINE-N and SSDLite inference on the repository CC0 bus image and disclosed synthetic clips; validates controls, active parameter semantics and review handover, not accuracy.",
+  "checks": [
+    {
+      "name": "current default D-FINE-N still runs the public image",
+      "passed": true,
+      "evidence": {
+        "detector": "dfine",
+        "detections": [
+          {
+            "class": "bus",
+            "score": 0.9651602077977631,
+            "bbox": [
+              0.14125004410743713,
+              0.30271363258361816,
+              0.8241178393363953,
+              0.6320297718048096
+            ]
+          },
+          {
+            "class": "stop sign",
+            "score": 0.7990683171645506,
+            "bbox": [
+              0.5951079428195953,
+              0.5470814406871796,
+              0.028489530086517334,
+              0.08871656656265259
+            ]
+          },
+          {
+            "class": "bus",
+            "score": 0.6453986740192105,
+            "bbox": [
+              0.8353092670440674,
+              0.32016459107398987,
+              0.16468727588653564,
+              0.3759388327598572
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "both detectors ignore blank or out-of-range unused dwell in image detection",
+      "passed": false,
+      "error": "vision-dwell should be inactive\n\nfalse !== true\n",
+      "evidence": {
+        "runs": [],
+        "state": {
+          "rule": "objects",
+          "detector": "dfine",
+          "fields": {
+            "vision-dwell": {
+              "value": "",
+              "disabled": false,
+              "required": true,
+              "help": null
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": false,
+              "required": false,
+              "help": null
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": false,
+              "required": true,
+              "help": null
+            }
+          },
+          "confirmed": false,
+          "message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。",
+          "focus": "",
+          "results_hidden": true
+        }
+      }
+    },
+    {
+      "name": "switching back to parking revalidates empty and out-of-range dwell drafts",
+      "passed": false,
+      "error": "vision-dwell should be inactive\n\nfalse !== true\n",
+      "evidence": {
+        "rejections": [],
+        "state": {
+          "rule": "objects",
+          "detector": "dfine",
+          "fields": {
+            "vision-dwell": {
+              "value": "",
+              "disabled": false,
+              "required": true,
+              "help": null
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": false,
+              "required": false,
+              "help": null
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": false,
+              "required": true,
+              "help": null
+            }
+          },
+          "confirmed": false,
+          "message": "通用物体检测无需现场确认；未知时间可留空，不生成事件候选。",
+          "focus": "vision-dwell",
+          "results_hidden": true
+        }
+      }
+    },
+    {
+      "name": "direction video uses direction and offset while ignoring an empty dwell draft",
+      "passed": false,
+      "error": "vision-dwell should be inactive\n\nfalse !== true\n",
+      "evidence": {
+        "state": {
+          "rule": "direction",
+          "detector": "dfine",
+          "fields": {
+            "vision-dwell": {
+              "value": "",
+              "disabled": false,
+              "required": true,
+              "help": null
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": false,
+              "required": false,
+              "help": null
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": false,
+              "required": true,
+              "help": null
+            }
+          },
+          "confirmed": false,
+          "message": "已切换到 D-FINE-N · ONNX Runtime Web。分数下限 0.6；需重新分析才会更新结果。",
+          "focus": "",
+          "results_hidden": true
+        }
+      }
+    },
+    {
+      "name": "image access ignores inactive controls and preserves candidates through review and handover",
+      "passed": false,
+      "error": "vision-dwell should be inactive\n\nfalse !== true\n",
+      "evidence": {
+        "state": {
+          "rule": "access",
+          "detector": "dfine",
+          "fields": {
+            "vision-dwell": {
+              "value": "",
+              "disabled": false,
+              "required": true,
+              "help": null
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": false,
+              "required": false,
+              "help": null
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": false,
+              "required": true,
+              "help": null
+            }
+          },
+          "confirmed": false,
+          "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+          "focus": "vision-start",
+          "results_hidden": true
+        }
+      }
+    },
+    {
+      "name": "valid parking video keeps active dwell and nonzero offset semantics",
+      "passed": false,
+      "error": "vision-direction should be inactive\n\nfalse !== true\n",
+      "evidence": {
+        "state": {
+          "rule": "parking",
+          "detector": "ssdlite",
+          "fields": {
+            "vision-dwell": {
+              "value": "2",
+              "disabled": false,
+              "required": true,
+              "help": null
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": false,
+              "required": false,
+              "help": null
+            },
+            "vision-offset": {
+              "value": "1",
+              "disabled": false,
+              "required": true,
+              "help": null
+            }
+          },
+          "confirmed": false,
+          "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+          "focus": "vision-offset",
+          "results_hidden": true
+        }
+      }
+    },
+    {
+      "name": "busy locks applicable controls and stopping restores only currently applicable fields",
+      "passed": false,
+      "error": "vision-direction should be inactive\n\nfalse !== true\n",
+      "evidence": {
+        "busy": {
+          "rule": "parking",
+          "detector": "ssdlite",
+          "fields": {
+            "vision-dwell": {
+              "value": "2",
+              "disabled": true,
+              "required": true,
+              "help": null
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": true,
+              "required": false,
+              "help": null
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": true,
+              "required": true,
+              "help": null
+            }
+          },
+          "confirmed": true,
+          "message": "正在推理 1 / 7 帧 · 0.0 秒",
+          "focus": "",
+          "results_hidden": true
+        },
+        "state": {
+          "rule": "parking",
+          "detector": "ssdlite",
+          "fields": {
+            "vision-dwell": {
+              "value": "2",
+              "disabled": false,
+              "required": true,
+              "help": null
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": false,
+              "required": false,
+              "help": null
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": false,
+              "required": true,
+              "help": null
+            }
+          },
+          "confirmed": true,
+          "message": "分析已停止。可导出已完成帧，未完成任务不生成候选。",
+          "focus": "",
+          "results_hidden": false
+        }
+      }
+    },
+    {
+      "name": "scene reuse preserves inactive drafts and invalid image rules explain the media requirement first",
+      "passed": false,
+      "error": "Expected values to be strictly equal:\n\n'2' !== '9'\n",
+      "evidence": {
+        "state": {
+          "rule": "access",
+          "detector": "ssdlite",
+          "fields": {
+            "vision-dwell": {
+              "value": "2",
+              "disabled": false,
+              "required": true,
+              "help": null
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": false,
+              "required": false,
+              "help": null
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": false,
+              "required": true,
+              "help": null
+            }
+          },
+          "confirmed": false,
+          "message": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "focus": "reuse-scene",
+          "results_hidden": true
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "injected_baseline": {
+    "revision": "5a1fe15",
+    "files": [
+      "index.html",
+      "vision.mjs",
+      "media-context.mjs"
+    ],
+    "scope": "Only historical application HTML/modules are injected. All media and model resources remain real."
+  },
+  "finished_at": "2026-10-20T02:15:22.954Z",
+  "passed": 1,
+  "failed": 7,
+  "ok": false
+}

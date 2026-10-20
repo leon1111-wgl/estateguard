@@ -72,11 +72,12 @@ function inputError(field,message){return Object.assign(new Error(message),{fiel
 function numberField(id,min,max){const value=Number($(id).value);if(!$(id).value.trim()||!Number.isFinite(value)||value<min||value>max)throw inputError(id,`请检查数值范围：${min} 至 ${max===Infinity?'素材结束前':max}。`);return value;}
 function roi(){const values=['roi-x','roi-y','roi-w','roi-h'].map((id,i)=>numberField(id,i<2?0:1,100)/100);if(values[0]+values[2]>1.00001||values[1]+values[3]>1.00001)throw inputError('roi-x','关注区域超出画面，请调整 X、Y、宽和高。');return values;}
 function readParameters(){
- const params={rule:$('vision-rule').value,roi:roi(),camera:$('vision-camera').value.trim(),zone:$('vision-zone').value.trim(),started_at:parseRecordingTime($('vision-start').value),media_name:sourceFile?.name,dwell_seconds:numberField('vision-dwell',2,19),is_video:isVideo,expected_direction:$('vision-direction').value,minimum_score:numberField('vision-score',.1,.95),offset_seconds:isVideo?numberField('vision-offset',0,Infinity):0,...inferenceSettings,detector:detectorKey(),...DETECTORS[detectorKey()].settings};
- if(!['objects','access','lift','parking','direction'].includes(params.rule))throw inputError('vision-rule','请选择有效的场景规则。');
- if(!['right','left','down','up'].includes(params.expected_direction))throw inputError('vision-direction','请选择预期行驶方向。');
+ const rule=$('vision-rule').value;
+ if(!['objects','access','lift','parking','direction'].includes(rule))throw inputError('vision-rule','请选择有效的场景规则。');
+ if(!isVideo&&['parking','direction'].includes(rule))throw inputError('vision-rule','停留和方向规则需要视频。单张图片只能检测物体或区域候选。');
+ const params={rule,roi:roi(),camera:$('vision-camera').value.trim(),zone:$('vision-zone').value.trim(),started_at:parseRecordingTime($('vision-start').value),media_name:sourceFile?.name,dwell_seconds:rule==='parking'?numberField('vision-dwell',2,19):null,is_video:isVideo,expected_direction:rule==='direction'?$('vision-direction').value:null,minimum_score:numberField('vision-score',.1,.95),offset_seconds:isVideo?numberField('vision-offset',0,Infinity):0,...inferenceSettings,detector:detectorKey(),...DETECTORS[detectorKey()].settings};
+ if(rule==='direction'&&!['right','left','down','up'].includes(params.expected_direction))throw inputError('vision-direction','请选择预期行驶方向。');
  if(isVideo&&params.offset_seconds>=source.duration)throw inputError('vision-offset','分析起点必须小于视频时长。');
- if(!isVideo&&['parking','direction'].includes(params.rule))throw inputError('vision-rule','停留和方向规则需要视频。单张图片只能检测物体或区域候选。');
  return params;
 }
 function contextIsCurrent(){try{return isContextConfirmed(contextConfirmation,mediaRevision,readParameters());}catch{return false;}}
@@ -92,6 +93,9 @@ function renderContext(){
 function showInputError(error){notice(error.message,true);$('vision-context-status').textContent=error.message;$('vision-context-status').classList.add('error');if(error.field?.startsWith('roi-'))document.querySelector('.roi-details').open=true;$(error.field)?.focus();}
 function syncControls(){
  for(const el of $('analysis-form').querySelectorAll('input,select,button'))el.disabled=busy||loading;
+ for(const [id,applicable] of [['vision-dwell',$('vision-rule').value==='parking'],['vision-direction',$('vision-rule').value==='direction'],['vision-offset',isVideo]]){
+  $(id).disabled=busy||loading||!applicable;$(id).required=applicable;
+ }
  $('stop-analysis').disabled=false;$('stop-analysis').hidden=!busy;
  $('run-analysis').disabled=busy||loading||!source;$('reuse-scene').disabled=busy||loading||!source;
  $('vision-context-confirmed').disabled=busy||loading||!source;
@@ -136,7 +140,7 @@ async function openFile(file,ticket=++sourceGeneration){if(busy){notice('分析�
  }catch(error){releaseSource(nextSource,nextURL);if(ticket===sourceGeneration){setMediaLoading(false);notice(`${error.message}${sourceFile?(report?' 当前仍保留此前素材、设置与已完成报告。':' 当前仍保留此前素材与设置。'):''}`,true);}return false;}}
 $('analysis-file').addEventListener('change',e=>{const file=e.target.files[0];e.target.value='';openFile(file);});
 $('sample-image').addEventListener('click',async()=>{const ticket=++sourceGeneration;setMediaLoading(true);try{const r=await fetch('samples/bus.jpg');if(!r.ok)throw new Error('示例图片加载失败');const file=new File([await r.blob()],'公开示例-校车.jpg',{type:'image/jpeg'});if(ticket!==sourceGeneration)return;if(await openFile(file,ticket))notice('公开示例：Raysonho，CC0，2011。具体拍摄时间未知，可直接做通用物体检测；规则演示需自行填写测试时间，不是小区违规证据。');}catch(e){if(ticket===sourceGeneration){setMediaLoading(false);notice(e.message,true);}}});
-$('analysis-form').addEventListener('input',event=>{if(busy||loading)return;
+$('analysis-form').addEventListener('input',event=>{if(busy||loading||event.target.disabled)return;
  invalidate();contextHint='';
  if(contextFields.has(event.target.id))contextConfirmation=null;
  if(event.target.id==='vision-context-confirmed'){
@@ -147,7 +151,7 @@ $('analysis-form').addEventListener('input',event=>{if(busy||loading)return;
 });
 $('reuse-scene').addEventListener('click',()=>{if(busy||loading||!source||!savedScene)return;
  const restored=restoreScene(savedScene,geometry),p=restored.settings;
- for(const [id,value] of Object.entries({'vision-camera':p.camera,'vision-zone':p.zone,'vision-rule':p.rule,'vision-direction':p.expected_direction,'vision-dwell':p.dwell_seconds,'vision-start':'','vision-offset':0}))$(id).value=value;
+ for(const [id,value] of Object.entries({'vision-camera':p.camera,'vision-zone':p.zone,'vision-rule':p.rule,'vision-direction':p.expected_direction,'vision-dwell':p.dwell_seconds,'vision-start':'','vision-offset':0}))if(value!==null&&value!==undefined)$(id).value=value;
  ['roi-x','roi-y','roi-w','roi-h'].forEach((id,i)=>$(id).value=Number((p.roi[i]*100).toFixed(6)));
  contextConfirmation=null;invalidate();contextHint=restored.roi_reset?'已沿用来源设置；画面尺寸变化，关注区域保持整幅。请重新框选并填写本素材时间，再核对。':'已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。';renderContext();paint();syncControls();notice(contextHint);
 });

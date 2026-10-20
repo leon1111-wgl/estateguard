@@ -43,6 +43,8 @@ JSON，版本 1。最多 5 MiB、10,000 条记录。见 `data/demo.json`。导�
 
 2026-10-19 起增加 `rules_version: vision-rules-v2-stable-dwell`、`tracking_max_gap_seconds: 1.6`、`parking_max_center_distance: 0.06`（片段内归一化检测中心最大两两距离）及 `parking_min_samples: 3`。停车候选只包含达标稳定段的时间、分数与证据，使用 `stable_segment_id` 保持下游分段。旧报告缺少这些字段时不能按新规则解释已有结果；需要原始媒体重新分析。
 
+2026-10-20 起，`params.dwell_seconds` 仅在 `rule: parking` 时为实际使用的 2–19 秒数值，其他规则为 `null`；`params.expected_direction` 仅在 `rule: direction` 时为有效方向，其他规则为 `null`。`null` 表示本次未使用，不表示使用默认值。界面仍保留闲置控件的本页草稿，切回对应规则后重新校验；该草稿不进入本次检测报告。图片的 `offset_seconds` 固定为 0，视频必须满足 `0 ≤ offset_seconds < 素材时长`。旧报告可能携带未生效的停留或方向值，解读时仍须以 `rule` 和媒体类型为准。
+
 素材确认版本增加 `media.width`、`media.height`（原始尺寸）以及 `params.context_confirmed`。顶层 `context_confirmation` 为 `{media_revision, confirmed_at}`，只有规则分析通过当前素材核对时才有值；通用检测为 `null`。`media_revision` 只是本标签页内成功替换素材的计数，不是跨会话文件标识；`confirmed_at` 是勾选时间，不是拍摄时间，也不是受认证的审计凭证。
 
 `params.started_at` 可在通用物体检测中为 `null`，来源和区域名也可为空；此模式始终没有候选。事件规则则要求有效来源、区域名、素材时间与当前确认；日期明确按 UTC+8，精度到秒。换素材不会自动继承日期或文件修改时间。公开校车图的具体拍摄时间未知，如填写日期演示规则，该日期属于人工测试输入，不是公开数据的真实时间标注。

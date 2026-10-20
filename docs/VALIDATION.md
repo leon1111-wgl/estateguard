@@ -335,3 +335,25 @@ node scripts/parking-transfer-check.cjs && node scripts/parking-check.cjs && nod
 - 与 origin/main 的“驶入后稳定停留”提交合并后重跑：136 项 JS 与全部审计、合成数据再生成一致；15 项浏览器检查通过。新的 `vision-dwell-check` 按 SSDLite 写成（断言 CC0 校车短片只有 1 个候选），在 D-FINE 默认下得到 2 个候选——第二个是照片边缘那辆被 D-FINE 检出（约 0.67 分）、SSDLite 漏掉（约 0.17 分）的真实大巴；与其他旧检查一样以 `?detector=ssdlite` 固定后 5/5，断言未改。`detector-check` 在连续全量运行中一次于手机页等待评测记录 30 秒超时，单独重跑通过。
 
 未验证：小区监控、夜间、客梯或鱼眼画面上的检出率与每小时误报；低端手机上单线程 WASM 的耗时；大件类别按类调阈值的效果。
+
+
+## 2026-10-20 · 分析参数的适用性与草稿保留
+
+```bash
+node --test tests/*.test.mjs
+node scripts/analysis-parameters-check.cjs
+node scripts/model-check.cjs
+node scripts/media-context-check.cjs
+node scripts/browser-check.cjs
+python3 scripts/verify_assets.py
+```
+
+浏览器依赖及 8766 静态服务同本文开头。新脚本自行将现有 CC0 校车图编码为静止/移动短片，不下载新素材；动作与测试时间为人工构造，不是现场违规标注。
+
+- [直接旧版复现](validation/analysis-parameters-baseline.json)：默认 D-FINE-N 正常图片检出大巴，空闲置停留值却阻止 objects/access/direction；补回无关值后通道与方向可正常产生候选。[完整红版](validation/analysis-parameters-baseline-tests.json) 1/8 通过、7 项失败；为避免覆盖正在修复的代码，正式红复跑在浏览器路由提供 `5a1fe15` 的原 index/vision/media-context 文件，报告带 `injected_baseline`。真实媒体和模型资源保持不变。
+- [修复后验收](validation/analysis-parameters-validation.json) 8/8：D-FINE-N 与 SSDLite 均实际推理；空/20 秒闲置草稿不影响图片检测且报告 `null`；切回停车拒绝空、1、20；方向视频忽略空停留值且改变有效方向仍撤销确认；图片通道候选送审、保存需补证据、导出恢复一致；停车保留 2 秒阈值和 1 秒分析起点；推理期间锁定控件，停止后仅恢复适用字段且未完成报告无候选；现场复用不清除新草稿，图片误选停车先提示视频要求。页面错误和跨站请求为 0。
+- 早期测试的全局 requestAnimationFrame 暂停会阻塞浏览器等待，属于夹具错误；最终只在真实 SSDLite 推理完成后暂缓返回原结果，验证忙碌和停止，不替换像素、框或分数。完整红报告不混入该超时。
+- 136 项 JS、26 项资源哈希通过。原 model-check 的校车分数 0.9916937947，视频 7 帧，张量 262→262；media-context-check 10/10；browser-check 通过。参数适用性使用真实浏览器回归，不为 DOM 分支另加镜像单测。
+- [设计师实际桌面与手机报告](validation/analysis-parameters-ui-validation.json)：1440 / 390px，闲置输入禁用且不 required、用途说明可读，空停留草稿仍可完成默认 D-FINE-N 推理与通道送审，切回停车正确聚焦错误输入；字段位置和 CSS 未变，无页面溢出/错误。截图保存在本地 `artifacts/rule-inputs-20261020-designer-after-*` 并已审查。
+
+限制：本次只修复输入与任务流；未改变 D-FINE-N/SSDLite 权重、分数下限、区域、采样、跟踪或候选算法。公开照片和合成运动不能证明小区违规识别质量；闲置草稿不是跨标签页持久化配置。

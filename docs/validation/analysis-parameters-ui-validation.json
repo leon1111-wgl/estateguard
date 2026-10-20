@@ -1,0 +1,1004 @@
+{
+  "started_at": "2026-10-20T02:14:31.885Z",
+  "scope": "Independent 1440/390 UI regression for applicable rule parameters. Real default D-FINE-N objects/access inference on public CC0 photo; video used to confirm parking validation and direction availability. No product files changed.",
+  "views": [
+    {
+      "width": 1440,
+      "initial": {
+        "width": 1440,
+        "docWidth": 1440,
+        "rule": "objects",
+        "detector": "dfine",
+        "dwell": {
+          "value": "5",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "新素材已清空来源和时间，片段起点归零、关注区域恢复整幅。可重新填写，或显式沿用已核对的现场设置。",
+        "message": "公开示例：Raysonho，CC0，2011。具体拍摄时间未知，可直接做通用物体检测；规则演示需自行填写测试时间，不是小区违规证据。",
+        "messageError": false,
+        "active": "sample-image",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "优先核查高风险类别电梯门受阻LIFT-A · A栋客梯 · door-heldevent:door-held-1优先安排人工检查，尚不代表违规已确认。观察时间2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例34 秒输入时间窗覆盖（非实测停留）88 / 100最大输入分数90 / 100最低输入质量来源描述预约搬家过程中，推车疑似阻挡电梯关门；预约不能豁免挡门风险。原创合成场景，无真实住户或监控，不是模型推理结果或实地部署测量。证据引用（媒体需另行打开）door-held-frame-1.jpgdoor-held-frame-2.jpgdoor-held-frame-3.jpgdoor-held-frame-4.jpg打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。未载入本地证据。请选择与本事件对应的图片或视频。下一步检查查看完整开关门片段，由值班人员核查障碍。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "9"
+      },
+      "initialScreenshot": "rule-inputs-20261020-designer-after-objects-disabled-1440.png",
+      "objectsBefore": {
+        "width": 1440,
+        "docWidth": 1440,
+        "rule": "objects",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "通用物体检测无需现场确认；未知时间可留空，不生成事件候选。",
+        "message": "通用物体检测无需现场确认；未知时间可留空，不生成事件候选。",
+        "messageError": false,
+        "active": "",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "优先核查高风险类别电梯门受阻LIFT-A · A栋客梯 · door-heldevent:door-held-1优先安排人工检查，尚不代表违规已确认。观察时间2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例34 秒输入时间窗覆盖（非实测停留）88 / 100最大输入分数90 / 100最低输入质量来源描述预约搬家过程中，推车疑似阻挡电梯关门；预约不能豁免挡门风险。原创合成场景，无真实住户或监控，不是模型推理结果或实地部署测量。证据引用（媒体需另行打开）door-held-frame-1.jpgdoor-held-frame-2.jpgdoor-held-frame-3.jpgdoor-held-frame-4.jpg打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。未载入本地证据。请选择与本事件对应的图片或视频。下一步检查查看完整开关门片段，由值班人员核查障碍。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "9"
+      },
+      "objects": {
+        "params": {
+          "rule": "objects",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "",
+          "zone": "",
+          "started_at": null,
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": null,
+          "is_video": false,
+          "expected_direction": null,
+          "minimum_score": 0.6,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "dfine",
+          "max_detections": 50,
+          "nms_iou_threshold": null,
+          "duplicate_iou_threshold": 0.9,
+          "postprocess": "dfine-topk-dedupe090-v1",
+          "input_size": 640,
+          "context_confirmed": false
+        },
+        "frames": 1,
+        "detections": 3,
+        "candidates": 0
+      },
+      "objectsResultScreenshot": "rule-inputs-20261020-designer-after-objects-success-1440.png",
+      "accessReady": {
+        "width": 1440,
+        "docWidth": 1440,
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": true,
+        "context": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "message": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "messageError": false,
+        "active": "vision-context-confirmed",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "优先核查高风险类别电梯门受阻LIFT-A · A栋客梯 · door-heldevent:door-held-1优先安排人工检查，尚不代表违规已确认。观察时间2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例34 秒输入时间窗覆盖（非实测停留）88 / 100最大输入分数90 / 100最低输入质量来源描述预约搬家过程中，推车疑似阻挡电梯关门；预约不能豁免挡门风险。原创合成场景，无真实住户或监控，不是模型推理结果或实地部署测量。证据引用（媒体需另行打开）door-held-frame-1.jpgdoor-held-frame-2.jpgdoor-held-frame-3.jpgdoor-held-frame-4.jpg打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。未载入本地证据。请选择与本事件对应的图片或视频。下一步检查查看完整开关门片段，由值班人员核查障碍。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "9"
+      },
+      "accessControlsScreenshot": "rule-inputs-20261020-designer-after-access-disabled-1440.png",
+      "helperScreenshot": "rule-inputs-20261020-designer-after-helpers-1440.png",
+      "access": {
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "CC0公开图片·参数回归",
+          "zone": "完整画面测试区域",
+          "started_at": "2026-10-20T08:30:00+08:00",
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": null,
+          "is_video": false,
+          "expected_direction": null,
+          "minimum_score": 0.6,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "dfine",
+          "max_detections": 50,
+          "nms_iou_threshold": null,
+          "duplicate_iou_threshold": 0.9,
+          "postprocess": "dfine-topk-dedupe090-v1",
+          "input_size": 640,
+          "context_confirmed": true
+        },
+        "frames": 1,
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "CC0公开图片·参数回归",
+            "zone": "完整画面测试区域",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-20T00:30:00.000Z",
+            "end": "2026-10-20T00:30:00.001Z",
+            "score": 0.9651602077977631,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          },
+          {
+            "id": "vision-track-3-2",
+            "camera": "CC0公开图片·参数回归",
+            "zone": "完整画面测试区域",
+            "track": "track-3",
+            "category": "blocked_access",
+            "start": "2026-10-20T00:30:00.000Z",
+            "end": "2026-10-20T00:30:00.001Z",
+            "score": 0.6453986740192105,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）"
+      },
+      "handoff": {
+        "width": 1440,
+        "docWidth": 1440,
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": true,
+        "context": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "message": "候选已送入复核，原始素材可在事件详情中查看。",
+        "messageError": false,
+        "active": "",
+        "runDisabled": false,
+        "sendDisabled": false,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "handoffScreenshot": "rule-inputs-20261020-designer-after-handoff-1440.png",
+      "parkingBefore": {
+        "width": 1440,
+        "docWidth": 1440,
+        "rule": "parking",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "messageError": false,
+        "active": "",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "parkingError": {
+        "width": 1440,
+        "docWidth": 1440,
+        "rule": "parking",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "请检查数值范围：2 至 19。",
+        "message": "请检查数值范围：2 至 19。",
+        "messageError": true,
+        "active": "vision-dwell",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "parkingErrorScreenshot": "rule-inputs-20261020-designer-after-parking-invalid-1440.png",
+      "direction": {
+        "width": 1440,
+        "docWidth": 1440,
+        "rule": "direction",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "left",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": true,
+        "context": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "message": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "messageError": false,
+        "active": "vision-context-confirmed",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "directionScreenshot": "rule-inputs-20261020-designer-after-direction-enabled-1440.png",
+      "directionInactive": {
+        "width": 1440,
+        "docWidth": 1440,
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "left",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "messageError": false,
+        "active": "vision-context-confirmed",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "directionReturned": {
+        "width": 1440,
+        "docWidth": 1440,
+        "rule": "direction",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "left",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "messageError": false,
+        "active": "vision-context-confirmed",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      }
+    },
+    {
+      "width": 390,
+      "initial": {
+        "width": 390,
+        "docWidth": 390,
+        "rule": "objects",
+        "detector": "dfine",
+        "dwell": {
+          "value": "5",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "新素材已清空来源和时间，片段起点归零、关注区域恢复整幅。可重新填写，或显式沿用已核对的现场设置。",
+        "message": "公开示例：Raysonho，CC0，2011。具体拍摄时间未知，可直接做通用物体检测；规则演示需自行填写测试时间，不是小区违规证据。",
+        "messageError": false,
+        "active": "sample-image",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "优先核查高风险类别电梯门受阻LIFT-A · A栋客梯 · door-heldevent:door-held-1优先安排人工检查，尚不代表违规已确认。观察时间2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例34 秒输入时间窗覆盖（非实测停留）88 / 100最大输入分数90 / 100最低输入质量来源描述预约搬家过程中，推车疑似阻挡电梯关门；预约不能豁免挡门风险。原创合成场景，无真实住户或监控，不是模型推理结果或实地部署测量。证据引用（媒体需另行打开）door-held-frame-1.jpgdoor-held-frame-2.jpgdoor-held-frame-3.jpgdoor-held-frame-4.jpg打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。未载入本地证据。请选择与本事件对应的图片或视频。下一步检查查看完整开关门片段，由值班人员核查障碍。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "9"
+      },
+      "initialScreenshot": "rule-inputs-20261020-designer-after-objects-disabled-390.png",
+      "objectsBefore": {
+        "width": 390,
+        "docWidth": 390,
+        "rule": "objects",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "通用物体检测无需现场确认；未知时间可留空，不生成事件候选。",
+        "message": "通用物体检测无需现场确认；未知时间可留空，不生成事件候选。",
+        "messageError": false,
+        "active": "vision-dwell",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "优先核查高风险类别电梯门受阻LIFT-A · A栋客梯 · door-heldevent:door-held-1优先安排人工检查，尚不代表违规已确认。观察时间2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例34 秒输入时间窗覆盖（非实测停留）88 / 100最大输入分数90 / 100最低输入质量来源描述预约搬家过程中，推车疑似阻挡电梯关门；预约不能豁免挡门风险。原创合成场景，无真实住户或监控，不是模型推理结果或实地部署测量。证据引用（媒体需另行打开）door-held-frame-1.jpgdoor-held-frame-2.jpgdoor-held-frame-3.jpgdoor-held-frame-4.jpg打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。未载入本地证据。请选择与本事件对应的图片或视频。下一步检查查看完整开关门片段，由值班人员核查障碍。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "9"
+      },
+      "objects": {
+        "params": {
+          "rule": "objects",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "",
+          "zone": "",
+          "started_at": null,
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": null,
+          "is_video": false,
+          "expected_direction": null,
+          "minimum_score": 0.6,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "dfine",
+          "max_detections": 50,
+          "nms_iou_threshold": null,
+          "duplicate_iou_threshold": 0.9,
+          "postprocess": "dfine-topk-dedupe090-v1",
+          "input_size": 640,
+          "context_confirmed": false
+        },
+        "frames": 1,
+        "detections": 3,
+        "candidates": 0
+      },
+      "objectsResultScreenshot": "rule-inputs-20261020-designer-after-objects-success-390.png",
+      "accessReady": {
+        "width": 390,
+        "docWidth": 390,
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": true,
+        "context": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "message": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "messageError": false,
+        "active": "vision-context-confirmed",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "优先核查高风险类别电梯门受阻LIFT-A · A栋客梯 · door-heldevent:door-held-1优先安排人工检查，尚不代表违规已确认。观察时间2026/10/15 08:00:20 → 2026/10/15 08:00:54（UTC+8）顺序示意，非时间比例34 秒输入时间窗覆盖（非实测停留）88 / 100最大输入分数90 / 100最低输入质量来源描述预约搬家过程中，推车疑似阻挡电梯关门；预约不能豁免挡门风险。原创合成场景，无真实住户或监控，不是模型推理结果或实地部署测量。证据引用（媒体需另行打开）door-held-frame-1.jpgdoor-held-frame-2.jpgdoor-held-frame-3.jpgdoor-held-frame-4.jpg打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。未载入本地证据。请选择与本事件对应的图片或视频。下一步检查查看完整开关门片段，由值班人员核查障碍。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "9"
+      },
+      "accessControlsScreenshot": "rule-inputs-20261020-designer-after-access-disabled-390.png",
+      "helperScreenshot": "rule-inputs-20261020-designer-after-helpers-390.png",
+      "access": {
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "CC0公开图片·参数回归",
+          "zone": "完整画面测试区域",
+          "started_at": "2026-10-20T08:30:00+08:00",
+          "media_name": "公开示例-校车.jpg",
+          "dwell_seconds": null,
+          "is_video": false,
+          "expected_direction": null,
+          "minimum_score": 0.6,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "dfine",
+          "max_detections": 50,
+          "nms_iou_threshold": null,
+          "duplicate_iou_threshold": 0.9,
+          "postprocess": "dfine-topk-dedupe090-v1",
+          "input_size": 640,
+          "context_confirmed": true
+        },
+        "frames": 1,
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "CC0公开图片·参数回归",
+            "zone": "完整画面测试区域",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-20T00:30:00.000Z",
+            "end": "2026-10-20T00:30:00.001Z",
+            "score": 0.9651602077977631,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          },
+          {
+            "id": "vision-track-3-2",
+            "camera": "CC0公开图片·参数回归",
+            "zone": "完整画面测试区域",
+            "track": "track-3",
+            "category": "blocked_access",
+            "start": "2026-10-20T00:30:00.000Z",
+            "end": "2026-10-20T00:30:00.001Z",
+            "score": 0.6453986740192105,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）"
+      },
+      "handoff": {
+        "width": 390,
+        "docWidth": 390,
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": true,
+        "context": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "message": "候选已送入复核，原始素材可在事件详情中查看。",
+        "messageError": false,
+        "active": "",
+        "runDisabled": false,
+        "sendDisabled": false,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "handoffScreenshot": "rule-inputs-20261020-designer-after-handoff-390.png",
+      "parkingBefore": {
+        "width": 390,
+        "docWidth": 390,
+        "rule": "parking",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "messageError": false,
+        "active": "",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "parkingError": {
+        "width": 390,
+        "docWidth": 390,
+        "rule": "parking",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "right",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "请检查数值范围：2 至 19。",
+        "message": "请检查数值范围：2 至 19。",
+        "messageError": true,
+        "active": "vision-dwell",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "parkingErrorScreenshot": "rule-inputs-20261020-designer-after-parking-invalid-390.png",
+      "direction": {
+        "width": 390,
+        "docWidth": 390,
+        "rule": "direction",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "left",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": true,
+        "context": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "message": "已核对当前素材；更换素材或修改来源、区域、时间后需要重新核对。",
+        "messageError": false,
+        "active": "vision-context-confirmed",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "directionScreenshot": "rule-inputs-20261020-designer-after-direction-enabled-390.png",
+      "directionInactive": {
+        "width": 390,
+        "docWidth": 390,
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "left",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "messageError": false,
+        "active": "vision-context-confirmed",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      },
+      "directionReturned": {
+        "width": 390,
+        "docWidth": 390,
+        "rule": "direction",
+        "detector": "dfine",
+        "dwell": {
+          "value": "",
+          "disabled": true,
+          "required": false,
+          "describedBy": "vision-dwell-help",
+          "help": "仅持续停留规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "direction": {
+          "value": "left",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-direction-help",
+          "help": "仅逆向移动规则使用。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "offset": {
+          "value": "0",
+          "disabled": false,
+          "required": true,
+          "describedBy": "vision-offset-help",
+          "help": "仅视频使用，图片无需填写。",
+          "fontSize": "11px",
+          "overflow": false
+        },
+        "confirmed": false,
+        "context": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "messageError": false,
+        "active": "vision-context-confirmed",
+        "runDisabled": false,
+        "sendDisabled": true,
+        "detail": "证据不足高风险类别通道占用线索CC0公开图片·参数回归 · 完整画面测试区域 · track-1event:vision-track-1-1画面质量不足、证据缺失或低分高风险线索，需要人工核实。观察时间2026/10/20 08:30:00 → 2026/10/20 08:30:00（UTC+8）顺序示意，非时间比例0.001 秒输入时间窗覆盖（非实测停留）97 / 100最大输入分数40 / 100最低输入质量来源描述模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。证据引用（媒体需另行打开）公开示例-校车.jpg @ 0.00s打开本地图片 / 视频用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。图片已解码，请核对画面是否对应本事件。公开示例-校车.jpg下一步检查核实是否为指定通道，并安排现场检查。处理结论待复核已确认 · 待处理已排除待补充证据已处理理由 / 已检查的证据保存复核记录复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "queue": "2"
+      }
+    }
+  ],
+  "pageErrors": [],
+  "blockers": [],
+  "ok": true,
+  "finished_at": "2026-10-20T02:14:38.891Z",
+  "visual_review": {
+    "inspected": [
+      "rule-inputs-20261020-designer-after-objects-disabled-390.png",
+      "rule-inputs-20261020-designer-after-helpers-390.png",
+      "rule-inputs-20261020-designer-after-parking-invalid-390.png",
+      "rule-inputs-20261020-designer-after-access-disabled-1440.png"
+    ],
+    "conclusion": "Original field positions, navigation and panel structure remain. Existing small help text explains applicability and wraps within both columns; disabled fields remain visible. Parking errors focus the active dwell input and are visible on mobile. No horizontal page overflow.",
+    "accessibility": "All three applicability hints are connected through aria-describedby; irrelevant fields are disabled and not required.",
+    "baseline_fixes": "Empty dwell no longer blocks actual objects/access inference; unused direction cannot cause a user edit/reconfirmation loop. Parking re-enables and validates the retained blank draft; direction choice survives rule changes.",
+    "product_files_changed": false
+  }
+}

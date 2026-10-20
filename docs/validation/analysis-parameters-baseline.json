@@ -1,0 +1,284 @@
+{
+  "at": "2026-10-20T02:08:52.791Z",
+  "head": "5a1fe15",
+  "base": "http://127.0.0.1:8766",
+  "browser": "155.0.8059.85",
+  "scope": "Actual current default D-FINE-N inference with public CC0 image and existing disclosed synthetic video. Tests parameter applicability, not model accuracy.",
+  "cases": [
+    {
+      "name": "normal object detection with default D-FINE-N",
+      "state": {
+        "rule": "objects",
+        "detector": "dfine",
+        "dwell": "5",
+        "dwell_required": true,
+        "dwell_disabled": false,
+        "direction": "right",
+        "offset": "0",
+        "message": "分析完成：1 帧、3 条匿名轨迹、0 个待核实候选。",
+        "focus": "download-detections",
+        "confirmed": false,
+        "results_hidden": false,
+        "run_disabled": false
+      },
+      "detections": [
+        {
+          "class": "bus",
+          "score": 0.9651602077977631,
+          "bbox": [
+            0.14125004410743713,
+            0.30271363258361816,
+            0.8241178393363953,
+            0.6320297718048096
+          ]
+        },
+        {
+          "class": "stop sign",
+          "score": 0.7990683171645506,
+          "bbox": [
+            0.5951079428195953,
+            0.5470814406871796,
+            0.028489530086517334,
+            0.08871656656265259
+          ]
+        },
+        {
+          "class": "bus",
+          "score": 0.6453986740192105,
+          "bbox": [
+            0.8353092670440674,
+            0.32016459107398987,
+            0.16468727588653564,
+            0.3759388327598572
+          ]
+        }
+      ],
+      "params": {
+        "rule": "objects",
+        "roi": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "camera": "",
+        "zone": "",
+        "started_at": null,
+        "media_name": "公开示例-校车.jpg",
+        "dwell_seconds": 5,
+        "is_video": false,
+        "expected_direction": "right",
+        "minimum_score": 0.6,
+        "offset_seconds": 0,
+        "sample_interval_seconds": 1,
+        "max_frames": 20,
+        "rules_version": "vision-rules-v2-stable-dwell",
+        "tracking_max_gap_seconds": 1.6,
+        "parking_max_center_distance": 0.06,
+        "parking_min_samples": 3,
+        "detector": "dfine",
+        "max_detections": 50,
+        "nms_iou_threshold": null,
+        "duplicate_iou_threshold": 0.9,
+        "postprocess": "dfine-topk-dedupe090-v1",
+        "input_size": 640,
+        "context_confirmed": false
+      }
+    },
+    {
+      "name": "unused blank dwell blocks object detection",
+      "state": {
+        "rule": "objects",
+        "detector": "dfine",
+        "dwell": "",
+        "dwell_required": true,
+        "dwell_disabled": false,
+        "direction": "right",
+        "offset": "0",
+        "message": "请检查数值范围：2 至 19。",
+        "focus": "vision-dwell",
+        "confirmed": false,
+        "results_hidden": true,
+        "run_disabled": false
+      }
+    },
+    {
+      "name": "unused blank dwell blocks image ROI confirmation",
+      "state": {
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": "",
+        "dwell_required": true,
+        "dwell_disabled": false,
+        "direction": "right",
+        "offset": "0",
+        "message": "请检查数值范围：2 至 19。",
+        "focus": "vision-dwell",
+        "confirmed": false,
+        "results_hidden": true,
+        "run_disabled": false
+      }
+    },
+    {
+      "name": "same image and ROI work once irrelevant dwell is restored",
+      "state": {
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": "5",
+        "dwell_required": true,
+        "dwell_disabled": false,
+        "direction": "right",
+        "offset": "0",
+        "message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。",
+        "focus": "download-detections",
+        "confirmed": true,
+        "results_hidden": false,
+        "run_disabled": false
+      },
+      "candidates": [
+        {
+          "id": "vision-track-1-1",
+          "camera": "公开素材参数验证",
+          "zone": "合成验证区域",
+          "track": "track-1",
+          "category": "blocked_access",
+          "start": "2026-10-20T00:00:00.000Z",
+          "end": "2026-10-20T00:00:00.001Z",
+          "score": 0.9651602077977631,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "公开示例-校车.jpg @ 0.00s"
+          ]
+        },
+        {
+          "id": "vision-track-3-2",
+          "camera": "公开素材参数验证",
+          "zone": "合成验证区域",
+          "track": "track-3",
+          "category": "blocked_access",
+          "start": "2026-10-20T00:00:00.000Z",
+          "end": "2026-10-20T00:00:00.001Z",
+          "score": 0.6453986740192105,
+          "quality": 0.4,
+          "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+          "evidence": [
+            "公开示例-校车.jpg @ 0.00s"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "irrelevant direction change revokes access confirmation",
+      "before": {
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": "5",
+        "dwell_required": true,
+        "dwell_disabled": false,
+        "direction": "right",
+        "offset": "0",
+        "message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。",
+        "focus": "download-detections",
+        "confirmed": true,
+        "results_hidden": false,
+        "run_disabled": false
+      },
+      "state": {
+        "rule": "access",
+        "detector": "dfine",
+        "dwell": "5",
+        "dwell_required": true,
+        "dwell_disabled": false,
+        "direction": "left",
+        "offset": "0",
+        "message": "生成候选前，请填写本素材的来源和实际时间，并核对关注区域。",
+        "focus": "download-detections",
+        "confirmed": false,
+        "results_hidden": true,
+        "run_disabled": false
+      }
+    },
+    {
+      "name": "unused blank dwell blocks actual video direction analysis",
+      "state": {
+        "rule": "direction",
+        "detector": "dfine",
+        "dwell": "",
+        "dwell_required": true,
+        "dwell_disabled": false,
+        "direction": "left",
+        "offset": "0",
+        "message": "请检查数值范围：2 至 19。",
+        "focus": "vision-dwell",
+        "confirmed": false,
+        "results_hidden": true,
+        "run_disabled": false
+      }
+    },
+    {
+      "name": "same synthetic moving video runs after restoring irrelevant dwell",
+      "state": {
+        "rule": "direction",
+        "detector": "dfine",
+        "dwell": "5",
+        "dwell_required": true,
+        "dwell_disabled": false,
+        "direction": "left",
+        "offset": "0",
+        "message": "分析完成：11 帧、5 条匿名轨迹、1 个待核实候选。",
+        "focus": "download-detections",
+        "confirmed": true,
+        "results_hidden": false,
+        "run_disabled": false
+      },
+      "frame_count": 11,
+      "candidates": [
+        {
+          "id": "vision-track-1-1",
+          "camera": "公开素材参数验证",
+          "zone": "合成验证区域",
+          "track": "track-1",
+          "category": "wrong_way",
+          "start": "2026-10-20T00:00:00.000Z",
+          "end": "2026-10-20T00:00:10.000Z",
+          "score": 0.965363308318346,
+          "quality": 0.4,
+          "summary": "模型检测：bus；11 个采样帧。匿名轨迹与用户指定方向相反，投影位移超过归一化画面的 0.12。需核对道路标识、镜头运动和关联是否正确。 时间范围来自稀疏采样，不证明连续停留。",
+          "evidence": [
+            "vision-dwell-moving.mp4 @ 0.00s",
+            "vision-dwell-moving.mp4 @ 1.00s",
+            "vision-dwell-moving.mp4 @ 2.00s",
+            "vision-dwell-moving.mp4 @ 3.00s",
+            "vision-dwell-moving.mp4 @ 4.00s",
+            "vision-dwell-moving.mp4 @ 5.00s",
+            "vision-dwell-moving.mp4 @ 6.00s",
+            "vision-dwell-moving.mp4 @ 7.00s",
+            "vision-dwell-moving.mp4 @ 8.00s",
+            "vision-dwell-moving.mp4 @ 9.00s",
+            "vision-dwell-moving.mp4 @ 10.00s"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "blank dwell correctly rejected when parking rule needs it",
+      "state": {
+        "rule": "parking",
+        "detector": "dfine",
+        "dwell": "",
+        "dwell_required": true,
+        "dwell_disabled": false,
+        "direction": "left",
+        "offset": "0",
+        "message": "请检查数值范围：2 至 19。",
+        "focus": "vision-dwell",
+        "confirmed": false,
+        "results_hidden": true,
+        "run_disabled": false
+      }
+    }
+  ],
+  "page_errors": [],
+  "complete": true
+}

@@ -1,0 +1,608 @@
+{
+  "started_at": "2026-10-20T02:14:00.227Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Actual D-FINE-N and SSDLite inference on the repository CC0 bus image and disclosed synthetic clips; validates controls, active parameter semantics and review handover, not accuracy.",
+  "checks": [
+    {
+      "name": "current default D-FINE-N still runs the public image",
+      "passed": true,
+      "evidence": {
+        "detector": "dfine",
+        "detections": [
+          {
+            "class": "bus",
+            "score": 0.9651602077977631,
+            "bbox": [
+              0.14125004410743713,
+              0.30271363258361816,
+              0.8241178393363953,
+              0.6320297718048096
+            ]
+          },
+          {
+            "class": "stop sign",
+            "score": 0.7990683171645506,
+            "bbox": [
+              0.5951079428195953,
+              0.5470814406871796,
+              0.028489530086517334,
+              0.08871656656265259
+            ]
+          },
+          {
+            "class": "bus",
+            "score": 0.6453986740192105,
+            "bbox": [
+              0.8353092670440674,
+              0.32016459107398987,
+              0.16468727588653564,
+              0.3759388327598572
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "both detectors ignore blank or out-of-range unused dwell in image detection",
+      "passed": true,
+      "evidence": {
+        "runs": [
+          {
+            "draft": "",
+            "params": {
+              "rule": "objects",
+              "roi": [
+                0,
+                0,
+                1,
+                1
+              ],
+              "camera": "",
+              "zone": "",
+              "started_at": null,
+              "media_name": "bus.jpg",
+              "dwell_seconds": null,
+              "is_video": false,
+              "expected_direction": null,
+              "minimum_score": 0.6,
+              "offset_seconds": 0,
+              "sample_interval_seconds": 1,
+              "max_frames": 20,
+              "rules_version": "vision-rules-v2-stable-dwell",
+              "tracking_max_gap_seconds": 1.6,
+              "parking_max_center_distance": 0.06,
+              "parking_min_samples": 3,
+              "detector": "dfine",
+              "max_detections": 50,
+              "nms_iou_threshold": null,
+              "duplicate_iou_threshold": 0.9,
+              "postprocess": "dfine-topk-dedupe090-v1",
+              "input_size": 640,
+              "context_confirmed": false
+            },
+            "bus_score": 0.9651602077977631
+          },
+          {
+            "draft": "",
+            "params": {
+              "rule": "objects",
+              "roi": [
+                0,
+                0,
+                1,
+                1
+              ],
+              "camera": "",
+              "zone": "",
+              "started_at": null,
+              "media_name": "bus.jpg",
+              "dwell_seconds": null,
+              "is_video": false,
+              "expected_direction": null,
+              "minimum_score": 0.5,
+              "offset_seconds": 0,
+              "sample_interval_seconds": 1,
+              "max_frames": 20,
+              "rules_version": "vision-rules-v2-stable-dwell",
+              "tracking_max_gap_seconds": 1.6,
+              "parking_max_center_distance": 0.06,
+              "parking_min_samples": 3,
+              "detector": "ssdlite",
+              "max_detections": 50,
+              "nms_iou_threshold": 0.5,
+              "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+              "context_confirmed": false
+            },
+            "bus_score": 0.9917388558387756
+          },
+          {
+            "draft": "20",
+            "params": {
+              "rule": "objects",
+              "roi": [
+                0,
+                0,
+                1,
+                1
+              ],
+              "camera": "",
+              "zone": "",
+              "started_at": null,
+              "media_name": "bus.jpg",
+              "dwell_seconds": null,
+              "is_video": false,
+              "expected_direction": null,
+              "minimum_score": 0.6,
+              "offset_seconds": 0,
+              "sample_interval_seconds": 1,
+              "max_frames": 20,
+              "rules_version": "vision-rules-v2-stable-dwell",
+              "tracking_max_gap_seconds": 1.6,
+              "parking_max_center_distance": 0.06,
+              "parking_min_samples": 3,
+              "detector": "dfine",
+              "max_detections": 50,
+              "nms_iou_threshold": null,
+              "duplicate_iou_threshold": 0.9,
+              "postprocess": "dfine-topk-dedupe090-v1",
+              "input_size": 640,
+              "context_confirmed": false
+            },
+            "bus_score": 0.965283811405391
+          },
+          {
+            "draft": "20",
+            "params": {
+              "rule": "objects",
+              "roi": [
+                0,
+                0,
+                1,
+                1
+              ],
+              "camera": "",
+              "zone": "",
+              "started_at": null,
+              "media_name": "bus.jpg",
+              "dwell_seconds": null,
+              "is_video": false,
+              "expected_direction": null,
+              "minimum_score": 0.5,
+              "offset_seconds": 0,
+              "sample_interval_seconds": 1,
+              "max_frames": 20,
+              "rules_version": "vision-rules-v2-stable-dwell",
+              "tracking_max_gap_seconds": 1.6,
+              "parking_max_center_distance": 0.06,
+              "parking_min_samples": 3,
+              "detector": "ssdlite",
+              "max_detections": 50,
+              "nms_iou_threshold": 0.5,
+              "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+              "context_confirmed": false
+            },
+            "bus_score": 0.9917388558387756
+          }
+        ]
+      }
+    },
+    {
+      "name": "switching back to parking revalidates empty and out-of-range dwell drafts",
+      "passed": true,
+      "evidence": {
+        "rejections": [
+          {
+            "rule": "parking",
+            "detector": "ssdlite",
+            "fields": {
+              "vision-dwell": {
+                "value": "",
+                "disabled": false,
+                "required": true,
+                "help": "仅持续停留规则使用。"
+              },
+              "vision-direction": {
+                "value": "right",
+                "disabled": true,
+                "required": false,
+                "help": "仅逆向移动规则使用。"
+              },
+              "vision-offset": {
+                "value": "0",
+                "disabled": false,
+                "required": true,
+                "help": "仅视频使用，图片无需填写。"
+              }
+            },
+            "confirmed": false,
+            "message": "请检查数值范围：2 至 19。",
+            "focus": "vision-dwell",
+            "results_hidden": true
+          },
+          {
+            "rule": "parking",
+            "detector": "ssdlite",
+            "fields": {
+              "vision-dwell": {
+                "value": "1",
+                "disabled": false,
+                "required": true,
+                "help": "仅持续停留规则使用。"
+              },
+              "vision-direction": {
+                "value": "right",
+                "disabled": true,
+                "required": false,
+                "help": "仅逆向移动规则使用。"
+              },
+              "vision-offset": {
+                "value": "0",
+                "disabled": false,
+                "required": true,
+                "help": "仅视频使用，图片无需填写。"
+              }
+            },
+            "confirmed": false,
+            "message": "请检查数值范围：2 至 19。",
+            "focus": "vision-dwell",
+            "results_hidden": true
+          },
+          {
+            "rule": "parking",
+            "detector": "ssdlite",
+            "fields": {
+              "vision-dwell": {
+                "value": "20",
+                "disabled": false,
+                "required": true,
+                "help": "仅持续停留规则使用。"
+              },
+              "vision-direction": {
+                "value": "right",
+                "disabled": true,
+                "required": false,
+                "help": "仅逆向移动规则使用。"
+              },
+              "vision-offset": {
+                "value": "0",
+                "disabled": false,
+                "required": true,
+                "help": "仅视频使用，图片无需填写。"
+              }
+            },
+            "confirmed": false,
+            "message": "请检查数值范围：2 至 19。",
+            "focus": "vision-dwell",
+            "results_hidden": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "direction video uses direction and offset while ignoring an empty dwell draft",
+      "passed": true,
+      "evidence": {
+        "params": {
+          "rule": "direction",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "公开素材参数验收",
+          "zone": "合成规则区域",
+          "started_at": "2026-10-20T08:00:00+08:00",
+          "media_name": "公开图片合成-moving.mp4",
+          "dwell_seconds": null,
+          "is_video": true,
+          "expected_direction": "left",
+          "minimum_score": 0.6,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "dfine",
+          "max_detections": 50,
+          "nms_iou_threshold": null,
+          "duplicate_iou_threshold": 0.9,
+          "postprocess": "dfine-topk-dedupe090-v1",
+          "input_size": 640,
+          "context_confirmed": true
+        },
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "公开素材参数验收",
+            "zone": "合成规则区域",
+            "track": "track-1",
+            "category": "wrong_way",
+            "start": "2026-10-20T00:00:00.000Z",
+            "end": "2026-10-20T00:00:06.000Z",
+            "score": 0.9623866525713121,
+            "quality": 0.4,
+            "summary": "模型检测：bus；7 个采样帧。匿名轨迹与用户指定方向相反，投影位移超过归一化画面的 0.12。需核对道路标识、镜头运动和关联是否正确。 时间范围来自稀疏采样，不证明连续停留。",
+            "evidence": [
+              "公开图片合成-moving.mp4 @ 0.00s",
+              "公开图片合成-moving.mp4 @ 1.00s",
+              "公开图片合成-moving.mp4 @ 2.00s",
+              "公开图片合成-moving.mp4 @ 3.00s",
+              "公开图片合成-moving.mp4 @ 4.00s",
+              "公开图片合成-moving.mp4 @ 5.00s",
+              "公开图片合成-moving.mp4 @ 6.00s"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "image access ignores inactive controls and preserves candidates through review and handover",
+      "passed": true,
+      "evidence": {
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "公开素材参数验收",
+          "zone": "合成规则区域",
+          "started_at": "2026-10-20T08:00:00+08:00",
+          "media_name": "bus.jpg",
+          "dwell_seconds": null,
+          "is_video": false,
+          "expected_direction": null,
+          "minimum_score": 0.6,
+          "offset_seconds": 0,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "dfine",
+          "max_detections": 50,
+          "nms_iou_threshold": null,
+          "duplicate_iou_threshold": 0.9,
+          "postprocess": "dfine-topk-dedupe090-v1",
+          "input_size": 640,
+          "context_confirmed": true
+        },
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "公开素材参数验收",
+            "zone": "合成规则区域",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-20T00:00:00.000Z",
+            "end": "2026-10-20T00:00:00.001Z",
+            "score": 0.965283811405391,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "bus.jpg @ 0.00s"
+            ]
+          },
+          {
+            "id": "vision-track-3-2",
+            "camera": "公开素材参数验收",
+            "zone": "合成规则区域",
+            "track": "track-3",
+            "category": "blocked_access",
+            "start": "2026-10-20T00:00:00.000Z",
+            "end": "2026-10-20T00:00:00.001Z",
+            "score": 0.6409148908448062,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "bus.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "decisions": {
+          "event:vision-track-1-1": {
+            "status": "needs_evidence",
+            "note": "公开图仅用于参数和交班验收，现场情况需补充证据。",
+            "at": "2026-10-20T02:14:13.957Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "valid parking video keeps active dwell and nonzero offset semantics",
+      "passed": true,
+      "evidence": {
+        "params": {
+          "rule": "parking",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "公开素材参数验收",
+          "zone": "合成规则区域",
+          "started_at": "2026-10-20T08:00:00+08:00",
+          "media_name": "公开图片合成-still.mp4",
+          "dwell_seconds": 2,
+          "is_video": true,
+          "expected_direction": null,
+          "minimum_score": 0.5,
+          "offset_seconds": 1,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "ssdlite",
+          "max_detections": 50,
+          "nms_iou_threshold": 0.5,
+          "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+          "context_confirmed": true
+        },
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "公开素材参数验收",
+            "zone": "合成规则区域",
+            "track": "track-1",
+            "stable_segment_id": "track-1-stay-1",
+            "category": "illegal_parking",
+            "start": "2026-10-20T00:00:01.000Z",
+            "end": "2026-10-20T00:00:06.000Z",
+            "score": 0.9967840909957886,
+            "quality": 0.4,
+            "summary": "模型检测：bus；6 个采样帧。采样中车辆在指定区域内有约 5.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+            "evidence": [
+              "公开图片合成-still.mp4 @ 1.00s",
+              "公开图片合成-still.mp4 @ 2.00s",
+              "公开图片合成-still.mp4 @ 3.00s",
+              "公开图片合成-still.mp4 @ 4.00s",
+              "公开图片合成-still.mp4 @ 5.00s",
+              "公开图片合成-still.mp4 @ 6.00s"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "busy locks applicable controls and stopping restores only currently applicable fields",
+      "passed": true,
+      "evidence": {
+        "busy": {
+          "rule": "parking",
+          "detector": "ssdlite",
+          "fields": {
+            "vision-dwell": {
+              "value": "2",
+              "disabled": true,
+              "required": true,
+              "help": "仅持续停留规则使用。"
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": true,
+              "required": false,
+              "help": "仅逆向移动规则使用。"
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": true,
+              "required": true,
+              "help": "仅视频使用，图片无需填写。"
+            }
+          },
+          "confirmed": true,
+          "message": "正在推理 1 / 7 帧 · 0.0 秒",
+          "focus": "",
+          "results_hidden": true
+        },
+        "after": {
+          "rule": "objects",
+          "detector": "ssdlite",
+          "fields": {
+            "vision-dwell": {
+              "value": "2",
+              "disabled": true,
+              "required": false,
+              "help": "仅持续停留规则使用。"
+            },
+            "vision-direction": {
+              "value": "right",
+              "disabled": true,
+              "required": false,
+              "help": "仅逆向移动规则使用。"
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": false,
+              "required": true,
+              "help": "仅视频使用，图片无需填写。"
+            }
+          },
+          "confirmed": false,
+          "message": "通用物体检测无需现场确认；未知时间可留空，不生成事件候选。",
+          "focus": "download-detections",
+          "results_hidden": true
+        },
+        "completed_frames": 1
+      }
+    },
+    {
+      "name": "scene reuse preserves inactive drafts and invalid image rules explain the media requirement first",
+      "passed": true,
+      "evidence": {
+        "reused": {
+          "rule": "access",
+          "detector": "ssdlite",
+          "fields": {
+            "vision-dwell": {
+              "value": "9",
+              "disabled": true,
+              "required": false,
+              "help": "仅持续停留规则使用。"
+            },
+            "vision-direction": {
+              "value": "left",
+              "disabled": true,
+              "required": false,
+              "help": "仅逆向移动规则使用。"
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": false,
+              "required": true,
+              "help": "仅视频使用，图片无需填写。"
+            }
+          },
+          "confirmed": false,
+          "message": "已沿用现场设置；同尺寸不代表同摄像头。请填写本素材时间并核对画面。",
+          "focus": "reuse-scene",
+          "results_hidden": true
+        },
+        "rejected_image": {
+          "rule": "parking",
+          "detector": "ssdlite",
+          "fields": {
+            "vision-dwell": {
+              "value": "",
+              "disabled": false,
+              "required": true,
+              "help": "仅持续停留规则使用。"
+            },
+            "vision-direction": {
+              "value": "left",
+              "disabled": true,
+              "required": false,
+              "help": "仅逆向移动规则使用。"
+            },
+            "vision-offset": {
+              "value": "0",
+              "disabled": true,
+              "required": false,
+              "help": "仅视频使用，图片无需填写。"
+            }
+          },
+          "confirmed": false,
+          "message": "停留和方向规则需要视频。单张图片只能检测物体或区域候选。",
+          "focus": "vision-rule",
+          "results_hidden": true
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-20T02:14:16.097Z",
+  "passed": 8,
+  "failed": 0,
+  "ok": true
+}
