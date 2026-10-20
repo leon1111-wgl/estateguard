@@ -1,0 +1,357 @@
+{
+  "at": "2026-10-20T14:19:50.243Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Actual public/demo workflow and real D-FINE-N handover. Controlled fetch and File.text completion delays represent slow reads; no private media or simulated model predictions.",
+  "checks": [
+    {
+      "name": "late demo asks before discarding a draft written while it was loading",
+      "passed": true,
+      "evidence": {
+        "dialogs": [
+          {
+            "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+            "accepted": false
+          }
+        ],
+        "before": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "读取示例期间新写的交班草稿",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "正在读取合成班次，当前复核可继续操作。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": {
+            "src": "blob:http://127.0.0.1:8767/0bbc6f46-65f0-41a9-a894-ff34b3dca2ba",
+            "width": 960,
+            "height": 640
+          }
+        },
+        "after": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "读取示例期间新写的交班草稿",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "已取消替换，当前记录、草稿和附件保持不变。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": {
+            "src": "blob:http://127.0.0.1:8767/0bbc6f46-65f0-41a9-a894-ff34b3dca2ba",
+            "width": 960,
+            "height": 640
+          }
+        }
+      }
+    },
+    {
+      "name": "late demo preserves a newly saved review when replacement is declined",
+      "passed": true,
+      "evidence": {
+        "dialogs": [
+          {
+            "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+            "accepted": false
+          }
+        ],
+        "before": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "在等待期间核实后保存，不能被旧请求清除",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/20 22:19:51 · 待补充证据：在等待期间核实后保存，不能被旧请求清除",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": null
+        },
+        "after": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "在等待期间核实后保存，不能被旧请求清除",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/20 22:19:51 · 待补充证据：在等待期间核实后保存，不能被旧请求清除",
+          "message": "已取消替换，当前记录、草稿和附件保持不变。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": null
+        }
+      }
+    },
+    {
+      "name": "existing dirty work is confirmed only after a valid replacement is ready",
+      "passed": true,
+      "evidence": {
+        "dialogs": [
+          {
+            "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+            "accepted": true
+          }
+        ],
+        "dialogs_before_read": 0,
+        "after": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": null
+        }
+      }
+    },
+    {
+      "name": "failed demo read preserves the workspace without asking to discard it",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "after": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "失败读取后仍需保留",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "读取示例失败，当前工作区未改变。无法读取示例数据",
+          "message_error": true,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": null
+        }
+      }
+    },
+    {
+      "name": "late demo failure cannot replace a newer successful import message",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "before": {
+          "batch": "新导入工作区",
+          "event": "event:door-held-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": null
+        },
+        "after": {
+          "batch": "新导入工作区",
+          "event": "event:door-held-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": null
+        }
+      }
+    },
+    {
+      "name": "applying a policy invalidates an earlier pending demo success",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "before": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "规则已应用，新的复核已开始。固定评测结果不受此操作影响。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "61",
+          "media_image": null
+        },
+        "after": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "规则已应用，新的复核已开始。固定评测结果不受此操作影响。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "61",
+          "media_image": null
+        }
+      }
+    },
+    {
+      "name": "applying a policy invalidates an earlier pending JSON read without another discard prompt",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "before": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "规则已应用，新的复核已开始。固定评测结果不受此操作影响。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "61",
+          "media_image": null
+        },
+        "after": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "规则已应用，新的复核已开始。固定评测结果不受此操作影响。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "61",
+          "media_image": null
+        }
+      }
+    },
+    {
+      "name": "latest import intent wins, including when the newer file is invalid",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "latest": {
+          "batch": "后选工作区",
+          "event": "event:door-held-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": null
+        },
+        "failed_latest": {
+          "batch": "后选工作区",
+          "event": "event:door-held-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "导入被拒绝，原工作区未改变。Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+          "message_error": true,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": null
+        }
+      }
+    },
+    {
+      "name": "actual D-FINE-N handover survives an earlier demo failure",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "real_inference": {
+          "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "before": {
+          "batch": "本地模型分析 · 公开示例-校车.jpg",
+          "event": "event:vision-track-1-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": {
+            "src": "blob:http://127.0.0.1:8767/d12663c8-12d4-4340-bc65-fc29e89e18d0",
+            "width": 960,
+            "height": 640
+          }
+        },
+        "after": {
+          "batch": "本地模型分析 · 公开示例-校车.jpg",
+          "event": "event:vision-track-1-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+          "message_error": false,
+          "merge_gap": "30",
+          "parking_grace": "30",
+          "media_image": {
+            "src": "blob:http://127.0.0.1:8767/d12663c8-12d4-4340-bc65-fc29e89e18d0",
+            "width": 960,
+            "height": 640
+          }
+        },
+        "candidates": [
+          {
+            "id": "vision-track-1-1",
+            "camera": "公开校车测试镜头",
+            "zone": "规则测试区域",
+            "track": "track-1",
+            "category": "blocked_access",
+            "start": "2026-10-20T00:00:00.000Z",
+            "end": "2026-10-20T00:00:00.001Z",
+            "score": 0.9651602077977631,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          },
+          {
+            "id": "vision-track-3-2",
+            "camera": "公开校车测试镜头",
+            "zone": "规则测试区域",
+            "track": "track-3",
+            "category": "blocked_access",
+            "start": "2026-10-20T00:00:00.000Z",
+            "end": "2026-10-20T00:00:00.001Z",
+            "score": 0.6453986740192105,
+            "quality": 0.4,
+            "summary": "模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。",
+            "evidence": [
+              "公开示例-校车.jpg @ 0.00s"
+            ]
+          }
+        ],
+        "saved_review": {
+          "event_id": "event:vision-track-1-1",
+          "status": "needs_evidence",
+          "note": "公开样例仅验证交接流程，现场授权与区域需补充证据",
+          "at": "2026-10-20T14:19:55.236Z"
+        },
+        "restored": {
+          "status": "needs_evidence",
+          "note": "公开样例仅验证交接流程，现场授权与区域需补充证据",
+          "audit": [
+            {
+              "event_id": "event:vision-track-1-1",
+              "status": "needs_evidence",
+              "note": "公开样例仅验证交接流程，现场授权与区域需补充证据",
+              "at": "2026-10-20T14:19:55.236Z"
+            }
+          ],
+          "media_status": "未载入本地证据。请选择与本事件对应的图片或视频。"
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-20T14:19:55.587Z",
+  "passed": 9,
+  "failed": 0,
+  "ok": true
+}

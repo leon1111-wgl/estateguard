@@ -1,0 +1,589 @@
+{
+  "base": "http://127.0.0.1:8767",
+  "scope": "Actual Chrome 1440/390 UI regression; delayed real demo.json response; no model output fabricated; no product edits.",
+  "started": "2026-10-20T14:17:39.745Z",
+  "viewports": [
+    {
+      "width": 1440,
+      "dialogs": [
+        {
+          "type": "confirm",
+          "text": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+          "action": "dismiss"
+        },
+        {
+          "type": "confirm",
+          "text": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+          "action": "accept"
+        }
+      ],
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-loading-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-rejected-record-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-rejected-full-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-accepted-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-restored-record-1440.png"
+      ],
+      "checks": [
+        {
+          "name": "loading feedback and form remain usable",
+          "passed": true
+        },
+        {
+          "name": "late confirmation rejection preserves saved record and decoded attachment",
+          "passed": true
+        },
+        {
+          "name": "export contains saved human decision",
+          "passed": true
+        },
+        {
+          "name": "accepting replacement resets the workspace intentionally",
+          "passed": true
+        },
+        {
+          "name": "queue controls remain usable",
+          "passed": true
+        },
+        {
+          "name": "saved export can be restored after accepted replacement",
+          "passed": true
+        },
+        {
+          "name": "no horizontal overflow in recorded states",
+          "passed": true
+        }
+      ],
+      "initial": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "message_error": false,
+        "message_rect": {
+          "top": 74.984375,
+          "bottom": 116.171875,
+          "visible": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/406ff575-daf2-4940-94b2-3a044baa7b02",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 78,
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "documentWidth": 1440
+        }
+      },
+      "loading": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "正在读取合成班次，当前复核可继续操作。",
+        "message_error": false,
+        "message_rect": {
+          "top": 74.984375,
+          "bottom": 116.171875,
+          "visible": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/406ff575-daf2-4940-94b2-3a044baa7b02",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 78,
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "documentWidth": 1440
+        }
+      },
+      "pending_saved": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "message_error": false,
+        "message_rect": {
+          "top": -723.015625,
+          "bottom": -681.828125,
+          "visible": false
+        },
+        "note": "宽度1440：慢加载期间新保存的复核，等待现场补证。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/20 22:17:40 · 待补充证据：宽度1440：慢加载期间新保存的复核，等待现场补证。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/406ff575-daf2-4940-94b2-3a044baa7b02",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 876,
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "documentWidth": 1440
+        }
+      },
+      "rejected": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "已取消替换，当前记录、草稿和附件保持不变。",
+        "message_error": false,
+        "message_rect": {
+          "top": -723.015625,
+          "bottom": -681.828125,
+          "visible": false
+        },
+        "note": "宽度1440：慢加载期间新保存的复核，等待现场补证。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/20 22:17:40 · 待补充证据：宽度1440：慢加载期间新保存的复核，等待现场补证。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/406ff575-daf2-4940-94b2-3a044baa7b02",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 876,
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "documentWidth": 1440
+        }
+      },
+      "export": "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-preserved-1440.json",
+      "accept_loading": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "正在读取合成班次，当前复核可继续操作。",
+        "message_error": false,
+        "message_rect": {
+          "top": 152.984375,
+          "bottom": 194.171875,
+          "visible": true
+        },
+        "note": "明确同意替换后可以丢弃的草稿",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/20 22:17:40 · 待补充证据：宽度1440：慢加载期间新保存的复核，等待现场补证。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/406ff575-daf2-4940-94b2-3a044baa7b02",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 0,
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "documentWidth": 1440
+        }
+      },
+      "accepted": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "message_error": false,
+        "message_rect": {
+          "top": 152.984375,
+          "bottom": 194.171875,
+          "visible": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "selected": "event:door-held-1",
+        "attachment": null,
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 0,
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "documentWidth": 1440
+        }
+      },
+      "filtered_event": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "message_error": false,
+        "message_rect": {
+          "top": 152.984375,
+          "bottom": 194.171875,
+          "visible": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "selected": "event:impact-1",
+        "attachment": null,
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 0,
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "documentWidth": 1440
+        }
+      },
+      "imported": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "message_error": false,
+        "message_rect": {
+          "top": 152.984375,
+          "bottom": 194.171875,
+          "visible": true
+        },
+        "note": "宽度1440：慢加载期间新保存的复核，等待现场补证。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/20 22:17:40 · 待补充证据：宽度1440：慢加载期间新保存的复核，等待现场补证。",
+        "selected": "event:door-held-1",
+        "attachment": null,
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 0,
+        "viewport": {
+          "width": 1440,
+          "height": 1000,
+          "documentWidth": 1440
+        }
+      },
+      "ok": true
+    },
+    {
+      "width": 390,
+      "dialogs": [
+        {
+          "type": "confirm",
+          "text": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+          "action": "dismiss"
+        },
+        {
+          "type": "confirm",
+          "text": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+          "action": "accept"
+        }
+      ],
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-loading-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-rejected-record-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-rejected-full-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-accepted-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-restored-record-390.png"
+      ],
+      "checks": [
+        {
+          "name": "loading feedback and form remain usable",
+          "passed": true
+        },
+        {
+          "name": "late confirmation rejection preserves saved record and decoded attachment",
+          "passed": true
+        },
+        {
+          "name": "export contains saved human decision",
+          "passed": true
+        },
+        {
+          "name": "accepting replacement resets the workspace intentionally",
+          "passed": true
+        },
+        {
+          "name": "queue controls remain usable",
+          "passed": true
+        },
+        {
+          "name": "saved export can be restored after accepted replacement",
+          "passed": true
+        },
+        {
+          "name": "no horizontal overflow in recorded states",
+          "passed": true
+        }
+      ],
+      "initial": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "message_error": false,
+        "message_rect": {
+          "top": 224.953125,
+          "bottom": 266.140625,
+          "visible": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/9ac8e071-8a47-4723-90b4-a1958d8320c3",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 51,
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "documentWidth": 390
+        }
+      },
+      "loading": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "正在读取合成班次，当前复核可继续操作。",
+        "message_error": false,
+        "message_rect": {
+          "top": 224.953125,
+          "bottom": 266.140625,
+          "visible": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/9ac8e071-8a47-4723-90b4-a1958d8320c3",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 51,
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "documentWidth": 390
+        }
+      },
+      "pending_saved": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "message_error": false,
+        "message_rect": {
+          "top": -1457.046875,
+          "bottom": -1415.859375,
+          "visible": false
+        },
+        "note": "宽度390：慢加载期间新保存的复核，等待现场补证。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/20 22:17:41 · 待补充证据：宽度390：慢加载期间新保存的复核，等待现场补证。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/9ac8e071-8a47-4723-90b4-a1958d8320c3",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 1733,
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "documentWidth": 390
+        }
+      },
+      "rejected": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "已取消替换，当前记录、草稿和附件保持不变。",
+        "message_error": false,
+        "message_rect": {
+          "top": -1457.046875,
+          "bottom": -1415.859375,
+          "visible": false
+        },
+        "note": "宽度390：慢加载期间新保存的复核，等待现场补证。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/20 22:17:41 · 待补充证据：宽度390：慢加载期间新保存的复核，等待现场补证。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/9ac8e071-8a47-4723-90b4-a1958d8320c3",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 1733,
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "documentWidth": 390
+        }
+      },
+      "export": "/tmp/estateguard-review-flow-20261020/artifacts/workspace-flow-designer-after-preserved-390.json",
+      "accept_loading": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "正在读取合成班次，当前复核可继续操作。",
+        "message_error": false,
+        "message_rect": {
+          "top": 275.953125,
+          "bottom": 317.140625,
+          "visible": true
+        },
+        "note": "明确同意替换后可以丢弃的草稿",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/20 22:17:41 · 待补充证据：宽度390：慢加载期间新保存的复核，等待现场补证。",
+        "selected": "event:door-held-1",
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/9ac8e071-8a47-4723-90b4-a1958d8320c3",
+          "width": 960
+        },
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 0,
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "documentWidth": 390
+        }
+      },
+      "accepted": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "message_error": false,
+        "message_rect": {
+          "top": 275.953125,
+          "bottom": 317.140625,
+          "visible": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "selected": "event:door-held-1",
+        "attachment": null,
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 0,
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "documentWidth": 390
+        }
+      },
+      "filtered_event": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "message_error": false,
+        "message_rect": {
+          "top": -657.046875,
+          "bottom": -615.859375,
+          "visible": false
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "selected": "event:impact-1",
+        "attachment": null,
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 933,
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "documentWidth": 390
+        }
+      },
+      "imported": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "message_error": false,
+        "message_rect": {
+          "top": 275.953125,
+          "bottom": 317.140625,
+          "visible": true
+        },
+        "note": "宽度390：慢加载期间新保存的复核，等待现场补证。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/20 22:17:41 · 待补充证据：宽度390：慢加载期间新保存的复核，等待现场补证。",
+        "selected": "event:door-held-1",
+        "attachment": null,
+        "controls": {
+          "reset": true,
+          "save": true,
+          "import": true,
+          "queue": true
+        },
+        "scrollY": 0,
+        "viewport": {
+          "width": 390,
+          "height": 844,
+          "documentWidth": 390
+        }
+      },
+      "ok": true
+    }
+  ],
+  "page_errors": [],
+  "blockers": [],
+  "browser": "155.0.8059.85",
+  "finished": "2026-10-20T14:17:42.612Z",
+  "ok": true,
+  "visual_review": {
+    "actual_screenshots_inspected": true,
+    "style_changes": false,
+    "horizontal_overflow": false,
+    "blocking_issues": [],
+    "nonblocking_note": "取消反馈沿用页面顶部消息区；在底部复核表单拒绝替换时不在当前视口内，但当前理由、历史及附件完整可见，未改变滚动位置。现有版式保持。"
+  }
+}

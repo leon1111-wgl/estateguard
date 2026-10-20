@@ -1,5 +1,24 @@
 # 验证记录 · 2026-10-15
 
+## 2026-10-20 · 工作区异步替换与复核保留
+
+基线为已发布的 `704f30a`。独立找茬 9 项中 8 项失败，修复并补充附件及模型交接断言后 9/9 通过。读取时序通过延迟真实 `fetch` / `File.text()` 完成来控制；响应被页面消费后的下一任务再检查状态，不替换模型输出。失败读取使用明确的 HTTP 错误夹具。
+
+```bash
+node scripts/workspace-replacement-check.cjs
+node scripts/model-check.cjs
+node scripts/browser-check.cjs
+node --test tests/*.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 scripts/verify_assets.py
+```
+
+浏览器配置沿用下文，隔离服务通过 `ESTATEGUARD_URL=http://127.0.0.1:8767` 指定。专项覆盖等待期间草稿/已保存结论、拒绝与同意替换、读取失败、较新导入优先、规则更新使旧示例与旧 JSON 失效、旧错误不盖新提示，以及实际 D-FINE-N 推理→送审→人工保存→导出恢复。页面错误、外部请求均为 0。分数 0.9651602 和 2 个候选是公开校车样例的运行观察，不是社区效果指标。
+
+原模型回归实际运行 SSDLite 图片及 7 帧合成视频，重复推理张量 262→262；136 项 JS 通过，Python 24 项中 23 项通过、1 项跳过，26 项资源哈希通过。独立代码审查另验取消后选导入、JSON 语法错误、结构错误 3 项；设计师 1440 / 390px 各 7 项通过，无横向溢出，原 CSS 与页面控件保持。
+
+机器证据：[旧版失败](validation/workspace-replacement-baseline.json)、[修复验收](validation/workspace-replacement-validation.json)、[界面回归](validation/workspace-replacement-ui-validation.json)。本地检查与后续 CI、线上核验分开记录；没有新增数据、训练或现场部署收益声明。
+
 ## 本地自动检查
 
 ```bash
