@@ -322,7 +322,7 @@
   "external_requests": [],
   "browser": "155.0.8059.85",
   "injected_baseline": {
-    "revision": "5a1fe15",
+    "revision": "6b0a268",
     "files": [
       "index.html",
       "vision.mjs",

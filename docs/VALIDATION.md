@@ -251,7 +251,7 @@ node scripts/critic-check.cjs
 
 未验证：整个视频后续帧是否损坏、媒体与事件事实对应、跨会话可信媒体归档。附件超时限制 10 秒，失败可重新选择；不把这些工程检查作为领域检测精度。
 
-发布前接续核验：上一轮抽检提交 a8cbad4 尚未推送，本轮独立重新运行 16 项训练检查、模型资源校验和全部迁移/抽检回放重算，并完整执行 parking-transfer-check。真实编码器前向、C6 抽检撤销、导出恢复及三模型 EXT 对照均通过，无页面错误或跨站请求；未修改其模型或抽检规则。独立报告保存在 artifacts/review-a8cbad4/parking-transfer-validation.json。
+发布前接续核验：上一轮抽检提交 e997ce3 尚未推送，本轮独立重新运行 16 项训练检查、模型资源校验和全部迁移/抽检回放重算，并完整执行 parking-transfer-check。真实编码器前向、C6 抽检撤销、导出恢复及三模型 EXT 对照均通过，无页面错误或跨站请求；未修改其模型或抽检规则。独立报告保存在 artifacts/review-e997ce3/parking-transfer-validation.json。
 
 
 发布校验的补充说明：Linux 首次失败后，通过[严格诊断运行](https://github.com/leon1111-wgl/estateguard/actions/runs/39095950159)定位 CP 统计数值差，最大 7.9447e-13。比较器只允许明确路径下 CP statistic 的绝对误差 1e-12，且两个值在目标 alpha 同一侧；所有离散结果、阈值、SPRT 统计值与其他报告字段严格一致。完整报告的 elapsed_seconds 是本机运行耗时，检查类型与有限值，不要求两次耗时相同。回归测试保留真实 Linux 数值对，同时篡改计数、阈值、撤销时间/位置、类型、数组和非有限数，验证仍能阻止发布。原保存结果与模型文件均保持不变。
@@ -350,7 +350,7 @@ python3 scripts/verify_assets.py
 
 浏览器依赖及 8766 静态服务同本文开头。新脚本自行将现有 CC0 校车图编码为静止/移动短片，不下载新素材；动作与测试时间为人工构造，不是现场违规标注。
 
-- [直接旧版复现](validation/analysis-parameters-baseline.json)：默认 D-FINE-N 正常图片检出大巴，空闲置停留值却阻止 objects/access/direction；补回无关值后通道与方向可正常产生候选。[完整红版](validation/analysis-parameters-baseline-tests.json) 1/8 通过、7 项失败；为避免覆盖正在修复的代码，正式红复跑在浏览器路由提供 `5a1fe15` 的原 index/vision/media-context 文件，报告带 `injected_baseline`。真实媒体和模型资源保持不变。
+- [直接旧版复现](validation/analysis-parameters-baseline.json)：默认 D-FINE-N 正常图片检出大巴，空闲置停留值却阻止 objects/access/direction；补回无关值后通道与方向可正常产生候选。[完整红版](validation/analysis-parameters-baseline-tests.json) 1/8 通过、7 项失败；为避免覆盖正在修复的代码，正式红复跑在浏览器路由提供 `6b0a268` 的原 index/vision/media-context 文件，报告带 `injected_baseline`。真实媒体和模型资源保持不变。
 - [修复后验收](validation/analysis-parameters-validation.json) 8/8：D-FINE-N 与 SSDLite 均实际推理；空/20 秒闲置草稿不影响图片检测且报告 `null`；切回停车拒绝空、1、20；方向视频忽略空停留值且改变有效方向仍撤销确认；图片通道候选送审、保存需补证据、导出恢复一致；停车保留 2 秒阈值和 1 秒分析起点；推理期间锁定控件，停止后仅恢复适用字段且未完成报告无候选；现场复用不清除新草稿，图片误选停车先提示视频要求。页面错误和跨站请求为 0。
 - 早期测试的全局 requestAnimationFrame 暂停会阻塞浏览器等待，属于夹具错误；最终只在真实 SSDLite 推理完成后暂缓返回原结果，验证忙碌和停止，不替换像素、框或分数。完整红报告不混入该超时。
 - 136 项 JS、26 项资源哈希通过。原 model-check 的校车分数 0.9916937947，视频 7 帧，张量 262→262；media-context-check 10/10；browser-check 通过。参数适用性使用真实浏览器回归，不为 DOM 分支另加镜像单测。

@@ -1,6 +1,6 @@
 {
-  "scope": "独立值班员和部署工程师的真实浏览器复现。主基线为 c9251e2；numeric_drift 与 cold_export 是修复过程中继续找出的边界。人工结论为测试输入，不代表现场判断质量。",
-  "baseline_commit": "c9251e2dd45ecef464283d027246d680a78bc09b",
+  "scope": "独立值班员和部署工程师的真实浏览器复现。主基线为 452dde8；numeric_drift 与 cold_export 是修复过程中继续找出的边界。人工结论为测试输入，不代表现场判断质量。",
+  "baseline_commit": "452dde8a73bde608a4efe843a0fb95a31796dee2",
   "b52": {
     "before": {
       "session": "B-20150708",
