@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-21T02:10:24.411Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Real review UI and JSON/Markdown export. Synthetic shift data is used only for workflow checks; public CC0 sample inference is recorded separately.",
+  "checks": [
+    {
+      "name": "typing then clearing an untouched note does not block either handover export",
+      "passed": false,
+      "error": "unchanged blank review was incorrectly retained as an unsaved draft\n\nfalse !== true\n",
+      "evidence": {
+        "dialogs": [],
+        "initial": {
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "error": false
+        },
+        "after_revert": {
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "error": false
+        },
+        "json": {
+          "downloaded": false,
+          "message": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。"
+        },
+        "markdown": {
+          "downloaded": false,
+          "message": "请先保存复核草稿，再导出交接单。"
+        },
+        "state": {
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "请先保存复核草稿，再导出交接单。",
+          "error": true
+        }
+      }
+    },
+    {
+      "name": "a genuinely new unsaved note survives event navigation and blocks handover export",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "draft": {
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "现场还没核对，不能作为已保存记录交接",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "error": false
+        },
+        "exports": {
+          "json": false,
+          "markdown": false
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-21T02:10:31.345Z",
+  "passed": 1,
+  "failed": 1,
+  "ok": false
+}

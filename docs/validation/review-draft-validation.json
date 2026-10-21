@@ -1,0 +1,253 @@
+{
+  "at": "2026-10-21T02:15:20.157Z",
+  "base": "http://127.0.0.1:8767",
+  "test_filter": null,
+  "baseline_stages": [
+    {
+      "file": "review-draft-validation.red.json",
+      "stage": "Original e473819: 1 of 2 checks failed; reverted blank review blocked exports."
+    },
+    {
+      "file": "review-draft-newlines.red.json",
+      "stage": "Initial trim-only fix: both CRLF and CR checks failed before comparison-only newline normalization."
+    }
+  ],
+  "scope": "Real review UI and JSON/Markdown export. Synthetic shift data is used only for workflow checks; public CC0 sample inference is recorded separately.",
+  "checks": [
+    {
+      "name": "typing then clearing an untouched note does not block either handover export",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "initial": {
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "error": false
+        },
+        "after_revert": {
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "error": false
+        },
+        "unload_protected": false,
+        "json": {
+          "downloaded": true,
+          "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。"
+        },
+        "markdown": {
+          "downloaded": true,
+          "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。"
+        }
+      }
+    },
+    {
+      "name": "a genuinely new unsaved note survives event navigation and blocks handover export",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "draft": {
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "现场还没核对，不能作为已保存记录交接",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "error": false
+        },
+        "exports": {
+          "json": false,
+          "markdown": false
+        }
+      }
+    },
+    {
+      "name": "whitespace-only untouched notes and reverted status do not create a discard warning",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "before": {
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": " \n\t ",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "error": false
+        },
+        "after": {
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "error": false
+        }
+      }
+    },
+    {
+      "name": "returning a saved note and status to the original values exports without another audit entry",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "reverted": {
+          "event": "event:door-held-1",
+          "status": "needs_evidence",
+          "note": "  已核对 原始视频，现场仍需确认\n",
+          "history": "复核历史 · 1 条2026/10/21 10:15:24 · 待补充证据：已核对 原始视频，现场仍需确认",
+          "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+          "error": false
+        },
+        "audit": [
+          {
+            "event_id": "event:door-held-1",
+            "status": "needs_evidence",
+            "note": "已核对 原始视频，现场仍需确认",
+            "at": "2026-10-21T02:15:24.635Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "real status changes and internal whitespace edits remain unsaved drafts",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "blocked": {
+          "status": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。",
+          "internal_space": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。",
+          "markdown": "请先保存复核草稿，再导出交接单。"
+        },
+        "explicit_save_audit": [
+          {
+            "event_id": "event:door-held-1",
+            "status": "needs_evidence",
+            "note": "已核对 原始视频",
+            "at": "2026-10-21T02:15:24.965Z"
+          },
+          {
+            "event_id": "event:door-held-1",
+            "status": "needs_evidence",
+            "note": "已核对  原始视频",
+            "at": "2026-10-21T02:15:29.633Z"
+          },
+          {
+            "event_id": "event:door-held-1",
+            "status": "needs_evidence",
+            "note": "已核对  原始视频",
+            "at": "2026-10-21T02:15:29.699Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reverting one event does not discard another event draft",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "audit": [
+          {
+            "event_id": "event:door-held-1",
+            "status": "needs_evidence",
+            "note": "第一件仍有真实未保存检查",
+            "at": "2026-10-21T02:15:31.549Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reverted draft does not clear the warning for a saved but unexported review",
+      "passed": true,
+      "evidence": {
+        "dialogs": [
+          "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？"
+        ],
+        "audit": [
+          {
+            "event_id": "event:door-held-1",
+            "status": "needs_evidence",
+            "note": "已保存但尚未导出的现场核实",
+            "at": "2026-10-21T02:15:31.798Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "trim-equivalent edits preserve imported historical note text verbatim",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "audit": [
+          {
+            "event_id": "event:door-held-1",
+            "status": "needs_evidence",
+            "note": "  导入记录的原始理由  ",
+            "at": "2026-10-21T02:15:32.111Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "imported newline CRLF survives a status change reverted to the saved value",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "original_note": "  第一行\r\n第二行  ",
+        "textarea_note": "  第一行\n第二行  ",
+        "export": {
+          "downloaded": true,
+          "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。"
+        },
+        "internal_newline_blocked": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。"
+      }
+    },
+    {
+      "name": "imported newline CR survives a status change reverted to the saved value",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "original_note": "  第一行\r第二行  ",
+        "textarea_note": "  第一行\n第二行  ",
+        "export": {
+          "downloaded": true,
+          "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。"
+        },
+        "internal_newline_blocked": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。"
+      }
+    },
+    {
+      "name": "actual D-FINE candidates can revert edits, save evidence review, and roundtrip unchanged",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "real_inference": {
+          "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "restored": {
+          "audit": [
+            {
+              "event_id": "event:vision-track-1-1",
+              "status": "needs_evidence",
+              "note": "公开样例不证明违规，需补充现场授权和区域证据",
+              "at": "2026-10-21T02:15:37.227Z"
+            }
+          ],
+          "note": "公开样例不证明违规，需补充现场授权和区域证据",
+          "media_status": "未载入本地证据。请选择与本事件对应的图片或视频。"
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-21T02:15:37.485Z",
+  "passed": 11,
+  "failed": 0,
+  "ok": true
+}

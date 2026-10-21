@@ -1,0 +1,889 @@
+{
+  "base": "http://127.0.0.1:8767",
+  "started_at": "2026-10-21T02:14:25.467Z",
+  "scope": "Actual Chrome 1440/390 user-input, attachment decode, draft, export and restore regression; no product edits or model claims.",
+  "viewports": [
+    {
+      "width": 1440,
+      "checks": [
+        {
+          "name": "draft badge appears and clears immediately when new empty event is reverted",
+          "passed": true
+        },
+        {
+          "name": "reverted empty input exports JSON and Markdown without artificial decision",
+          "passed": true
+        },
+        {
+          "name": "real draft still blocks both exports",
+          "passed": true
+        },
+        {
+          "name": "event switching retains real draft and attachment URL",
+          "passed": true
+        },
+        {
+          "name": "typing preserves form, field, attachment and tile nodes plus focus and caret",
+          "passed": true
+        },
+        {
+          "name": "whitespace-only new note plus original status clears draft",
+          "passed": true
+        },
+        {
+          "name": "one real save creates exactly one audit record",
+          "passed": true
+        },
+        {
+          "name": "reverting saved status and trimmed note clears badge",
+          "passed": true
+        },
+        {
+          "name": "reverted saved values export unchanged decisions and audit without duplicate save",
+          "passed": true
+        },
+        {
+          "name": "internal whitespace remains a real edit",
+          "passed": true
+        },
+        {
+          "name": "restoring exact internal content removes draft",
+          "passed": true
+        },
+        {
+          "name": "new page import restores original saved content and exactly one audit record",
+          "passed": true
+        },
+        {
+          "name": "all captured states fit viewport width",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-empty-export-success-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-live-draft-badge-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-reverted-saved-history-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-cleared-draft-badge-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-restored-1440.png"
+      ],
+      "downloads": [
+        "estateguard-workspace.json",
+        "estateguard-handover.md",
+        "estateguard-workspace.json",
+        "estateguard-workspace.json",
+        "estateguard-handover.md"
+      ],
+      "dialogs": [],
+      "source_sha256": "41788f5dd30537cb99374efe1375c18e3d6d7d94efc5e2cdd89fcb63ed071886",
+      "initial": {
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "error": false,
+        "message_visible": true,
+        "note": "",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查",
+        "draft_badge": false,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": null,
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 0
+      },
+      "new_draft": {
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "error": false,
+        "message_visible": false,
+        "note": "误输入",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 3,
+          "end": 3
+        },
+        "attachment": null,
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 570
+      },
+      "empty_reverted": {
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "error": false,
+        "message_visible": false,
+        "note": "",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查",
+        "draft_badge": false,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": null,
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 570
+      },
+      "empty_export": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": "",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查",
+        "draft_badge": false,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "export-brief",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": null,
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 570
+      },
+      "real_draft": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": "真实草稿，切换事件后应保留。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 14,
+          "end": 14
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 876
+      },
+      "real_draft_json_blocked": {
+        "message": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。",
+        "error": true,
+        "message_visible": true,
+        "note": "真实草稿，切换事件后应保留。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "export-json",
+        "selection": {
+          "start": 14,
+          "end": 14
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 57
+      },
+      "real_draft_md_blocked": {
+        "message": "请先保存复核草稿，再导出交接单。",
+        "error": true,
+        "message_visible": false,
+        "note": "真实草稿，切换事件后应保留。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "export-brief",
+        "selection": {
+          "start": 14,
+          "end": 14
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 876
+      },
+      "switched_back": {
+        "message": "请先保存复核草稿，再导出交接单。",
+        "error": true,
+        "message_visible": true,
+        "note": "真实草稿，切换事件后应保留。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 175
+      },
+      "input_stability": {
+        "same_form": true,
+        "same_note": true,
+        "same_image": true,
+        "same_tile": true,
+        "focus": "decision-note",
+        "cursor": 3
+      },
+      "trim_reverted": {
+        "message": "请先保存复核草稿，再导出交接单。",
+        "error": true,
+        "message_visible": false,
+        "note": " \n\t",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查",
+        "draft_badge": false,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 3,
+          "end": 3
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 876
+      },
+      "saved": {
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "error": false,
+        "message_visible": false,
+        "note": "已检查片段，保留  内部空格，等待现场补证。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:26 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 876
+      },
+      "saved_changed": {
+        "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+        "error": false,
+        "message_visible": false,
+        "note": "已检查片段，保留  内部空格，等待现场补证。临时补充",
+        "status": "confirmed_concern",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 1 条2026/10/21 10:14:26 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 26,
+          "end": 26
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 884
+      },
+      "saved_reverted": {
+        "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+        "error": false,
+        "message_visible": false,
+        "note": " \n已检查片段，保留  内部空格，等待现场补证。\t ",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:26 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 26,
+          "end": 26
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 884
+      },
+      "successful_export": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": " \n已检查片段，保留  内部空格，等待现场补证。\t ",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:26 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "export-brief",
+        "selection": {
+          "start": 26,
+          "end": 26
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 884
+      },
+      "internal_space_change": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": "已检查片段，保留 内部空格，等待现场补证。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 1 条2026/10/21 10:14:26 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 21,
+          "end": 21
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 884
+      },
+      "internal_space_restored": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": "已检查片段，保留  内部空格，等待现场补证。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:26 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 22,
+          "end": 22
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/23b1cfc2-5afc-4d28-8e04-92bf6c4f6dbb",
+          "width": 960
+        },
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 884
+      },
+      "restored": {
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "error": false,
+        "message_visible": true,
+        "note": "已检查片段，保留  内部空格，等待现场补证。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:26 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": null,
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 78
+      },
+      "ok": true
+    },
+    {
+      "width": 390,
+      "checks": [
+        {
+          "name": "draft badge appears and clears immediately when new empty event is reverted",
+          "passed": true
+        },
+        {
+          "name": "reverted empty input exports JSON and Markdown without artificial decision",
+          "passed": true
+        },
+        {
+          "name": "real draft still blocks both exports",
+          "passed": true
+        },
+        {
+          "name": "event switching retains real draft and attachment URL",
+          "passed": true
+        },
+        {
+          "name": "typing preserves form, field, attachment and tile nodes plus focus and caret",
+          "passed": true
+        },
+        {
+          "name": "whitespace-only new note plus original status clears draft",
+          "passed": true
+        },
+        {
+          "name": "one real save creates exactly one audit record",
+          "passed": true
+        },
+        {
+          "name": "reverting saved status and trimmed note clears badge",
+          "passed": true
+        },
+        {
+          "name": "reverted saved values export unchanged decisions and audit without duplicate save",
+          "passed": true
+        },
+        {
+          "name": "internal whitespace remains a real edit",
+          "passed": true
+        },
+        {
+          "name": "restoring exact internal content removes draft",
+          "passed": true
+        },
+        {
+          "name": "new page import restores original saved content and exactly one audit record",
+          "passed": true
+        },
+        {
+          "name": "all captured states fit viewport width",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-empty-export-success-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-live-draft-badge-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-reverted-saved-history-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-cleared-draft-badge-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/review-drafts-designer-after-restored-390.png"
+      ],
+      "downloads": [
+        "estateguard-workspace.json",
+        "estateguard-handover.md",
+        "estateguard-workspace.json",
+        "estateguard-workspace.json",
+        "estateguard-handover.md"
+      ],
+      "dialogs": [],
+      "source_sha256": "41788f5dd30537cb99374efe1375c18e3d6d7d94efc5e2cdd89fcb63ed071886",
+      "initial": {
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "error": false,
+        "message_visible": true,
+        "note": "",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查",
+        "draft_badge": false,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": null,
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 159
+      },
+      "new_draft": {
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "error": false,
+        "message_visible": false,
+        "note": "误输入",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 3,
+          "end": 3
+        },
+        "attachment": null,
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1499
+      },
+      "empty_reverted": {
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "error": false,
+        "message_visible": false,
+        "note": "",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查",
+        "draft_badge": false,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": null,
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1499
+      },
+      "empty_export": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": "",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查",
+        "draft_badge": false,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "export-brief",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": null,
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1573
+      },
+      "real_draft": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": "真实草稿，切换事件后应保留。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 14,
+          "end": 14
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1733
+      },
+      "real_draft_json_blocked": {
+        "message": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。",
+        "error": true,
+        "message_visible": true,
+        "note": "真实草稿，切换事件后应保留。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "export-json",
+        "selection": {
+          "start": 14,
+          "end": 14
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 0
+      },
+      "real_draft_md_blocked": {
+        "message": "请先保存复核草稿，再导出交接单。",
+        "error": true,
+        "message_visible": false,
+        "note": "真实草稿，切换事件后应保留。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "export-brief",
+        "selection": {
+          "start": 14,
+          "end": 14
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1807
+      },
+      "switched_back": {
+        "message": "请先保存复核草稿，再导出交接单。",
+        "error": true,
+        "message_visible": false,
+        "note": "真实草稿，切换事件后应保留。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 933
+      },
+      "input_stability": {
+        "same_form": true,
+        "same_note": true,
+        "same_image": true,
+        "same_tile": true,
+        "focus": "decision-note",
+        "cursor": 3
+      },
+      "trim_reverted": {
+        "message": "请先保存复核草稿，再导出交接单。",
+        "error": true,
+        "message_visible": false,
+        "note": " \n\t",
+        "status": "open",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n优先核查",
+        "draft_badge": false,
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 3,
+          "end": 3
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1733
+      },
+      "saved": {
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "error": false,
+        "message_visible": false,
+        "note": "已检查片段，保留  内部空格，等待现场补证。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:27 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1733
+      },
+      "saved_changed": {
+        "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+        "error": false,
+        "message_visible": false,
+        "note": "已检查片段，保留  内部空格，等待现场补证。临时补充",
+        "status": "confirmed_concern",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 1 条2026/10/21 10:14:27 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 26,
+          "end": 26
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1733
+      },
+      "saved_reverted": {
+        "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+        "error": false,
+        "message_visible": false,
+        "note": " \n已检查片段，保留  内部空格，等待现场补证。\t ",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:27 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 26,
+          "end": 26
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1733
+      },
+      "successful_export": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": " \n已检查片段，保留  内部空格，等待现场补证。\t ",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:27 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "export-brief",
+        "selection": {
+          "start": 26,
+          "end": 26
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1833
+      },
+      "internal_space_change": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": "已检查片段，保留 内部空格，等待现场补证。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据 未保存草稿",
+        "draft_badge": true,
+        "history": "复核历史 · 1 条2026/10/21 10:14:27 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 21,
+          "end": 21
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1833
+      },
+      "internal_space_restored": {
+        "message": "交接单已导出。如需恢复工作区，请同时导出 JSON。",
+        "error": false,
+        "message_visible": false,
+        "note": "已检查片段，保留  内部空格，等待现场补证。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:27 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "decision-note",
+        "selection": {
+          "start": 22,
+          "end": 22
+        },
+        "attachment": {
+          "src": "blob:http://127.0.0.1:8767/86c755ed-35ab-4ff2-bda0-9f07cd35e8ca",
+          "width": 960
+        },
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1833
+      },
+      "restored": {
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "error": false,
+        "message_visible": true,
+        "note": "已检查片段，保留  内部空格，等待现场补证。",
+        "status": "needs_evidence",
+        "event": "event:door-held-1",
+        "queue_label": "电梯 · 2026/10/15 08:00:20\n4 条\n电梯门受阻\nA栋客梯\n待补充证据",
+        "draft_badge": false,
+        "history": "复核历史 · 1 条2026/10/21 10:14:27 · 待补充证据：已检查片段，保留  内部空格，等待现场补证。",
+        "focus": "",
+        "selection": {
+          "start": 0,
+          "end": 0
+        },
+        "attachment": null,
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 159
+      },
+      "ok": true
+    }
+  ],
+  "page_errors": [],
+  "blockers": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-21T02:14:28.123Z",
+  "ok": true,
+  "visual_review": {
+    "screenshots_actually_inspected": true,
+    "approved_layout_preserved": true,
+    "horizontal_overflow": false,
+    "blocking_issues": [],
+    "summary": "现有队列草稿标记实时出现和消失，未新增控件；1440 与 390 均可撤回修改后直接导出，真实草稿仍保护。原始保存内容和单条历史在新页恢复后保持。"
+  }
+}

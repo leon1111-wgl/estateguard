@@ -1,5 +1,25 @@
 # 验证记录 · 2026-10-15
 
+
+## 2026-10-21 · 复核草稿差异与交班导出
+
+- 原发布 `e473819` 上，空备注输入后清空仍阻止 JSON/Markdown 导出，初始 2 项检查为 1 失败、1 对照通过。首次 trim 比较修复后，另发现 CRLF/CR 导入历史的 2 项失败；两阶段独立保留，不混成同一基线。
+- 最终专项 11/11：撤回空值/已保存内容、首尾空白与换行兼容、真实正文/结论/内部空白保护、跨事件隔离、已保存未导出提醒、原历史逐项保留、显式保存兼容、真实模型候选的导出恢复。页面错误和外部请求为 0。
+- D-FINE-N 真实读取现有 CC0 图片，样例大巴分数 0.9651602、2 个规则候选；复核保存后导出恢复的 batch/decisions/audit 一致。没有模拟模型分数，也没有将该样例作为领域精度证据。
+- 136 项 JS、26 项资产哈希通过；原慢加载回归 9/9、原 browser-check 通过；model-check 实际运行 SSDLite 图片和 7 帧重复图片合成视频，张量 262→262。
+- 独立代码审查 4 项通过；设计师 1440 / 390px 各 13 项通过，无横向溢出。标记更新保留表单、附件、焦点与光标；CSS 和固定版面不变。
+
+```bash
+node scripts/review-draft-check.cjs
+node scripts/workspace-replacement-check.cjs
+node scripts/browser-check.cjs
+node scripts/model-check.cjs
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+```
+
+浏览器配置沿用下文；本轮隔离服务为 `ESTATEGUARD_URL=http://127.0.0.1:8767`。机器证据：[原版基线](validation/review-draft-baseline.json)、[换行边界基线](validation/review-draft-newlines-baseline.json)、[最终验收](validation/review-draft-validation.json)、[界面回归](validation/review-draft-ui-validation.json)。CI 和线上检查与本地结果分别记录。
+
 ## 2026-10-20 · 工作区异步替换与复核保留
 
 基线为已发布的 `704f30a`。独立找茬 9 项中 8 项失败，修复并补充附件及模型交接断言后 9/9 通过。读取时序通过延迟真实 `fetch` / `File.text()` 完成来控制；响应被页面消费后的下一任务再检查状态，不替换模型输出。失败读取使用明确的 HTTP 错误夹具。

@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-21T02:14:09.055Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Real review UI and JSON/Markdown export. Synthetic shift data is used only for workflow checks; public CC0 sample inference is recorded separately.",
+  "checks": [
+    {
+      "name": "imported newline CRLF survives a status change reverted to the saved value",
+      "passed": false,
+      "error": "textarea newline normalization must not fabricate a changed review\n\nfalse !== true\n",
+      "evidence": {
+        "dialogs": [],
+        "original_note": "  第一行\r\n第二行  ",
+        "textarea_note": "  第一行\n第二行  ",
+        "export": {
+          "downloaded": false,
+          "message": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。"
+        },
+        "state": {
+          "event": "event:door-held-1",
+          "status": "needs_evidence",
+          "note": "  第一行\n第二行  ",
+          "history": "复核历史 · 1 条2026/10/21 10:14:09 · 待补充证据：  第一行\n第二行  ",
+          "message": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。",
+          "error": true
+        }
+      }
+    },
+    {
+      "name": "imported newline CR survives a status change reverted to the saved value",
+      "passed": false,
+      "error": "textarea newline normalization must not fabricate a changed review\n\nfalse !== true\n",
+      "evidence": {
+        "dialogs": [],
+        "original_note": "  第一行\r第二行  ",
+        "textarea_note": "  第一行\n第二行  ",
+        "export": {
+          "downloaded": false,
+          "message": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。"
+        },
+        "state": {
+          "event": "event:door-held-1",
+          "status": "needs_evidence",
+          "note": "  第一行\n第二行  ",
+          "history": "复核历史 · 1 条2026/10/21 10:14:11 · 待补充证据：  第一行\n第二行  ",
+          "message": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。",
+          "error": true
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-21T02:14:13.267Z",
+  "passed": 0,
+  "failed": 2,
+  "ok": false
+}
