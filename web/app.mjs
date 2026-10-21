@@ -20,14 +20,15 @@ function clearMedia(){media.clear();}
 const hasUnsavedWork=()=>dirty||drafts.size>0;
 const comparableNote=note=>note.replace(/\r\n?/g,'\n').trim();
 function replaceAllowed(){if(!hasUnsavedWork()||confirm('当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？'))return true;message('已取消替换，当前记录、草稿和附件保持不变。');return false;}
-function setWorkspace(next){++loadSequence;clearMedia();drafts.clear();ws=next;selected=null;dirty=false;syncPolicy();render();}
+function setWorkspace(next){++loadSequence;clearMedia();drafts.clear();ws=next;selected=null;dirty=false;syncPolicy();render(true);}
 function syncPolicy(){for(const [key,id] of Object.entries({score_threshold:'score-threshold',quality_threshold:'quality-threshold',merge_gap_seconds:'merge-gap',parking_grace_seconds:'parking-grace'}))$(id).value=ws.policy[key];}
 const decision=e=>ws.decisions[e.id]?.status||'open';
 const pending=e=>!['dismissed','resolved'].includes(decision(e));
 const requiresAttention=e=>pending(e)&&(inReviewQueue(e)||['confirmed_concern','needs_evidence'].includes(decision(e)));
 function badge(e){let type=e.urgent?'urgent':'';if(e.routing==='insufficient_evidence')type='uncertain';const d=decision(e);return `<span class="badge ${pending(e)?type:'closed'}">${escape(labels[d!=='open'?d:e.routing])}</span>`;}
 const reviewBadges=e=>badge(e)+(drafts.has(e.id)?' <span class="badge uncertain">未保存草稿</span>':'');
-function render(){events=buildEvents(ws.batch,ws.policy);$('batch-name').textContent=ws.batch.name;const metrics=[[ws.batch.observations.length,'来源观察记录'],[events.length,'合并后事件'],[events.filter(requiresAttention).length,'待复核 / 待处理'],[events.filter(e=>e.urgent&&requiresAttention(e)).length,'优先核查（含证据不足）']];$('metrics').innerHTML=metrics.map(([v,l])=>`<div class="metric"><strong>${v}</strong><span>${l}</span></div>`).join('');renderQueue();}
+function resetQueueFilters(){$('area-filter').value='all';$('queue-filter').value=events.some(requiresAttention)?'review':'all';}
+function render(resetFilters=false){events=buildEvents(ws.batch,ws.policy);if(resetFilters)resetQueueFilters();$('batch-name').textContent=ws.batch.name;const metrics=[[ws.batch.observations.length,'来源观察记录'],[events.length,'合并后事件'],[events.filter(requiresAttention).length,'待复核 / 待处理'],[events.filter(e=>e.urgent&&requiresAttention(e)).length,'优先核查（含证据不足）']];$('metrics').innerHTML=metrics.map(([v,l])=>`<div class="metric"><strong>${v}</strong><span>${l}</span></div>`).join('');renderQueue();}
 function renderQueue(){const filter=$('queue-filter').value,area=$('area-filter').value;const visible=events.filter(e=>(area==='all'||categories[e.category].area===area)&&(filter==='all'||filter==='review'&&requiresAttention(e)||filter==='urgent'&&e.urgent&&pending(e)||filter==='resolved'&&!pending(e)));$('queue-count').textContent=visible.length;if(!visible.some(e=>e.id===selected))selected=visible[0]?.id||null;
  $('queue-list').innerHTML=visible.length?visible.map(e=>`<button class="event-button ${selected===e.id?'active':''}" data-event="${escape(e.id)}" aria-pressed="${selected===e.id}"><span class="event-top"><span>${escape(areaNames[categories[e.category].area])} · ${formatTime(e.start)}</span><span>${e.observation_ids.length} 条</span></span><strong>${categoryNames[e.category]}</strong><small>${escape(e.zone)}</small><span data-review-badges style="display:block;margin-top:8px">${reviewBadges(e)}</span></button>`).join(''):'<p class="empty">此筛选下没有事件。选择「全部事件」可查看例外和已处理记录。</p>';
  for(const b of $('queue-list').querySelectorAll('[data-event]'))b.addEventListener('click',()=>{selected=b.dataset.event;renderQueue();if(matchMedia('(max-width:650px)').matches)$('incident-detail').scrollIntoView({block:'start'});});renderDetail();}
@@ -66,7 +67,19 @@ $('import-file').addEventListener('change',async event=>{const file=event.target
 async function loadDemo(){const ticket=++loadSequence;message(ws?'正在读取合成班次，当前复核可继续操作。':'正在读取合成班次。');try{const r=await fetch('demo.json');if(!r.ok)throw new Error('无法读取示例数据');const next=importWorkspace(await r.json());if(ticket!==loadSequence||!replaceAllowed())return;setWorkspace(next);message('当前为合成班次：用于演示处理流程，不是模型识别结果。');}catch(err){if(ticket===loadSequence)message(`读取示例失败，当前工作区未改变。${err.message}`,true);}}
 $('reset-demo').addEventListener('click',loadDemo);
 $('policy-form').addEventListener('submit',event=>{event.preventDefault();if(!ws)return;try{const policy=validatePolicy(Object.fromEntries([...new FormData(event.target)].map(([k,v])=>[k,Number(v)])));if((ws.audit.length||hasUnsavedWork())&&!confirm('应用规则将清空当前复核和草稿。请先导出已有工作。继续吗？'))return;setWorkspace({...ws,policy,decisions:{},audit:[]});dirty=true;message('规则已应用，新的复核已开始。固定评测结果不受此操作影响。');}catch(err){message(err.message,true);}});
-window.addEventListener('estateguard:candidates',event=>{try{const next=importWorkspace(event.detail.batch);if(!replaceAllowed())return;setWorkspace(next);dirty=true;if(event.detail.file)void media.replace(events.map(e=>e.id),event.detail.file);event.detail.accepted=true;location.hash='workspace';message('已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。');}catch(err){message(err.message,true);}});
+window.addEventListener('estateguard:candidates',event=>{try{
+ const next=importWorkspace(event.detail.batch);
+ // 同一检测任务的原批次只返回当前复核；不能按轨迹编号或候选相似度合并不同任务。
+ if(next.batch.analysis_id&&JSON.stringify(next.batch)===JSON.stringify(ws?.batch)){
+  ++loadSequence;
+  if(!$('queue-list').querySelector('.event-button')){resetQueueFilters();renderQueue();}
+  event.detail.accepted=true;event.detail.reused=true;location.hash='workspace';
+  message('已返回本次分析的复核记录，原结论、草稿和附件保持不变。');return;
+ }
+ if(!replaceAllowed())return;setWorkspace(next);dirty=true;
+ if(event.detail.file)void media.replace(events.map(e=>e.id),event.detail.file);
+ event.detail.accepted=true;location.hash='workspace';message('已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。');
+ }catch(err){message(err.message,true);}});
 window.addEventListener('beforeunload',event=>{if(hasUnsavedWork()){event.preventDefault();event.returnValue='';}});
 async function showBenchmark(){try{const r=await fetch('benchmark.json');if(!r.ok)throw new Error('无法读取评测');const b=await r.json();const pct=n=>n===null?'不适用':`${(n*100).toFixed(1)}%`;$('benchmark').innerHTML=`<div class="bench-result"><strong>${b.baseline.predictions} → ${b.proposed.predictions}</strong><p>固定合成班次中的待办条目减少 ${pct(b.queue_reduction)}。仍保留一个错误提示和一个完全漏掉的事件，避免把流程评测误写成完美识别。</p></div><div class="table-wrap"><table><thead><tr><th>事件级匹配</th><th>仅按分数告警</th><th>场景规则队列</th></tr></thead><tbody>${[['待办条目','predictions'],['匹配到的参考事件','true_positive'],['未匹配 / 重复条目','false_positive'],['漏掉的参考事件','missed'],['本用例精确率','precision'],['本用例召回率','recall']].map(([l,k])=>`<tr><td>${l}</td><td>${['precision','recall'].includes(k)?pct(b.baseline[k]):b.baseline[k]}</td><td>${['precision','recall'].includes(k)?pct(b.proposed[k]):b.proposed[k]}</td></tr>`).join('')}</tbody></table></div><p class="benchmark-note">${b.raw_observations} 条人工构造的观察、${b.proposed.references} 个参考事件。摄像头、区域、轨迹和类别一致，时间 IoU ≥ 0.1，按重叠从高到低一对一匹配。重复告警算未匹配条目；改进队列还保留低分高风险提示，因此这是流程对比，不是单一模型消融。</p>`;}catch(err){$('benchmark').textContent=err.message;}}
 await loadDemo();await showBenchmark();

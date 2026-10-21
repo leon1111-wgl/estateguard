@@ -46,6 +46,7 @@ export function validateBatch(batch){
  requireValue(object(batch)&&batch.schema_version===1,'Expected a batch with schema_version: 1.');
  jsonWithinLimit(batch,MAX_BATCH_BYTES,'Observation batch');
  textValue(batch.name,'name'); textValue(batch.provenance,'provenance',1000);
+ if(batch.analysis_id!==undefined)textValue(batch.analysis_id,'analysis_id',100);
  requireValue(Array.isArray(batch.observations)&&batch.observations.length>0&&batch.observations.length<=10000,'observations must contain 1–10,000 records.');
  const ids=new Set();
  batch.observations.forEach((r,i)=>{

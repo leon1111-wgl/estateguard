@@ -1,0 +1,79 @@
+{
+  "at": "2026-10-21T14:13:09.610Z",
+  "base": "http://127.0.0.1:8767",
+  "test_filter": null,
+  "scope": "Actual D-FINE-N inference on existing public CC0 bus image. Event-handler-only boundaries are separately marked synthetic and do not measure model accuracy.",
+  "checks": [
+    {
+      "name": "actual unchanged report returns exported review without erasing history",
+      "passed": false,
+      "error": "same analysis must not clear the completed review\n+ actual - expected\n\n+ []\n- [\n-   {\n-     at: '2026-10-21T14:13:11.646Z',\n-     event_id: 'event:vision-track-1-1',\n-     note: '公开样例仅验证流程，现场授权和通道情况待补证据',\n-     status: 'needs_evidence'\n-   }\n- ]\n",
+      "evidence": {
+        "dialogs": [],
+        "inference": {
+          "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "before": {
+          "batch": "本地模型分析 · 公开示例-校车.jpg",
+          "event": "event:vision-track-1-1",
+          "note": "公开样例仅验证流程，现场授权和通道情况待补证据",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:13:11 · 待补充证据：公开样例仅验证流程，现场授权和通道情况待补证据",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/0624c6ba-312a-4135-ab05-5794fec5907d",
+            "width": 960
+          }
+        },
+        "after": {
+          "batch": "本地模型分析 · 公开示例-校车.jpg",
+          "event": "event:vision-track-1-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/d97beeca-0743-489c-b1cd-7e0c10011b5e",
+            "width": 960
+          }
+        },
+        "audit_before": [
+          {
+            "event_id": "event:vision-track-1-1",
+            "status": "needs_evidence",
+            "note": "公开样例仅验证流程，现场授权和通道情况待补证据",
+            "at": "2026-10-21T14:13:11.646Z"
+          }
+        ],
+        "audit_after": [],
+        "state": {
+          "batch": "本地模型分析 · 公开示例-校车.jpg",
+          "event": "event:vision-track-1-1",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/d97beeca-0743-489c-b1cd-7e0c10011b5e",
+            "width": 960
+          }
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-21T14:13:12.138Z",
+  "passed": 0,
+  "failed": 1,
+  "ok": false
+}

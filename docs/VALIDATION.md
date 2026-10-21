@@ -1,6 +1,28 @@
 # 验证记录 · 2026-10-15
 
 
+## 2026-10-21 晚间 · 候选送审身份与可见队列
+
+- 旧版 `521e1b6` 正式专项 0/1：真实推理后重复送审将审查历史从 1 条清为 0。独立设计师两宽度发现 2 个候选被旧筛选隐藏。
+- 修复后专项 10/10：其中 2 项实际运行 D-FINE-N，8 项通过合成候选验证状态边界；不混算为模型识别指标。页面异常和外部请求为 0。
+- 独立代码边界 7/7；桌面 1440 / 手机 390 各 10 项，实际截图无溢出。重复送审保留原表单、文本框和图片节点。列表内容可用不等于所有候选行都同时位于当前视口。
+- JS 138/138（旧基线 136）；新增任务标识校验的红测试 1 通过 / 1 失败，修复后均通过。26 项资产哈希、原 browser-check、异步替换 9/9、草稿 11/11 通过。
+
+```bash
+node scripts/candidate-handoff-check.cjs
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+node scripts/browser-check.cjs
+node scripts/workspace-replacement-check.cjs
+node scripts/review-draft-check.cjs
+node scripts/model-check.cjs
+```
+
+SSDLite 原 model-check 首次在点击公开图片后的素材就绪等待处超时（尚未推理）；加入只读请求/页面诊断的副本以及原脚本随后完整复跑均通过，没有修改该脚本或产品加载逻辑。此次未复现超时原因，不能将其归为已修复问题。成功运行实际图片和 7 帧重复图片合成视频，张量 262→262，外部请求 0；原始失败日志保留在本地 artifacts/candidate-handoff-model-check.txt，最终日志在 candidate-handoff-model-check-final.txt。
+
+浏览器配置沿用下文，隔离服务为 `ESTATEGUARD_URL=http://127.0.0.1:8767`；专项支持 `CANDIDATE_HANDOFF_REPORT` 指定报告名。[重复送审红基线](validation/candidate-handoff-baseline.json)、[筛选基线](validation/candidate-handoff-filter-baseline.json)、[最终专项](validation/candidate-handoff-validation.json)、[独立代码复核](validation/candidate-handoff-code-review.json)、[桌面与手机回归](validation/candidate-handoff-ui-validation.json)。
+
+
 ## 2026-10-21 · 复核草稿差异与交班导出
 
 - 原发布 `e473819` 上，空备注输入后清空仍阻止 JSON/Markdown 导出，初始 2 项检查为 1 失败、1 对照通过。首次 trim 比较修复后，另发现 CRLF/CR 导入历史的 2 项失败；两阶段独立保留，不混成同一基线。

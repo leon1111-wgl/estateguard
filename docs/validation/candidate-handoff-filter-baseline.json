@@ -1,0 +1,312 @@
+{
+  "base": "http://127.0.0.1:8767",
+  "started_at": "2026-10-21T14:10:12.998Z",
+  "scope": "Real local D-FINE inference on public CC0 image, synthetic source/time labels for workflow validation only; read-only product review.",
+  "viewports": [
+    {
+      "width": 1440,
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-sent-empty-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-sent-empty-detail-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-area-still-empty-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-manual-recovery-saved-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-restored-empty-1440.png"
+      ],
+      "dialogs": [],
+      "app_sha256": "2a63edda4741942db85f569be50803c36d29263c56d5860129485674328e2441",
+      "previous_filters": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "metrics": "36\n来源观察记录\n12\n合并后事件\n9\n待复核 / 待处理\n5\n优先核查（含证据不足）",
+        "queue_filter": "resolved",
+        "area_filter": "Lift",
+        "count": 0,
+        "selected": null,
+        "detail": "此视图暂无待办\n\n所有观察记录仍保留在全部事件中。离开前可导出交接单。",
+        "detail_rect": {
+          "top": 318.5625,
+          "bottom": 618.109375,
+          "visible": true
+        },
+        "image_width": 0,
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 0
+      },
+      "detector": "dfine",
+      "inference_message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。",
+      "inference": {
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frame_count": 1,
+        "candidate_count": 2,
+        "bus_scores": [
+          0.9651602077977631,
+          0.6453986740192105
+        ],
+        "report": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-detections-1440.json"
+      },
+      "sent": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "resolved",
+        "area_filter": "Lift",
+        "count": 0,
+        "selected": null,
+        "detail": "此视图暂无待办\n\n所有观察记录仍保留在全部事件中。离开前可导出交接单。",
+        "detail_rect": {
+          "top": 318.5625,
+          "bottom": 618.109375,
+          "visible": true
+        },
+        "image_width": 0,
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 0
+      },
+      "status_recovered_but_area_still_hides": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "Lift",
+        "count": 0,
+        "selected": null,
+        "detail": "此视图暂无待办\n\n所有观察记录仍保留在全部事件中。离开前可导出交接单。",
+        "detail_rect": {
+          "top": 318.5625,
+          "bottom": 618.109375,
+          "visible": true
+        },
+        "image_width": 0,
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 0
+      },
+      "manually_recovered": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "detail": "证据不足高风险类别\n通道占用线索\n\n公开图片流程验证 · 示例关注区域（非实际通道认定） · track-1\n\nevent:vision-track-1-1\n画面质量不足、证据缺失或低分高风险线索，需要人工核实。\n观察时间\n2026/10/21 14:07:00 → 2026/10/21 14:07:00（UTC+8）\n顺序示意，非时间比例\n0.001 秒\n输入时间窗覆盖（非实测停留）\n97 / 100\n最大输入分数\n40 / 100\n最低输入质量\n来源描述\n模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。\n\n真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。\n\n证据引用（媒体需另行打开）\n公开示例-校车.jpg @ 0.00s\n打开本地图片 / 视频\n\n用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。\n\n图片已解码，请核对画面是否对应本事件。\n\n公开示例-校车.jpg\n\n下一步检查\n\n核实是否为指定通道，并安排现场检查。\n\n处理结论\n待复核\n已确认 · 待处理\n已排除\n待补充证据\n已处理\n理由 / 已检查的证据\n保存复核记录\n复核历史 · 0 条\n\n尚无人工结论，模型分数不能代替核实。",
+        "detail_rect": {
+          "top": 318.5625,
+          "bottom": 1698.125,
+          "visible": true
+        },
+        "image_width": 960,
+        "note": "",
+        "status": "open",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 0
+      },
+      "saved_export": {
+        "workspace": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-workspace-1440.json",
+        "brief": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-handover-1440.md",
+        "audit_count": 1
+      },
+      "imported": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "resolved",
+        "area_filter": "Lift",
+        "count": 0,
+        "selected": null,
+        "detail": "此视图暂无待办\n\n所有观察记录仍保留在全部事件中。离开前可导出交接单。",
+        "detail_rect": {
+          "top": 318.5625,
+          "bottom": 618.109375,
+          "visible": true
+        },
+        "image_width": 0,
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 0
+      },
+      "reproduced": true,
+      "no_overflow": true
+    },
+    {
+      "width": 390,
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-sent-empty-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-sent-empty-detail-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-area-still-empty-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-manual-recovery-saved-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-restored-empty-390.png"
+      ],
+      "dialogs": [],
+      "app_sha256": "2a63edda4741942db85f569be50803c36d29263c56d5860129485674328e2441",
+      "previous_filters": {
+        "batch": "枫庭小区 · 模拟早班",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "metrics": "36\n来源观察记录\n12\n合并后事件\n9\n待复核 / 待处理\n5\n优先核查（含证据不足）",
+        "queue_filter": "resolved",
+        "area_filter": "Lift",
+        "count": 0,
+        "selected": null,
+        "detail": "此视图暂无待办\n\n所有观察记录仍保留在全部事件中。离开前可导出交接单。",
+        "detail_rect": {
+          "top": 758.84375,
+          "bottom": 935.609375,
+          "visible": true
+        },
+        "image_width": 0,
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 51
+      },
+      "detector": "dfine",
+      "inference_message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。",
+      "inference": {
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frame_count": 1,
+        "candidate_count": 2,
+        "bus_scores": [
+          0.9651602077977631,
+          0.6453986740192105
+        ],
+        "report": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-detections-390.json"
+      },
+      "sent": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "resolved",
+        "area_filter": "Lift",
+        "count": 0,
+        "selected": null,
+        "detail": "此视图暂无待办\n\n所有观察记录仍保留在全部事件中。离开前可导出交接单。",
+        "detail_rect": {
+          "top": 390.03125,
+          "bottom": 566.796875,
+          "visible": true
+        },
+        "image_width": 0,
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 439
+      },
+      "status_recovered_but_area_still_hides": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "Lift",
+        "count": 0,
+        "selected": null,
+        "detail": "此视图暂无待办\n\n所有观察记录仍保留在全部事件中。离开前可导出交接单。",
+        "detail_rect": {
+          "top": 390.03125,
+          "bottom": 566.796875,
+          "visible": true
+        },
+        "image_width": 0,
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 439
+      },
+      "manually_recovered": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "detail": "证据不足高风险类别\n通道占用线索\n\n公开图片流程验证 · 示例关注区域（非实际通道认定） · track-1\n\nevent:vision-track-1-1\n画面质量不足、证据缺失或低分高风险线索，需要人工核实。\n观察时间\n2026/10/21 14:07:00 → 2026/10/21 14:07:00（UTC+8）\n顺序示意，非时间比例\n0.001 秒\n输入时间窗覆盖（非实测停留）\n97 / 100\n最大输入分数\n40 / 100\n最低输入质量\n来源描述\n模型检测：bus；1 个采样帧。车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。 单图时间窗仅为格式占位，不表示停留时间。\n\n真实浏览器推理：D-FINE-N（本项目由官方权重导出的 ONNX）。来源：公开示例-校车.jpg。规则：access；采样 1 fps；区域 0,0,1,1。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。\n\n证据引用（媒体需另行打开）\n公开示例-校车.jpg @ 0.00s\n打开本地图片 / 视频\n\n用于人工复核，最大 100 MB。文件不上传、不随 JSON 导出；恢复工作区后需重新选择。\n\n图片已解码，请核对画面是否对应本事件。\n\n公开示例-校车.jpg\n\n下一步检查\n\n核实是否为指定通道，并安排现场检查。\n\n处理结论\n待复核\n已确认 · 待处理\n已排除\n待补充证据\n已处理\n理由 / 已检查的证据\n保存复核记录\n复核历史 · 0 条\n\n尚无人工结论，模型分数不能代替核实。",
+        "detail_rect": {
+          "top": -396.34375,
+          "bottom": 1108.59375,
+          "visible": true
+        },
+        "image_width": 960,
+        "note": "",
+        "status": "open",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1349
+      },
+      "saved_export": {
+        "workspace": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-workspace-390.json",
+        "brief": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-handover-390.md",
+        "audit_count": 1
+      },
+      "imported": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "resolved",
+        "area_filter": "Lift",
+        "count": 0,
+        "selected": null,
+        "detail": "此视图暂无待办\n\n所有观察记录仍保留在全部事件中。离开前可导出交接单。",
+        "detail_rect": {
+          "top": 390.84375,
+          "bottom": 567.609375,
+          "visible": true
+        },
+        "image_width": 0,
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 419
+      },
+      "reproduced": true,
+      "no_overflow": true
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-21T14:10:16.818Z",
+  "findings": [
+    {
+      "width": 1440,
+      "reproduced": true,
+      "inference": {
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frame_count": 1,
+        "candidate_count": 2,
+        "bus_scores": [
+          0.9651602077977631,
+          0.6453986740192105
+        ],
+        "report": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-detections-1440.json"
+      },
+      "sent_count": 0,
+      "recovered_count": 2,
+      "imported_count": 0,
+      "no_overflow": true
+    },
+    {
+      "width": 390,
+      "reproduced": true,
+      "inference": {
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frame_count": 1,
+        "candidate_count": 2,
+        "bus_scores": [
+          0.9651602077977631,
+          0.6453986740192105
+        ],
+        "report": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-filter-designer-baseline-20261021-1407-detections-390.json"
+      },
+      "sent_count": 0,
+      "recovered_count": 2,
+      "imported_count": 0,
+      "no_overflow": true
+    }
+  ],
+  "visual_review": {
+    "actual_screenshots_inspected": true,
+    "blocking_issue": "成功送审和导入保留旧工作区筛选，新的待办被隐藏；仅按空态提示改处理状态仍受场景筛选遮挡。",
+    "minimal_expected": "成功替换时选用能显示新数据的状态并清除旧场景限制，选中实际待办；无待办时显示全部记录。取消/失败及普通保存/切换事件保持用户原筛选。",
+    "layout_changes_required": false,
+    "overflow": false
+  }
+}

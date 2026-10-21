@@ -1,0 +1,630 @@
+{
+  "base": "http://127.0.0.1:8767",
+  "started_at": "2026-10-21T14:15:38.764Z",
+  "scope": "Real D-FINE inference on CC0 bus image; synthetic test context, no field-accuracy claims. Independent UI regression, no product edits.",
+  "viewports": [
+    {
+      "width": 1440,
+      "checks": [
+        {
+          "name": "actual D-FINE inference yields identified report with candidates",
+          "passed": true
+        },
+        {
+          "name": "new handoff clears old incompatible filters and selects a real pending item",
+          "passed": true
+        },
+        {
+          "name": "same report after export preserves saved history and attachment DOM without confirmation",
+          "passed": true
+        },
+        {
+          "name": "same report also preserves unsaved draft and existing form/image nodes",
+          "passed": true
+        },
+        {
+          "name": "repeat preserves exported decisions and audit exactly",
+          "passed": true
+        },
+        {
+          "name": "ordinary save keeps current filters",
+          "passed": true
+        },
+        {
+          "name": "bad import preserves filters, draft, history and attachment",
+          "passed": true
+        },
+        {
+          "name": "cancelled valid import preserves original filters and live work",
+          "passed": true
+        },
+        {
+          "name": "closed-only import shows all records with a selected item",
+          "passed": true
+        },
+        {
+          "name": "all recorded views fit viewport width",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-new-handoff-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-repeat-preserves-draft-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-cancelled-import-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-closed-import-1440.png"
+      ],
+      "dialogs": [
+        {
+          "type": "confirm",
+          "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+          "action": "dismiss"
+        }
+      ],
+      "app_sha256": "f0526f39659b081d44d3913203f43eae067eba2402d11a101b311b9594cf4a76",
+      "inference": {
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "analysis_id": "3fbdb616-c2dc-45ba-8cc8-4ec674feac7a",
+        "candidate_count": 2,
+        "frame_count": 1,
+        "report": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-detections-1440.json"
+      },
+      "sent": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n证据不足",
+        "selected_visible": true,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/d15bbfd2-6efa-4602-ab3d-5d9d95e161e8",
+          "width": 960
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 304
+      },
+      "saved": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据",
+        "selected_visible": true,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/d15bbfd2-6efa-4602-ab3d-5d9d95e161e8",
+          "width": 960
+        },
+        "note": "公开图只验证流程，需现场核对实际用途。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/21 22:15:40 · 待补充证据：公开图只验证流程，需现场核对实际用途。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 0
+      },
+      "repeated_saved": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据",
+        "selected_visible": true,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/d15bbfd2-6efa-4602-ab3d-5d9d95e161e8",
+          "width": 960
+        },
+        "note": "公开图只验证流程，需现场核对实际用途。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/21 22:15:40 · 待补充证据：公开图只验证流程，需现场核对实际用途。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 239
+      },
+      "saved_dom": {
+        "form": true,
+        "note": true,
+        "image": true
+      },
+      "draft_before": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/d15bbfd2-6efa-4602-ab3d-5d9d95e161e8",
+          "width": 960
+        },
+        "note": "正在补充的现场核对草稿，尚未保存。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/21 22:15:40 · 待补充证据：公开图只验证流程，需现场核对实际用途。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 902
+      },
+      "repeated_draft": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": true,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/d15bbfd2-6efa-4602-ab3d-5d9d95e161e8",
+          "width": 960
+        },
+        "note": "正在补充的现场核对草稿，尚未保存。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/21 22:15:40 · 待补充证据：公开图只验证流程，需现场核对实际用途。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 239
+      },
+      "draft_dom": {
+        "form": true,
+        "note": true,
+        "image": true
+      },
+      "normal_save": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "Shared space",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/d15bbfd2-6efa-4602-ab3d-5d9d95e161e8",
+          "width": 960
+        },
+        "note": "普通保存应保留当前公共通道筛选。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 2 条2026/10/21 22:15:40 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:40 · 待补充证据：普通保存应保留当前公共通道筛选。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 902
+      },
+      "before_rejected": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "Shared space",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/d15bbfd2-6efa-4602-ab3d-5d9d95e161e8",
+          "width": 960
+        },
+        "note": "拒绝替换后仍需保留的草稿",
+        "status": "needs_evidence",
+        "history": "复核历史 · 2 条2026/10/21 22:15:40 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:40 · 待补充证据：普通保存应保留当前公共通道筛选。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 902
+      },
+      "bad_import": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "导入被拒绝，原工作区未改变。Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "Shared space",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/d15bbfd2-6efa-4602-ab3d-5d9d95e161e8",
+          "width": 960
+        },
+        "note": "拒绝替换后仍需保留的草稿",
+        "status": "needs_evidence",
+        "history": "复核历史 · 2 条2026/10/21 22:15:40 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:40 · 待补充证据：普通保存应保留当前公共通道筛选。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 902
+      },
+      "bad_import_dom": {
+        "form": true,
+        "note": true,
+        "image": true
+      },
+      "cancelled": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已取消替换，当前记录、草稿和附件保持不变。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "Shared space",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/d15bbfd2-6efa-4602-ab3d-5d9d95e161e8",
+          "width": 960
+        },
+        "note": "拒绝替换后仍需保留的草稿",
+        "status": "needs_evidence",
+        "history": "复核历史 · 2 条2026/10/21 22:15:40 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:40 · 待补充证据：普通保存应保留当前公共通道筛选。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 902
+      },
+      "cancelled_dom": {
+        "form": true,
+        "note": true,
+        "image": true
+      },
+      "closed_import": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n0\n待复核 / 待处理\n0\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n已排除",
+        "selected_visible": true,
+        "detail_visible": true,
+        "image": null,
+        "note": "流程测试：公开照片不能证明该区域违规，排除本示例候选。",
+        "status": "dismissed",
+        "history": "复核历史 · 3 条2026/10/21 22:15:40 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:40 · 待补充证据：普通保存应保留当前公共通道筛选。2026/10/21 22:15:41 · 已排除：流程测试：公开照片不能证明该区域违规，排除本示例候选。",
+        "width": 1440,
+        "document_width": 1440,
+        "scrollY": 0
+      },
+      "ok": true
+    },
+    {
+      "width": 390,
+      "checks": [
+        {
+          "name": "actual D-FINE inference yields identified report with candidates",
+          "passed": true
+        },
+        {
+          "name": "new handoff clears old incompatible filters and selects a real pending item",
+          "passed": true
+        },
+        {
+          "name": "same report after export preserves saved history and attachment DOM without confirmation",
+          "passed": true
+        },
+        {
+          "name": "same report also preserves unsaved draft and existing form/image nodes",
+          "passed": true
+        },
+        {
+          "name": "repeat preserves exported decisions and audit exactly",
+          "passed": true
+        },
+        {
+          "name": "ordinary save keeps current filters",
+          "passed": true
+        },
+        {
+          "name": "bad import preserves filters, draft, history and attachment",
+          "passed": true
+        },
+        {
+          "name": "cancelled valid import preserves original filters and live work",
+          "passed": true
+        },
+        {
+          "name": "closed-only import shows all records with a selected item",
+          "passed": true
+        },
+        {
+          "name": "all recorded views fit viewport width",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-new-handoff-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-repeat-preserves-draft-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-cancelled-import-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-closed-import-390.png"
+      ],
+      "dialogs": [
+        {
+          "type": "confirm",
+          "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+          "action": "dismiss"
+        }
+      ],
+      "app_sha256": "f0526f39659b081d44d3913203f43eae067eba2402d11a101b311b9594cf4a76",
+      "inference": {
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "analysis_id": "d6b3f8d0-8c11-4285-bf8c-0eec3b25479a",
+        "candidate_count": 2,
+        "frame_count": 1,
+        "report": "/tmp/estateguard-review-flow-20261020/artifacts/handoff-designer-after-20261021-1407-detections-390.json"
+      },
+      "sent": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n证据不足",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/4a8f2c2a-e14b-4157-b1bc-b204760a5eba",
+          "width": 960
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1349
+      },
+      "saved": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据",
+        "selected_visible": true,
+        "detail_visible": false,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/4a8f2c2a-e14b-4157-b1bc-b204760a5eba",
+          "width": 960
+        },
+        "note": "公开图只验证流程，需现场核对实际用途。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/21 22:15:42 · 待补充证据：公开图只验证流程，需现场核对实际用途。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 0
+      },
+      "repeated_saved": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/4a8f2c2a-e14b-4157-b1bc-b204760a5eba",
+          "width": 960
+        },
+        "note": "公开图只验证流程，需现场核对实际用途。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/21 22:15:42 · 待补充证据：公开图只验证流程，需现场核对实际用途。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 944
+      },
+      "saved_dom": {
+        "form": true,
+        "note": true,
+        "image": true
+      },
+      "draft_before": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/4a8f2c2a-e14b-4157-b1bc-b204760a5eba",
+          "width": 960
+        },
+        "note": "正在补充的现场核对草稿，尚未保存。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/21 22:15:42 · 待补充证据：公开图只验证流程，需现场核对实际用途。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1778
+      },
+      "repeated_draft": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "review",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/4a8f2c2a-e14b-4157-b1bc-b204760a5eba",
+          "width": 960
+        },
+        "note": "正在补充的现场核对草稿，尚未保存。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/21 22:15:42 · 待补充证据：公开图只验证流程，需现场核对实际用途。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 944
+      },
+      "draft_dom": {
+        "form": true,
+        "note": true,
+        "image": true
+      },
+      "normal_save": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "Shared space",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/4a8f2c2a-e14b-4157-b1bc-b204760a5eba",
+          "width": 960
+        },
+        "note": "普通保存应保留当前公共通道筛选。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 2 条2026/10/21 22:15:42 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:43 · 待补充证据：普通保存应保留当前公共通道筛选。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1778
+      },
+      "before_rejected": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "Shared space",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/4a8f2c2a-e14b-4157-b1bc-b204760a5eba",
+          "width": 960
+        },
+        "note": "拒绝替换后仍需保留的草稿",
+        "status": "needs_evidence",
+        "history": "复核历史 · 2 条2026/10/21 22:15:42 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:43 · 待补充证据：普通保存应保留当前公共通道筛选。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1778
+      },
+      "bad_import": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "导入被拒绝，原工作区未改变。Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "Shared space",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/4a8f2c2a-e14b-4157-b1bc-b204760a5eba",
+          "width": 960
+        },
+        "note": "拒绝替换后仍需保留的草稿",
+        "status": "needs_evidence",
+        "history": "复核历史 · 2 条2026/10/21 22:15:42 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:43 · 待补充证据：普通保存应保留当前公共通道筛选。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1797
+      },
+      "bad_import_dom": {
+        "form": true,
+        "note": true,
+        "image": true
+      },
+      "cancelled": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "已取消替换，当前记录、草稿和附件保持不变。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n2\n待复核 / 待处理\n2\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "Shared space",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n待补充证据 未保存草稿",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/4a8f2c2a-e14b-4157-b1bc-b204760a5eba",
+          "width": 960
+        },
+        "note": "拒绝替换后仍需保留的草稿",
+        "status": "needs_evidence",
+        "history": "复核历史 · 2 条2026/10/21 22:15:42 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:43 · 待补充证据：普通保存应保留当前公共通道筛选。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1778
+      },
+      "cancelled_dom": {
+        "form": true,
+        "note": true,
+        "image": true
+      },
+      "closed_import": {
+        "batch": "本地模型分析 · 公开示例-校车.jpg",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "metrics": "2\n来源观察记录\n2\n合并后事件\n0\n待复核 / 待处理\n0\n优先核查（含证据不足）",
+        "queue_filter": "all",
+        "area_filter": "all",
+        "count": 2,
+        "selected": "event:vision-track-1-1",
+        "selected_label": "公共通道 · 2026/10/21 14:07:00\n1 条\n通道占用线索\n示例区域（不认定实际用途）\n已排除",
+        "selected_visible": false,
+        "detail_visible": true,
+        "image": null,
+        "note": "流程测试：公开照片不能证明该区域违规，排除本示例候选。",
+        "status": "dismissed",
+        "history": "复核历史 · 3 条2026/10/21 22:15:42 · 待补充证据：公开图只验证流程，需现场核对实际用途。2026/10/21 22:15:43 · 待补充证据：普通保存应保留当前公共通道筛选。2026/10/21 22:15:43 · 已排除：流程测试：公开照片不能证明该区域违规，排除本示例候选。",
+        "width": 390,
+        "document_width": 390,
+        "scrollY": 1714
+      },
+      "ok": true
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "blockers": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-21T14:15:43.715Z",
+  "ok": true,
+  "visual_review": {
+    "actual_screenshots_inspected": true,
+    "approved_layout_preserved": true,
+    "horizontal_overflow": false,
+    "blocking_issues": [],
+    "summary": "1440/390 新送审显示两条实际候选；同报告重送保留同一复核表单与附件DOM、草稿及历史。取消导入保留筛选与原工作，已关闭批次导入切至全部并可复查。",
+    "nonblocking_note": "390px 首次新批次送审仍保留分析页纵向滚动，落在当前事件的来源描述/证据区；标题、成功提示和选中行在当前视口之外。详情及人工操作可继续。原有行为，无数据丢失。",
+    "natural_viewport_evidence": "artifacts/handoff-designer-after-20261021-1407-natural-viewport-390.json"
+  }
+}

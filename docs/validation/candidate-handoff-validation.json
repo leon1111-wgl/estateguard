@@ -1,0 +1,339 @@
+{
+  "at": "2026-10-21T14:16:50.025Z",
+  "base": "http://127.0.0.1:8767",
+  "test_filter": null,
+  "scope": "Actual D-FINE-N inference on existing public CC0 bus image. Event-handler-only boundaries are separately marked synthetic and do not measure model accuracy.",
+  "checks": [
+    {
+      "name": "actual unchanged report returns exported review without erasing history",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "inference": {
+          "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+          "analysis_id": "c6950273-c068-4b0b-8504-2b5113d293d7",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "before": {
+          "batch": "本地模型分析 · 公开示例-校车.jpg",
+          "event": "event:vision-track-1-1",
+          "note": "公开样例仅验证流程，现场授权和通道情况待补证据",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:51 · 待补充证据：公开样例仅验证流程，现场授权和通道情况待补证据",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/6bd3077d-e0b3-4f40-97b9-d07c6d894156",
+            "width": 960
+          }
+        },
+        "after": {
+          "batch": "本地模型分析 · 公开示例-校车.jpg",
+          "event": "event:vision-track-1-1",
+          "note": "公开样例仅验证流程，现场授权和通道情况待补证据",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:51 · 待补充证据：公开样例仅验证流程，现场授权和通道情况待补证据",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/6bd3077d-e0b3-4f40-97b9-d07c6d894156",
+            "width": 960
+          }
+        },
+        "audit_before": [
+          {
+            "event_id": "event:vision-track-1-1",
+            "status": "needs_evidence",
+            "note": "公开样例仅验证流程，现场授权和通道情况待补证据",
+            "at": "2026-10-21T14:16:51.753Z"
+          }
+        ],
+        "audit_after": [
+          {
+            "event_id": "event:vision-track-1-1",
+            "status": "needs_evidence",
+            "note": "公开样例仅验证流程，现场授权和通道情况待补证据",
+            "at": "2026-10-21T14:16:51.753Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "synthetic repeat preserves unexported review draft policy and evidence DOM",
+      "passed": true,
+      "evidence": {
+        "dialogs": [
+          {
+            "message": "应用规则将清空当前复核和草稿。请先导出已有工作。继续吗？",
+            "accepted": true
+          }
+        ],
+        "synthetic_boundary": true,
+        "before": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "继续编辑但尚未保存的补充证据",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:52 · 待补充证据：已保存的现场核实",
+          "area": "all",
+          "filter": "all",
+          "policy": "61",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/18dd610b-9acb-42e5-bc74-09a72874690e",
+            "width": 960
+          }
+        },
+        "after": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "继续编辑但尚未保存的补充证据",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:52 · 待补充证据：已保存的现场核实",
+          "area": "all",
+          "filter": "all",
+          "policy": "61",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/18dd610b-9acb-42e5-bc74-09a72874690e",
+            "width": 960
+          }
+        }
+      }
+    },
+    {
+      "name": "actual new inference on identical input has a new id and requires replacement of unsaved review",
+      "passed": true,
+      "evidence": {
+        "dialogs": [
+          {
+            "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+            "accepted": false
+          },
+          {
+            "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+            "accepted": true
+          }
+        ],
+        "inference": {
+          "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+          "analysis_id": "e48392f5-878d-46d9-b28e-d71d89a5c897",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "before": {
+          "batch": "本地模型分析 · 公开示例-校车.jpg",
+          "event": "event:vision-track-1-1",
+          "note": "第一次分析的复核需保留",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:53 · 待补充证据：第一次分析的复核需保留",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/558ddb5d-d046-4888-a296-4cebeb45f854",
+            "width": 960
+          }
+        },
+        "analysis_ids": [
+          "e48392f5-878d-46d9-b28e-d71d89a5c897",
+          "4a79c2ad-67d6-4bc4-8de1-6a3c21da644e"
+        ]
+      }
+    },
+    {
+      "name": "synthetic imported review survives repeat without silently restoring an attachment",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "before": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "交接文件中已保存的人工理由",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:54 · 待补充证据：交接文件中已保存的人工理由",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": null
+        },
+        "after": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "交接文件中已保存的人工理由",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:54 · 待补充证据：交接文件中已保存的人工理由",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": null
+        }
+      }
+    },
+    {
+      "name": "synthetic same id with changed batch metadata is a replacement, never a replay",
+      "passed": true,
+      "evidence": {
+        "dialogs": [
+          {
+            "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+            "accepted": false
+          },
+          {
+            "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+            "accepted": true
+          }
+        ],
+        "synthetic_boundary": true,
+        "before": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "不能被同标识的另一份内容替代",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:55 · 待补充证据：不能被同标识的另一份内容替代",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": null
+        }
+      }
+    },
+    {
+      "name": "synthetic repeated handover invalidates an earlier delayed demo response",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "before": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "慢请求等待期间应保留",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:55 · 待补充证据：慢请求等待期间应保留",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": null
+        },
+        "after": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "慢请求等待期间应保留",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:55 · 待补充证据：慢请求等待期间应保留",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": null
+        }
+      }
+    },
+    {
+      "name": "synthetic successful new handover resets stale filters to visible pending candidates",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "after": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": null
+        }
+      }
+    },
+    {
+      "name": "synthetic imported fully resolved workspace opens all events instead of an empty pending queue",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "after": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "已现场检查并完成处置",
+          "status": "resolved",
+          "history": "复核历史 · 1 条2026/10/21 22:16:56 · 已处理：已现场检查并完成处置",
+          "area": "all",
+          "filter": "all",
+          "policy": "30",
+          "media": null
+        }
+      }
+    },
+    {
+      "name": "synthetic failed or declined handover keeps current filters draft and decoded attachment",
+      "passed": true,
+      "evidence": {
+        "dialogs": [
+          {
+            "message": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+            "accepted": false
+          }
+        ],
+        "synthetic_boundary": true,
+        "before": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "保留当前筛选下的真实草稿",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "area": "Lift",
+          "filter": "all",
+          "policy": "30",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/839d3187-3707-4c7e-a47a-fafaeb839c09",
+            "width": 960
+          }
+        },
+        "after": {
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "note": "保留当前筛选下的真实草稿",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "area": "Lift",
+          "filter": "all",
+          "policy": "30",
+          "media": {
+            "src": "blob:http://127.0.0.1:8767/839d3187-3707-4c7e-a47a-fafaeb839c09",
+            "width": 960
+          }
+        }
+      }
+    },
+    {
+      "name": "synthetic repeat repairs an empty filter without clearing review history",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "after": {
+          "batch": "合成送审边界",
+          "event": "event:same-anonymous-id",
+          "note": "已有复核不能因筛选为空丢失",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/21 22:16:56 · 待补充证据：已有复核不能因筛选为空丢失",
+          "area": "all",
+          "filter": "review",
+          "policy": "30",
+          "media": null
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-21T14:16:56.955Z",
+  "passed": 10,
+  "failed": 0,
+  "ok": true
+}

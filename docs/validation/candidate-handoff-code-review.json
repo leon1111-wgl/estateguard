@@ -1,0 +1,71 @@
+{
+  "scope": "Synthetic candidate event seam and real browser/file decoding; no new model inference.",
+  "checks": [
+    {
+      "name": "duplicate preserves exported history, real draft, user attachment and DOM nodes",
+      "pass": true,
+      "evidence": {
+        "audit": 1,
+        "attachment": "human-checked.jpg",
+        "same_nodes": true
+      }
+    },
+    {
+      "name": "changed policy and saved dirty survive reuse, then imported same batch also remains",
+      "pass": true,
+      "evidence": {
+        "parking_grace": 47,
+        "audit": 1,
+        "import_media_empty": true,
+        "dialogs": 0
+      }
+    },
+    {
+      "name": "different identity and changed content require replacement, cancellation is atomic",
+      "pass": true,
+      "evidence": {
+        "cancelled": 2,
+        "confirmed_new_id": "independent-report-b"
+      }
+    },
+    {
+      "name": "pending real media decode is retained and not restarted by duplicate",
+      "pass": true,
+      "evidence": {
+        "decode_calls": 1,
+        "image_width": 960
+      }
+    },
+    {
+      "name": "duplicate invalidates older demo 200 response",
+      "pass": true,
+      "evidence": {
+        "stale_status": 200,
+        "message_preserved": true,
+        "audit": 1
+      }
+    },
+    {
+      "name": "duplicate invalidates older demo 500 response",
+      "pass": true,
+      "evidence": {
+        "stale_status": 500,
+        "message_preserved": true,
+        "audit": 1
+      }
+    },
+    {
+      "name": "new workspace resets stale filters; reusable current filtered event retains its node",
+      "pass": true,
+      "evidence": {
+        "new_filter": "review",
+        "existing_nonempty_filter_preserved": true,
+        "empty_filter_recovered": true
+      }
+    }
+  ],
+  "page_errors": [],
+  "passed": 7,
+  "failed": 0,
+  "ok": true
+}

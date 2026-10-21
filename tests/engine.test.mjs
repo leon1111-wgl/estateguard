@@ -3,6 +3,19 @@ import assert from 'node:assert/strict';
 import {validateBatch, buildEvents, defaultPolicy, evaluate, applyDecision, exportWorkspace, importWorkspace} from '../web/engine.mjs';
 const row=(extra={})=>({id:'a',camera:'lift-a',zone:'lift',track:'t1',category:'bulky_load',start:'2026-10-15T08:00:00+08:00',end:'2026-10-15T08:00:10+08:00',score:.9,quality:.9,summary:'Object in lift',evidence:['frame-a'],...extra});
 const batch=(rows)=>({schema_version:1,name:'test',provenance:'synthetic',observations:rows});
+test('analysis identity survives review export and legacy batches stay compatible',()=>{
+ const input={...batch([row()]),analysis_id:'c2261a1f-3ef3-42aa-b5fb-79e690f7be72'};
+ let ws=importWorkspace(input);
+ ws=applyDecision(ws,buildEvents(input)[0].id,'needs_evidence','核对原始素材');
+ const restored=importWorkspace(JSON.parse(exportWorkspace(ws)));
+ assert.equal(restored.batch.analysis_id,input.analysis_id);
+ assert.deepEqual(restored.audit,ws.audit);
+ assert.equal(importWorkspace(batch([row()])).batch.analysis_id,undefined);
+});
+test('malformed optional analysis identities are rejected before importing a batch',()=>{
+ for(const analysis_id of ['', '  ', null, 7, {}, 'x'.repeat(101)])
+  assert.throws(()=>importWorkspace({...batch([row()]),analysis_id}),/analysis_id/);
+});
 test('repeated observations merge but different tracks and cameras stay distinct',()=>{
  const events=buildEvents(batch([row(),row({id:'b',start:'2026-10-15T08:00:12+08:00',end:'2026-10-15T08:00:20+08:00'}),row({id:'c',track:'t2'}),row({id:'d',camera:'lift-b'})]),defaultPolicy);
  assert.equal(events.length,3); assert.deepEqual(events.find(e=>e.observation_ids.includes('a')).observation_ids,['a','b']);
