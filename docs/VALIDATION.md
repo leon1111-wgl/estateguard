@@ -20,6 +20,8 @@ python3 scripts/verify_assets.py
 
 浏览器配置沿用下文；本轮隔离服务为 `ESTATEGUARD_URL=http://127.0.0.1:8767`。机器证据：[原版基线](validation/review-draft-baseline.json)、[换行边界基线](validation/review-draft-newlines-baseline.json)、[最终验收](validation/review-draft-validation.json)、[界面回归](validation/review-draft-ui-validation.json)。CI 和线上检查与本地结果分别记录。
 
+线上产品提交 `edfe9ab`：CI / Pages `39532420551` 成功，13 个关键文件与提交逐字节一致。[线上专项报告](validation/review-draft-online-validation.json) 为 11/11，含真实 D-FINE 推理及复核交接恢复。首次运行在异步评测初始化前断言默认模型而失败（10/11），经独立延迟真实响应复现后，只为测试增加等待默认值的条件，再次完整运行通过；未手动选择模型或更改产品。
+
 ## 2026-10-20 · 工作区异步替换与复核保留
 
 基线为已发布的 `704f30a`。独立找茬 9 项中 8 项失败，修复并补充附件及模型交接断言后 9/9 通过。读取时序通过延迟真实 `fetch` / `File.text()` 完成来控制；响应被页面消费后的下一任务再检查状态，不替换模型输出。失败读取使用明确的 HTTP 错误夹具。
