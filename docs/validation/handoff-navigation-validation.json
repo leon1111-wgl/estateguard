@@ -1,0 +1,1300 @@
+{
+  "at": "2026-10-22T02:19:17.913Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Real default D-FINE-N inference on the existing public CC0 image. Synthetic handler boundaries, when used, are marked separately; these are navigation checks, not field-accuracy measurements.",
+  "test_assumptions": {
+    "previous_run": "handoff-navigation-validation.layout-assertions.json",
+    "corrections": [
+      "In-place repeat: browser scroll anchoring may change scrollY when a status message changes height; the editing anchor must stay within 1 CSS pixel with identical DOM/focus and no added application positioning calls.",
+      "Late media: inserting a decoded image may reflow the form; assert the edited input stays visible and focused without added positioning, not zero layout shift."
+    ],
+    "instrumentation": "Read-only wrappers record actual focus/scrollIntoView calls and still call the native methods. Only evidence decode completion is delayed; model/image data are not mocked."
+  },
+  "checks": [
+    {
+      "name": "mobile actual first handover reveals the current review heading",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialogs": [],
+        "inference": {
+          "detector": "dfine",
+          "analysis_id": "fd312fbc-b027-4d85-bc3f-56bedb55b762",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "before": {
+          "hash": "#analyze",
+          "scroll_y": 1349,
+          "navigation_calls": [],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "message": {
+            "text": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "电梯门受阻",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "优先核查",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "media_status": {
+            "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "download-detections",
+            "tag": "BUTTON",
+            "text": "导出检测 JSON"
+          }
+        },
+        "after": {
+          "hash": "#workspace",
+          "scroll_y": 953,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": -793.8125,
+            "bottom": -764.421875,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": -677.046875,
+            "bottom": -616.671875,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": 51.046875,
+            "bottom": 81.4375,
+            "visible": true
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": 22.65625,
+            "bottom": 41.65625,
+            "visible": true
+          },
+          "note_rect": {
+            "text": "",
+            "top": 1249.4375,
+            "bottom": 1337.4375,
+            "visible": false
+          },
+          "media_status": {
+            "text": "图片已解码，请核对画面是否对应本事件。",
+            "top": 797.84375,
+            "bottom": 815.4375,
+            "visible": true
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "通道占用线索"
+          }
+        },
+        "next_control": "media-file"
+      }
+    },
+    {
+      "name": "desktop actual first handover reveals risk and event title with keyboard continuation",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "dialogs": [],
+        "inference": {
+          "detector": "dfine",
+          "analysis_id": "13d749ef-614f-4c49-bc93-4a7f3770668e",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "before": {
+          "hash": "#analyze",
+          "scroll_y": 664,
+          "navigation_calls": [],
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "message": {
+            "text": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "电梯门受阻",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "优先核查",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "media_status": {
+            "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "download-detections",
+            "tag": "BUTTON",
+            "text": "导出检测 JSON"
+          }
+        },
+        "after": {
+          "hash": "#workspace",
+          "scroll_y": 319,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": -241,
+            "bottom": -210.203125,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": -166.015625,
+            "bottom": -124.828125,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": 51.953125,
+            "bottom": 82.34375,
+            "visible": true
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": 23.5625,
+            "bottom": 42.5625,
+            "visible": true
+          },
+          "note_rect": {
+            "text": "",
+            "top": 1142.15625,
+            "bottom": 1230.15625,
+            "visible": false
+          },
+          "media_status": {
+            "text": "图片已解码，请核对画面是否对应本事件。",
+            "top": 619.21875,
+            "bottom": 636.8125,
+            "visible": true
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "通道占用线索"
+          }
+        },
+        "next_control": "media-file"
+      }
+    },
+    {
+      "name": "synthetic in-place repeat keeps reading position draft focus and evidence DOM",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "before": {
+          "hash": "#workspace",
+          "scroll_y": 1594,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": -1434.8125,
+            "bottom": -1405.421875,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": -1318.046875,
+            "bottom": -1257.671875,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": -702.171875,
+            "bottom": -671.78125,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": -730.5625,
+            "bottom": -711.5625,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 405.0625,
+            "bottom": 493.0625,
+            "visible": true
+          },
+          "media_status": {
+            "text": "图片已解码，请核对画面是否对应本事件。",
+            "top": -46.53125,
+            "bottom": -28.9375,
+            "visible": false
+          },
+          "note": "复核中尚未保存的现场说明",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "decision-note",
+            "tag": "TEXTAREA",
+            "text": ""
+          }
+        },
+        "after": {
+          "hash": "#workspace",
+          "scroll_y": 1574,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": -1414.8125,
+            "bottom": -1385.421875,
+            "visible": false
+          },
+          "message": {
+            "text": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+            "top": -1298.046875,
+            "bottom": -1256.859375,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": -701.359375,
+            "bottom": -670.96875,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": -729.75,
+            "bottom": -710.75,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 405.875,
+            "bottom": 493.875,
+            "visible": true
+          },
+          "media_status": {
+            "text": "图片已解码，请核对画面是否对应本事件。",
+            "top": -45.71875,
+            "bottom": -28.125,
+            "visible": false
+          },
+          "note": "复核中尚未保存的现场说明",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "decision-note",
+            "tag": "TEXTAREA",
+            "text": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "synthetic declined replacement stays on the original analysis page and retains draft",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialogs": [
+          "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？"
+        ],
+        "synthetic_boundary": true,
+        "before": {
+          "hash": "#analyze",
+          "scroll_y": 206,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "media_status": {
+            "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note": "不能因取消送审丢失的草稿",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "vision-camera",
+            "tag": "INPUT",
+            "text": ""
+          }
+        },
+        "after": {
+          "hash": "#analyze",
+          "scroll_y": 206,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "message": {
+            "text": "已取消替换，当前记录、草稿和附件保持不变。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "media_status": {
+            "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note": "不能因取消送审丢失的草稿",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "vision-camera",
+            "tag": "INPUT",
+            "text": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "synthetic invalid handover cannot navigate or move keyboard focus",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "before": {
+          "hash": "#analyze",
+          "scroll_y": 78,
+          "navigation_calls": [],
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "message": {
+            "text": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "电梯门受阻",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "优先核查",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "media_status": {
+            "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "vision-camera",
+            "tag": "INPUT",
+            "text": ""
+          }
+        },
+        "after": {
+          "hash": "#analyze",
+          "scroll_y": 78,
+          "navigation_calls": [],
+          "viewport": {
+            "width": 1440,
+            "height": 1000
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "message": {
+            "text": "observations must contain 1–10,000 records.",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "电梯门受阻",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "优先核查",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "media_status": {
+            "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "vision-camera",
+            "tag": "INPUT",
+            "text": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "synthetic delayed real image decode does not steal focus from later review editing",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "before": {
+          "hash": "#workspace",
+          "scroll_y": 1377,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": -1217.8125,
+            "bottom": -1188.421875,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": -1101.046875,
+            "bottom": -1040.671875,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": -485.171875,
+            "bottom": -454.78125,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": -513.5625,
+            "bottom": -494.5625,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 405.40625,
+            "bottom": 493.40625,
+            "visible": true
+          },
+          "media_status": {
+            "text": "正在检查「public-bus.jpg」是否可打开。尚未载入可查看的证据，复核草稿已保留。检查完成后可保存复核记录。",
+            "top": 170.46875,
+            "bottom": 205.65625,
+            "visible": true
+          },
+          "note": "附件还在读取时继续填写的记录",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "decision-note",
+            "tag": "TEXTAREA",
+            "text": ""
+          }
+        },
+        "after": {
+          "hash": "#workspace",
+          "scroll_y": 1377,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": -1217.8125,
+            "bottom": -1188.421875,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": -1101.046875,
+            "bottom": -1040.671875,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": -485.171875,
+            "bottom": -454.78125,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": -513.5625,
+            "bottom": -494.5625,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 622.0625,
+            "bottom": 710.0625,
+            "visible": true
+          },
+          "media_status": {
+            "text": "图片已解码，请核对画面是否对应本事件。",
+            "top": 170.46875,
+            "bottom": 188.0625,
+            "visible": true
+          },
+          "note": "附件还在读取时继续填写的记录",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "decision-note",
+            "tag": "TEXTAREA",
+            "text": ""
+          }
+        }
+      }
+    },
+    {
+      "name": "synthetic new batches already in workspace position review with missing or broken media",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "transitions": [
+          {
+            "id": "same-hash-no-media",
+            "fileKind": false,
+            "before": {
+              "hash": "#workspace",
+              "scroll_y": 1340,
+              "navigation_calls": [
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                }
+              ],
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "workspace_heading": {
+                "text": "事件复核",
+                "top": -1180.8125,
+                "bottom": -1151.421875,
+                "visible": false
+              },
+              "message": {
+                "text": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+                "top": -1064.046875,
+                "bottom": -1022.859375,
+                "visible": false
+              },
+              "event_heading": {
+                "text": "通道占用线索",
+                "top": -467.359375,
+                "bottom": -436.96875,
+                "visible": false
+              },
+              "risk_badge": {
+                "text": "证据不足",
+                "top": -495.75,
+                "bottom": -476.75,
+                "visible": false
+              },
+              "note_rect": {
+                "text": "",
+                "top": 405.625,
+                "bottom": 493.625,
+                "visible": true
+              },
+              "media_status": {
+                "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+                "top": 188.28125,
+                "bottom": 205.875,
+                "visible": true
+              },
+              "note": "",
+              "status": "open",
+              "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+              "focus": {
+                "id": "decision-note",
+                "tag": "TEXTAREA",
+                "text": ""
+              }
+            },
+            "after": {
+              "hash": "#workspace",
+              "scroll_y": 840,
+              "navigation_calls": [
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                },
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                }
+              ],
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "workspace_heading": {
+                "text": "事件复核",
+                "top": -680.8125,
+                "bottom": -651.421875,
+                "visible": false
+              },
+              "message": {
+                "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+                "top": -564.046875,
+                "bottom": -503.671875,
+                "visible": false
+              },
+              "event_heading": {
+                "text": "通道占用线索",
+                "top": 51.828125,
+                "bottom": 82.21875,
+                "visible": true
+              },
+              "risk_badge": {
+                "text": "证据不足",
+                "top": 23.4375,
+                "bottom": 42.4375,
+                "visible": true
+              },
+              "note_rect": {
+                "text": "",
+                "top": 924.8125,
+                "bottom": 1012.8125,
+                "visible": false
+              },
+              "media_status": {
+                "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+                "top": 707.46875,
+                "bottom": 725.0625,
+                "visible": true
+              },
+              "note": "",
+              "status": "open",
+              "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+              "focus": {
+                "id": "",
+                "tag": "H3",
+                "text": "通道占用线索"
+              }
+            }
+          },
+          {
+            "id": "same-hash-broken-media",
+            "fileKind": "broken",
+            "before": {
+              "hash": "#workspace",
+              "scroll_y": 1340,
+              "navigation_calls": [
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                },
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                }
+              ],
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "workspace_heading": {
+                "text": "事件复核",
+                "top": -1180.8125,
+                "bottom": -1151.421875,
+                "visible": false
+              },
+              "message": {
+                "text": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+                "top": -1064.046875,
+                "bottom": -1022.859375,
+                "visible": false
+              },
+              "event_heading": {
+                "text": "通道占用线索",
+                "top": -467.359375,
+                "bottom": -436.96875,
+                "visible": false
+              },
+              "risk_badge": {
+                "text": "证据不足",
+                "top": -495.75,
+                "bottom": -476.75,
+                "visible": false
+              },
+              "note_rect": {
+                "text": "",
+                "top": 405.625,
+                "bottom": 493.625,
+                "visible": true
+              },
+              "media_status": {
+                "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+                "top": 188.28125,
+                "bottom": 205.875,
+                "visible": true
+              },
+              "note": "",
+              "status": "open",
+              "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+              "focus": {
+                "id": "decision-note",
+                "tag": "TEXTAREA",
+                "text": ""
+              }
+            },
+            "after": {
+              "hash": "#workspace",
+              "scroll_y": 840,
+              "navigation_calls": [
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                },
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                },
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                }
+              ],
+              "viewport": {
+                "width": 390,
+                "height": 844
+              },
+              "workspace_heading": {
+                "text": "事件复核",
+                "top": -680.8125,
+                "bottom": -651.421875,
+                "visible": false
+              },
+              "message": {
+                "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+                "top": -564.046875,
+                "bottom": -503.671875,
+                "visible": false
+              },
+              "event_heading": {
+                "text": "通道占用线索",
+                "top": 51.828125,
+                "bottom": 82.21875,
+                "visible": true
+              },
+              "risk_badge": {
+                "text": "证据不足",
+                "top": 23.4375,
+                "bottom": 42.4375,
+                "visible": true
+              },
+              "note_rect": {
+                "text": "",
+                "top": 960,
+                "bottom": 1048,
+                "visible": false
+              },
+              "media_status": {
+                "text": "「broken.jpg」读取失败：无法解码这张图片，请选择可打开的 JPEG、PNG 或 WebP。 尚未载入可查看的证据，复核草稿已保留。",
+                "top": 707.46875,
+                "bottom": 760.25,
+                "visible": true
+              },
+              "note": "",
+              "status": "open",
+              "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+              "focus": {
+                "id": "",
+                "tag": "H3",
+                "text": "通道占用线索"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "synthetic quick departure after handover is not pulled back by delayed media completion",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialogs": [],
+        "synthetic_boundary": true,
+        "before": {
+          "hash": "#story",
+          "scroll_y": 0,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "A"
+            }
+          ],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "media_status": {
+            "text": "正在检查「public-bus.jpg」是否可打开。尚未载入可查看的证据，复核草稿已保留。检查完成后可保存复核记录。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "",
+            "tag": "A",
+            "text": "项目说明"
+          }
+        },
+        "after": {
+          "hash": "#story",
+          "scroll_y": 0,
+          "navigation_calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "A"
+            }
+          ],
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "risk_badge": {
+            "text": "证据不足",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note_rect": {
+            "text": "",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "media_status": {
+            "text": "图片已解码，请核对画面是否对应本事件。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "",
+            "tag": "A",
+            "text": "项目说明"
+          }
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-22T02:19:23.190Z",
+  "passed": 8,
+  "failed": 0,
+  "ok": true
+}

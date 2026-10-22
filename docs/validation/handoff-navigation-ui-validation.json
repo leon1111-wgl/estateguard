@@ -1,0 +1,830 @@
+{
+  "started_at": "2026-10-22T02:16:26.952Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Actual D-FINE on public CC0 photo with synthetic review context. Delay only completion of genuine native evidence decode; no pixels, inference, or decode outcomes mocked. No product edits.",
+  "viewports": [
+    {
+      "width": 1440,
+      "checks": [
+        {
+          "name": "real model produced candidates",
+          "passed": true
+        },
+        {
+          "name": "first handoff reveals event title, risk state and source while attachment is still loading",
+          "passed": true
+        },
+        {
+          "name": "real decoded media completion leaves title, focus and scroll stable",
+          "passed": true
+        },
+        {
+          "name": "Tab proceeds from heading to existing local-evidence control",
+          "passed": true
+        },
+        {
+          "name": "same-report return does not call new positioning or replace draft/history/media",
+          "passed": true
+        },
+        {
+          "name": "cancelled new report stays on analysis without scroll or focus relocation",
+          "passed": true
+        },
+        {
+          "name": "captured states have no horizontal overflow",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-loading-title-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-ready-title-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-next-tab-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-repeat-1440.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-cancelled-1440.png"
+      ],
+      "dialogs": [
+        {
+          "type": "confirm",
+          "text": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+          "action": "dismiss"
+        }
+      ],
+      "app_sha256": "8f69f5f9b7194f848f123404793bd27e49641a26026167d0979a9720d4151139",
+      "inference_message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。",
+      "before_media": {
+        "hash": "#workspace",
+        "scrollY": 319,
+        "width": 1440,
+        "document_width": 1440,
+        "title": {
+          "top": 51.953125,
+          "bottom": 82.34375,
+          "visible": true,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 23.5625,
+          "bottom": 42.5625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 88.34375,
+          "bottom": 107.53125,
+          "visible": true,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": -0.4375,
+          "bottom": 1073.53125,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": 180.734375,
+          "bottom": 295.515625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "active": {
+          "id": "",
+          "tag": "H3",
+          "heading": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "image": null,
+        "media_status": "正在检查「公开示例-校车.jpg」是否可打开。尚未载入可查看的证据，复核草稿已保留。检查完成后可保存复核记录。",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "scroll_calls": 1
+      },
+      "ready": {
+        "hash": "#workspace",
+        "scrollY": 319,
+        "width": 1440,
+        "document_width": 1440,
+        "title": {
+          "top": 51.953125,
+          "bottom": 82.34375,
+          "visible": true,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 23.5625,
+          "bottom": 42.5625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 88.34375,
+          "bottom": 107.53125,
+          "visible": true,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": -0.4375,
+          "bottom": 1379.125,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": 180.734375,
+          "bottom": 295.515625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "active": {
+          "id": "",
+          "tag": "H3",
+          "heading": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/ead6c3b6-4f63-4f9d-8ecb-210081504f68",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "scroll_calls": 1
+      },
+      "next_tab": {
+        "hash": "#workspace",
+        "scrollY": 319,
+        "width": 1440,
+        "document_width": 1440,
+        "title": {
+          "top": 51.953125,
+          "bottom": 82.34375,
+          "visible": true,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 23.5625,
+          "bottom": 42.5625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 88.34375,
+          "bottom": 107.53125,
+          "visible": true,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": -0.4375,
+          "bottom": 1379.125,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": 180.734375,
+          "bottom": 295.515625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "active": {
+          "id": "media-file",
+          "tag": "INPUT",
+          "heading": false
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/ead6c3b6-4f63-4f9d-8ecb-210081504f68",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "scroll_calls": 1
+      },
+      "reading_before_return": {
+        "hash": "#workspace",
+        "scrollY": 893,
+        "width": 1440,
+        "document_width": 1440,
+        "title": {
+          "top": -522.046875,
+          "bottom": -491.65625,
+          "visible": false,
+          "fully_visible": false
+        },
+        "badges": {
+          "top": -550.4375,
+          "bottom": -531.4375,
+          "visible": false,
+          "fully_visible": false
+        },
+        "source": {
+          "top": -485.65625,
+          "bottom": -466.46875,
+          "visible": false,
+          "fully_visible": false
+        },
+        "detail": {
+          "top": -574.4375,
+          "bottom": 813.53125,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": -393.265625,
+          "bottom": -278.484375,
+          "visible": false,
+          "fully_visible": false
+        },
+        "active": {
+          "id": "decision-note",
+          "tag": "TEXTAREA",
+          "heading": false
+        },
+        "note": "再次返回须保留的未保存草稿。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/22 10:16:29 · 待补充证据：公开图流程验证：待现场补证。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/ead6c3b6-4f63-4f9d-8ecb-210081504f68",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "scroll_calls": 1
+      },
+      "repeated": {
+        "hash": "#workspace",
+        "scrollY": 239,
+        "width": 1440,
+        "document_width": 1440,
+        "title": {
+          "top": 131.953125,
+          "bottom": 162.34375,
+          "visible": true,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 103.5625,
+          "bottom": 122.5625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 168.34375,
+          "bottom": 187.53125,
+          "visible": true,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": 79.5625,
+          "bottom": 1467.53125,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": 260.734375,
+          "bottom": 375.515625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "active": {
+          "id": "",
+          "tag": "BODY",
+          "heading": false
+        },
+        "note": "再次返回须保留的未保存草稿。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/22 10:16:29 · 待补充证据：公开图流程验证：待现场补证。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/ead6c3b6-4f63-4f9d-8ecb-210081504f68",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "scroll_calls": 1
+      },
+      "repeated_nodes": {
+        "form": true,
+        "image": true
+      },
+      "before_cancel": {
+        "hash": "#analyze",
+        "scrollY": 664,
+        "width": 1440,
+        "document_width": 1440,
+        "title": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "queue": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "active": {
+          "id": "run-analysis",
+          "tag": "BUTTON",
+          "heading": false
+        },
+        "note": "再次返回须保留的未保存草稿。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/22 10:16:29 · 待补充证据：公开图流程验证：待现场补证。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/ead6c3b6-4f63-4f9d-8ecb-210081504f68",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "scroll_calls": 1
+      },
+      "cancelled": {
+        "hash": "#analyze",
+        "scrollY": 664,
+        "width": 1440,
+        "document_width": 1440,
+        "title": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "queue": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "active": {
+          "id": "send-candidates",
+          "tag": "BUTTON",
+          "heading": false
+        },
+        "note": "再次返回须保留的未保存草稿。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/22 10:16:29 · 待补充证据：公开图流程验证：待现场补证。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/ead6c3b6-4f63-4f9d-8ecb-210081504f68",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已取消替换，当前记录、草稿和附件保持不变。",
+        "scroll_calls": 1
+      },
+      "ok": true
+    },
+    {
+      "width": 390,
+      "checks": [
+        {
+          "name": "real model produced candidates",
+          "passed": true
+        },
+        {
+          "name": "first handoff reveals event title, risk state and source while attachment is still loading",
+          "passed": true
+        },
+        {
+          "name": "real decoded media completion leaves title, focus and scroll stable",
+          "passed": true
+        },
+        {
+          "name": "Tab proceeds from heading to existing local-evidence control",
+          "passed": true
+        },
+        {
+          "name": "same-report return does not call new positioning or replace draft/history/media",
+          "passed": true
+        },
+        {
+          "name": "cancelled new report stays on analysis without scroll or focus relocation",
+          "passed": true
+        },
+        {
+          "name": "captured states have no horizontal overflow",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-loading-title-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-ready-title-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-next-tab-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-repeat-390.png",
+        "/tmp/estateguard-review-flow-20261020/artifacts/handoff-scroll-designer-after-20261022-cancelled-390.png"
+      ],
+      "dialogs": [
+        {
+          "type": "confirm",
+          "text": "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+          "action": "dismiss"
+        }
+      ],
+      "app_sha256": "8f69f5f9b7194f848f123404793bd27e49641a26026167d0979a9720d4151139",
+      "inference_message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。",
+      "before_media": {
+        "hash": "#workspace",
+        "scrollY": 953,
+        "width": 390,
+        "document_width": 390,
+        "title": {
+          "top": 51.046875,
+          "bottom": 81.4375,
+          "visible": true,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 22.65625,
+          "bottom": 41.65625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 87.4375,
+          "bottom": 106.625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": -0.34375,
+          "bottom": 1268.75,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": -243.34375,
+          "bottom": -128.5625,
+          "visible": false,
+          "fully_visible": false
+        },
+        "active": {
+          "id": "",
+          "tag": "H3",
+          "heading": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "image": null,
+        "media_status": "正在检查「公开示例-校车.jpg」是否可打开。尚未载入可查看的证据，复核草稿已保留。检查完成后可保存复核记录。",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "scroll_calls": 1
+      },
+      "ready": {
+        "hash": "#workspace",
+        "scrollY": 953,
+        "width": 390,
+        "document_width": 390,
+        "title": {
+          "top": 51.046875,
+          "bottom": 81.4375,
+          "visible": true,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 22.65625,
+          "bottom": 41.65625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 87.4375,
+          "bottom": 106.625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": -0.34375,
+          "bottom": 1485.40625,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": -243.34375,
+          "bottom": -128.5625,
+          "visible": false,
+          "fully_visible": false
+        },
+        "active": {
+          "id": "",
+          "tag": "H3",
+          "heading": true
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/b9b0cbfd-dfc5-4588-99e2-c7e6ab7e6125",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "scroll_calls": 1
+      },
+      "next_tab": {
+        "hash": "#workspace",
+        "scrollY": 953,
+        "width": 390,
+        "document_width": 390,
+        "title": {
+          "top": 51.046875,
+          "bottom": 81.4375,
+          "visible": true,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 22.65625,
+          "bottom": 41.65625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 87.4375,
+          "bottom": 106.625,
+          "visible": true,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": -0.34375,
+          "bottom": 1485.40625,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": -243.34375,
+          "bottom": -128.5625,
+          "visible": false,
+          "fully_visible": false
+        },
+        "active": {
+          "id": "media-file",
+          "tag": "INPUT",
+          "heading": false
+        },
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/b9b0cbfd-dfc5-4588-99e2-c7e6ab7e6125",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "scroll_calls": 1
+      },
+      "reading_before_return": {
+        "hash": "#workspace",
+        "scrollY": 1757,
+        "width": 390,
+        "document_width": 390,
+        "title": {
+          "top": -772.140625,
+          "bottom": -741.75,
+          "visible": false,
+          "fully_visible": false
+        },
+        "badges": {
+          "top": -800.53125,
+          "bottom": -781.53125,
+          "visible": false,
+          "fully_visible": false
+        },
+        "source": {
+          "top": -735.75,
+          "bottom": -716.5625,
+          "visible": false,
+          "fully_visible": false
+        },
+        "detail": {
+          "top": -823.53125,
+          "bottom": 688.21875,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": -1066.53125,
+          "bottom": -951.75,
+          "visible": false,
+          "fully_visible": false
+        },
+        "active": {
+          "id": "decision-note",
+          "tag": "TEXTAREA",
+          "heading": false
+        },
+        "note": "再次返回须保留的未保存草稿。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/22 10:16:33 · 待补充证据：公开图流程验证：待现场补证。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/b9b0cbfd-dfc5-4588-99e2-c7e6ab7e6125",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "scroll_calls": 1
+      },
+      "repeated": {
+        "hash": "#workspace",
+        "scrollY": 944,
+        "width": 390,
+        "document_width": 390,
+        "title": {
+          "top": 40.859375,
+          "bottom": 71.25,
+          "visible": true,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 12.46875,
+          "bottom": 31.46875,
+          "visible": true,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 77.25,
+          "bottom": 96.4375,
+          "visible": true,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": -10.53125,
+          "bottom": 1501.21875,
+          "visible": true,
+          "fully_visible": false
+        },
+        "queue": {
+          "top": -253.53125,
+          "bottom": -138.75,
+          "visible": false,
+          "fully_visible": false
+        },
+        "active": {
+          "id": "",
+          "tag": "BODY",
+          "heading": false
+        },
+        "note": "再次返回须保留的未保存草稿。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/22 10:16:33 · 待补充证据：公开图流程验证：待现场补证。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/b9b0cbfd-dfc5-4588-99e2-c7e6ab7e6125",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "scroll_calls": 1
+      },
+      "repeated_nodes": {
+        "form": true,
+        "image": true
+      },
+      "before_cancel": {
+        "hash": "#analyze",
+        "scrollY": 1349,
+        "width": 390,
+        "document_width": 390,
+        "title": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "queue": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "active": {
+          "id": "run-analysis",
+          "tag": "BUTTON",
+          "heading": false
+        },
+        "note": "再次返回须保留的未保存草稿。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/22 10:16:33 · 待补充证据：公开图流程验证：待现场补证。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/b9b0cbfd-dfc5-4588-99e2-c7e6ab7e6125",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已返回本次分析的复核记录，原结论、草稿和附件保持不变。",
+        "scroll_calls": 1
+      },
+      "cancelled": {
+        "hash": "#analyze",
+        "scrollY": 1349,
+        "width": 390,
+        "document_width": 390,
+        "title": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "badges": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "source": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "detail": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "queue": {
+          "top": 0,
+          "bottom": 0,
+          "visible": false,
+          "fully_visible": true
+        },
+        "active": {
+          "id": "send-candidates",
+          "tag": "BUTTON",
+          "heading": false
+        },
+        "note": "再次返回须保留的未保存草稿。",
+        "status": "needs_evidence",
+        "history": "复核历史 · 1 条2026/10/22 10:16:33 · 待补充证据：公开图流程验证：待现场补证。",
+        "image": {
+          "src": "blob:http://127.0.0.1:8767/b9b0cbfd-dfc5-4588-99e2-c7e6ab7e6125",
+          "width": 960
+        },
+        "media_status": "图片已解码，请核对画面是否对应本事件。",
+        "message": "已取消替换，当前记录、草稿和附件保持不变。",
+        "scroll_calls": 1
+      },
+      "ok": true
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "blockers": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-22T02:16:34.407Z",
+  "ok": true,
+  "remaining_limit": "Exact per-page reading-scroll restoration is not implemented; same-report return avoids the newly added heading positioning and preserves review data and media DOM."
+}

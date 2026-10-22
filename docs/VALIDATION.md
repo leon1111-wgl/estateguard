@@ -1,5 +1,25 @@
 # 验证记录 · 2026-10-15
 
+## 2026-10-22 · 候选交接定位与键盘继续
+
+旧版 `6a0586c` 的手机红基线 0/1：真实 D-FINE-N 生成 2 个候选，送审后标题在视口上方约 345px，焦点落 BODY。[基线](validation/handoff-navigation-baseline.json)与[最终专项](validation/handoff-navigation-validation.json)分别保留。
+
+专项 8/8：2 项实际默认 D-FINE-N 推理（1440 / 390px），6 项合成状态边界。公开 CC0 校车图的大巴分数均为 0.9651602；这不是小区违规准确率。除新交接定位外，还覆盖键盘 Tab、原地重复、取消、无效输入、迟到图片、快速切页、相同 hash 下无附件或坏附件的新交接。页面异常和外部请求为 0。
+
+```bash
+ESTATEGUARD_URL=http://127.0.0.1:8767 node scripts/handoff-navigation-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8767 node scripts/candidate-handoff-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8767 node scripts/browser-check.cjs
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+```
+
+浏览器依赖配置沿用下文。新专项支持 `HANDOFF_NAVIGATION_REPORT` 指定输出文件名、`HANDOFF_NAVIGATION_ONLY` 筛选检查。原候选交接 10/10（含 2 项真实模型流程）、browser-check、JS 138/138、26 项资产哈希通过。
+
+[独立代码边界](validation/handoff-navigation-code-review.json) 8/8；[独立界面回归](validation/handoff-navigation-ui-validation.json) 14/14，无横向溢出，实际桌面/手机截图已查看。只修改新候选成功交接的定位，没有调整 CSS、模型权重或检测规则。
+
+初版扩展专项 5/7，两个失败来自过强的坐标假设：重复提示改变高度后浏览器滚动锚定使 scrollY 变化 20px，但正在编辑的备注视口位置只变约 0.8px；图片插入令备注下移约 217px，但不夺焦点且输入仍可见。保留诊断于本地 `artifacts/handoff-navigation-validation.layout-assertions.json`，最终断言检查阅读锚点、输入可见性、DOM、焦点与新增定位调用，不把媒体自身布局变化记为已修复。独立设计与代码脚本另纠正隐藏页 `innerText` 换行和原生导航焦点假设；产品未因这些脚本问题改变。
+
 
 ## 2026-10-21 晚间 · 候选送审身份与可见队列
 

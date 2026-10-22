@@ -1,0 +1,152 @@
+{
+  "at": "2026-10-22T02:12:26.137Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Real default D-FINE-N inference on the existing public CC0 image. Synthetic handler boundaries, when used, are marked separately; these are navigation checks, not field-accuracy measurements.",
+  "checks": [
+    {
+      "name": "mobile actual first handover reveals the current review heading",
+      "passed": false,
+      "error": "first handover leaves the current event heading outside the phone viewport\n\nfalse !== true\n",
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "dialogs": [],
+        "inference": {
+          "detector": "dfine",
+          "analysis_id": "20af1dea-3900-472d-8df2-94daa7af5d61",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "before": {
+          "hash": "#analyze",
+          "scroll_y": 1349,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "message": {
+            "text": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "电梯门受阻",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "media_status": {
+            "text": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "top": 0,
+            "bottom": 0,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "download-detections",
+            "tag": "BUTTON",
+            "text": "导出检测 JSON"
+          }
+        },
+        "after": {
+          "hash": "#workspace",
+          "scroll_y": 1349,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": -1189.8125,
+            "bottom": -1160.421875,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": -1073.046875,
+            "bottom": -1012.671875,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": -344.953125,
+            "bottom": -314.5625,
+            "visible": false
+          },
+          "media_status": {
+            "text": "图片已解码，请核对画面是否对应本事件。",
+            "top": 401.84375,
+            "bottom": 419.4375,
+            "visible": true
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "",
+            "tag": "BODY",
+            "text": "跳转到工作区\nEstateGuard社区巡检工作台社社区巡检本地工作空间工作台视频与图片分析事件复核车位巡检场景规则评测与模型项目说明 文件仅在本机处理本地工作区 · v0.3查看项目源码 ↗\n工作空"
+          }
+        },
+        "final": {
+          "hash": "#workspace",
+          "scroll_y": 1349,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "workspace_heading": {
+            "text": "事件复核",
+            "top": -1189.8125,
+            "bottom": -1160.421875,
+            "visible": false
+          },
+          "message": {
+            "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+            "top": -1073.046875,
+            "bottom": -1012.671875,
+            "visible": false
+          },
+          "event_heading": {
+            "text": "通道占用线索",
+            "top": -344.953125,
+            "bottom": -314.5625,
+            "visible": false
+          },
+          "media_status": {
+            "text": "图片已解码，请核对画面是否对应本事件。",
+            "top": 401.84375,
+            "bottom": 419.4375,
+            "visible": true
+          },
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "focus": {
+            "id": "",
+            "tag": "BODY",
+            "text": "跳转到工作区\nEstateGuard社区巡检工作台社社区巡检本地工作空间工作台视频与图片分析事件复核车位巡检场景规则评测与模型项目说明 文件仅在本机处理本地工作区 · v0.3查看项目源码 ↗\n工作空"
+          }
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-22T02:12:28.769Z",
+  "passed": 0,
+  "failed": 1,
+  "ok": false
+}

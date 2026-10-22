@@ -1,0 +1,239 @@
+{
+  "scope": "Current product browser integration, synthetic candidate event seam, real CC0 image decoding with controlled delay; no model inference.",
+  "checks": [
+    {
+      "width": 390,
+      "name": "native hash settling and delayed media keep initial heading visible",
+      "pass": true,
+      "evidence": {
+        "immediate": {
+          "hash": "#workspace",
+          "scroll_y": 840,
+          "detail_top": 0.4375,
+          "heading_top": 51.828125,
+          "heading_bottom": 82.21875,
+          "heading_focused": true,
+          "active_id": "",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "after_hash": {
+          "hash": "#workspace",
+          "scroll_y": 840,
+          "detail_top": 0.4375,
+          "heading_top": 51.828125,
+          "heading_bottom": 82.21875,
+          "heading_focused": true,
+          "active_id": "",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "after_media": {
+          "hash": "#workspace",
+          "scroll_y": 840,
+          "detail_top": 0.4375,
+          "heading_top": 51.828125,
+          "heading_bottom": 82.21875,
+          "heading_focused": true,
+          "active_id": "",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        }
+      }
+    },
+    {
+      "width": 390,
+      "name": "same-task navigation away wins over later hash events and media",
+      "pass": true,
+      "evidence": {
+        "before_media": {
+          "hash": "#policy",
+          "scroll_y": 265,
+          "detail_top": 0,
+          "heading_top": 0,
+          "heading_bottom": 0,
+          "heading_focused": false,
+          "active_id": "score-threshold",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "after_media": {
+          "hash": "#policy",
+          "scroll_y": 265,
+          "detail_top": 0,
+          "heading_top": 0,
+          "heading_bottom": 0,
+          "heading_focused": false,
+          "active_id": "score-threshold",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        }
+      }
+    },
+    {
+      "width": 390,
+      "name": "typing immediately after handoff keeps input focus through media completion",
+      "pass": true,
+      "evidence": {
+        "hash": "#workspace",
+        "scroll_y": 1349,
+        "detail_top": -508.5625,
+        "heading_top": -457.171875,
+        "heading_bottom": -426.78125,
+        "heading_focused": false,
+        "active_id": "decision-note",
+        "focus_calls": 1,
+        "scroll_calls": 1
+      }
+    },
+    {
+      "width": 390,
+      "name": "reuse, rejected replacement, invalid batch and normal navigation add no positioning",
+      "pass": true,
+      "evidence": {
+        "baseline": {
+          "hash": "#workspace",
+          "scroll_y": 1331,
+          "detail_top": -490.5625,
+          "heading_top": -439.171875,
+          "heading_bottom": -408.78125,
+          "heading_focused": false,
+          "active_id": "decision-note",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "after": {
+          "hash": "#workspace",
+          "scroll_y": 0,
+          "detail_top": 821.25,
+          "heading_top": 872.640625,
+          "heading_bottom": 903.03125,
+          "heading_focused": false,
+          "active_id": "",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "dialogs": 1
+      }
+    },
+    {
+      "width": 1440,
+      "name": "native hash settling and delayed media keep initial heading visible",
+      "pass": true,
+      "evidence": {
+        "immediate": {
+          "hash": "#workspace",
+          "scroll_y": 319,
+          "detail_top": -0.4375,
+          "heading_top": 51.953125,
+          "heading_bottom": 82.34375,
+          "heading_focused": true,
+          "active_id": "",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "after_hash": {
+          "hash": "#workspace",
+          "scroll_y": 319,
+          "detail_top": -0.4375,
+          "heading_top": 51.953125,
+          "heading_bottom": 82.34375,
+          "heading_focused": true,
+          "active_id": "",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "after_media": {
+          "hash": "#workspace",
+          "scroll_y": 319,
+          "detail_top": -0.4375,
+          "heading_top": 51.953125,
+          "heading_bottom": 82.34375,
+          "heading_focused": true,
+          "active_id": "",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        }
+      }
+    },
+    {
+      "width": 1440,
+      "name": "same-task navigation away wins over later hash events and media",
+      "pass": true,
+      "evidence": {
+        "before_media": {
+          "hash": "#policy",
+          "scroll_y": 0,
+          "detail_top": 0,
+          "heading_top": 0,
+          "heading_bottom": 0,
+          "heading_focused": false,
+          "active_id": "score-threshold",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "after_media": {
+          "hash": "#policy",
+          "scroll_y": 0,
+          "detail_top": 0,
+          "heading_top": 0,
+          "heading_bottom": 0,
+          "heading_focused": false,
+          "active_id": "score-threshold",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        }
+      }
+    },
+    {
+      "width": 1440,
+      "name": "typing immediately after handoff keeps input focus through media completion",
+      "pass": true,
+      "evidence": {
+        "hash": "#workspace",
+        "scroll_y": 319,
+        "detail_top": -0.4375,
+        "heading_top": 51.953125,
+        "heading_bottom": 82.34375,
+        "heading_focused": false,
+        "active_id": "decision-note",
+        "focus_calls": 1,
+        "scroll_calls": 1
+      }
+    },
+    {
+      "width": 1440,
+      "name": "reuse, rejected replacement, invalid batch and normal navigation add no positioning",
+      "pass": true,
+      "evidence": {
+        "baseline": {
+          "hash": "#workspace",
+          "scroll_y": 319,
+          "detail_top": -0.4375,
+          "heading_top": 51.953125,
+          "heading_bottom": 82.34375,
+          "heading_focused": false,
+          "active_id": "decision-note",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "after": {
+          "hash": "#workspace",
+          "scroll_y": 319,
+          "detail_top": -0.4375,
+          "heading_top": 51.953125,
+          "heading_bottom": 82.34375,
+          "heading_focused": false,
+          "active_id": "",
+          "focus_calls": 1,
+          "scroll_calls": 1
+        },
+        "dialogs": 1
+      }
+    }
+  ],
+  "page_errors": [],
+  "passed": 8,
+  "failed": 0,
+  "ok": true
+}

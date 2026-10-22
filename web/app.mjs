@@ -16,6 +16,12 @@ const titles={analyze:'视频与图片分析',workspace:'事件复核',parking:'
 function navigate(){const view=Object.hasOwn(titles,location.hash.slice(1))?location.hash.slice(1):'analyze';for(const section of document.querySelectorAll('[data-page]'))section.hidden=section.id!==view;for(const a of document.querySelectorAll('[data-nav]'))a.classList.toggle('active',a.dataset.nav===view);$('view-title').textContent=titles[view];}
 window.addEventListener('hashchange',navigate);navigate();
 function message(text,error=false){$('message').textContent=text;$('message').classList.toggle('error',error);}
+function revealNewReview(){
+ // 先显示目标页再同步定位；后续附件解码无需再次触发定位。
+ location.hash='workspace';navigate();
+ const heading=$('incident-detail').querySelector('.detail-header h3');
+ if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});$('incident-detail').scrollIntoView({block:'start',behavior:'instant'});}
+}
 function clearMedia(){media.clear();}
 const hasUnsavedWork=()=>dirty||drafts.size>0;
 const comparableNote=note=>note.replace(/\r\n?/g,'\n').trim();
@@ -78,7 +84,7 @@ window.addEventListener('estateguard:candidates',event=>{try{
  }
  if(!replaceAllowed())return;setWorkspace(next);dirty=true;
  if(event.detail.file)void media.replace(events.map(e=>e.id),event.detail.file);
- event.detail.accepted=true;location.hash='workspace';message('已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。');
+ event.detail.accepted=true;message('已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。');revealNewReview();
  }catch(err){message(err.message,true);}});
 window.addEventListener('beforeunload',event=>{if(hasUnsavedWork()){event.preventDefault();event.returnValue='';}});
 async function showBenchmark(){try{const r=await fetch('benchmark.json');if(!r.ok)throw new Error('无法读取评测');const b=await r.json();const pct=n=>n===null?'不适用':`${(n*100).toFixed(1)}%`;$('benchmark').innerHTML=`<div class="bench-result"><strong>${b.baseline.predictions} → ${b.proposed.predictions}</strong><p>固定合成班次中的待办条目减少 ${pct(b.queue_reduction)}。仍保留一个错误提示和一个完全漏掉的事件，避免把流程评测误写成完美识别。</p></div><div class="table-wrap"><table><thead><tr><th>事件级匹配</th><th>仅按分数告警</th><th>场景规则队列</th></tr></thead><tbody>${[['待办条目','predictions'],['匹配到的参考事件','true_positive'],['未匹配 / 重复条目','false_positive'],['漏掉的参考事件','missed'],['本用例精确率','precision'],['本用例召回率','recall']].map(([l,k])=>`<tr><td>${l}</td><td>${['precision','recall'].includes(k)?pct(b.baseline[k]):b.baseline[k]}</td><td>${['precision','recall'].includes(k)?pct(b.proposed[k]):b.proposed[k]}</td></tr>`).join('')}</tbody></table></div><p class="benchmark-note">${b.raw_observations} 条人工构造的观察、${b.proposed.references} 个参考事件。摄像头、区域、轨迹和类别一致，时间 IoU ≥ 0.1，按重叠从高到低一对一匹配。重复告警算未匹配条目；改进队列还保留低分高风险提示，因此这是流程对比，不是单一模型消融。</p>`;}catch(err){$('benchmark').textContent=err.message;}}
