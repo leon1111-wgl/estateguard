@@ -1,0 +1,91 @@
+{
+  "started_at": "2026-10-23T02:15:43.139Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Actual SSDLite inference on an existing synthetic clip of the repository CC0 bus photo. Inference exceptions are deliberately injected after real successful calls; no detection output or model is mocked. This validates failure reporting, not surveillance accuracy.",
+  "checks": [
+    {
+      "name": "normal actual video inference produces a complete report",
+      "passed": true,
+      "evidence": {
+        "frame_count": 7,
+        "bus_scores": [
+          0.9830567240715027,
+          0.9851245880126953,
+          0.9881211519241333,
+          0.9886025786399841,
+          0.9900193214416504,
+          0.9899007678031921,
+          0.9896509647369385
+        ],
+        "candidates": 1
+      }
+    },
+    {
+      "name": "third-call inference failure retains the first two actual frames for export",
+      "passed": false,
+      "error": "a failed video run must retain export access to already completed frames\n\ntrue !== false\n",
+      "evidence": {
+        "state": {
+          "message": "分析失败：测试注入：第 3 帧推理失败",
+          "run_disabled": false,
+          "download_disabled": true,
+          "send_disabled": true,
+          "results_hidden": true,
+          "file_info": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：2.0 秒（下方播放器可独立播放）",
+          "detector": "ssdlite",
+          "confirmed": true,
+          "actual_calls": [
+            {
+              "call": 1,
+              "width": 640,
+              "height": 426,
+              "predictions": [
+                {
+                  "bbox": [
+                    81.45668029785156,
+                    125.63666796684265,
+                    539.5832061767578,
+                    272.7724871635437
+                  ],
+                  "class": "bus",
+                  "score": 0.9830567240715027
+                }
+              ]
+            },
+            {
+              "call": 2,
+              "width": 640,
+              "height": 426,
+              "predictions": [
+                {
+                  "bbox": [
+                    83.10684204101562,
+                    125.24441885948181,
+                    539.9948883056641,
+                    273.4581105709076
+                  ],
+                  "class": "bus",
+                  "score": 0.9851245880126953
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "fixture": {
+    "path": "artifacts/synthetic-still.mp4",
+    "bytes": 202685,
+    "sha256": "cfa76ef99d178218dfa6c9dabe076b795f6cf8a416b5f62dc7a78bb67cd12f8d",
+    "source": "web/samples/bus.jpg",
+    "synthetic": true
+  },
+  "finished_at": "2026-10-23T02:15:46.643Z",
+  "passed": 1,
+  "failed": 1,
+  "ok": false
+}

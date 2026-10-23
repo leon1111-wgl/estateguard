@@ -1,0 +1,1069 @@
+{
+  "started_at": "2026-10-23T02:21:47.358Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Real SSDLite inference on the repository CC0 bus photo and disclosed synthetic clips. Faults are injected at detector calls, video seek, or manifest requests; successful predictions and weights are never replaced.",
+  "test_note": "The initial 8/9 post-fix run used an overly narrow no-frame Chinese-message regex. Its report is preserved as partial-analysis-validation.notice-assertion.json; the zero-frame behavior was already correct.",
+  "checks": [
+    {
+      "name": "normal real video inference produces a complete report",
+      "passed": true,
+      "evidence": {
+        "frame_count": 7,
+        "bus_scores": [
+          0.9830567240715027,
+          0.9851245880126953,
+          0.9884098768234253,
+          0.9884323477745056,
+          0.9900193214416504,
+          0.9899007678031921,
+          0.9896509647369385
+        ],
+        "candidates": 1
+      }
+    },
+    {
+      "name": "third-call inference failure exports the first two actual frames",
+      "passed": true,
+      "evidence": {
+        "state": {
+          "message": "分析失败：测试注入：第 3 帧推理失败 已保留 2 / 7 个采样帧，可导出检测 JSON 或重新分析。未完成任务不生成候选。",
+          "run_disabled": false,
+          "file_disabled": false,
+          "download_disabled": false,
+          "send_disabled": true,
+          "results_hidden": false,
+          "file_info": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：1.0 秒（下方播放器可独立播放）",
+          "detector": "ssdlite",
+          "confirmed": true,
+          "last_paint": "1090560:574f7aa0",
+          "drawn_rects": [
+            [
+              0,
+              0,
+              640,
+              426
+            ],
+            [
+              83.10684204101562,
+              125.24441885948181,
+              539.9948883056641,
+              273.4581105709076
+            ]
+          ],
+          "actual_calls": [
+            {
+              "number": 1,
+              "width": 640,
+              "height": 426,
+              "fingerprint": "1090560:d3922502",
+              "predictions": [
+                {
+                  "bbox": [
+                    81.45668029785156,
+                    125.63666796684265,
+                    539.5832061767578,
+                    272.7724871635437
+                  ],
+                  "class": "bus",
+                  "score": 0.9830567240715027
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "width": 640,
+              "height": 426,
+              "fingerprint": "1090560:574f7aa0",
+              "predictions": [
+                {
+                  "bbox": [
+                    83.10684204101562,
+                    125.24441885948181,
+                    539.9948883056641,
+                    273.4581105709076
+                  ],
+                  "class": "bus",
+                  "score": 0.9851245880126953
+                }
+              ]
+            }
+          ],
+          "attempts": [
+            {
+              "number": 1,
+              "fingerprint": "1090560:d3922502"
+            },
+            {
+              "number": 2,
+              "fingerprint": "1090560:574f7aa0"
+            },
+            {
+              "number": 3,
+              "fingerprint": "1090560:eccb7dc3"
+            }
+          ]
+        },
+        "report": {
+          "format": "estateguard-detections",
+          "version": 1,
+          "analysis_id": "c9be809a-e27a-4378-92d8-8e755a85b860",
+          "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+          "runtime": "TensorFlow.js 4.22.0",
+          "backend": "webgl",
+          "model_loading": {
+            "network_bytes": 0,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20041229,
+            "load_ms": 0,
+            "initialization_ms": 0,
+            "reused_in_memory": true
+          },
+          "media": {
+            "name": "synthetic-still.mp4",
+            "type": "video/mp4",
+            "bytes": 202685,
+            "width": 640,
+            "height": 426
+          },
+          "params": {
+            "rule": "access",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "camera": "合成视频故障验收镜头",
+            "zone": "完整画面测试区域",
+            "started_at": "2026-10-23T08:00:00+08:00",
+            "media_name": "synthetic-still.mp4",
+            "dwell_seconds": null,
+            "is_video": true,
+            "expected_direction": null,
+            "minimum_score": 0.5,
+            "offset_seconds": 0,
+            "sample_interval_seconds": 1,
+            "max_frames": 20,
+            "rules_version": "vision-rules-v2-stable-dwell",
+            "tracking_max_gap_seconds": 1.6,
+            "parking_max_center_distance": 0.06,
+            "parking_min_samples": 3,
+            "detector": "ssdlite",
+            "max_detections": 50,
+            "nms_iou_threshold": 0.5,
+            "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+            "context_confirmed": true
+          },
+          "context_confirmation": {
+            "media_revision": 1,
+            "confirmed_at": "2026-10-23T02:21:48.655Z"
+          },
+          "complete": false,
+          "outcome": "failed",
+          "failure": {
+            "stage": "inference",
+            "message": "测试注入：第 3 帧推理失败",
+            "sample_time_seconds": 2
+          },
+          "frames": [
+            {
+              "time": 0,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9830567240715027,
+                  "bbox": [
+                    0.12727606296539307,
+                    0.29492175579071045,
+                    0.8430987596511841,
+                    0.6403110027313232
+                  ]
+                }
+              ]
+            },
+            {
+              "time": 1,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9851245880126953,
+                  "bbox": [
+                    0.12985444068908691,
+                    0.2940009832382202,
+                    0.8437420129776001,
+                    0.6419204473495483
+                  ]
+                }
+              ]
+            }
+          ],
+          "tracks": [
+            {
+              "id": "track-1",
+              "class": "bus",
+              "samples": [
+                {
+                  "time": 0,
+                  "bbox": [
+                    0.12727606296539307,
+                    0.29492175579071045,
+                    0.8430987596511841,
+                    0.6403110027313232
+                  ],
+                  "score": 0.9830567240715027
+                },
+                {
+                  "time": 1,
+                  "bbox": [
+                    0.12985444068908691,
+                    0.2940009832382202,
+                    0.8437420129776001,
+                    0.6419204473495483
+                  ],
+                  "score": 0.9851245880126953
+                }
+              ]
+            }
+          ],
+          "candidates": [],
+          "metrics": {
+            "frame_count": 2,
+            "planned_frame_count": 7,
+            "mean_inference_ms": 21.75,
+            "total_ms": 115
+          },
+          "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+        }
+      }
+    },
+    {
+      "name": "retry after failed inference creates an independent clean complete run",
+      "passed": true,
+      "evidence": {
+        "analysis_id": "c85bec94-f749-4cd8-aefe-0dd8e9eec98b",
+        "frame_count": 7,
+        "candidates": 1,
+        "handover": {
+          "analysis_id": "c85bec94-f749-4cd8-aefe-0dd8e9eec98b",
+          "audit": [
+            {
+              "event_id": "event:vision-track-1-1",
+              "status": "needs_evidence",
+              "note": "故障后完整重试。公开图合成短片不证明现场阻塞，需核对现场证据。",
+              "at": "2026-10-23T02:21:50.831Z"
+            }
+          ],
+          "restored_media_count": 0
+        }
+      }
+    },
+    {
+      "name": "seek failure retains successful frames and reports the failed sample time",
+      "passed": true,
+      "evidence": {
+        "state": {
+          "message": "分析失败：浏览器无法解码此视频 已保留 2 / 7 个采样帧，可导出检测 JSON 或重新分析。未完成任务不生成候选。",
+          "run_disabled": false,
+          "file_disabled": false,
+          "download_disabled": false,
+          "send_disabled": true,
+          "results_hidden": false,
+          "file_info": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：1.0 秒（下方播放器可独立播放）",
+          "detector": "ssdlite",
+          "confirmed": true,
+          "last_paint": "1090560:574f7aa0",
+          "drawn_rects": [
+            [
+              0,
+              0,
+              640,
+              426
+            ],
+            [
+              83.10684204101562,
+              125.24441885948181,
+              539.9948883056641,
+              273.4581105709076
+            ]
+          ],
+          "actual_calls": [
+            {
+              "number": 1,
+              "width": 640,
+              "height": 426,
+              "fingerprint": "1090560:d3922502",
+              "predictions": [
+                {
+                  "bbox": [
+                    81.45668029785156,
+                    125.63666796684265,
+                    539.5832061767578,
+                    272.7724871635437
+                  ],
+                  "class": "bus",
+                  "score": 0.9830567240715027
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "width": 640,
+              "height": 426,
+              "fingerprint": "1090560:574f7aa0",
+              "predictions": [
+                {
+                  "bbox": [
+                    83.10684204101562,
+                    125.24441885948181,
+                    539.9948883056641,
+                    273.4581105709076
+                  ],
+                  "class": "bus",
+                  "score": 0.9851245880126953
+                }
+              ]
+            }
+          ],
+          "attempts": [
+            {
+              "number": 1,
+              "fingerprint": "1090560:d3922502"
+            },
+            {
+              "number": 2,
+              "fingerprint": "1090560:574f7aa0"
+            }
+          ]
+        },
+        "report": {
+          "format": "estateguard-detections",
+          "version": 1,
+          "analysis_id": "f6f431a3-2e13-4067-8002-5c7bfcb04bb2",
+          "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+          "runtime": "TensorFlow.js 4.22.0",
+          "backend": "webgl",
+          "model_loading": {
+            "network_bytes": 0,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20041229,
+            "load_ms": 0,
+            "initialization_ms": 0,
+            "reused_in_memory": true
+          },
+          "media": {
+            "name": "synthetic-still.mp4",
+            "type": "video/mp4",
+            "bytes": 202685,
+            "width": 640,
+            "height": 426
+          },
+          "params": {
+            "rule": "access",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "camera": "合成视频故障验收镜头",
+            "zone": "完整画面测试区域",
+            "started_at": "2026-10-23T08:00:00+08:00",
+            "media_name": "synthetic-still.mp4",
+            "dwell_seconds": null,
+            "is_video": true,
+            "expected_direction": null,
+            "minimum_score": 0.5,
+            "offset_seconds": 0,
+            "sample_interval_seconds": 1,
+            "max_frames": 20,
+            "rules_version": "vision-rules-v2-stable-dwell",
+            "tracking_max_gap_seconds": 1.6,
+            "parking_max_center_distance": 0.06,
+            "parking_min_samples": 3,
+            "detector": "ssdlite",
+            "max_detections": 50,
+            "nms_iou_threshold": 0.5,
+            "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+            "context_confirmed": true
+          },
+          "context_confirmation": {
+            "media_revision": 1,
+            "confirmed_at": "2026-10-23T02:21:48.655Z"
+          },
+          "complete": false,
+          "outcome": "failed",
+          "failure": {
+            "stage": "frame_decode",
+            "message": "浏览器无法解码此视频",
+            "sample_time_seconds": 2
+          },
+          "frames": [
+            {
+              "time": 0,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9830567240715027,
+                  "bbox": [
+                    0.12727606296539307,
+                    0.29492175579071045,
+                    0.8430987596511841,
+                    0.6403110027313232
+                  ]
+                }
+              ]
+            },
+            {
+              "time": 1,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9851245880126953,
+                  "bbox": [
+                    0.12985444068908691,
+                    0.2940009832382202,
+                    0.8437420129776001,
+                    0.6419204473495483
+                  ]
+                }
+              ]
+            }
+          ],
+          "tracks": [
+            {
+              "id": "track-1",
+              "class": "bus",
+              "samples": [
+                {
+                  "time": 0,
+                  "bbox": [
+                    0.12727606296539307,
+                    0.29492175579071045,
+                    0.8430987596511841,
+                    0.6403110027313232
+                  ],
+                  "score": 0.9830567240715027
+                },
+                {
+                  "time": 1,
+                  "bbox": [
+                    0.12985444068908691,
+                    0.2940009832382202,
+                    0.8437420129776001,
+                    0.6419204473495483
+                  ],
+                  "score": 0.9851245880126953
+                }
+              ]
+            }
+          ],
+          "candidates": [],
+          "metrics": {
+            "frame_count": 2,
+            "planned_frame_count": 7,
+            "mean_inference_ms": 21.399999976158142,
+            "total_ms": 79.90000009536743
+          },
+          "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+        }
+      }
+    },
+    {
+      "name": "manual stop exports completed real frames without candidates or a failure",
+      "passed": true,
+      "evidence": {
+        "state": {
+          "message": "分析已停止。可导出已完成帧，未完成任务不生成候选。",
+          "run_disabled": false,
+          "file_disabled": false,
+          "download_disabled": false,
+          "send_disabled": true,
+          "results_hidden": false,
+          "file_info": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：2.0 秒（下方播放器可独立播放）",
+          "detector": "ssdlite",
+          "confirmed": true,
+          "last_paint": "1090560:eccb7dc3",
+          "drawn_rects": [
+            [
+              0,
+              0,
+              640,
+              426
+            ],
+            [
+              83.31274032592773,
+              123.6524430513382,
+              537.3841285705566,
+              274.8902463912964
+            ]
+          ],
+          "actual_calls": [
+            {
+              "number": 1,
+              "width": 640,
+              "height": 426,
+              "fingerprint": "1090560:d3922502",
+              "predictions": [
+                {
+                  "bbox": [
+                    81.45668029785156,
+                    125.63666796684265,
+                    539.5832061767578,
+                    272.7724871635437
+                  ],
+                  "class": "bus",
+                  "score": 0.9830567240715027
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "width": 640,
+              "height": 426,
+              "fingerprint": "1090560:574f7aa0",
+              "predictions": [
+                {
+                  "bbox": [
+                    83.10684204101562,
+                    125.24441885948181,
+                    539.9948883056641,
+                    273.4581105709076
+                  ],
+                  "class": "bus",
+                  "score": 0.9851245880126953
+                }
+              ]
+            },
+            {
+              "number": 3,
+              "width": 640,
+              "height": 426,
+              "fingerprint": "1090560:eccb7dc3",
+              "predictions": [
+                {
+                  "bbox": [
+                    83.31274032592773,
+                    123.6524430513382,
+                    537.3841285705566,
+                    274.8902463912964
+                  ],
+                  "class": "bus",
+                  "score": 0.9884098768234253
+                }
+              ]
+            }
+          ],
+          "attempts": [
+            {
+              "number": 1,
+              "fingerprint": "1090560:d3922502"
+            },
+            {
+              "number": 2,
+              "fingerprint": "1090560:574f7aa0"
+            },
+            {
+              "number": 3,
+              "fingerprint": "1090560:eccb7dc3"
+            }
+          ]
+        },
+        "report": {
+          "format": "estateguard-detections",
+          "version": 1,
+          "analysis_id": "47d73864-1629-4f31-bd72-ecb1da205db1",
+          "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+          "runtime": "TensorFlow.js 4.22.0",
+          "backend": "webgl",
+          "model_loading": {
+            "network_bytes": 0,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20041229,
+            "load_ms": 0,
+            "initialization_ms": 0,
+            "reused_in_memory": true
+          },
+          "media": {
+            "name": "synthetic-still.mp4",
+            "type": "video/mp4",
+            "bytes": 202685,
+            "width": 640,
+            "height": 426
+          },
+          "params": {
+            "rule": "access",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "camera": "合成视频故障验收镜头",
+            "zone": "完整画面测试区域",
+            "started_at": "2026-10-23T08:00:00+08:00",
+            "media_name": "synthetic-still.mp4",
+            "dwell_seconds": null,
+            "is_video": true,
+            "expected_direction": null,
+            "minimum_score": 0.5,
+            "offset_seconds": 0,
+            "sample_interval_seconds": 1,
+            "max_frames": 20,
+            "rules_version": "vision-rules-v2-stable-dwell",
+            "tracking_max_gap_seconds": 1.6,
+            "parking_max_center_distance": 0.06,
+            "parking_min_samples": 3,
+            "detector": "ssdlite",
+            "max_detections": 50,
+            "nms_iou_threshold": 0.5,
+            "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+            "context_confirmed": true
+          },
+          "context_confirmation": {
+            "media_revision": 1,
+            "confirmed_at": "2026-10-23T02:21:48.655Z"
+          },
+          "complete": false,
+          "outcome": "stopped",
+          "failure": null,
+          "frames": [
+            {
+              "time": 0,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9830567240715027,
+                  "bbox": [
+                    0.12727606296539307,
+                    0.29492175579071045,
+                    0.8430987596511841,
+                    0.6403110027313232
+                  ]
+                }
+              ]
+            },
+            {
+              "time": 1,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9851245880126953,
+                  "bbox": [
+                    0.12985444068908691,
+                    0.2940009832382202,
+                    0.8437420129776001,
+                    0.6419204473495483
+                  ]
+                }
+              ]
+            },
+            {
+              "time": 2,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9884098768234253,
+                  "bbox": [
+                    0.13017615675926208,
+                    0.29026395082473755,
+                    0.8396627008914948,
+                    0.6452822685241699
+                  ]
+                }
+              ]
+            }
+          ],
+          "tracks": [
+            {
+              "id": "track-1",
+              "class": "bus",
+              "samples": [
+                {
+                  "time": 0,
+                  "bbox": [
+                    0.12727606296539307,
+                    0.29492175579071045,
+                    0.8430987596511841,
+                    0.6403110027313232
+                  ],
+                  "score": 0.9830567240715027
+                },
+                {
+                  "time": 1,
+                  "bbox": [
+                    0.12985444068908691,
+                    0.2940009832382202,
+                    0.8437420129776001,
+                    0.6419204473495483
+                  ],
+                  "score": 0.9851245880126953
+                },
+                {
+                  "time": 2,
+                  "bbox": [
+                    0.13017615675926208,
+                    0.29026395082473755,
+                    0.8396627008914948,
+                    0.6452822685241699
+                  ],
+                  "score": 0.9884098768234253
+                }
+              ]
+            }
+          ],
+          "candidates": [],
+          "metrics": {
+            "frame_count": 3,
+            "planned_frame_count": 7,
+            "mean_inference_ms": 30.46666669845581,
+            "total_ms": 165
+          },
+          "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+        }
+      }
+    },
+    {
+      "name": "failure before any successful frame has no report or stale candidates",
+      "passed": true,
+      "evidence": {
+        "state": {
+          "message": "分析失败：测试注入：第 1 帧推理失败 尚无已完成采样帧，没有可导出的结果。可重新分析。",
+          "run_disabled": false,
+          "file_disabled": false,
+          "download_disabled": true,
+          "send_disabled": true,
+          "results_hidden": true,
+          "file_info": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：0.0 秒（下方播放器可独立播放）",
+          "detector": "ssdlite",
+          "confirmed": true,
+          "last_paint": "1090560:d3922502",
+          "drawn_rects": [
+            [
+              0,
+              0,
+              640,
+              426
+            ]
+          ],
+          "actual_calls": [],
+          "attempts": [
+            {
+              "number": 1,
+              "fingerprint": "1090560:d3922502"
+            }
+          ]
+        },
+        "failure_notice": "分析失败：测试注入：第 1 帧推理失败 尚无已完成采样帧，没有可导出的结果。可重新分析。"
+      }
+    },
+    {
+      "name": "failed moving-marker frame restores the last successful image and matching boxes",
+      "passed": true,
+      "evidence": {
+        "state": {
+          "message": "分析失败：测试注入：第 3 帧推理失败 已保留 2 / 7 个采样帧，可导出检测 JSON 或重新分析。未完成任务不生成候选。",
+          "run_disabled": false,
+          "file_disabled": false,
+          "download_disabled": false,
+          "send_disabled": true,
+          "results_hidden": false,
+          "file_info": "partial-analysis-varying.mp4 · 0.39 MB · 6.1 秒 · 检测画面：1.0 秒（下方播放器可独立播放）",
+          "detector": "ssdlite",
+          "confirmed": true,
+          "last_paint": "2457600:2c0ed611",
+          "drawn_rects": [
+            [
+              0,
+              0,
+              960,
+              640
+            ],
+            [
+              125.78727722167969,
+              190.18651962280273,
+              816.6205215454102,
+              408.54761123657227
+            ]
+          ],
+          "actual_calls": [
+            {
+              "number": 1,
+              "width": 960,
+              "height": 640,
+              "fingerprint": "2457600:28b521c8",
+              "predictions": [
+                {
+                  "bbox": [
+                    124.02151107788086,
+                    189.36491012573242,
+                    817.1203994750977,
+                    409.57292556762695
+                  ],
+                  "class": "bus",
+                  "score": 0.9896559715270996
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "width": 960,
+              "height": 640,
+              "fingerprint": "2457600:2c0ed611",
+              "predictions": [
+                {
+                  "bbox": [
+                    125.78727722167969,
+                    190.18651962280273,
+                    816.6205215454102,
+                    408.54761123657227
+                  ],
+                  "class": "bus",
+                  "score": 0.9906778335571289
+                }
+              ]
+            }
+          ],
+          "attempts": [
+            {
+              "number": 1,
+              "fingerprint": "2457600:28b521c8"
+            },
+            {
+              "number": 2,
+              "fingerprint": "2457600:2c0ed611"
+            },
+            {
+              "number": 3,
+              "fingerprint": "2457600:26f413a8"
+            }
+          ]
+        },
+        "report": {
+          "format": "estateguard-detections",
+          "version": 1,
+          "analysis_id": "d6e6f303-f674-414a-a396-8098eddd5c9d",
+          "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+          "runtime": "TensorFlow.js 4.22.0",
+          "backend": "webgl",
+          "model_loading": {
+            "network_bytes": 0,
+            "cache_bytes": 0,
+            "cache_available": true,
+            "resource_bytes": 20041229,
+            "load_ms": 0,
+            "initialization_ms": 0,
+            "reused_in_memory": true
+          },
+          "media": {
+            "name": "partial-analysis-varying.mp4",
+            "type": "video/mp4",
+            "bytes": 404230,
+            "width": 960,
+            "height": 640
+          },
+          "params": {
+            "rule": "access",
+            "roi": [
+              0,
+              0,
+              1,
+              1
+            ],
+            "camera": "合成视频故障验收镜头",
+            "zone": "完整画面测试区域",
+            "started_at": "2026-10-23T08:00:00+08:00",
+            "media_name": "partial-analysis-varying.mp4",
+            "dwell_seconds": null,
+            "is_video": true,
+            "expected_direction": null,
+            "minimum_score": 0.5,
+            "offset_seconds": 0,
+            "sample_interval_seconds": 1,
+            "max_frames": 20,
+            "rules_version": "vision-rules-v2-stable-dwell",
+            "tracking_max_gap_seconds": 1.6,
+            "parking_max_center_distance": 0.06,
+            "parking_min_samples": 3,
+            "detector": "ssdlite",
+            "max_detections": 50,
+            "nms_iou_threshold": 0.5,
+            "postprocess": "coco-ssd-2.2.3-fixed-nms-v1",
+            "context_confirmed": true
+          },
+          "context_confirmation": {
+            "media_revision": 2,
+            "confirmed_at": "2026-10-23T02:21:51.548Z"
+          },
+          "complete": false,
+          "outcome": "failed",
+          "failure": {
+            "stage": "inference",
+            "message": "测试注入：第 3 帧推理失败",
+            "sample_time_seconds": 2
+          },
+          "frames": [
+            {
+              "time": 0,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9896559715270996,
+                  "bbox": [
+                    0.12918907403945923,
+                    0.2958826720714569,
+                    0.8511670827865601,
+                    0.6399576961994171
+                  ]
+                }
+              ]
+            },
+            {
+              "time": 1,
+              "detections": [
+                {
+                  "class": "bus",
+                  "score": 0.9906778335571289,
+                  "bbox": [
+                    0.131028413772583,
+                    0.2971664369106293,
+                    0.8506463766098022,
+                    0.6383556425571442
+                  ]
+                }
+              ]
+            }
+          ],
+          "tracks": [
+            {
+              "id": "track-1",
+              "class": "bus",
+              "samples": [
+                {
+                  "time": 0,
+                  "bbox": [
+                    0.12918907403945923,
+                    0.2958826720714569,
+                    0.8511670827865601,
+                    0.6399576961994171
+                  ],
+                  "score": 0.9896559715270996
+                },
+                {
+                  "time": 1,
+                  "bbox": [
+                    0.131028413772583,
+                    0.2971664369106293,
+                    0.8506463766098022,
+                    0.6383556425571442
+                  ],
+                  "score": 0.9906778335571289
+                }
+              ]
+            }
+          ],
+          "candidates": [],
+          "metrics": {
+            "frame_count": 2,
+            "planned_frame_count": 7,
+            "mean_inference_ms": 26.200000047683716,
+            "total_ms": 117.40000009536743
+          },
+          "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+        }
+      }
+    },
+    {
+      "name": "manifest failure produces no partial report and a real retry succeeds",
+      "passed": true,
+      "evidence": {
+        "failed": {
+          "message": "分析失败：模型清单加载失败 (500) 尚无已完成采样帧，没有可导出的结果。可重新分析。",
+          "run_disabled": false,
+          "file_disabled": false,
+          "download_disabled": true,
+          "send_disabled": true,
+          "results_hidden": true,
+          "file_info": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：0.0 秒（下方播放器可独立播放）",
+          "detector": "ssdlite",
+          "confirmed": true,
+          "last_paint": "1090560:d3922502",
+          "drawn_rects": [
+            [
+              0,
+              0,
+              640,
+              426
+            ]
+          ],
+          "actual_calls": [],
+          "attempts": []
+        },
+        "retry": {
+          "outcome": "completed",
+          "frames": 7
+        }
+      }
+    },
+    {
+      "name": "cancelling a pending model manifest keeps media and permits real retry",
+      "passed": true,
+      "evidence": {
+        "cancelled": {
+          "message": "模型加载已取消。素材与设置已保留，可重新开始分析。",
+          "run_disabled": false,
+          "file_disabled": false,
+          "download_disabled": true,
+          "send_disabled": true,
+          "results_hidden": true,
+          "file_info": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：0.0 秒（下方播放器可独立播放）",
+          "detector": "ssdlite",
+          "confirmed": true,
+          "last_paint": "1090560:d3922502",
+          "drawn_rects": [
+            [
+              0,
+              0,
+              640,
+              426
+            ]
+          ],
+          "actual_calls": [],
+          "attempts": []
+        },
+        "retry": {
+          "outcome": "completed",
+          "frames": 7,
+          "candidates": 1
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "fixtures": [
+    {
+      "path": "artifacts/synthetic-still.mp4",
+      "bytes": 202685,
+      "sha256": "1ab59913c916eed33630af540cfa6e5314aa11d6522ef35d6b4065d5d96f6676",
+      "source": "web/samples/bus.jpg",
+      "source_sha256": "34ff1128eb83891e0ae38c6323022af6a4dc6a035d150c106201088b093499bd",
+      "synthetic": true
+    },
+    {
+      "path": "artifacts/partial-analysis-varying.mp4",
+      "bytes": 404230,
+      "sha256": "955481dade0ae73d9778609656a8fe4c39a35d8d76267949e0feb47d5c8de106",
+      "source": "web/samples/bus.jpg",
+      "source_sha256": "34ff1128eb83891e0ae38c6323022af6a4dc6a035d150c106201088b093499bd",
+      "synthetic": true
+    }
+  ],
+  "finished_at": "2026-10-23T02:21:54.939Z",
+  "passed": 9,
+  "failed": 0,
+  "ok": true
+}

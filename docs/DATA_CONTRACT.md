@@ -41,6 +41,10 @@ JSON，版本 1。最多 5 MiB、10,000 条记录。见 `data/demo.json`。导�
 
 `format: estateguard-detections`；包含模型/运行库版本、后端、来源文件元数据、阈值、区域、场景参数、逐帧检测框、匿名轨迹、规则候选与实际耗时。它是视觉模块的可复查原始输出；用「送入事件复核」产生兼容的观察批次。
 
+2026-10-23 起保留 `version: 1` 与原 `complete` 布尔值，并增加 `outcome`：`completed`、`stopped` 或 `failed`。只有 `completed` 的 `complete` 为 `true`；其余状态的 `candidates` 为空，不允许送审。`metrics.planned_frame_count` 是本次计划采样数，`metrics.frame_count` 与 `frames.length` 只统计成功帧；平均推理耗时也只使用这些帧。旧报告没有 `outcome` 时，不能仅凭 `complete:false` 推断中断原因。
+
+失败报告的 `failure` 包含 `stage`（`frame_decode`、`inference`、`tracking` 或 `rules`）、`message` 与 `sample_time_seconds`。帧级失败时间为相对原素材的尝试采样位置，不表示该帧已经完成；非帧级派生失败为 `null`。帧失败后若连轨迹整理也失败，会另记 `tracking_error`，保留 `frames`、将 `tracks` 留空并明确提示；不能把空轨迹理解为未检测到物体。正常完成或手动停止的 `failure` 为 `null`。零成功帧的失败不生成检测报告，加载失败/取消亦不伪造结果。报告不含原始图像、视频或可恢复的推理检查点。
+
 2026-10-16 起的报告在 `params` 中保存实际 `minimum_score`、`nms_iou_threshold`、`postprocess` 补丁标识、`max_detections`、`offset_seconds`、`sample_interval_seconds`、`max_frames`。片段起点为相对原素材的秒数，图片实际为 0；`started_at` 是原素材开始时间，候选绝对时间在此基础上加采样秒数。旧报告缺失这些字段时不得假定当时用了默认值，无法完整重现其检测设置。报告不包含原始媒体，当前也没有从检测报告一键恢复分析设置的入口。
 
 2026-10-19 起增加 `rules_version: vision-rules-v2-stable-dwell`、`tracking_max_gap_seconds: 1.6`、`parking_max_center_distance: 0.06`（片段内归一化检测中心最大两两距离）及 `parking_min_samples: 3`。停车候选只包含达标稳定段的时间、分数与证据，使用 `stable_segment_id` 保持下游分段。旧报告缺少这些字段时不能按新规则解释已有结果；需要原始媒体重新分析。

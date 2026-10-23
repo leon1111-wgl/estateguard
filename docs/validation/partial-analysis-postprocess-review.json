@@ -1,0 +1,929 @@
+{
+  "at": "2026-10-23T02:22:44.377Z",
+  "base": "http://127.0.0.1:8767",
+  "vision_sha256": "635e35b9d381ac4a2a357399e2ecf74d6acb9b0ea200b4e3da5740a391800c3d",
+  "rules_sha256": "e897d7541ce38e523b710b12dcdc6b9f7ff0c27ef981a70c226a6d0051ee6a0d",
+  "scope": "Actual D-FINE inference on existing CC0-photo synthetic video. Explicit postprocessing exceptions in HTTP module responses only; no product changes or fabricated detections.",
+  "cases": [
+    {
+      "mode": "tracking",
+      "pass": true,
+      "evidence": {
+        "attempts": 2,
+        "outputs": [
+          {
+            "time": 5,
+            "predictions": [
+              {
+                "bbox": [
+                  90.72494506835938,
+                  129.10398960113525,
+                  526.2857055664062,
+                  268.49106073379517
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.9658855618793439
+              },
+              {
+                "bbox": [
+                  380.23237228393555,
+                  233.0379420518875,
+                  18.76056671142578,
+                  37.93984293937683
+                ],
+                "class": "stop sign",
+                "classIndex": 11,
+                "score": 0.8377448371421952
+              },
+              {
+                "bbox": [
+                  535.3224754333496,
+                  137.70314607024193,
+                  104.6121597290039,
+                  158.35571032762527
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.6394068883337125
+              }
+            ]
+          },
+          {
+            "time": 6,
+            "predictions": [
+              {
+                "bbox": [
+                  90.5941390991211,
+                  129.06138253211975,
+                  526.4482116699219,
+                  268.5205149650574
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.9642059032940443
+              },
+              {
+                "bbox": [
+                  380.1997375488281,
+                  233.00589787960052,
+                  18.802871704101562,
+                  38.0116503238678
+                ],
+                "class": "stop sign",
+                "classIndex": 11,
+                "score": 0.8387751236737436
+              },
+              {
+                "bbox": [
+                  535.4329872131348,
+                  138.04141268134117,
+                  104.5498275756836,
+                  158.28090673685074
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.6667640539641932
+              }
+            ]
+          }
+        ],
+        "committed": [
+          {
+            "time": 5,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9658855618793439,
+                "bbox": [
+                  0.14175772666931152,
+                  0.30306100845336914,
+                  0.8223214149475098,
+                  0.630260705947876
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8377448371421952,
+                "bbox": [
+                  0.5941130816936493,
+                  0.5470374226570129,
+                  0.029313385486602783,
+                  0.08906066417694092
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6394068883337125,
+                "bbox": [
+                  0.8364413678646088,
+                  0.3232468217611313,
+                  0.1634564995765686,
+                  0.37172701954841614
+                ]
+              }
+            ]
+          },
+          {
+            "time": 6,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9642059032940443,
+                "bbox": [
+                  0.1415533423423767,
+                  0.30296099185943604,
+                  0.8225753307342529,
+                  0.6303298473358154
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8387751236737436,
+                "bbox": [
+                  0.594062089920044,
+                  0.5469622015953064,
+                  0.02937948703765869,
+                  0.08922922611236572
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6667640539641932,
+                "bbox": [
+                  0.8366140425205231,
+                  0.32404087483882904,
+                  0.16335910558700562,
+                  0.37155142426490784
+                ]
+              }
+            ]
+          }
+        ],
+        "tracking_calls": 1,
+        "rules_calls": 0,
+        "canvas_matches_last_success": true,
+        "frame_info": "public-photo-synthetic-video.mp4 · 0.19 MB · 6.1 秒 · 检测画面：6.0 秒（下方播放器可独立播放）",
+        "message": "分析失败：INJECTED_TEST_TRACKING_FAILURE 已保留 2 / 2 个采样帧，可导出检测 JSON 或重新分析。未完成任务不生成候选。",
+        "download_disabled": false,
+        "send_disabled": true,
+        "results_hidden": false,
+        "candidate_explanation": "分析中途失败，仅保留 2 / 2 个采样帧，未生成规则候选。可导出已完成帧或重新分析。",
+        "summary": "2采样帧未完成匿名轨迹0规则候选260 ms平均推理",
+        "rows": "轨迹整理失败，已完成帧与原始检测框仍可导出。"
+      },
+      "report": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "analysis_id": "e8cb7159-6a80-4947-bfd0-eb91f1a7a432",
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "runtime": "ONNX Runtime Web 1.30.0",
+        "backend": "WASM · 1 线程",
+        "model_loading": {
+          "network_bytes": 29776700,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 29776700,
+          "load_ms": 506.30000019073486,
+          "initialization_ms": 376.2999999523163,
+          "reused_in_memory": false
+        },
+        "media": {
+          "name": "public-photo-synthetic-video.mp4",
+          "type": "video/mp4",
+          "bytes": 202685,
+          "width": 640,
+          "height": 426
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "公开素材验证相机",
+          "zone": "合成规则验证区域",
+          "started_at": "2026-10-23T08:00:00+08:00",
+          "media_name": "public-photo-synthetic-video.mp4",
+          "dwell_seconds": null,
+          "is_video": true,
+          "expected_direction": null,
+          "minimum_score": 0.6,
+          "offset_seconds": 5,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "dfine",
+          "max_detections": 50,
+          "nms_iou_threshold": null,
+          "duplicate_iou_threshold": 0.9,
+          "postprocess": "dfine-topk-dedupe090-v1",
+          "input_size": 640,
+          "context_confirmed": true
+        },
+        "context_confirmation": {
+          "media_revision": 1,
+          "confirmed_at": "2026-10-23T02:22:45.763Z"
+        },
+        "complete": false,
+        "outcome": "failed",
+        "failure": {
+          "stage": "tracking",
+          "message": "INJECTED_TEST_TRACKING_FAILURE",
+          "sample_time_seconds": null
+        },
+        "frames": [
+          {
+            "time": 5,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9658855618793439,
+                "bbox": [
+                  0.14175772666931152,
+                  0.30306100845336914,
+                  0.8223214149475098,
+                  0.630260705947876
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8377448371421952,
+                "bbox": [
+                  0.5941130816936493,
+                  0.5470374226570129,
+                  0.029313385486602783,
+                  0.08906066417694092
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6394068883337125,
+                "bbox": [
+                  0.8364413678646088,
+                  0.3232468217611313,
+                  0.1634564995765686,
+                  0.37172701954841614
+                ]
+              }
+            ]
+          },
+          {
+            "time": 6,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9642059032940443,
+                "bbox": [
+                  0.1415533423423767,
+                  0.30296099185943604,
+                  0.8225753307342529,
+                  0.6303298473358154
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8387751236737436,
+                "bbox": [
+                  0.594062089920044,
+                  0.5469622015953064,
+                  0.02937948703765869,
+                  0.08922922611236572
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6667640539641932,
+                "bbox": [
+                  0.8366140425205231,
+                  0.32404087483882904,
+                  0.16335910558700562,
+                  0.37155142426490784
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [],
+        "candidates": [],
+        "metrics": {
+          "frame_count": 2,
+          "planned_frame_count": 2,
+          "mean_inference_ms": 260.10000002384186,
+          "total_ms": 1162.2999999523163
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      }
+    },
+    {
+      "mode": "rules",
+      "pass": true,
+      "evidence": {
+        "attempts": 2,
+        "outputs": [
+          {
+            "time": 5,
+            "predictions": [
+              {
+                "bbox": [
+                  90.72494506835938,
+                  129.10398960113525,
+                  526.2857055664062,
+                  268.49106073379517
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.9658855618793439
+              },
+              {
+                "bbox": [
+                  380.23237228393555,
+                  233.0379420518875,
+                  18.76056671142578,
+                  37.93984293937683
+                ],
+                "class": "stop sign",
+                "classIndex": 11,
+                "score": 0.8377448371421952
+              },
+              {
+                "bbox": [
+                  535.3224754333496,
+                  137.70314607024193,
+                  104.6121597290039,
+                  158.35571032762527
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.6394068883337125
+              }
+            ]
+          },
+          {
+            "time": 6,
+            "predictions": [
+              {
+                "bbox": [
+                  90.5941390991211,
+                  129.06138253211975,
+                  526.4482116699219,
+                  268.5205149650574
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.9642059032940443
+              },
+              {
+                "bbox": [
+                  380.1997375488281,
+                  233.00589787960052,
+                  18.802871704101562,
+                  38.0116503238678
+                ],
+                "class": "stop sign",
+                "classIndex": 11,
+                "score": 0.8387751236737436
+              },
+              {
+                "bbox": [
+                  535.4329872131348,
+                  138.04141268134117,
+                  104.5498275756836,
+                  158.28090673685074
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.6667640539641932
+              }
+            ]
+          }
+        ],
+        "committed": [
+          {
+            "time": 5,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9658855618793439,
+                "bbox": [
+                  0.14175772666931152,
+                  0.30306100845336914,
+                  0.8223214149475098,
+                  0.630260705947876
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8377448371421952,
+                "bbox": [
+                  0.5941130816936493,
+                  0.5470374226570129,
+                  0.029313385486602783,
+                  0.08906066417694092
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6394068883337125,
+                "bbox": [
+                  0.8364413678646088,
+                  0.3232468217611313,
+                  0.1634564995765686,
+                  0.37172701954841614
+                ]
+              }
+            ]
+          },
+          {
+            "time": 6,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9642059032940443,
+                "bbox": [
+                  0.1415533423423767,
+                  0.30296099185943604,
+                  0.8225753307342529,
+                  0.6303298473358154
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8387751236737436,
+                "bbox": [
+                  0.594062089920044,
+                  0.5469622015953064,
+                  0.02937948703765869,
+                  0.08922922611236572
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6667640539641932,
+                "bbox": [
+                  0.8366140425205231,
+                  0.32404087483882904,
+                  0.16335910558700562,
+                  0.37155142426490784
+                ]
+              }
+            ]
+          }
+        ],
+        "tracking_calls": 1,
+        "rules_calls": 1,
+        "canvas_matches_last_success": true,
+        "frame_info": "public-photo-synthetic-video.mp4 · 0.19 MB · 6.1 秒 · 检测画面：6.0 秒（下方播放器可独立播放）",
+        "message": "分析失败：INJECTED_TEST_RULES_FAILURE 已保留 2 / 2 个采样帧，可导出检测 JSON 或重新分析。未完成任务不生成候选。",
+        "download_disabled": false,
+        "send_disabled": true,
+        "results_hidden": false,
+        "candidate_explanation": "分析中途失败，仅保留 2 / 2 个采样帧，未生成规则候选。可导出已完成帧或重新分析。",
+        "summary": "2采样帧3匿名轨迹0规则候选230 ms平均推理",
+        "rows": "5.0 strack-1公交 / 大巴96.6%0.142, 0.303, 0.822, 0.6306.0 strack-1公交 / 大巴96.4%0.142, 0.303, 0.823, 0.6305.0 strack-2stop sign83.8%0.594, 0.547, 0.029, 0.0896.0 strack-2stop sign83.9%0.594, 0.547, 0.029, 0.0895.0 strack-3公交 / 大巴63.9%0.836, 0.323, 0.163, 0.3726.0 strack-3公交 / 大巴66.7%0.837, 0.324, 0.163, 0.372"
+      },
+      "report": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "analysis_id": "50824e3f-09a7-46a3-a459-2160ee12c5e1",
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "runtime": "ONNX Runtime Web 1.30.0",
+        "backend": "WASM · 1 线程",
+        "model_loading": {
+          "network_bytes": 0,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 29776700,
+          "load_ms": 0,
+          "initialization_ms": 0,
+          "reused_in_memory": true
+        },
+        "media": {
+          "name": "public-photo-synthetic-video.mp4",
+          "type": "video/mp4",
+          "bytes": 202685,
+          "width": 640,
+          "height": 426
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "公开素材验证相机",
+          "zone": "合成规则验证区域",
+          "started_at": "2026-10-23T08:00:00+08:00",
+          "media_name": "public-photo-synthetic-video.mp4",
+          "dwell_seconds": null,
+          "is_video": true,
+          "expected_direction": null,
+          "minimum_score": 0.6,
+          "offset_seconds": 5,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "dfine",
+          "max_detections": 50,
+          "nms_iou_threshold": null,
+          "duplicate_iou_threshold": 0.9,
+          "postprocess": "dfine-topk-dedupe090-v1",
+          "input_size": 640,
+          "context_confirmed": true
+        },
+        "context_confirmation": {
+          "media_revision": 1,
+          "confirmed_at": "2026-10-23T02:22:45.763Z"
+        },
+        "complete": false,
+        "outcome": "failed",
+        "failure": {
+          "stage": "rules",
+          "message": "INJECTED_TEST_RULES_FAILURE",
+          "sample_time_seconds": null
+        },
+        "frames": [
+          {
+            "time": 5,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9658855618793439,
+                "bbox": [
+                  0.14175772666931152,
+                  0.30306100845336914,
+                  0.8223214149475098,
+                  0.630260705947876
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8377448371421952,
+                "bbox": [
+                  0.5941130816936493,
+                  0.5470374226570129,
+                  0.029313385486602783,
+                  0.08906066417694092
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6394068883337125,
+                "bbox": [
+                  0.8364413678646088,
+                  0.3232468217611313,
+                  0.1634564995765686,
+                  0.37172701954841614
+                ]
+              }
+            ]
+          },
+          {
+            "time": 6,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9642059032940443,
+                "bbox": [
+                  0.1415533423423767,
+                  0.30296099185943604,
+                  0.8225753307342529,
+                  0.6303298473358154
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8387751236737436,
+                "bbox": [
+                  0.594062089920044,
+                  0.5469622015953064,
+                  0.02937948703765869,
+                  0.08922922611236572
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6667640539641932,
+                "bbox": [
+                  0.8366140425205231,
+                  0.32404087483882904,
+                  0.16335910558700562,
+                  0.37155142426490784
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [
+          {
+            "id": "track-1",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 5,
+                "bbox": [
+                  0.14175772666931152,
+                  0.30306100845336914,
+                  0.8223214149475098,
+                  0.630260705947876
+                ],
+                "score": 0.9658855618793439
+              },
+              {
+                "time": 6,
+                "bbox": [
+                  0.1415533423423767,
+                  0.30296099185943604,
+                  0.8225753307342529,
+                  0.6303298473358154
+                ],
+                "score": 0.9642059032940443
+              }
+            ]
+          },
+          {
+            "id": "track-2",
+            "class": "stop sign",
+            "samples": [
+              {
+                "time": 5,
+                "bbox": [
+                  0.5941130816936493,
+                  0.5470374226570129,
+                  0.029313385486602783,
+                  0.08906066417694092
+                ],
+                "score": 0.8377448371421952
+              },
+              {
+                "time": 6,
+                "bbox": [
+                  0.594062089920044,
+                  0.5469622015953064,
+                  0.02937948703765869,
+                  0.08922922611236572
+                ],
+                "score": 0.8387751236737436
+              }
+            ]
+          },
+          {
+            "id": "track-3",
+            "class": "bus",
+            "samples": [
+              {
+                "time": 5,
+                "bbox": [
+                  0.8364413678646088,
+                  0.3232468217611313,
+                  0.1634564995765686,
+                  0.37172701954841614
+                ],
+                "score": 0.6394068883337125
+              },
+              {
+                "time": 6,
+                "bbox": [
+                  0.8366140425205231,
+                  0.32404087483882904,
+                  0.16335910558700562,
+                  0.37155142426490784
+                ],
+                "score": 0.6667640539641932
+              }
+            ]
+          }
+        ],
+        "candidates": [],
+        "metrics": {
+          "frame_count": 2,
+          "planned_frame_count": 2,
+          "mean_inference_ms": 230.44999992847443,
+          "total_ms": 592.5
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      }
+    },
+    {
+      "mode": "inference_and_tracking",
+      "pass": true,
+      "evidence": {
+        "attempts": 2,
+        "outputs": [
+          {
+            "time": 5,
+            "predictions": [
+              {
+                "bbox": [
+                  90.72494506835938,
+                  129.10398960113525,
+                  526.2857055664062,
+                  268.49106073379517
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.9658855618793439
+              },
+              {
+                "bbox": [
+                  380.23237228393555,
+                  233.0379420518875,
+                  18.76056671142578,
+                  37.93984293937683
+                ],
+                "class": "stop sign",
+                "classIndex": 11,
+                "score": 0.8377448371421952
+              },
+              {
+                "bbox": [
+                  535.3224754333496,
+                  137.70314607024193,
+                  104.6121597290039,
+                  158.35571032762527
+                ],
+                "class": "bus",
+                "classIndex": 5,
+                "score": 0.6394068883337125
+              }
+            ]
+          }
+        ],
+        "committed": [
+          {
+            "time": 5,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9658855618793439,
+                "bbox": [
+                  0.14175772666931152,
+                  0.30306100845336914,
+                  0.8223214149475098,
+                  0.630260705947876
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8377448371421952,
+                "bbox": [
+                  0.5941130816936493,
+                  0.5470374226570129,
+                  0.029313385486602783,
+                  0.08906066417694092
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6394068883337125,
+                "bbox": [
+                  0.8364413678646088,
+                  0.3232468217611313,
+                  0.1634564995765686,
+                  0.37172701954841614
+                ]
+              }
+            ]
+          }
+        ],
+        "tracking_calls": 1,
+        "rules_calls": 0,
+        "canvas_matches_last_success": true,
+        "frame_info": "public-photo-synthetic-video.mp4 · 0.19 MB · 6.1 秒 · 检测画面：5.0 秒（下方播放器可独立播放）",
+        "message": "分析失败：INJECTED_TEST_SECOND_INFERENCE_FAILURE 已保留 1 / 2 个采样帧，可导出检测 JSON 或重新分析。未完成任务不生成候选。",
+        "download_disabled": false,
+        "send_disabled": true,
+        "results_hidden": false,
+        "candidate_explanation": "分析中途失败，仅保留 1 / 2 个采样帧，未生成规则候选。可导出已完成帧或重新分析。",
+        "summary": "1采样帧未完成匿名轨迹0规则候选227 ms平均推理",
+        "rows": "轨迹整理失败，已完成帧与原始检测框仍可导出。"
+      },
+      "report": {
+        "format": "estateguard-detections",
+        "version": 1,
+        "analysis_id": "84c01210-ae18-41f4-beed-8ecec86f28dd",
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "runtime": "ONNX Runtime Web 1.30.0",
+        "backend": "WASM · 1 线程",
+        "model_loading": {
+          "network_bytes": 0,
+          "cache_bytes": 0,
+          "cache_available": true,
+          "resource_bytes": 29776700,
+          "load_ms": 0,
+          "initialization_ms": 0,
+          "reused_in_memory": true
+        },
+        "media": {
+          "name": "public-photo-synthetic-video.mp4",
+          "type": "video/mp4",
+          "bytes": 202685,
+          "width": 640,
+          "height": 426
+        },
+        "params": {
+          "rule": "access",
+          "roi": [
+            0,
+            0,
+            1,
+            1
+          ],
+          "camera": "公开素材验证相机",
+          "zone": "合成规则验证区域",
+          "started_at": "2026-10-23T08:00:00+08:00",
+          "media_name": "public-photo-synthetic-video.mp4",
+          "dwell_seconds": null,
+          "is_video": true,
+          "expected_direction": null,
+          "minimum_score": 0.6,
+          "offset_seconds": 5,
+          "sample_interval_seconds": 1,
+          "max_frames": 20,
+          "rules_version": "vision-rules-v2-stable-dwell",
+          "tracking_max_gap_seconds": 1.6,
+          "parking_max_center_distance": 0.06,
+          "parking_min_samples": 3,
+          "detector": "dfine",
+          "max_detections": 50,
+          "nms_iou_threshold": null,
+          "duplicate_iou_threshold": 0.9,
+          "postprocess": "dfine-topk-dedupe090-v1",
+          "input_size": 640,
+          "context_confirmed": true
+        },
+        "context_confirmation": {
+          "media_revision": 1,
+          "confirmed_at": "2026-10-23T02:22:45.763Z"
+        },
+        "complete": false,
+        "outcome": "failed",
+        "failure": {
+          "stage": "inference",
+          "message": "INJECTED_TEST_SECOND_INFERENCE_FAILURE",
+          "sample_time_seconds": 6,
+          "tracking_error": "INJECTED_TEST_TRACKING_FAILURE"
+        },
+        "frames": [
+          {
+            "time": 5,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9658855618793439,
+                "bbox": [
+                  0.14175772666931152,
+                  0.30306100845336914,
+                  0.8223214149475098,
+                  0.630260705947876
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.8377448371421952,
+                "bbox": [
+                  0.5941130816936493,
+                  0.5470374226570129,
+                  0.029313385486602783,
+                  0.08906066417694092
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6394068883337125,
+                "bbox": [
+                  0.8364413678646088,
+                  0.3232468217611313,
+                  0.1634564995765686,
+                  0.37172701954841614
+                ]
+              }
+            ]
+          }
+        ],
+        "tracks": [],
+        "candidates": [],
+        "metrics": {
+          "frame_count": 1,
+          "planned_frame_count": 2,
+          "mean_inference_ms": 227.39999985694885,
+          "total_ms": 345.19999980926514
+        },
+        "scope": "真实物体推理 + 示例规则。未进行领域微调；采样、关联和规则均可能漏检或误报。不是违规、身份或损坏判定。"
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "ok": true
+}

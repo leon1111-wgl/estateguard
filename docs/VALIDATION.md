@@ -1,5 +1,29 @@
 # 验证记录 · 2026-10-15
 
+## 2026-10-23 · 中途失败保留已完成的检测结果
+
+旧版 `c29c6bc` 正式红基线 1/2：真实 SSDLite 正常完成 7 帧，但第三次推理注入异常后，前两帧已经成功，结果区仍隐藏、导出被禁用。修复后[专项 9/9](validation/partial-analysis-validation.json)；[红基线](validation/partial-analysis-baseline.json)独立保留。错误由测试明确注入，不将其描述为自然发生的坏视频。
+
+- 实际调用 SSDLite，逐框、逐分核对部分 JSON 只含成功帧；失败报告为 `complete:false`、`outcome:failed`，记录阶段与尝试采样时间。手动停止为 `stopped`，没有失败原因；两者都不生成候选。
+- 带变化标记的公开图片合成短片使失败帧与成功帧可区分：恢复后的底图指纹和绘制框均对应最后成功帧。指纹只是本次画布比较，不是素材真实性证明。
+- 覆盖 seek 失败、首帧失败、模型清单加载失败、取消加载及完整重试；重试后的真实候选送审、保存待补证据、工作区导出/恢复，批次、结论与审查历史一致。零成功帧没有报告，原媒体仍不进入导出。
+- [独立 D-FINE 复核 6/6](validation/partial-analysis-code-review.json)：推理失败、seek 失败、停止、非零片段起点、正常完成、首帧失败。[后处理异常 3/3](validation/partial-analysis-postprocess-review.json)：轨迹整理、规则生成，以及推理与轨迹双重失败；成功原始框仍能导出，已失败函数不重复执行。
+- [独立界面 16/16](validation/partial-analysis-ui-validation.json)，1440 / 390px 各 8 项；自然视口能看到失败提示和导出操作，无横向溢出，实际截图经设计师和主代理查看。上述专项页面异常和外域请求均为 0。没有改变 HTML、CSS 或既有版面。
+
+```bash
+ESTATEGUARD_URL=http://127.0.0.1:8767 node scripts/partial-analysis-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8767 node scripts/model-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8767 node scripts/handoff-navigation-check.cjs
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+```
+
+浏览器依赖配置沿用下文。专项支持 `PARTIAL_ANALYSIS_REPORT` 指定报告名、`PARTIAL_ANALYSIS_ONLY` 按检查名称筛选；完整验收不设置筛选。首次运行会用现有 CC0 校车图生成合成视频，需要支持 MP4 MediaRecorder 的 Chrome；固定夹具及源图哈希写入报告。已有夹具可复用，重新生成的视频字节及耗时不保证相同。
+
+原 `model-check` 真实运行图片和 7 帧合成视频，张量 262→262，外域请求 0；原交接定位 8/8（2 项真实 D-FINE、6 项合成状态边界），JS 138/138、26 项资源哈希通过。首次修复后专项 8/9 的一项失败是零帧提示断言漏掉实际文案“尚无已完成采样帧”，报告与控件行为已正确；保留本地诊断 `artifacts/partial-analysis-validation.notice-assertion.json`，修正测试措辞后完整复跑通过。
+
+本轮只验证失败恢复与工作流，未新增模型训练或领域识别精度。公开 CC0 图片与其合成时序不代表真实社区视频；不提供断点续跑、跨会话推理恢复或损坏视频修复。CI、线上资产与线上浏览器结果另行记录，不与本地通过混算。
+
 ## 2026-10-22 · 候选交接定位与键盘继续
 
 旧版 `6a0586c` 的手机红基线 0/1：真实 D-FINE-N 生成 2 个候选，送审后标题在视口上方约 345px，焦点落 BODY。[基线](validation/handoff-navigation-baseline.json)与[最终专项](validation/handoff-navigation-validation.json)分别保留。

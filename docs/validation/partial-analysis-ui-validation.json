@@ -1,0 +1,996 @@
+{
+  "started_at": "2026-10-23T02:19:25.497Z",
+  "kind": "independent after UI regression",
+  "scope": "Actual SSDLite inference on existing synthetic CC0 bus clip. Exception deliberately injected before the third detect call, with first two real model calls untouched. No model outputs mocked; this is workflow evidence, not field accuracy.",
+  "source_sha256": "635e35b9d381ac4a2a357399e2ecf74d6acb9b0ea200b4e3da5740a391800c3d",
+  "checks": [
+    {
+      "width": 1440,
+      "name": "normal real inference produces seven completed frames",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "failure identifies two of seven completed frames and next actions",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "natural viewport contains readable failure and export controls without overflow",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "export enabled and incomplete task cannot be sent for review",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "download records incomplete failure and only successful frames",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "original source context and last successful canvas time retained",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "retry completes actual inference with same parameters and new task identifier",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "successful retry can be reviewed and exported without false confirmed conclusion",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "normal real inference produces seven completed frames",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "failure identifies two of seven completed frames and next actions",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "natural viewport contains readable failure and export controls without overflow",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "export enabled and incomplete task cannot be sent for review",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "download records incomplete failure and only successful frames",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "original source context and last successful canvas time retained",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "retry completes actual inference with same parameters and new task identifier",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "successful retry can be reviewed and exported without false confirmed conclusion",
+      "passed": true
+    }
+  ],
+  "widths": [
+    {
+      "width": 1440,
+      "screenshots": [
+        "partial-analysis-designer-after-20261023-failure-natural-1440.png",
+        "partial-analysis-designer-after-20261023-partial-results-1440.png",
+        "partial-analysis-designer-after-20261023-retry-handoff-1440.png"
+      ],
+      "normal": {
+        "scrollY": 78,
+        "viewport": 1000,
+        "overflow": 0,
+        "confirmed": true,
+        "actualCalls": [],
+        "fields": {
+          "vision-camera": "合成短片界面验收镜头",
+          "vision-zone": "完整画面测试区域",
+          "vision-start": "2026-10-23T08:00",
+          "vision-rule": "access",
+          "vision-offset": "0",
+          "vision-score": "0.5"
+        },
+        "vision-message": {
+          "text": "分析完成：7 帧、1 条匿名轨迹、1 个待核实候选。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 1037.625,
+            "bottom": 1078.8125,
+            "left": 232,
+            "right": 1412
+          },
+          "visible": false
+        },
+        "run-analysis": {
+          "text": "开始分析",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 973.4375,
+            "bottom": 1006.625,
+            "left": 1129,
+            "right": 1395
+          },
+          "visible": true
+        },
+        "download-detections": {
+          "text": "导出检测 JSON",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 1109.8125,
+            "bottom": 1143,
+            "left": 1174.875,
+            "right": 1285
+          },
+          "visible": false
+        },
+        "send-candidates": {
+          "text": "送入事件复核",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 1109.8125,
+            "bottom": 1143,
+            "left": 1293,
+            "right": 1391
+          },
+          "visible": false
+        },
+        "vision-results": {
+          "text": "分析结果导出检测 JSON送入事件复核7采样帧1匿名轨迹1规则候选22 ms平均推理候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。采样时间匿名轨迹物体类别检测分数归一化检测框0.0 strack-1公交 / 大巴98.3%0.127, 0.295, 0.843, 0.6401.0 strack-1公交 / 大巴98.5%0.130, 0.294, 0.844, 0.6422.0 strack-1公交 / 大巴98.8%0.130, 0.291, 0.841, 0.6453.0 strack-1公交 / 大巴98.9%0.130, 0.290, 0.841, 0.6464.0 strack-1公交 / 大巴99.0%0.129, 0.292, 0.845, 0.6455.0 strack-1公交 / 大巴99.0%0.130, 0.293, 0.849, 0.6446.0 strack-1公交 / 大巴99.0%0.130, 0.293, 0.847, 0.644",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 1092.8125,
+            "bottom": 1599.28125,
+            "left": 232,
+            "right": 1412
+          },
+          "visible": false
+        },
+        "vision-summary": {
+          "text": "7采样帧1匿名轨迹1规则候选22 ms平均推理",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 1161,
+            "bottom": 1214.78125,
+            "left": 253,
+            "right": 1391
+          },
+          "visible": false
+        },
+        "candidate-explanation": {
+          "text": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 1232.78125,
+            "bottom": 1250.375,
+            "left": 253,
+            "right": 1391
+          },
+          "visible": false
+        },
+        "analysis-file-info": {
+          "text": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：6.0 秒（下方播放器可独立播放）",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 765.265625,
+            "bottom": 800.859375,
+            "left": 233,
+            "right": 1093
+          },
+          "visible": true
+        }
+      },
+      "normal_report": {
+        "complete": true,
+        "frames": 7,
+        "candidates": 1,
+        "bus_scores": [
+          0.9830567240715027,
+          0.9851245880126953,
+          0.9881211519241333,
+          0.9886025786399841,
+          0.9900193214416504,
+          0.9899007678031921,
+          0.9896509647369385
+        ]
+      },
+      "failure": {
+        "scrollY": 331,
+        "viewport": 1000,
+        "overflow": 0,
+        "confirmed": true,
+        "actualCalls": [
+          {
+            "call": 1,
+            "predictions": [
+              {
+                "bbox": [
+                  81.45668029785156,
+                  125.63666796684265,
+                  539.5832061767578,
+                  272.7724871635437
+                ],
+                "class": "bus",
+                "score": 0.9830567240715027
+              }
+            ]
+          },
+          {
+            "call": 2,
+            "predictions": [
+              {
+                "bbox": [
+                  83.10684204101562,
+                  125.24441885948181,
+                  539.9948883056641,
+                  273.4581105709076
+                ],
+                "class": "bus",
+                "score": 0.9851245880126953
+              }
+            ]
+          }
+        ],
+        "fields": {
+          "vision-camera": "合成短片界面验收镜头",
+          "vision-zone": "完整画面测试区域",
+          "vision-start": "2026-10-23T08:00",
+          "vision-rule": "access",
+          "vision-offset": "0",
+          "vision-score": "0.5"
+        },
+        "vision-message": {
+          "text": "分析失败：验收注入：第 3 帧推理失败 已保留 2 / 7 个采样帧，可导出检测 JSON 或重新分析。未完成任务不生成候选。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 784.625,
+            "bottom": 825.8125,
+            "left": 232,
+            "right": 1412
+          },
+          "visible": true
+        },
+        "run-analysis": {
+          "text": "开始分析",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 720.4375,
+            "bottom": 753.625,
+            "left": 1129,
+            "right": 1395
+          },
+          "visible": true
+        },
+        "download-detections": {
+          "text": "导出检测 JSON",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 856.8125,
+            "bottom": 890,
+            "left": 1174.875,
+            "right": 1285
+          },
+          "visible": true
+        },
+        "send-candidates": {
+          "text": "送入事件复核",
+          "hidden": false,
+          "disabled": true,
+          "rect": {
+            "top": 856.8125,
+            "bottom": 890,
+            "left": 1293,
+            "right": 1391
+          },
+          "visible": true
+        },
+        "vision-results": {
+          "text": "分析结果导出检测 JSON送入事件复核2采样帧1匿名轨迹0规则候选25 ms平均推理分析中途失败，仅保留 2 / 7 个采样帧，未生成规则候选。可导出已完成帧或重新分析。采样时间匿名轨迹物体类别检测分数归一化检测框0.0 strack-1公交 / 大巴98.3%0.127, 0.295, 0.843, 0.6401.0 strack-1公交 / 大巴98.5%0.130, 0.294, 0.844, 0.642",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 839.8125,
+            "bottom": 1145.34375,
+            "left": 232,
+            "right": 1412
+          },
+          "visible": true
+        },
+        "vision-summary": {
+          "text": "2采样帧1匿名轨迹0规则候选25 ms平均推理",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 908,
+            "bottom": 961.78125,
+            "left": 253,
+            "right": 1391
+          },
+          "visible": true
+        },
+        "candidate-explanation": {
+          "text": "分析中途失败，仅保留 2 / 7 个采样帧，未生成规则候选。可导出已完成帧或重新分析。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 979.78125,
+            "bottom": 997.375,
+            "left": 253,
+            "right": 1391
+          },
+          "visible": true
+        },
+        "analysis-file-info": {
+          "text": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：1.0 秒（下方播放器可独立播放）",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 512.265625,
+            "bottom": 547.859375,
+            "left": 233,
+            "right": 1093
+          },
+          "visible": true
+        }
+      },
+      "partial_report": {
+        "complete": false,
+        "outcome": "failed",
+        "failure": {
+          "stage": "inference",
+          "message": "验收注入：第 3 帧推理失败",
+          "sample_time_seconds": 2
+        },
+        "frames": [
+          0,
+          1
+        ],
+        "candidates": 0,
+        "planned": 7
+      },
+      "retry": {
+        "scrollY": 331,
+        "viewport": 1000,
+        "overflow": 0,
+        "confirmed": true,
+        "actualCalls": [
+          {
+            "call": 1,
+            "predictions": [
+              {
+                "bbox": [
+                  81.45668029785156,
+                  125.63666796684265,
+                  539.5832061767578,
+                  272.7724871635437
+                ],
+                "class": "bus",
+                "score": 0.9830567240715027
+              }
+            ]
+          },
+          {
+            "call": 2,
+            "predictions": [
+              {
+                "bbox": [
+                  83.10684204101562,
+                  125.24441885948181,
+                  539.9948883056641,
+                  273.4581105709076
+                ],
+                "class": "bus",
+                "score": 0.9851245880126953
+              }
+            ]
+          }
+        ],
+        "fields": {
+          "vision-camera": "合成短片界面验收镜头",
+          "vision-zone": "完整画面测试区域",
+          "vision-start": "2026-10-23T08:00",
+          "vision-rule": "access",
+          "vision-offset": "0",
+          "vision-score": "0.5"
+        },
+        "vision-message": {
+          "text": "分析完成：7 帧、1 条匿名轨迹、1 个待核实候选。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 784.625,
+            "bottom": 825.8125,
+            "left": 232,
+            "right": 1412
+          },
+          "visible": true
+        },
+        "run-analysis": {
+          "text": "开始分析",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 720.4375,
+            "bottom": 753.625,
+            "left": 1129,
+            "right": 1395
+          },
+          "visible": true
+        },
+        "download-detections": {
+          "text": "导出检测 JSON",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 856.8125,
+            "bottom": 890,
+            "left": 1174.875,
+            "right": 1285
+          },
+          "visible": true
+        },
+        "send-candidates": {
+          "text": "送入事件复核",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 856.8125,
+            "bottom": 890,
+            "left": 1293,
+            "right": 1391
+          },
+          "visible": true
+        },
+        "vision-results": {
+          "text": "分析结果导出检测 JSON送入事件复核7采样帧1匿名轨迹1规则候选22 ms平均推理候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。采样时间匿名轨迹物体类别检测分数归一化检测框0.0 strack-1公交 / 大巴98.3%0.127, 0.295, 0.843, 0.6401.0 strack-1公交 / 大巴98.5%0.130, 0.294, 0.844, 0.6422.0 strack-1公交 / 大巴98.8%0.130, 0.291, 0.841, 0.6453.0 strack-1公交 / 大巴98.9%0.130, 0.290, 0.841, 0.6464.0 strack-1公交 / 大巴99.0%0.129, 0.292, 0.845, 0.6455.0 strack-1公交 / 大巴99.0%0.130, 0.293, 0.849, 0.6446.0 strack-1公交 / 大巴99.0%0.130, 0.293, 0.847, 0.644",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 839.8125,
+            "bottom": 1346.28125,
+            "left": 232,
+            "right": 1412
+          },
+          "visible": true
+        },
+        "vision-summary": {
+          "text": "7采样帧1匿名轨迹1规则候选22 ms平均推理",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 908,
+            "bottom": 961.78125,
+            "left": 253,
+            "right": 1391
+          },
+          "visible": true
+        },
+        "candidate-explanation": {
+          "text": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 979.78125,
+            "bottom": 997.375,
+            "left": 253,
+            "right": 1391
+          },
+          "visible": true
+        },
+        "analysis-file-info": {
+          "text": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：6.0 秒（下方播放器可独立播放）",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 512.265625,
+            "bottom": 547.859375,
+            "left": 233,
+            "right": 1093
+          },
+          "visible": true
+        }
+      },
+      "handoff": {
+        "title": "通道占用线索",
+        "count": 1,
+        "media_status": "视频首帧已解码，请核对画面是否对应本事件。",
+        "overflow": 0
+      },
+      "review_export": {
+        "decisions": 1,
+        "audit": 1
+      }
+    },
+    {
+      "width": 390,
+      "screenshots": [
+        "partial-analysis-designer-after-20261023-failure-natural-390.png",
+        "partial-analysis-designer-after-20261023-partial-results-390.png",
+        "partial-analysis-designer-after-20261023-retry-handoff-390.png"
+      ],
+      "normal": {
+        "scrollY": 1050,
+        "viewport": 844,
+        "overflow": 0,
+        "confirmed": true,
+        "actualCalls": [],
+        "fields": {
+          "vision-camera": "合成短片界面验收镜头",
+          "vision-zone": "完整画面测试区域",
+          "vision-start": "2026-10-23T08:00",
+          "vision-rule": "access",
+          "vision-offset": "0",
+          "vision-score": "0.5"
+        },
+        "vision-message": {
+          "text": "分析完成：7 帧、1 条匿名轨迹、1 个待核实候选。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 745.453125,
+            "bottom": 786.640625,
+            "left": 16,
+            "right": 374
+          },
+          "visible": true
+        },
+        "run-analysis": {
+          "text": "开始分析",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 681.265625,
+            "bottom": 714.453125,
+            "left": 33,
+            "right": 357
+          },
+          "visible": true
+        },
+        "download-detections": {
+          "text": "导出检测 JSON",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 854.03125,
+            "bottom": 887.21875,
+            "left": 30,
+            "right": 191
+          },
+          "visible": false
+        },
+        "send-candidates": {
+          "text": "送入事件复核",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 854.03125,
+            "bottom": 887.21875,
+            "left": 199,
+            "right": 360
+          },
+          "visible": false
+        },
+        "vision-results": {
+          "text": "分析结果导出检测 JSON送入事件复核7采样帧1匿名轨迹1规则候选25 ms平均推理候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。采样时间匿名轨迹物体类别检测分数归一化检测框0.0 strack-1公交 / 大巴98.3%0.127, 0.295, 0.843, 0.6401.0 strack-1公交 / 大巴98.5%0.130, 0.294, 0.844, 0.6422.0 strack-1公交 / 大巴98.8%0.130, 0.291, 0.841, 0.6453.0 strack-1公交 / 大巴98.9%0.130, 0.290, 0.841, 0.6464.0 strack-1公交 / 大巴99.0%0.129, 0.292, 0.845, 0.6455.0 strack-1公交 / 大巴99.0%0.130, 0.293, 0.849, 0.6446.0 strack-1公交 / 大巴99.0%0.130, 0.293, 0.847, 0.644",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 800.640625,
+            "bottom": 1378.09375,
+            "left": 16,
+            "right": 374
+          },
+          "visible": true
+        },
+        "vision-summary": {
+          "text": "7采样帧1匿名轨迹1规则候选25 ms平均推理",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 905.21875,
+            "bottom": 952,
+            "left": 30,
+            "right": 360
+          },
+          "visible": false
+        },
+        "candidate-explanation": {
+          "text": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 970,
+            "bottom": 1005.1875,
+            "left": 30,
+            "right": 360
+          },
+          "visible": false
+        },
+        "analysis-file-info": {
+          "text": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：6.0 秒（下方播放器可独立播放）",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": -202.90625,
+            "bottom": -149.71875,
+            "left": 17,
+            "right": 373
+          },
+          "visible": false
+        }
+      },
+      "normal_report": {
+        "complete": true,
+        "frames": 7,
+        "candidates": 1,
+        "bus_scores": [
+          0.9830567240715027,
+          0.9851245880126953,
+          0.9881211519241333,
+          0.9886025190353394,
+          0.9900193214416504,
+          0.9899007678031921,
+          0.9896509647369385
+        ]
+      },
+      "failure": {
+        "scrollY": 1206,
+        "viewport": 844,
+        "overflow": 0,
+        "confirmed": true,
+        "actualCalls": [
+          {
+            "call": 1,
+            "predictions": [
+              {
+                "bbox": [
+                  81.45668029785156,
+                  125.63666796684265,
+                  539.5832061767578,
+                  272.7724871635437
+                ],
+                "class": "bus",
+                "score": 0.9830567240715027
+              }
+            ]
+          },
+          {
+            "call": 2,
+            "predictions": [
+              {
+                "bbox": [
+                  83.10684204101562,
+                  125.24441885948181,
+                  539.9948883056641,
+                  273.4581105709076
+                ],
+                "class": "bus",
+                "score": 0.9851245880126953
+              }
+            ]
+          }
+        ],
+        "fields": {
+          "vision-camera": "合成短片界面验收镜头",
+          "vision-zone": "完整画面测试区域",
+          "vision-start": "2026-10-23T08:00",
+          "vision-rule": "access",
+          "vision-offset": "0",
+          "vision-score": "0.5"
+        },
+        "vision-message": {
+          "text": "分析失败：验收注入：第 3 帧推理失败 已保留 2 / 7 个采样帧，可导出检测 JSON 或重新分析。未完成任务不生成候选。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 589.453125,
+            "bottom": 649.828125,
+            "left": 16,
+            "right": 374
+          },
+          "visible": true
+        },
+        "run-analysis": {
+          "text": "开始分析",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 525.265625,
+            "bottom": 558.453125,
+            "left": 33,
+            "right": 357
+          },
+          "visible": true
+        },
+        "download-detections": {
+          "text": "导出检测 JSON",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 717.21875,
+            "bottom": 750.40625,
+            "left": 30,
+            "right": 191
+          },
+          "visible": true
+        },
+        "send-candidates": {
+          "text": "送入事件复核",
+          "hidden": false,
+          "disabled": true,
+          "rect": {
+            "top": 717.21875,
+            "bottom": 750.40625,
+            "left": 199,
+            "right": 360
+          },
+          "visible": true
+        },
+        "vision-results": {
+          "text": "分析结果导出检测 JSON送入事件复核2采样帧1匿名轨迹0规则候选21 ms平均推理分析中途失败，仅保留 2 / 7 个采样帧，未生成规则候选。可导出已完成帧或重新分析。采样时间匿名轨迹物体类别检测分数归一化检测框0.0 strack-1公交 / 大巴98.3%0.127, 0.295, 0.843, 0.6401.0 strack-1公交 / 大巴98.5%0.130, 0.294, 0.844, 0.642",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 663.828125,
+            "bottom": 1040.34375,
+            "left": 16,
+            "right": 374
+          },
+          "visible": true
+        },
+        "vision-summary": {
+          "text": "2采样帧1匿名轨迹0规则候选21 ms平均推理",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 768.40625,
+            "bottom": 815.1875,
+            "left": 30,
+            "right": 360
+          },
+          "visible": true
+        },
+        "candidate-explanation": {
+          "text": "分析中途失败，仅保留 2 / 7 个采样帧，未生成规则候选。可导出已完成帧或重新分析。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 833.1875,
+            "bottom": 868.375,
+            "left": 30,
+            "right": 360
+          },
+          "visible": true
+        },
+        "analysis-file-info": {
+          "text": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：1.0 秒（下方播放器可独立播放）",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": -358.90625,
+            "bottom": -305.71875,
+            "left": 17,
+            "right": 373
+          },
+          "visible": false
+        }
+      },
+      "partial_report": {
+        "complete": false,
+        "outcome": "failed",
+        "failure": {
+          "stage": "inference",
+          "message": "验收注入：第 3 帧推理失败",
+          "sample_time_seconds": 2
+        },
+        "frames": [
+          0,
+          1
+        ],
+        "candidates": 0,
+        "planned": 7
+      },
+      "retry": {
+        "scrollY": 1206,
+        "viewport": 844,
+        "overflow": 0,
+        "confirmed": true,
+        "actualCalls": [
+          {
+            "call": 1,
+            "predictions": [
+              {
+                "bbox": [
+                  81.45668029785156,
+                  125.63666796684265,
+                  539.5832061767578,
+                  272.7724871635437
+                ],
+                "class": "bus",
+                "score": 0.9830567240715027
+              }
+            ]
+          },
+          {
+            "call": 2,
+            "predictions": [
+              {
+                "bbox": [
+                  83.10684204101562,
+                  125.24441885948181,
+                  539.9948883056641,
+                  273.4581105709076
+                ],
+                "class": "bus",
+                "score": 0.9851245880126953
+              }
+            ]
+          }
+        ],
+        "fields": {
+          "vision-camera": "合成短片界面验收镜头",
+          "vision-zone": "完整画面测试区域",
+          "vision-start": "2026-10-23T08:00",
+          "vision-rule": "access",
+          "vision-offset": "0",
+          "vision-score": "0.5"
+        },
+        "vision-message": {
+          "text": "分析完成：7 帧、1 条匿名轨迹、1 个待核实候选。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 589.453125,
+            "bottom": 630.640625,
+            "left": 16,
+            "right": 374
+          },
+          "visible": true
+        },
+        "run-analysis": {
+          "text": "开始分析",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 525.265625,
+            "bottom": 558.453125,
+            "left": 33,
+            "right": 357
+          },
+          "visible": true
+        },
+        "download-detections": {
+          "text": "导出检测 JSON",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 698.03125,
+            "bottom": 731.21875,
+            "left": 30,
+            "right": 191
+          },
+          "visible": true
+        },
+        "send-candidates": {
+          "text": "送入事件复核",
+          "hidden": false,
+          "disabled": false,
+          "rect": {
+            "top": 698.03125,
+            "bottom": 731.21875,
+            "left": 199,
+            "right": 360
+          },
+          "visible": true
+        },
+        "vision-results": {
+          "text": "分析结果导出检测 JSON送入事件复核7采样帧1匿名轨迹1规则候选20 ms平均推理候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。采样时间匿名轨迹物体类别检测分数归一化检测框0.0 strack-1公交 / 大巴98.3%0.127, 0.295, 0.843, 0.6401.0 strack-1公交 / 大巴98.5%0.130, 0.294, 0.844, 0.6422.0 strack-1公交 / 大巴98.8%0.130, 0.291, 0.841, 0.6453.0 strack-1公交 / 大巴98.9%0.130, 0.290, 0.841, 0.6464.0 strack-1公交 / 大巴99.0%0.129, 0.292, 0.845, 0.6455.0 strack-1公交 / 大巴99.0%0.130, 0.293, 0.849, 0.6446.0 strack-1公交 / 大巴99.0%0.130, 0.293, 0.847, 0.644",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 644.640625,
+            "bottom": 1222.09375,
+            "left": 16,
+            "right": 374
+          },
+          "visible": true
+        },
+        "vision-summary": {
+          "text": "7采样帧1匿名轨迹1规则候选20 ms平均推理",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 749.21875,
+            "bottom": 796,
+            "left": 30,
+            "right": 360
+          },
+          "visible": true
+        },
+        "candidate-explanation": {
+          "text": "候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": 814,
+            "bottom": 849.1875,
+            "left": 30,
+            "right": 360
+          },
+          "visible": true
+        },
+        "analysis-file-info": {
+          "text": "synthetic-still.mp4 · 0.19 MB · 6.1 秒 · 检测画面：6.0 秒（下方播放器可独立播放）",
+          "hidden": false,
+          "disabled": null,
+          "rect": {
+            "top": -358.90625,
+            "bottom": -305.71875,
+            "left": 17,
+            "right": 373
+          },
+          "visible": false
+        }
+      },
+      "handoff": {
+        "title": "通道占用线索",
+        "count": 1,
+        "media_status": "视频首帧已解码，请核对画面是否对应本事件。",
+        "overflow": 0
+      },
+      "review_export": {
+        "decisions": 1,
+        "audit": 1
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "finished_at": "2026-10-23T02:19:32.286Z",
+  "passed": 16,
+  "failed": 0,
+  "ok": true,
+  "visual_review": {
+    "inspected": [
+      "partial-analysis-designer-after-20261023-failure-natural-390.png",
+      "partial-analysis-designer-after-20261023-partial-results-1440.png",
+      "partial-analysis-designer-after-20261023-partial-results-390.png",
+      "partial-analysis-designer-after-20261023-retry-handoff-390.png"
+    ],
+    "conclusion": "No blocking UI issue. Existing message and results components distinguish failed partial analysis from complete zero-candidate analysis. Natural failure viewport shows export button at both widths; successful retry has normal review handoff. No product changes required.",
+    "adaptation_required": false,
+    "limitations": [
+      "Exception is deliberately injected after two actual SSDLite calls, not an estimate of real failure frequency.",
+      "No D-FINE exception or real damaged-video decode case exercised by this UI audit; parent independent test suite covers broader failure paths.",
+      "Retry reruns analysis from the configured start; this does not implement resume at failed frame.",
+      "Synthetic CC0 still-video validates local inference and workflow only, not property-violation accuracy."
+    ]
+  }
+}
