@@ -29,9 +29,11 @@ function replaceAllowed(){if(!hasUnsavedWork()||confirm('当前标签页有未�
 function setWorkspace(next){++loadSequence;clearMedia();drafts.clear();ws=next;selected=null;dirty=false;syncPolicy();render(true);}
 function syncPolicy(){for(const [key,id] of Object.entries({score_threshold:'score-threshold',quality_threshold:'quality-threshold',merge_gap_seconds:'merge-gap',parking_grace_seconds:'parking-grace'}))$(id).value=ws.policy[key];}
 const decision=e=>ws.decisions[e.id]?.status||'open';
+const hasDecision=e=>Object.hasOwn(ws.decisions,e.id);
 const pending=e=>!['dismissed','resolved'].includes(decision(e));
-const requiresAttention=e=>pending(e)&&(inReviewQueue(e)||['confirmed_concern','needs_evidence'].includes(decision(e)));
-function badge(e){let type=e.urgent?'urgent':'';if(e.routing==='insufficient_evidence')type='uncertain';const d=decision(e);return `<span class="badge ${pending(e)?type:'closed'}">${escape(labels[d!=='open'?d:e.routing])}</span>`;}
+// 已保存的待复核也是人工要求，不能与没有记录时的默认 open 混为一谈。
+const requiresAttention=e=>pending(e)&&(hasDecision(e)||inReviewQueue(e));
+function badge(e){let type=e.urgent?'urgent':'';if(e.routing==='insufficient_evidence')type='uncertain';return `<span class="badge ${pending(e)?type:'closed'}">${escape(labels[hasDecision(e)?decision(e):e.routing])}</span>`;}
 const reviewBadges=e=>badge(e)+(drafts.has(e.id)?' <span class="badge uncertain">未保存草稿</span>':'');
 function resetQueueFilters(){$('area-filter').value='all';$('queue-filter').value=events.some(requiresAttention)?'review':'all';}
 function render(resetFilters=false){events=buildEvents(ws.batch,ws.policy);if(resetFilters)resetQueueFilters();$('batch-name').textContent=ws.batch.name;const metrics=[[ws.batch.observations.length,'来源观察记录'],[events.length,'合并后事件'],[events.filter(requiresAttention).length,'待复核 / 待处理'],[events.filter(e=>e.urgent&&requiresAttention(e)).length,'优先核查（含证据不足）']];$('metrics').innerHTML=metrics.map(([v,l])=>`<div class="metric"><strong>${v}</strong><span>${l}</span></div>`).join('');renderQueue();}

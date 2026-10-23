@@ -1,0 +1,281 @@
+{
+  "at": "2026-10-23T14:17:20.851Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Existing synthetic demo appointment observations; real Chrome review/export/import operations, no detection model claim.",
+  "cases": [
+    {
+      "initial_closed_status": "dismissed",
+      "initial": {
+        "batch": "主动重开验收-dismissed",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "all",
+        "queue_count": "1",
+        "badge": "预约例外待核对",
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "event": "event:move-booked-1"
+      },
+      "closed": {
+        "batch": "主动重开验收-dismissed",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "all",
+        "queue_count": "1",
+        "badge": "已排除",
+        "note": "已核对预约后结案（合成验收）",
+        "status": "dismissed",
+        "history": "复核历史 · 1 条2026/10/23 22:17:22 · 已排除：已核对预约后结案（合成验收）",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "event": "event:move-booked-1"
+      },
+      "reopened": {
+        "batch": "主动重开验收-dismissed",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "all",
+        "queue_count": "1",
+        "badge": "预约例外待核对",
+        "note": "交班发现预约有效期仍需复查，请重新安排核查",
+        "status": "open",
+        "history": "复核历史 · 2 条2026/10/23 22:17:22 · 已排除：已核对预约后结案（合成验收）2026/10/23 22:17:22 · 待复核：交班发现预约有效期仍需复查，请重新安排核查",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "event": "event:move-booked-1"
+      },
+      "pending_filter": {
+        "batch": "主动重开验收-dismissed",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "review",
+        "queue_count": "0",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+      },
+      "exported": {
+        "decisions": {
+          "event:move-booked-1": {
+            "status": "open",
+            "note": "交班发现预约有效期仍需复查，请重新安排核查",
+            "at": "2026-10-23T14:17:22.229Z"
+          }
+        },
+        "audit": [
+          {
+            "event_id": "event:move-booked-1",
+            "status": "dismissed",
+            "note": "已核对预约后结案（合成验收）",
+            "at": "2026-10-23T14:17:22.154Z"
+          },
+          {
+            "event_id": "event:move-booked-1",
+            "status": "open",
+            "note": "交班发现预约有效期仍需复查，请重新安排核查",
+            "at": "2026-10-23T14:17:22.229Z"
+          }
+        ]
+      },
+      "restored": {
+        "batch": "主动重开验收-dismissed",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "all",
+        "queue_count": "1",
+        "badge": "预约例外待核对",
+        "note": "交班发现预约有效期仍需复查，请重新安排核查",
+        "status": "open",
+        "history": "复核历史 · 2 条2026/10/23 22:17:22 · 已排除：已核对预约后结案（合成验收）2026/10/23 22:17:22 · 待复核：交班发现预约有效期仍需复查，请重新安排核查",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "event": "event:move-booked-1"
+      },
+      "restored_pending_filter": {
+        "batch": "主动重开验收-dismissed",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "review",
+        "queue_count": "0",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。"
+      },
+      "needs_evidence_control": {
+        "batch": "主动重开验收-dismissed",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "1\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "review",
+        "queue_count": "1",
+        "badge": "待补充证据",
+        "note": "待补充预约记录（正常对照）",
+        "status": "needs_evidence",
+        "history": "复核历史 · 3 条2026/10/23 22:17:22 · 已排除：已核对预约后结案（合成验收）2026/10/23 22:17:22 · 待复核：交班发现预约有效期仍需复查，请重新安排核查2026/10/23 22:17:22 · 待补充证据：待补充预约记录（正常对照）",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "event": "event:move-booked-1"
+      },
+      "bug_confirmed": true
+    },
+    {
+      "initial_closed_status": "resolved",
+      "initial": {
+        "batch": "主动重开验收-resolved",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "all",
+        "queue_count": "1",
+        "badge": "预约例外待核对",
+        "note": "",
+        "status": "open",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "event": "event:move-booked-1"
+      },
+      "closed": {
+        "batch": "主动重开验收-resolved",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "all",
+        "queue_count": "1",
+        "badge": "已处理",
+        "note": "已核对预约后结案（合成验收）",
+        "status": "resolved",
+        "history": "复核历史 · 1 条2026/10/23 22:17:22 · 已处理：已核对预约后结案（合成验收）",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "event": "event:move-booked-1"
+      },
+      "reopened": {
+        "batch": "主动重开验收-resolved",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "all",
+        "queue_count": "1",
+        "badge": "预约例外待核对",
+        "note": "交班发现预约有效期仍需复查，请重新安排核查",
+        "status": "open",
+        "history": "复核历史 · 2 条2026/10/23 22:17:22 · 已处理：已核对预约后结案（合成验收）2026/10/23 22:17:22 · 待复核：交班发现预约有效期仍需复查，请重新安排核查",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "event": "event:move-booked-1"
+      },
+      "pending_filter": {
+        "batch": "主动重开验收-resolved",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "review",
+        "queue_count": "0",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+      },
+      "exported": {
+        "decisions": {
+          "event:move-booked-1": {
+            "status": "open",
+            "note": "交班发现预约有效期仍需复查，请重新安排核查",
+            "at": "2026-10-23T14:17:22.596Z"
+          }
+        },
+        "audit": [
+          {
+            "event_id": "event:move-booked-1",
+            "status": "resolved",
+            "note": "已核对预约后结案（合成验收）",
+            "at": "2026-10-23T14:17:22.564Z"
+          },
+          {
+            "event_id": "event:move-booked-1",
+            "status": "open",
+            "note": "交班发现预约有效期仍需复查，请重新安排核查",
+            "at": "2026-10-23T14:17:22.596Z"
+          }
+        ]
+      },
+      "restored": {
+        "batch": "主动重开验收-resolved",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "all",
+        "queue_count": "1",
+        "badge": "预约例外待核对",
+        "note": "交班发现预约有效期仍需复查，请重新安排核查",
+        "status": "open",
+        "history": "复核历史 · 2 条2026/10/23 22:17:22 · 已处理：已核对预约后结案（合成验收）2026/10/23 22:17:22 · 待复核：交班发现预约有效期仍需复查，请重新安排核查",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+        "event": "event:move-booked-1"
+      },
+      "restored_pending_filter": {
+        "batch": "主动重开验收-resolved",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "0\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "review",
+        "queue_count": "0",
+        "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。"
+      },
+      "needs_evidence_control": {
+        "batch": "主动重开验收-resolved",
+        "metrics": [
+          "4\n来源观察记录",
+          "1\n合并后事件",
+          "1\n待复核 / 待处理",
+          "0\n优先核查（含证据不足）"
+        ],
+        "filter": "review",
+        "queue_count": "1",
+        "badge": "待补充证据",
+        "note": "待补充预约记录（正常对照）",
+        "status": "needs_evidence",
+        "history": "复核历史 · 3 条2026/10/23 22:17:22 · 已处理：已核对预约后结案（合成验收）2026/10/23 22:17:22 · 待复核：交班发现预约有效期仍需复查，请重新安排核查2026/10/23 22:17:22 · 待补充证据：待补充预约记录（正常对照）",
+        "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+        "event": "event:move-booked-1"
+      },
+      "bug_confirmed": true
+    }
+  ],
+  "page_errors": [],
+  "confirmed": true
+}

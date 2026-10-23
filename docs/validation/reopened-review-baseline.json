@@ -1,0 +1,102 @@
+{
+  "at": "2026-10-23T14:19:35.599Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Synthetic appointment/score/dwell workflow cases and separately identified actual model output. Checks saved human intent, not field accuracy.",
+  "checks": [
+    {
+      "name": "appointment reopened from dismissed becomes a pending saved human decision",
+      "passed": false,
+      "error": "saved human open must override the automatic routing badge\n\n'预约例外待核对' !== '待复核'\n",
+      "evidence": {
+        "synthetic": true,
+        "default": {
+          "metrics": [
+            "4\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "预约例外待核对",
+          "queue_badges": [
+            "预约例外待核对"
+          ],
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "event": "event:move-booked-1"
+        },
+        "closed": {
+          "metrics": [
+            "4\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "已排除",
+          "queue_badges": [
+            "已排除"
+          ],
+          "note": "预约已核对，先行排除（合成验收）",
+          "status": "dismissed",
+          "history": "复核历史 · 1 条2026/10/23 22:19:36 · 已排除：预约已核对，先行排除（合成验收）",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:move-booked-1"
+        },
+        "reopened": {
+          "metrics": [
+            "4\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "预约例外待核对",
+          "queue_badges": [
+            "预约例外待核对"
+          ],
+          "note": "预约有效期仍需复查，请接班人员重新核对",
+          "status": "open",
+          "history": "复核历史 · 2 条2026/10/23 22:19:36 · 已排除：预约已核对，先行排除（合成验收）2026/10/23 22:19:36 · 待复核：预约有效期仍需复查，请接班人员重新核对",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:move-booked-1"
+        },
+        "final": {
+          "metrics": [
+            "4\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "预约例外待核对",
+          "queue_badges": [
+            "预约例外待核对"
+          ],
+          "note": "预约有效期仍需复查，请接班人员重新核对",
+          "status": "open",
+          "history": "复核历史 · 2 条2026/10/23 22:19:36 · 已排除：预约已核对，先行排除（合成验收）2026/10/23 22:19:36 · 待复核：预约有效期仍需复查，请接班人员重新核对",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:move-booked-1"
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "baseline_commit": "14fce0d",
+  "finished_at": "2026-10-23T14:19:37.099Z",
+  "passed": 0,
+  "failed": 1,
+  "ok": false
+}

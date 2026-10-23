@@ -1,5 +1,29 @@
 # 验证记录 · 2026-10-15
 
+## 2026-10-23 晚间 · 人工重开优先于规则分流
+
+旧版 `14fce0d` 中，已有预约大件事件先保存为已排除或已处理，再保存「待复核」与重查理由，JSON 正确保留了两条历史和 `open`，但待办仍为 0、徽标仍为预约例外；导入后仍遗漏。[直接基线](validation/reopened-review-direct-baseline.json)含两种原结案状态。正式最小[红测试 0/1](validation/reopened-review-baseline.json)通过浏览器路由提供该提交的原 `app.mjs`，其余模块未变；不能把最终六项都计成旧版失败数。
+
+修复后[专项 6/6](validation/reopened-review-validation.json)：预约、低分、短观察三类；无人工记录与未保存草稿保持原分流；空白理由保存失败；明确人工待复核进入待办；再次结案退出；JSON 与 Markdown 保留原规则和人工结论。五项为合成状态边界，另一项实际运行 SSDLite 的 7 帧公开图片合成短片，生成 1 个停车候选，再显式调整质量门槛为 0 以覆盖短观察分流路径。该策略只用于测试，不更改产品默认值，也不构成现场风险建议。
+
+真实候选的原 `routing` 仍是 `short_observation`，人工重开后待办为 1，导出恢复的观察、任务标识、结论及历史一致。这验证人机复核流程，不能证明真实停车时长、违停或识别精度。
+
+[独立代码边界 6/6](validation/reopened-review-code-review.json)另检查首次直接保存待复核、多个事件隔离、关闭草稿不提前移出、最新结案优先于旧重开、旧版结构文件恢复；来源、政策、结论、历史深度一致。[独立界面 23/23](validation/reopened-review-ui-validation.json)：1440px 12 项（含真实默认 D-FINE 图片流程），390px 11 项；实际截图经设计师和主代理查看，无横向溢出。D-FINE 校车图实际生成 2 个规则候选，大巴分数 0.9651602；这里只验证推理、复核及导出。专项和界面检查均无页面异常或外域请求，独立代码检查无页面异常。
+
+```bash
+ESTATEGUARD_URL=http://127.0.0.1:8767 node scripts/reopened-review-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8767 node scripts/candidate-handoff-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8767 node scripts/model-check.cjs
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+```
+
+浏览器依赖配置沿用下文。专项支持 `REOPENED_REVIEW_REPORT` 指定报告名、`REOPENED_REVIEW_ONLY` 按名称筛选；完整验收不设置筛选。可用 `REOPENED_REVIEW_BASELINE=14fce0d` 读取本地 Git 中的原网页模块作对照，报告会标注提交。首次最小脚本恰逢产品修改后运行，其绿结果保留为本地 `artifacts/reopened-review-validation.premature-green.json`，未作为红基线；随后显式提供旧模块才得到正式失败。
+
+原候选交接 10/10（含 2 项真实 D-FINE 流程）、JS 138/138、26 项资产哈希通过；原 `model-check` 实际运行 SSDLite 图片与 7 帧合成视频，张量 262→262，外域请求 0。本轮只改人工待办和徽标判断，没有改检测权重、事件引擎、分组、阈值、导出格式或固定评测数字。
+
+剩余限制：普通保存仍保留当前筛选，重开事件会退出「已处理」视图，可切到待办查看；尚未修复完成一项后自动选中下一项时上下文可能在屏外的问题，见 BACKLOG。关闭前仍须导出，媒体需另行选择。CI 与线上验证单独记录。
+
 ## 2026-10-23 · 中途失败保留已完成的检测结果
 
 旧版 `c29c6bc` 正式红基线 1/2：真实 SSDLite 正常完成 7 帧，但第三次推理注入异常后，前两帧已经成功，结果区仍隐藏、导出被禁用。修复后[专项 9/9](validation/partial-analysis-validation.json)；[红基线](validation/partial-analysis-baseline.json)独立保留。错误由测试明确注入，不将其描述为自然发生的坏视频。

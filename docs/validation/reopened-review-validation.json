@@ -1,0 +1,483 @@
+{
+  "at": "2026-10-23T14:22:18.120Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Synthetic appointment/score/dwell workflow cases and separately identified actual model output. Checks saved human intent, not field accuracy.",
+  "checks": [
+    {
+      "name": "appointment reopened from dismissed becomes a pending saved human decision",
+      "passed": true,
+      "evidence": {
+        "synthetic": true,
+        "default": {
+          "metrics": [
+            "4\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "预约例外待核对",
+          "queue_badges": [
+            "预约例外待核对"
+          ],
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "event": "event:move-booked-1"
+        },
+        "closed": {
+          "metrics": [
+            "4\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "已排除",
+          "queue_badges": [
+            "已排除"
+          ],
+          "note": "预约已核对，先行排除（合成验收）",
+          "status": "dismissed",
+          "history": "复核历史 · 1 条2026/10/23 22:22:19 · 已排除：预约已核对，先行排除（合成验收）",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:move-booked-1"
+        },
+        "reopened": {
+          "metrics": [
+            "4\n来源观察记录",
+            "1\n合并后事件",
+            "1\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 1,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "待复核",
+          "queue_badges": [
+            "待复核"
+          ],
+          "note": "预约有效期仍需复查，请接班人员重新核对",
+          "status": "open",
+          "history": "复核历史 · 2 条2026/10/23 22:22:19 · 已排除：预约已核对，先行排除（合成验收）2026/10/23 22:22:19 · 待复核：预约有效期仍需复查，请接班人员重新核对",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:move-booked-1"
+        }
+      }
+    },
+    {
+      "name": "low-score default and unsaved open draft stay out until explicit save",
+      "passed": true,
+      "evidence": {
+        "synthetic": true,
+        "default": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "低于分数阈值",
+          "queue_badges": [
+            "低于分数阈值"
+          ],
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "event": "event:reopen-low"
+        },
+        "draft": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "低于分数阈值",
+          "queue_badges": [
+            "低于分数阈值 未保存草稿"
+          ],
+          "note": "住户再次反馈，请安排人工核查",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "event": "event:reopen-low"
+        },
+        "draft_pending": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "review",
+          "queue_count": 0,
+          "queue_badges": [],
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。"
+        },
+        "saved": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "1\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 1,
+          "filter": "review",
+          "queue_count": 1,
+          "badge": "待复核",
+          "queue_badges": [
+            "待复核"
+          ],
+          "note": "住户再次反馈，请安排人工核查",
+          "status": "open",
+          "history": "复核历史 · 1 条2026/10/23 22:22:19 · 待复核：住户再次反馈，请安排人工核查",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:reopen-low"
+        }
+      }
+    },
+    {
+      "name": "short observation reopened from resolved survives JSON and Markdown handover",
+      "passed": true,
+      "evidence": {
+        "synthetic": true,
+        "reopened": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "1\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 1,
+          "filter": "review",
+          "queue_count": 1,
+          "badge": "待复核",
+          "queue_badges": [
+            "待复核"
+          ],
+          "note": "原片段较短，交班后仍需现场复查",
+          "status": "open",
+          "history": "复核历史 · 2 条2026/10/23 22:22:19 · 已处理：现场已处理，先行结案（合成验收）2026/10/23 22:22:19 · 待复核：原片段较短，交班后仍需现场复查",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:reopen-short"
+        },
+        "restored": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "1\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 1,
+          "filter": "review",
+          "queue_count": 1,
+          "badge": "待复核",
+          "queue_badges": [
+            "待复核"
+          ],
+          "note": "原片段较短，交班后仍需现场复查",
+          "status": "open",
+          "history": "复核历史 · 2 条2026/10/23 22:22:19 · 已处理：现场已处理，先行结案（合成验收）2026/10/23 22:22:19 · 待复核：原片段较短，交班后仍需现场复查",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "event": "event:reopen-short"
+        },
+        "handover": {
+          "decisions": {
+            "event:reopen-short": {
+              "status": "open",
+              "note": "原片段较短，交班后仍需现场复查",
+              "at": "2026-10-23T14:22:19.315Z"
+            }
+          },
+          "audit": [
+            {
+              "event_id": "event:reopen-short",
+              "status": "resolved",
+              "note": "现场已处理，先行结案（合成验收）",
+              "at": "2026-10-23T14:22:19.280Z"
+            },
+            {
+              "event_id": "event:reopen-short",
+              "status": "open",
+              "note": "原片段较短，交班后仍需现场复查",
+              "at": "2026-10-23T14:22:19.315Z"
+            }
+          ],
+          "markdown": "# EstateGuard 班次交接单\n\n人工待办验收-short\n\n导出时间：2026-10-23T14:22:19.381Z\n\n数据来源：原创合成观察，仅验证人工状态和规则分流的优先级。\n\n## 使用边界\n\n以下记录为人工复核材料，不是责任或违法判定。媒体文件不包含在内。使用配套 JSON 恢复工作区。时间统一为 UTC+8。\n\n## 当前规则\n\n```json\n{\n  \"score_threshold\": 0.6,\n  \"quality_threshold\": 0.5,\n  \"merge_gap_seconds\": 30,\n  \"parking_grace_seconds\": 30\n}\n```\n\n## 疑似不当停车\n\n- 事件：event:reopen-short\n- 摄像头 / 区域 / 匿名轨迹：合成镜头 / 合成区域 / synthetic-track\n- 时间：2026/10/23 08:00:00 至 2026/10/23 08:00:10\n- 分流：观察时间不足\n- 原因：有证据的观察时长未达到当前停车宽限；间隔未计入。\n- 来源 ID：reopen-short\n- 证据引用：synthetic-reference.jpg\n- 人工结论：待复核\n- 理由：原片段较短，交班后仍需现场复查\n\n## 审查历史\n\n- 2026/10/23 22:22:19 | event:reopen-short | 已处理 | 现场已处理，先行结案（合成验收）\n- 2026/10/23 22:22:19 | event:reopen-short | 待复核 | 原片段较短，交班后仍需现场复查\n"
+        }
+      }
+    },
+    {
+      "name": "blank reopening fails without changing the saved queue and closing again removes it",
+      "passed": true,
+      "evidence": {
+        "synthetic": true,
+        "failed": {
+          "metrics": [
+            "4\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "已处理",
+          "queue_badges": [
+            "已处理 未保存草稿"
+          ],
+          "note": "   ",
+          "status": "open",
+          "history": "复核历史 · 1 条2026/10/23 22:22:19 · 已处理：现场已完成处理",
+          "message": "Review note: enter 1–2000 characters.",
+          "event": "event:move-booked-1"
+        },
+        "closed": {
+          "metrics": [
+            "4\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "review",
+          "queue_count": 0,
+          "queue_badges": [],
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        },
+        "audit": [
+          {
+            "event_id": "event:move-booked-1",
+            "status": "resolved",
+            "note": "现场已完成处理",
+            "at": "2026-10-23T14:22:19.514Z"
+          },
+          {
+            "event_id": "event:move-booked-1",
+            "status": "open",
+            "note": "补充了有效理由，重新核查",
+            "at": "2026-10-23T14:22:19.581Z"
+          },
+          {
+            "event_id": "event:move-booked-1",
+            "status": "resolved",
+            "note": "再次核查完成，关闭本条",
+            "at": "2026-10-23T14:22:19.614Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "other saved human statuses keep their existing queue meaning",
+      "passed": true,
+      "evidence": {
+        "synthetic": true,
+        "confirmed": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "1\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 1,
+          "filter": "review",
+          "queue_count": 1,
+          "badge": "已确认 · 待处理",
+          "queue_badges": [
+            "已确认 · 待处理"
+          ],
+          "note": "线下核查发现需要处理",
+          "status": "confirmed_concern",
+          "history": "复核历史 · 1 条2026/10/23 22:22:19 · 已确认 · 待处理：线下核查发现需要处理",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:reopen-low"
+        },
+        "needs_evidence": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "1\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 1,
+          "filter": "review",
+          "queue_count": 1,
+          "badge": "待补充证据",
+          "queue_badges": [
+            "待补充证据"
+          ],
+          "note": "需要进一步核对现场证据",
+          "status": "needs_evidence",
+          "history": "复核历史 · 2 条2026/10/23 22:22:19 · 已确认 · 待处理：线下核查发现需要处理2026/10/23 22:22:19 · 待补充证据：需要进一步核对现场证据",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:reopen-low"
+        },
+        "dismissed": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "0\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "review",
+          "queue_count": 0,
+          "queue_badges": [],
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        }
+      }
+    },
+    {
+      "name": "real SSDLite parking candidate can be explicitly reopened after short-observation routing",
+      "passed": true,
+      "evidence": {
+        "real_model": true,
+        "synthetic_video": true,
+        "fixture": {
+          "path": "artifacts/synthetic-still.mp4",
+          "sha256": "85f019a60ce7eb5f4b46f1bdbe14ea8c5966982f750c920e46fbd4e0ea30b2c5",
+          "source": "web/samples/bus.jpg"
+        },
+        "inference": {
+          "analysis_id": "b1110f40-eada-4545-9c21-4a6695466b0d",
+          "frames": 7,
+          "bus_scores": [
+            0.9830567240715027,
+            0.9851245880126953,
+            0.9881211519241333,
+            0.9884323477745056,
+            0.9900193214416504,
+            0.9899007678031921,
+            0.9896509647369385
+          ],
+          "candidates": [
+            {
+              "id": "vision-track-1-1",
+              "camera": "公开图合成视频测试镜头",
+              "zone": "合成完整区域",
+              "track": "track-1",
+              "stable_segment_id": "track-1-stay-1",
+              "category": "illegal_parking",
+              "start": "2026-10-23T00:00:00.000Z",
+              "end": "2026-10-23T00:00:06.000Z",
+              "score": 0.9900193214416504,
+              "quality": 0.4,
+              "summary": "模型检测：bus；7 个采样帧。采样中车辆在指定区域内有约 6.0 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 0.06。驶入、驶离及其他停留片段分别处理。 时间范围来自稀疏采样，不证明连续停留。",
+              "evidence": [
+                "synthetic-still.mp4 @ 0.00s",
+                "synthetic-still.mp4 @ 1.00s",
+                "synthetic-still.mp4 @ 2.00s",
+                "synthetic-still.mp4 @ 3.00s",
+                "synthetic-still.mp4 @ 4.00s",
+                "synthetic-still.mp4 @ 5.00s",
+                "synthetic-still.mp4 @ 6.00s"
+              ]
+            }
+          ]
+        },
+        "automatic": {
+          "metrics": [
+            "1来源观察记录",
+            "1合并后事件",
+            "0待复核 / 待处理",
+            "0优先核查（含证据不足）"
+          ],
+          "pending": 0,
+          "filter": "all",
+          "queue_count": 1,
+          "badge": "观察时间不足",
+          "queue_badges": [
+            "观察时间不足"
+          ],
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "message": "规则已应用，新的复核已开始。固定评测结果不受此操作影响。",
+          "event": "event:vision-track-1-1"
+        },
+        "reopened": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "1\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 1,
+          "filter": "review",
+          "queue_count": 1,
+          "badge": "待复核",
+          "queue_badges": [
+            "待复核"
+          ],
+          "note": "短片段不能确定现场情况，请下一班补查",
+          "status": "open",
+          "history": "复核历史 · 2 条2026/10/23 22:22:21 · 已处理：本轮合成场景已核查2026/10/23 22:22:21 · 待复核：短片段不能确定现场情况，请下一班补查",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "event": "event:vision-track-1-1"
+        },
+        "original_routing": "short_observation",
+        "restored": {
+          "metrics": [
+            "1\n来源观察记录",
+            "1\n合并后事件",
+            "1\n待复核 / 待处理",
+            "0\n优先核查（含证据不足）"
+          ],
+          "pending": 1,
+          "filter": "review",
+          "queue_count": 1,
+          "badge": "待复核",
+          "queue_badges": [
+            "待复核"
+          ],
+          "note": "短片段不能确定现场情况，请下一班补查",
+          "status": "open",
+          "history": "复核历史 · 2 条2026/10/23 22:22:21 · 已处理：本轮合成场景已核查2026/10/23 22:22:21 · 待复核：短片段不能确定现场情况，请下一班补查",
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "event": "event:vision-track-1-1"
+        },
+        "decisions": {
+          "event:vision-track-1-1": {
+            "status": "open",
+            "note": "短片段不能确定现场情况，请下一班补查",
+            "at": "2026-10-23T14:22:21.730Z"
+          }
+        },
+        "audit": [
+          {
+            "event_id": "event:vision-track-1-1",
+            "status": "resolved",
+            "note": "本轮合成场景已核查",
+            "at": "2026-10-23T14:22:21.697Z"
+          },
+          {
+            "event_id": "event:vision-track-1-1",
+            "status": "open",
+            "note": "短片段不能确定现场情况，请下一班补查",
+            "at": "2026-10-23T14:22:21.730Z"
+          }
+        ]
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "finished_at": "2026-10-23T14:22:21.973Z",
+  "passed": 6,
+  "failed": 0,
+  "ok": true
+}

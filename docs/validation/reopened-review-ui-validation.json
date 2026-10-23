@@ -1,0 +1,1239 @@
+{
+  "started_at": "2026-10-23T14:21:43.677Z",
+  "scope": "Independent fixed-layout UI regression. Synthetic demo validates human reopen semantics; one additional real default D-FINE public-image flow validates inference to review/export. Fixture notes are not real onsite findings.",
+  "source_sha256": "efbfc003e95737685bbdd7ff033430128d2423452833ab5dac9931bfb1004549",
+  "checks": [
+    {
+      "width": 1440,
+      "name": "untouched rule exclusions remain outside pending",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "unsaved open draft does not override routing",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "permit saved reopen enters pending with human-status badge and history",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "short saved reopen enters pending with human-status badge and history",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "low-score saved reopen enters pending with human-status badge and history",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "ordinary saved reopen enters pending with human-status badge and history",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "JSON and Markdown contain four saved open decisions with retained reasons and eight history entries",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "fresh-page restore keeps reopened items pending and preserves their current badges",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "cancelled rule reset preserves saved reopen decisions and full history",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "explicitly confirmed new rule round clears human override and restores original rule routing",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "existing layout has no page overflow through pending, reopen, restore",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "actual default D-FINE inference still completes candidate review and export",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "untouched rule exclusions remain outside pending",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "unsaved open draft does not override routing",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "permit saved reopen enters pending with human-status badge and history",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "short saved reopen enters pending with human-status badge and history",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "low-score saved reopen enters pending with human-status badge and history",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "ordinary saved reopen enters pending with human-status badge and history",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "JSON and Markdown contain four saved open decisions with retained reasons and eight history entries",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "fresh-page restore keeps reopened items pending and preserves their current badges",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "cancelled rule reset preserves saved reopen decisions and full history",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "explicitly confirmed new rule round clears human override and restores original rule routing",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "existing layout has no page overflow through pending, reopen, restore",
+      "passed": true
+    }
+  ],
+  "widths": [
+    {
+      "width": 1440,
+      "cases": [
+        {
+          "key": "permit",
+          "id": "event:move-booked-1",
+          "closed": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:move-booked-1",
+            "badge": "已排除",
+            "list_badge": "已排除",
+            "status": "dismissed",
+            "note": "合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "reason": "所有大件观察记录均声明有搬运预约，请核对有效性。其他风险类别不受此例外影响。",
+            "history": "复核历史 · 1 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "metrics": "36来源观察记录12合并后事件9待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "reopened_all": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:move-booked-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "reason": "所有大件观察记录均声明有搬运预约，请核对有效性。其他风险类别不受此例外影响。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:45 · 待复核：流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "metrics": "36来源观察记录12合并后事件10待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "screenshot": "reopen-review-designer-after-20261023b-permit-reopened-1440.png",
+          "pending": {
+            "queue": "review",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:bags-1",
+              "event:full-bin-1"
+            ],
+            "selected": "event:move-booked-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "reason": "所有大件观察记录均声明有搬运预约，请核对有效性。其他风险类别不受此例外影响。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:45 · 待复核：流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "metrics": "36来源观察记录12合并后事件10待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          }
+        },
+        {
+          "key": "short",
+          "id": "event:drop-off-1",
+          "closed": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:drop-off-1",
+            "badge": "已排除",
+            "list_badge": "已排除",
+            "status": "dismissed",
+            "note": "合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "reason": "有证据的观察时长未达到当前停车宽限；间隔未计入。",
+            "history": "复核历史 · 1 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "metrics": "36来源观察记录12合并后事件10待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "reopened_all": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:drop-off-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "reason": "有证据的观察时长未达到当前停车宽限；间隔未计入。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:45 · 待复核：流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "metrics": "36来源观察记录12合并后事件11待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "screenshot": "reopen-review-designer-after-20261023b-short-reopened-1440.png",
+          "pending": {
+            "queue": "review",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1"
+            ],
+            "selected": "event:drop-off-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "reason": "有证据的观察时长未达到当前停车宽限；间隔未计入。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:45 · 待复核：流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "metrics": "36来源观察记录12合并后事件11待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          }
+        },
+        {
+          "key": "low-score",
+          "id": "event:shadow-1",
+          "closed": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:shadow-1",
+            "badge": "已排除",
+            "list_badge": "已排除",
+            "status": "dismissed",
+            "note": "合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "reason": "低于当前分数下限，保留在全部事件中供审计。",
+            "history": "复核历史 · 1 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "metrics": "36来源观察记录12合并后事件11待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "reopened_all": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:shadow-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "reason": "低于当前分数下限，保留在全部事件中供审计。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:45 · 待复核：流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "screenshot": "reopen-review-designer-after-20261023b-low-score-reopened-1440.png",
+          "pending": {
+            "queue": "review",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:shadow-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "reason": "低于当前分数下限，保留在全部事件中供审计。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:45 · 待复核：流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          }
+        },
+        {
+          "key": "ordinary",
+          "id": "event:unbooked-1",
+          "closed": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:unbooked-1",
+            "badge": "已排除",
+            "list_badge": "已排除",
+            "status": "dismissed",
+            "note": "合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "reason": "候选线索。核对现场规则和证据后再作结论。",
+            "history": "复核历史 · 1 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "metrics": "36来源观察记录12合并后事件11待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "reopened_all": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:unbooked-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：普通候选有新增反馈，重新核查。",
+            "reason": "候选线索。核对现场规则和证据后再作结论。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:45 · 待复核：流程验收：普通候选有新增反馈，重新核查。",
+            "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "pending": {
+            "queue": "review",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:unbooked-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：普通候选有新增反馈，重新核查。",
+            "reason": "候选线索。核对现场规则和证据后再作结论。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:45 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:45 · 待复核：流程验收：普通候选有新增反馈，重新核查。",
+            "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          }
+        }
+      ],
+      "dialogs": [
+        {
+          "text": "应用规则将清空当前复核和草稿。请先导出已有工作。继续吗？",
+          "accepted": false
+        },
+        {
+          "text": "应用规则将清空当前复核和草稿。请先导出已有工作。继续吗？",
+          "accepted": true
+        }
+      ],
+      "screenshots": [
+        "reopen-review-designer-after-20261023b-permit-reopened-1440.png",
+        "reopen-review-designer-after-20261023b-short-reopened-1440.png",
+        "reopen-review-designer-after-20261023b-low-score-reopened-1440.png",
+        "reopen-review-designer-after-20261023b-restored-reopened-1440.png",
+        "reopen-review-designer-after-20261023b-actual-dfine-review-1440.png"
+      ],
+      "initial": {
+        "queue": "review",
+        "ids": [
+          "event:door-held-1",
+          "event:impact-1",
+          "event:van-route-1",
+          "event:reverse-1",
+          "event:dark-route-1",
+          "event:unbooked-1",
+          "event:bay-17-1",
+          "event:bags-1",
+          "event:full-bin-1"
+        ],
+        "selected": "event:door-held-1",
+        "badge": "优先核查",
+        "list_badge": "优先核查",
+        "status": "open",
+        "note": "",
+        "reason": "优先安排人工检查，尚不代表违规已确认。",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "metrics": "36来源观察记录12合并后事件9待复核 / 待处理5优先核查（含证据不足）",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "overflow": 0
+      },
+      "unsaved": {
+        "queue": "review",
+        "ids": [
+          "event:door-held-1",
+          "event:impact-1",
+          "event:van-route-1",
+          "event:reverse-1",
+          "event:dark-route-1",
+          "event:unbooked-1",
+          "event:bay-17-1",
+          "event:bags-1",
+          "event:full-bin-1"
+        ],
+        "selected": "event:door-held-1",
+        "badge": "优先核查",
+        "list_badge": "优先核查",
+        "status": "open",
+        "note": "",
+        "reason": "优先安排人工检查，尚不代表违规已确认。",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "metrics": "36来源观察记录12合并后事件9待复核 / 待处理5优先核查（含证据不足）",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "overflow": 0
+      },
+      "saved": {
+        "audit": 8,
+        "decisions": {
+          "event:move-booked-1": {
+            "status": "open",
+            "note": "流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "at": "2026-10-23T14:21:45.125Z"
+          },
+          "event:drop-off-1": {
+            "status": "open",
+            "note": "流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "at": "2026-10-23T14:21:45.290Z"
+          },
+          "event:shadow-1": {
+            "status": "open",
+            "note": "流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "at": "2026-10-23T14:21:45.457Z"
+          },
+          "event:unbooked-1": {
+            "status": "open",
+            "note": "流程验收：普通候选有新增反馈，重新核查。",
+            "at": "2026-10-23T14:21:45.623Z"
+          }
+        }
+      },
+      "restored": {
+        "queue": "review",
+        "ids": [
+          "event:door-held-1",
+          "event:impact-1",
+          "event:van-route-1",
+          "event:reverse-1",
+          "event:dark-route-1",
+          "event:move-booked-1",
+          "event:unbooked-1",
+          "event:bay-17-1",
+          "event:drop-off-1",
+          "event:bags-1",
+          "event:full-bin-1",
+          "event:shadow-1"
+        ],
+        "badges": [
+          {
+            "id": "event:door-held-1",
+            "label": "优先核查"
+          },
+          {
+            "id": "event:impact-1",
+            "label": "优先核查"
+          },
+          {
+            "id": "event:van-route-1",
+            "label": "优先核查"
+          },
+          {
+            "id": "event:reverse-1",
+            "label": "优先核查"
+          },
+          {
+            "id": "event:dark-route-1",
+            "label": "证据不足"
+          },
+          {
+            "id": "event:move-booked-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:unbooked-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:bay-17-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:drop-off-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:bags-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:full-bin-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:shadow-1",
+            "label": "待复核"
+          }
+        ],
+        "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+        "media": "未载入本地证据。请选择与本事件对应的图片或视频。",
+        "overflow": 0
+      },
+      "after_reset": {
+        "queue": "review",
+        "ids": [
+          "event:door-held-1",
+          "event:impact-1",
+          "event:van-route-1",
+          "event:reverse-1",
+          "event:dark-route-1",
+          "event:unbooked-1",
+          "event:bay-17-1",
+          "event:bags-1",
+          "event:full-bin-1"
+        ],
+        "selected": "event:door-held-1",
+        "badge": "优先核查",
+        "list_badge": "优先核查",
+        "status": "open",
+        "note": "",
+        "reason": "优先安排人工检查，尚不代表违规已确认。",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "metrics": "36来源观察记录12合并后事件9待复核 / 待处理5优先核查（含证据不足）",
+        "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+        "overflow": 0
+      },
+      "real_model": {
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frames": 1,
+        "candidates": 2,
+        "classes": [
+          {
+            "class": "bus",
+            "score": 0.9651602077977631
+          },
+          {
+            "class": "stop sign",
+            "score": 0.7990683171645506
+          },
+          {
+            "class": "bus",
+            "score": 0.6453986740192105
+          }
+        ]
+      },
+      "real_handoff": {
+        "queue": "review",
+        "ids": [
+          "event:vision-track-1-1",
+          "event:vision-track-3-2"
+        ],
+        "selected": "event:vision-track-1-1",
+        "badge": "证据不足",
+        "list_badge": "证据不足",
+        "status": "open",
+        "note": "",
+        "reason": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "metrics": "2来源观察记录2合并后事件2待复核 / 待处理2优先核查（含证据不足）",
+        "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+        "overflow": 0
+      }
+    },
+    {
+      "width": 390,
+      "cases": [
+        {
+          "key": "permit",
+          "id": "event:move-booked-1",
+          "closed": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:move-booked-1",
+            "badge": "已排除",
+            "list_badge": "已排除",
+            "status": "dismissed",
+            "note": "合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "reason": "所有大件观察记录均声明有搬运预约，请核对有效性。其他风险类别不受此例外影响。",
+            "history": "复核历史 · 1 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "metrics": "36来源观察记录12合并后事件9待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "reopened_all": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:move-booked-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "reason": "所有大件观察记录均声明有搬运预约，请核对有效性。其他风险类别不受此例外影响。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:48 · 待复核：流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "metrics": "36来源观察记录12合并后事件10待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "screenshot": "reopen-review-designer-after-20261023b-permit-reopened-390.png",
+          "pending": {
+            "queue": "review",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:bags-1",
+              "event:full-bin-1"
+            ],
+            "selected": "event:move-booked-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "reason": "所有大件观察记录均声明有搬运预约，请核对有效性。其他风险类别不受此例外影响。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:48 · 待复核：流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "metrics": "36来源观察记录12合并后事件10待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          }
+        },
+        {
+          "key": "short",
+          "id": "event:drop-off-1",
+          "closed": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:drop-off-1",
+            "badge": "已排除",
+            "list_badge": "已排除",
+            "status": "dismissed",
+            "note": "合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "reason": "有证据的观察时长未达到当前停车宽限；间隔未计入。",
+            "history": "复核历史 · 1 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "metrics": "36来源观察记录12合并后事件10待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "reopened_all": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:drop-off-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "reason": "有证据的观察时长未达到当前停车宽限；间隔未计入。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:48 · 待复核：流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "metrics": "36来源观察记录12合并后事件11待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "screenshot": "reopen-review-designer-after-20261023b-short-reopened-390.png",
+          "pending": {
+            "queue": "review",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1"
+            ],
+            "selected": "event:drop-off-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "reason": "有证据的观察时长未达到当前停车宽限；间隔未计入。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:48 · 待复核：流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "metrics": "36来源观察记录12合并后事件11待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          }
+        },
+        {
+          "key": "low-score",
+          "id": "event:shadow-1",
+          "closed": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:shadow-1",
+            "badge": "已排除",
+            "list_badge": "已排除",
+            "status": "dismissed",
+            "note": "合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "reason": "低于当前分数下限，保留在全部事件中供审计。",
+            "history": "复核历史 · 1 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "metrics": "36来源观察记录12合并后事件11待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "reopened_all": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:shadow-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "reason": "低于当前分数下限，保留在全部事件中供审计。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:48 · 待复核：流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "screenshot": "reopen-review-designer-after-20261023b-low-score-reopened-390.png",
+          "pending": {
+            "queue": "review",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:shadow-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "reason": "低于当前分数下限，保留在全部事件中供审计。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:48 · 待复核：流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          }
+        },
+        {
+          "key": "ordinary",
+          "id": "event:unbooked-1",
+          "closed": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:unbooked-1",
+            "badge": "已排除",
+            "list_badge": "已排除",
+            "status": "dismissed",
+            "note": "合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "reason": "候选线索。核对现场规则和证据后再作结论。",
+            "history": "复核历史 · 1 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。",
+            "metrics": "36来源观察记录12合并后事件11待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "reopened_all": {
+            "queue": "all",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:unbooked-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：普通候选有新增反馈，重新核查。",
+            "reason": "候选线索。核对现场规则和证据后再作结论。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:48 · 待复核：流程验收：普通候选有新增反馈，重新核查。",
+            "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          },
+          "pending": {
+            "queue": "review",
+            "ids": [
+              "event:door-held-1",
+              "event:impact-1",
+              "event:van-route-1",
+              "event:reverse-1",
+              "event:dark-route-1",
+              "event:move-booked-1",
+              "event:unbooked-1",
+              "event:bay-17-1",
+              "event:drop-off-1",
+              "event:bags-1",
+              "event:full-bin-1",
+              "event:shadow-1"
+            ],
+            "selected": "event:unbooked-1",
+            "badge": "待复核",
+            "list_badge": "待复核",
+            "status": "open",
+            "note": "流程验收：普通候选有新增反馈，重新核查。",
+            "reason": "候选线索。核对现场规则和证据后再作结论。",
+            "history": "复核历史 · 2 条2026/10/23 22:21:48 · 已排除：合成流程验收：上一班已核对并排除，作为重开前置状态。2026/10/23 22:21:48 · 待复核：流程验收：普通候选有新增反馈，重新核查。",
+            "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+            "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+            "overflow": 0
+          }
+        }
+      ],
+      "dialogs": [
+        {
+          "text": "应用规则将清空当前复核和草稿。请先导出已有工作。继续吗？",
+          "accepted": false
+        },
+        {
+          "text": "应用规则将清空当前复核和草稿。请先导出已有工作。继续吗？",
+          "accepted": true
+        }
+      ],
+      "screenshots": [
+        "reopen-review-designer-after-20261023b-permit-reopened-390.png",
+        "reopen-review-designer-after-20261023b-short-reopened-390.png",
+        "reopen-review-designer-after-20261023b-low-score-reopened-390.png",
+        "reopen-review-designer-after-20261023b-restored-reopened-390.png"
+      ],
+      "initial": {
+        "queue": "review",
+        "ids": [
+          "event:door-held-1",
+          "event:impact-1",
+          "event:van-route-1",
+          "event:reverse-1",
+          "event:dark-route-1",
+          "event:unbooked-1",
+          "event:bay-17-1",
+          "event:bags-1",
+          "event:full-bin-1"
+        ],
+        "selected": "event:door-held-1",
+        "badge": "优先核查",
+        "list_badge": "优先核查",
+        "status": "open",
+        "note": "",
+        "reason": "优先安排人工检查，尚不代表违规已确认。",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "metrics": "36来源观察记录12合并后事件9待复核 / 待处理5优先核查（含证据不足）",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "overflow": 0
+      },
+      "unsaved": {
+        "queue": "review",
+        "ids": [
+          "event:door-held-1",
+          "event:impact-1",
+          "event:van-route-1",
+          "event:reverse-1",
+          "event:dark-route-1",
+          "event:unbooked-1",
+          "event:bay-17-1",
+          "event:bags-1",
+          "event:full-bin-1"
+        ],
+        "selected": "event:door-held-1",
+        "badge": "优先核查",
+        "list_badge": "优先核查",
+        "status": "open",
+        "note": "",
+        "reason": "优先安排人工检查，尚不代表违规已确认。",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "metrics": "36来源观察记录12合并后事件9待复核 / 待处理5优先核查（含证据不足）",
+        "message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+        "overflow": 0
+      },
+      "saved": {
+        "audit": 8,
+        "decisions": {
+          "event:move-booked-1": {
+            "status": "open",
+            "note": "流程验收：重新核查预约是否已失效，请本班补核搬运凭证。",
+            "at": "2026-10-23T14:21:48.195Z"
+          },
+          "event:drop-off-1": {
+            "status": "open",
+            "note": "流程验收：现场收到持续停靠反馈，要求重新核查完整时段。",
+            "at": "2026-10-23T14:21:48.347Z"
+          },
+          "event:shadow-1": {
+            "status": "open",
+            "note": "流程验收：低分线索有新增人工反馈，需要补看完整视频。",
+            "at": "2026-10-23T14:21:48.496Z"
+          },
+          "event:unbooked-1": {
+            "status": "open",
+            "note": "流程验收：普通候选有新增反馈，重新核查。",
+            "at": "2026-10-23T14:21:48.647Z"
+          }
+        }
+      },
+      "restored": {
+        "queue": "review",
+        "ids": [
+          "event:door-held-1",
+          "event:impact-1",
+          "event:van-route-1",
+          "event:reverse-1",
+          "event:dark-route-1",
+          "event:move-booked-1",
+          "event:unbooked-1",
+          "event:bay-17-1",
+          "event:drop-off-1",
+          "event:bags-1",
+          "event:full-bin-1",
+          "event:shadow-1"
+        ],
+        "badges": [
+          {
+            "id": "event:door-held-1",
+            "label": "优先核查"
+          },
+          {
+            "id": "event:impact-1",
+            "label": "优先核查"
+          },
+          {
+            "id": "event:van-route-1",
+            "label": "优先核查"
+          },
+          {
+            "id": "event:reverse-1",
+            "label": "优先核查"
+          },
+          {
+            "id": "event:dark-route-1",
+            "label": "证据不足"
+          },
+          {
+            "id": "event:move-booked-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:unbooked-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:bay-17-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:drop-off-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:bags-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:full-bin-1",
+            "label": "待复核"
+          },
+          {
+            "id": "event:shadow-1",
+            "label": "待复核"
+          }
+        ],
+        "metrics": "36来源观察记录12合并后事件12待复核 / 待处理5优先核查（含证据不足）",
+        "media": "未载入本地证据。请选择与本事件对应的图片或视频。",
+        "overflow": 0
+      },
+      "after_reset": {
+        "queue": "review",
+        "ids": [
+          "event:door-held-1",
+          "event:impact-1",
+          "event:van-route-1",
+          "event:reverse-1",
+          "event:dark-route-1",
+          "event:unbooked-1",
+          "event:bay-17-1",
+          "event:bags-1",
+          "event:full-bin-1"
+        ],
+        "selected": "event:door-held-1",
+        "badge": "优先核查",
+        "list_badge": "优先核查",
+        "status": "open",
+        "note": "",
+        "reason": "优先安排人工检查，尚不代表违规已确认。",
+        "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+        "metrics": "36来源观察记录12合并后事件9待复核 / 待处理5优先核查（含证据不足）",
+        "message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+        "overflow": 0
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "passed": 23,
+  "failed": 0,
+  "ok": true,
+  "finished_at": "2026-10-23T14:21:49.538Z",
+  "visual_review": {
+    "inspected": [
+      "reopen-review-designer-after-20261023b-permit-reopened-390.png",
+      "reopen-review-designer-after-20261023b-short-reopened-1440.png",
+      "reopen-review-designer-after-20261023b-restored-reopened-390.png"
+    ],
+    "blockers": [],
+    "adaptation_required": false,
+    "reading_assessment": "Current badge explicitly says 待复核. Original routing explanations describe the earlier input evidence and still invite verification; they do not claim the human obligation has been resolved. Existing field, note, history and status hierarchy is sufficient; no additional card, controls, CSS, or wording needed for this round.",
+    "remaining_separate_issue": "Closing the selected item in pending filter automatically selects another event at the same scrolled form position. Evidence is in review-completion-designer-20261023b.json, deferred by parent; this round intentionally does not change selection/scroll behavior."
+  },
+  "limitations": [
+    "Synthetic demo cases verify review-state semantics; they do not establish real-world incident correctness.",
+    "Real D-FINE smoke flow used public CC0 photo with test camera/time, one frame and two rule candidates, not onsite evidence.",
+    "Final successful code hash matches parent efbfc003e95737685bbdd7ff033430128d2423452833ab5dac9931bfb1004549."
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "at": "2026-10-23T14:20:56.809Z",
+  "base": "http://127.0.0.1:8767",
+  "app_sha256": "efbfc003e95737685bbdd7ff033430128d2423452833ab5dac9931bfb1004549",
+  "scope": "Synthetic state fixtures through real browser save/export/import UI, not detector accuracy.",
+  "checks": [
+    {
+      "name": "Default open stays under original routing for all three exception classes",
+      "passed": true,
+      "evidence": {
+        "metric": "1",
+        "filter": "all",
+        "visible": [
+          {
+            "id": "event:permit",
+            "badge": "预约例外待核对"
+          },
+          {
+            "id": "event:rule-review",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:score",
+            "badge": "低于分数阈值"
+          },
+          {
+            "id": "event:short",
+            "badge": "观察时间不足"
+          }
+        ],
+        "selected": "event:short",
+        "detail_badge": "观察时间不足"
+      }
+    },
+    {
+      "name": "Unsaved open notes do not change attention, survive switching, and revert cleanly",
+      "passed": true,
+      "evidence": {
+        "metric": "1",
+        "filter": "all",
+        "visible": [
+          {
+            "id": "event:permit",
+            "badge": "预约例外待核对"
+          },
+          {
+            "id": "event:rule-review",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:score",
+            "badge": "低于分数阈值"
+          },
+          {
+            "id": "event:short",
+            "badge": "观察时间不足"
+          }
+        ],
+        "selected": "event:short",
+        "detail_badge": "观察时间不足"
+      }
+    },
+    {
+      "name": "First saved open overrides all three routes independently",
+      "passed": true,
+      "evidence": {
+        "metric": "4",
+        "filter": "review",
+        "visible": [
+          {
+            "id": "event:permit",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:rule-review",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:score",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:short",
+            "badge": "待复核"
+          }
+        ],
+        "selected": "event:short",
+        "detail_badge": "待复核"
+      }
+    },
+    {
+      "name": "Unsaved close drafts do not hide saved open events or mutate audit",
+      "passed": true,
+      "evidence": {
+        "metric": "4",
+        "filter": "all",
+        "visible": [
+          {
+            "id": "event:permit",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:rule-review",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:score",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:short",
+            "badge": "待复核"
+          }
+        ],
+        "selected": "event:short",
+        "detail_badge": "待复核"
+      }
+    },
+    {
+      "name": "Latest saved resolved/dismissed wins over historic open",
+      "passed": true,
+      "evidence": {
+        "metric": "1",
+        "filter": "review",
+        "visible": [
+          {
+            "id": "event:rule-review",
+            "badge": "待复核"
+          }
+        ],
+        "selected": "event:rule-review",
+        "detail_badge": "待复核"
+      }
+    },
+    {
+      "name": "Existing version-1 closed and reopened exports restore latest state without rewriting routing/history",
+      "passed": true,
+      "evidence": {
+        "metric": "4",
+        "filter": "review",
+        "visible": [
+          {
+            "id": "event:permit",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:rule-review",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:score",
+            "badge": "待复核"
+          },
+          {
+            "id": "event:short",
+            "badge": "待复核"
+          }
+        ],
+        "selected": "event:permit",
+        "detail_badge": "待复核"
+      },
+      "audit_statuses": [
+        {
+          "event_id": "event:permit",
+          "status": "open"
+        },
+        {
+          "event_id": "event:score",
+          "status": "open"
+        },
+        {
+          "event_id": "event:short",
+          "status": "open"
+        },
+        {
+          "event_id": "event:permit",
+          "status": "dismissed"
+        },
+        {
+          "event_id": "event:score",
+          "status": "resolved"
+        },
+        {
+          "event_id": "event:short",
+          "status": "dismissed"
+        },
+        {
+          "event_id": "event:permit",
+          "status": "open"
+        },
+        {
+          "event_id": "event:score",
+          "status": "open"
+        },
+        {
+          "event_id": "event:short",
+          "status": "open"
+        }
+      ]
+    }
+  ],
+  "page_errors": [],
+  "ok": true
+}
