@@ -1,0 +1,511 @@
+{
+  "at": "2026-10-24T14:23:49.825Z",
+  "base": "http://127.0.0.1:8767",
+  "app_sha256": "749072aaf7cc2ec582430aca6279ecbedba936fbf715391ec4a7a727b7b16809",
+  "scope": "Synthetic review-state fixtures through real Chrome UI; existing public bus image used only for actual attachment decode. No detector inference or product edits.",
+  "checks": [
+    {
+      "name": "Closing a non-first event keeps visible[0] selection, draft and attachment",
+      "width": 1440,
+      "passed": true,
+      "evidence": {
+        "after": {
+          "selected": "event:A",
+          "filter": "review",
+          "area": "all",
+          "queue": [
+            "event:A",
+            "event:C"
+          ],
+          "metric": "2",
+          "heading": "客梯大件搬运",
+          "heading_visible": true,
+          "heading_focused": true,
+          "focus": {
+            "id": "",
+            "tag": "H3"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3",
+              "text": "客梯大件搬运"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE",
+              "text": null
+            }
+          ],
+          "note": "Unfinished draft on A",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "media": "blob:http://127.0.0.1:8767/3534c881-63e1-44a9-baa5-78f854bee7c7",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#workspace",
+          "scroll_y": 319
+        }
+      }
+    },
+    {
+      "name": "Reopening in resolved filter advances within that filter then focuses empty state",
+      "width": 1440,
+      "passed": true,
+      "evidence": {
+        "first": {
+          "selected": "event:B",
+          "filter": "resolved",
+          "area": "all",
+          "queue": [
+            "event:B"
+          ],
+          "metric": "2",
+          "heading": "客梯大件搬运",
+          "heading_visible": true,
+          "heading_focused": true,
+          "focus": {
+            "id": "",
+            "tag": "H3"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3",
+              "text": "客梯大件搬运"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE",
+              "text": null
+            }
+          ],
+          "note": "Saved B",
+          "status": "dismissed",
+          "history": "复核历史 · 1 条2026/10/24 08:02:00 · 已排除：Saved B",
+          "media": null,
+          "media_status": "未载入本地证据。请选择与本事件对应的图片或视频。",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#workspace",
+          "scroll_y": 319
+        },
+        "empty": {
+          "selected": null,
+          "filter": "resolved",
+          "area": "all",
+          "queue": [],
+          "metric": "3",
+          "heading": "此视图暂无待办",
+          "heading_visible": true,
+          "heading_focused": true,
+          "focus": {
+            "id": "",
+            "tag": "H3"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3",
+              "text": "此视图暂无待办"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE",
+              "text": null
+            }
+          ],
+          "history": null,
+          "media": null,
+          "media_status": null,
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#workspace",
+          "scroll_y": 0
+        }
+      }
+    },
+    {
+      "name": "Closing last event in selected area does not jump to another area",
+      "width": 1440,
+      "passed": true,
+      "evidence": {
+        "after": {
+          "selected": null,
+          "filter": "review",
+          "area": "Lift",
+          "queue": [],
+          "metric": "1",
+          "heading": "此视图暂无待办",
+          "heading_visible": true,
+          "heading_focused": true,
+          "focus": {
+            "id": "",
+            "tag": "H3"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3",
+              "text": "此视图暂无待办"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE",
+              "text": null
+            }
+          ],
+          "history": null,
+          "media": null,
+          "media_status": null,
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#workspace",
+          "scroll_y": 0
+        }
+      }
+    },
+    {
+      "name": "Closing a non-first event keeps visible[0] selection, draft and attachment",
+      "width": 390,
+      "passed": true,
+      "evidence": {
+        "after": {
+          "selected": "event:A",
+          "filter": "review",
+          "area": "all",
+          "queue": [
+            "event:A",
+            "event:C"
+          ],
+          "metric": "2",
+          "heading": "客梯大件搬运",
+          "heading_visible": true,
+          "heading_focused": true,
+          "focus": {
+            "id": "",
+            "tag": "H3"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3",
+              "text": "客梯大件搬运"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE",
+              "text": null
+            }
+          ],
+          "note": "Unfinished draft on A",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "media": "blob:http://127.0.0.1:8767/a738634c-b512-4fac-b81d-aaaf3a53166a",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#workspace",
+          "scroll_y": 933
+        }
+      }
+    },
+    {
+      "name": "Reopening in resolved filter advances within that filter then focuses empty state",
+      "width": 390,
+      "passed": true,
+      "evidence": {
+        "first": {
+          "selected": "event:B",
+          "filter": "resolved",
+          "area": "all",
+          "queue": [
+            "event:B"
+          ],
+          "metric": "2",
+          "heading": "客梯大件搬运",
+          "heading_visible": true,
+          "heading_focused": true,
+          "focus": {
+            "id": "",
+            "tag": "H3"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3",
+              "text": "客梯大件搬运"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE",
+              "text": null
+            }
+          ],
+          "note": "Saved B",
+          "status": "dismissed",
+          "history": "复核历史 · 1 条2026/10/24 08:02:00 · 已排除：Saved B",
+          "media": null,
+          "media_status": "未载入本地证据。请选择与本事件对应的图片或视频。",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#workspace",
+          "scroll_y": 821
+        },
+        "empty": {
+          "selected": null,
+          "filter": "resolved",
+          "area": "all",
+          "queue": [],
+          "metric": "3",
+          "heading": "此视图暂无待办",
+          "heading_visible": true,
+          "heading_focused": true,
+          "focus": {
+            "id": "",
+            "tag": "H3"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3",
+              "text": "此视图暂无待办"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE",
+              "text": null
+            }
+          ],
+          "history": null,
+          "media": null,
+          "media_status": null,
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#workspace",
+          "scroll_y": 419
+        }
+      }
+    },
+    {
+      "name": "Closing last event in selected area does not jump to another area",
+      "width": 390,
+      "passed": true,
+      "evidence": {
+        "after": {
+          "selected": null,
+          "filter": "review",
+          "area": "Lift",
+          "queue": [],
+          "metric": "1",
+          "heading": "此视图暂无待办",
+          "heading_visible": true,
+          "heading_focused": true,
+          "focus": {
+            "id": "",
+            "tag": "H3"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3",
+              "text": "此视图暂无待办"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE",
+              "text": null
+            }
+          ],
+          "history": null,
+          "media": null,
+          "media_status": null,
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#workspace",
+          "scroll_y": 419
+        }
+      }
+    },
+    {
+      "name": "Whitespace reason failure retains event, draft and focus without reveal",
+      "width": 1440,
+      "passed": true,
+      "evidence": {
+        "after": {
+          "selected": "event:A",
+          "filter": "review",
+          "area": "all",
+          "queue": [
+            "event:A",
+            "event:B",
+            "event:C"
+          ],
+          "metric": "3",
+          "heading": "客梯大件搬运",
+          "heading_visible": false,
+          "heading_focused": false,
+          "focus": {
+            "id": "",
+            "tag": "BUTTON"
+          },
+          "calls": [],
+          "note": "  \n  ",
+          "status": "resolved",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "media": null,
+          "media_status": "未载入本地证据。请选择与本事件对应的图片或视频。",
+          "message": "Review note: enter 1–2000 characters.",
+          "hash": "#workspace",
+          "scroll_y": 608
+        }
+      }
+    },
+    {
+      "name": "50,000-entry save rejection leaves workspace unchanged without reveal",
+      "width": 1440,
+      "passed": true,
+      "evidence": {
+        "after": {
+          "selected": "event:A",
+          "filter": "review",
+          "area": "all",
+          "queue": [
+            "event:A",
+            "event:B",
+            "event:C"
+          ],
+          "metric": "3",
+          "heading": "客梯大件搬运",
+          "heading_visible": false,
+          "heading_focused": false,
+          "focus": {
+            "id": "",
+            "tag": "BUTTON"
+          },
+          "calls": [],
+          "note": "This must not be saved",
+          "status": "resolved",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "media": null,
+          "media_status": "未载入本地证据。请选择与本事件对应的图片或视频。",
+          "message": "Audit history is limited to 50,000 entries. Export this review and start a new one before saving more decisions.",
+          "hash": "#workspace",
+          "scroll_y": 608
+        },
+        "retained_audit_entries": 50000
+      }
+    },
+    {
+      "name": "Late actual evidence decode after advancing and leaving does not steal navigation",
+      "width": 390,
+      "passed": true,
+      "evidence": {
+        "advanced": {
+          "selected": "event:A",
+          "filter": "review",
+          "area": "all",
+          "queue": [
+            "event:A",
+            "event:C"
+          ],
+          "metric": "2",
+          "heading": "客梯大件搬运",
+          "heading_visible": true,
+          "heading_focused": true,
+          "focus": {
+            "id": "",
+            "tag": "H3"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3",
+              "text": "客梯大件搬运"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE",
+              "text": null
+            }
+          ],
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "media": null,
+          "media_status": "正在检查「bus.jpg」是否可打开。尚未载入可查看的证据，复核草稿已保留。检查完成后可保存复核记录。",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#workspace",
+          "scroll_y": 933
+        },
+        "before_release": {
+          "selected": "event:A",
+          "filter": "review",
+          "area": "all",
+          "queue": [
+            "event:A",
+            "event:C"
+          ],
+          "metric": "2",
+          "heading": "客梯大件搬运",
+          "heading_visible": false,
+          "heading_focused": false,
+          "focus": {
+            "id": "",
+            "tag": "A"
+          },
+          "calls": [],
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "media": null,
+          "media_status": "正在检查「bus.jpg」是否可打开。尚未载入可查看的证据，复核草稿已保留。检查完成后可保存复核记录。",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#results",
+          "scroll_y": 0
+        },
+        "after_release": {
+          "selected": "event:A",
+          "filter": "review",
+          "area": "all",
+          "queue": [
+            "event:A",
+            "event:C"
+          ],
+          "metric": "2",
+          "heading": "客梯大件搬运",
+          "heading_visible": false,
+          "heading_focused": false,
+          "focus": {
+            "id": "",
+            "tag": "A"
+          },
+          "calls": [],
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "media": "blob:http://127.0.0.1:8767/1b18d452-c85c-4207-90b1-aee0f375a232",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "hash": "#results",
+          "scroll_y": 0
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "ok": true,
+  "passed": 9,
+  "failed": 0
+}

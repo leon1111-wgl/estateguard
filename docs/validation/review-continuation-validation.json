@@ -1,0 +1,1297 @@
+{
+  "started_at": "2026-10-24T14:22:23.293Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Real default D-FINE on the existing public CC0 bus image; access region and capture time are synthetic test context. Other cases explicitly label synthetic workflow fixtures. No model accuracy or field violation claim.",
+  "instrumentation": "Native focus/scrollIntoView calls are observed without changing their behavior. Delayed evidence cases postpone completion of actual image decode only.",
+  "checks": [
+    {
+      "name": "real D-FINE closing first candidate reveals next object at 1440",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "real_model": {
+          "detector": "dfine",
+          "analysis_id": "aa7ad107-c8be-4f6a-a3db-8008d385a6d8",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "initial": {
+          "event": "event:vision-track-1-1",
+          "heading": {
+            "text": "通道占用线索",
+            "top": 51.953125,
+            "bottom": 82.34375,
+            "visible": true
+          },
+          "source": {
+            "text": "公开图片测试镜头 · 合成通道区域 · track-1",
+            "top": 88.34375,
+            "bottom": 107.53125,
+            "visible": true
+          },
+          "badge": {
+            "text": "证据不足",
+            "top": 23.5625,
+            "bottom": 42.5625,
+            "visible": true
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "",
+            "top": 1142.15625,
+            "bottom": 1230.15625,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "media": "blob:http://127.0.0.1:8767/698c7e05-48a9-4c2e-bf69-471bd7ad09df",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "2",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "通道占用线索"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 319,
+          "hash": "#workspace",
+          "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。"
+        },
+        "before": {
+          "event": "event:vision-track-1-1",
+          "heading": {
+            "text": "通道占用线索",
+            "top": -522.046875,
+            "bottom": -491.65625,
+            "visible": false
+          },
+          "source": {
+            "text": "公开图片测试镜头 · 合成通道区域 · track-1",
+            "top": -485.65625,
+            "bottom": -466.46875,
+            "visible": false
+          },
+          "badge": {
+            "text": "证据不足",
+            "top": -550.4375,
+            "bottom": -531.4375,
+            "visible": false
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "",
+            "top": 568.15625,
+            "bottom": 656.15625,
+            "visible": true
+          },
+          "note": "公开照片流程测试：已核对第一对象，不作实际违规认定。",
+          "status": "dismissed",
+          "media": "blob:http://127.0.0.1:8767/698c7e05-48a9-4c2e-bf69-471bd7ad09df",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "2",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "decision-note",
+            "tag": "TEXTAREA",
+            "text": ""
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 893,
+          "hash": "#workspace",
+          "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。"
+        },
+        "after": {
+          "event": "event:vision-track-3-2",
+          "heading": {
+            "text": "通道占用线索",
+            "top": 51.953125,
+            "bottom": 82.34375,
+            "visible": true
+          },
+          "source": {
+            "text": "公开图片测试镜头 · 合成通道区域 · track-3",
+            "top": 88.34375,
+            "bottom": 107.53125,
+            "visible": true
+          },
+          "badge": {
+            "text": "证据不足",
+            "top": 23.5625,
+            "bottom": 42.5625,
+            "visible": true
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "",
+            "top": 1142.15625,
+            "bottom": 1230.15625,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "media": "blob:http://127.0.0.1:8767/698c7e05-48a9-4c2e-bf69-471bd7ad09df",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "1",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "通道占用线索"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 319,
+          "hash": "#workspace",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        },
+        "decisions": {
+          "event:vision-track-1-1": {
+            "status": "dismissed",
+            "note": "公开照片流程测试：已核对第一对象，不作实际违规认定。",
+            "at": "2026-10-24T14:22:25.106Z"
+          },
+          "event:vision-track-3-2": {
+            "status": "needs_evidence",
+            "note": "第二对象仍需现场核查，不能沿用上一对象的排除结论。",
+            "at": "2026-10-24T14:22:25.255Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "real D-FINE closing first candidate reveals next object at 390",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "real_model": {
+          "detector": "dfine",
+          "analysis_id": "7c7b8eb2-062e-4619-8e7a-8b63e4023f5b",
+          "bus_score": 0.9651602077977631,
+          "candidates": 2
+        },
+        "initial": {
+          "event": "event:vision-track-1-1",
+          "heading": {
+            "text": "通道占用线索",
+            "top": 51.046875,
+            "bottom": 81.4375,
+            "visible": true
+          },
+          "source": {
+            "text": "公开图片测试镜头 · 合成通道区域 · track-1",
+            "top": 87.4375,
+            "bottom": 106.625,
+            "visible": true
+          },
+          "badge": {
+            "text": "证据不足",
+            "top": 22.65625,
+            "bottom": 41.65625,
+            "visible": true
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "",
+            "top": 1249.4375,
+            "bottom": 1337.4375,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "media": "blob:http://127.0.0.1:8767/1e3f4f02-cf30-4027-85e4-afa373a21e4c",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "2",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "通道占用线索"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 953,
+          "hash": "#workspace",
+          "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。"
+        },
+        "before": {
+          "event": "event:vision-track-1-1",
+          "heading": {
+            "text": "通道占用线索",
+            "top": -792.953125,
+            "bottom": -762.5625,
+            "visible": false
+          },
+          "source": {
+            "text": "公开图片测试镜头 · 合成通道区域 · track-1",
+            "top": -756.5625,
+            "bottom": -737.375,
+            "visible": false
+          },
+          "badge": {
+            "text": "证据不足",
+            "top": -821.34375,
+            "bottom": -802.34375,
+            "visible": false
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "",
+            "top": 405.4375,
+            "bottom": 493.4375,
+            "visible": true
+          },
+          "note": "公开照片流程测试：已核对第一对象，不作实际违规认定。",
+          "status": "dismissed",
+          "media": "blob:http://127.0.0.1:8767/1e3f4f02-cf30-4027-85e4-afa373a21e4c",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "2",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "decision-note",
+            "tag": "TEXTAREA",
+            "text": ""
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 1797,
+          "hash": "#workspace",
+          "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。"
+        },
+        "after": {
+          "event": "event:vision-track-3-2",
+          "heading": {
+            "text": "通道占用线索",
+            "top": 51.640625,
+            "bottom": 82.03125,
+            "visible": true
+          },
+          "source": {
+            "text": "公开图片测试镜头 · 合成通道区域 · track-3",
+            "top": 88.03125,
+            "bottom": 107.21875,
+            "visible": true
+          },
+          "badge": {
+            "text": "证据不足",
+            "top": 23.25,
+            "bottom": 42.25,
+            "visible": true
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "",
+            "top": 1250.03125,
+            "bottom": 1338.03125,
+            "visible": false
+          },
+          "note": "",
+          "status": "open",
+          "media": "blob:http://127.0.0.1:8767/1e3f4f02-cf30-4027-85e4-afa373a21e4c",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "1",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "通道占用线索"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 821,
+          "hash": "#workspace",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        },
+        "decisions": {
+          "event:vision-track-1-1": {
+            "status": "dismissed",
+            "note": "公开照片流程测试：已核对第一对象，不作实际违规认定。",
+            "at": "2026-10-24T14:22:26.586Z"
+          },
+          "event:vision-track-3-2": {
+            "status": "needs_evidence",
+            "note": "第二对象仍需现场核查，不能沿用上一对象的排除结论。",
+            "at": "2026-10-24T14:22:26.684Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "synthetic ordinary save and all-filter closure do not reposition unchanged selection",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "synthetic": true,
+        "transitions": [
+          {
+            "before": {
+              "event": "event:review-1",
+              "heading": {
+                "text": "通道占用线索",
+                "top": -682.953125,
+                "bottom": -652.5625,
+                "visible": false
+              },
+              "source": {
+                "text": "测试镜头 · 测试通道 · object-1",
+                "top": -646.5625,
+                "bottom": -627.375,
+                "visible": false
+              },
+              "badge": {
+                "text": "优先核查",
+                "top": -711.34375,
+                "bottom": -692.34375,
+                "visible": false
+              },
+              "empty": null,
+              "note_rect": {
+                "text": "",
+                "top": 405.09375,
+                "bottom": 493.09375,
+                "visible": true
+              },
+              "note": "同一对象的明确保存 needs_evidence",
+              "status": "needs_evidence",
+              "media": "blob:http://127.0.0.1:8767/d4441670-4674-42a2-818f-c19ce83d1e6b",
+              "media_status": "图片已解码，请核对画面是否对应本事件。",
+              "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+              "queue_count": "2",
+              "filter": "review",
+              "area": "all",
+              "focus": {
+                "id": "decision-note",
+                "tag": "TEXTAREA",
+                "text": ""
+              },
+              "calls": [
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                }
+              ],
+              "scroll_y": 1687,
+              "hash": "#workspace",
+              "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。"
+            },
+            "after": {
+              "event": "event:review-1",
+              "heading": {
+                "text": "通道占用线索",
+                "top": -682.140625,
+                "bottom": -651.75,
+                "visible": false
+              },
+              "source": {
+                "text": "测试镜头 · 测试通道 · object-1",
+                "top": -645.75,
+                "bottom": -626.5625,
+                "visible": false
+              },
+              "badge": {
+                "text": "待补充证据",
+                "top": -710.53125,
+                "bottom": -691.53125,
+                "visible": false
+              },
+              "empty": null,
+              "note_rect": {
+                "text": "同一对象的明确保存 needs_evidence",
+                "top": 405.90625,
+                "bottom": 493.90625,
+                "visible": true
+              },
+              "note": "同一对象的明确保存 needs_evidence",
+              "status": "needs_evidence",
+              "media": "blob:http://127.0.0.1:8767/d4441670-4674-42a2-818f-c19ce83d1e6b",
+              "media_status": "图片已解码，请核对画面是否对应本事件。",
+              "history": "复核历史 · 1 条2026/10/24 22:22:27 · 待补充证据：同一对象的明确保存 needs_evidence",
+              "queue_count": "2",
+              "filter": "review",
+              "area": "all",
+              "focus": {
+                "id": "",
+                "tag": "BODY",
+                "text": "跳转到工作区\nEstateGuard社区巡检工作台社社区巡检本地工作空间工作台视频与图片分析事件复核车位巡检场景规则评测与模型项目说明 文件仅在本机处理本地工作区 · v0.3查看项目源码 ↗\n工作空"
+              },
+              "calls": [
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                }
+              ],
+              "scroll_y": 1667,
+              "hash": "#workspace",
+              "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+            }
+          },
+          {
+            "before": {
+              "event": "event:review-1",
+              "heading": {
+                "text": "通道占用线索",
+                "top": -682.140625,
+                "bottom": -651.75,
+                "visible": false
+              },
+              "source": {
+                "text": "测试镜头 · 测试通道 · object-1",
+                "top": -645.75,
+                "bottom": -626.5625,
+                "visible": false
+              },
+              "badge": {
+                "text": "待补充证据",
+                "top": -710.53125,
+                "bottom": -691.53125,
+                "visible": false
+              },
+              "empty": null,
+              "note_rect": {
+                "text": "同一对象的明确保存 needs_evidence",
+                "top": 405.90625,
+                "bottom": 493.90625,
+                "visible": true
+              },
+              "note": "同一对象的明确保存 dismissed",
+              "status": "dismissed",
+              "media": "blob:http://127.0.0.1:8767/d4441670-4674-42a2-818f-c19ce83d1e6b",
+              "media_status": "图片已解码，请核对画面是否对应本事件。",
+              "history": "复核历史 · 1 条2026/10/24 22:22:27 · 待补充证据：同一对象的明确保存 needs_evidence",
+              "queue_count": "2",
+              "filter": "all",
+              "area": "all",
+              "focus": {
+                "id": "decision-note",
+                "tag": "TEXTAREA",
+                "text": "同一对象的明确保存 needs_evidence"
+              },
+              "calls": [
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                }
+              ],
+              "scroll_y": 1667,
+              "hash": "#workspace",
+              "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+            },
+            "after": {
+              "event": "event:review-1",
+              "heading": {
+                "text": "通道占用线索",
+                "top": -682.140625,
+                "bottom": -651.75,
+                "visible": false
+              },
+              "source": {
+                "text": "测试镜头 · 测试通道 · object-1",
+                "top": -645.75,
+                "bottom": -626.5625,
+                "visible": false
+              },
+              "badge": {
+                "text": "已排除",
+                "top": -710.53125,
+                "bottom": -691.53125,
+                "visible": false
+              },
+              "empty": null,
+              "note_rect": {
+                "text": "同一对象的明确保存 dismissed",
+                "top": 405.90625,
+                "bottom": 493.90625,
+                "visible": true
+              },
+              "note": "同一对象的明确保存 dismissed",
+              "status": "dismissed",
+              "media": "blob:http://127.0.0.1:8767/d4441670-4674-42a2-818f-c19ce83d1e6b",
+              "media_status": "图片已解码，请核对画面是否对应本事件。",
+              "history": "复核历史 · 2 条2026/10/24 22:22:27 · 待补充证据：同一对象的明确保存 needs_evidence2026/10/24 22:22:27 · 已排除：同一对象的明确保存 dismissed",
+              "queue_count": "2",
+              "filter": "all",
+              "area": "all",
+              "focus": {
+                "id": "",
+                "tag": "BODY",
+                "text": "跳转到工作区\nEstateGuard社区巡检工作台社社区巡检本地工作空间工作台视频与图片分析事件复核车位巡检场景规则评测与模型项目说明 文件仅在本机处理本地工作区 · v0.3查看项目源码 ↗\n工作空"
+              },
+              "calls": [
+                {
+                  "method": "focus",
+                  "id": "",
+                  "tag": "H3"
+                },
+                {
+                  "method": "scrollIntoView",
+                  "id": "incident-detail",
+                  "tag": "ARTICLE"
+                }
+              ],
+              "scroll_y": 1667,
+              "hash": "#workspace",
+              "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+            }
+          }
+        ],
+        "audit": [
+          {
+            "event_id": "event:review-1",
+            "status": "needs_evidence",
+            "note": "同一对象的明确保存 needs_evidence",
+            "at": "2026-10-24T14:22:27.075Z"
+          },
+          {
+            "event_id": "event:review-1",
+            "status": "dismissed",
+            "note": "同一对象的明确保存 dismissed",
+            "at": "2026-10-24T14:22:27.225Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "synthetic next event restores its own draft and separately attached evidence",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "synthetic": true,
+        "after": {
+          "event": "event:review-2",
+          "heading": {
+            "text": "通道占用线索",
+            "top": 51.640625,
+            "bottom": 82.03125,
+            "visible": true
+          },
+          "source": {
+            "text": "测试镜头 · 测试通道 · object-2",
+            "top": 88.03125,
+            "bottom": 107.21875,
+            "visible": true
+          },
+          "badge": {
+            "text": "优先核查",
+            "top": 23.25,
+            "bottom": 42.25,
+            "visible": true
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "第二对象尚未保存的独立草稿",
+            "top": 1139.6875,
+            "bottom": 1227.6875,
+            "visible": false
+          },
+          "note": "第二对象尚未保存的独立草稿",
+          "status": "confirmed_concern",
+          "media": "blob:http://127.0.0.1:8767/74aacce0-0cb1-4bbc-a25b-0ff41635e467",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "1",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "通道占用线索"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 821,
+          "hash": "#workspace",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        },
+        "decisions": {
+          "event:review-1": {
+            "status": "dismissed",
+            "note": "第一对象已排除，仅关闭第一项。",
+            "at": "2026-10-24T14:22:27.672Z"
+          },
+          "event:review-2": {
+            "status": "confirmed_concern",
+            "note": "第二对象尚未保存的独立草稿",
+            "at": "2026-10-24T14:22:27.738Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "synthetic rejected blank reason preserves selection draft evidence and current form",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "synthetic": true,
+        "before": {
+          "event": "event:review-1",
+          "heading": {
+            "text": "通道占用线索",
+            "top": -505.046875,
+            "bottom": -474.65625,
+            "visible": false
+          },
+          "source": {
+            "text": "测试镜头 · 测试通道 · object-1",
+            "top": -468.65625,
+            "bottom": -449.46875,
+            "visible": false
+          },
+          "badge": {
+            "text": "优先核查",
+            "top": -533.4375,
+            "bottom": -514.4375,
+            "visible": false
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "",
+            "top": 567.5625,
+            "bottom": 655.5625,
+            "visible": true
+          },
+          "note": "   ",
+          "status": "dismissed",
+          "media": "blob:http://127.0.0.1:8767/f8182953-4ce9-4aa9-9dc4-0245f45326c6",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "2",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "decision-note",
+            "tag": "TEXTAREA",
+            "text": ""
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 876,
+          "hash": "#workspace",
+          "message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。"
+        },
+        "after": {
+          "event": "event:review-1",
+          "heading": {
+            "text": "通道占用线索",
+            "top": -505.046875,
+            "bottom": -474.65625,
+            "visible": false
+          },
+          "source": {
+            "text": "测试镜头 · 测试通道 · object-1",
+            "top": -468.65625,
+            "bottom": -449.46875,
+            "visible": false
+          },
+          "badge": {
+            "text": "优先核查",
+            "top": -533.4375,
+            "bottom": -514.4375,
+            "visible": false
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "",
+            "top": 567.5625,
+            "bottom": 655.5625,
+            "visible": true
+          },
+          "note": "   ",
+          "status": "dismissed",
+          "media": "blob:http://127.0.0.1:8767/f8182953-4ce9-4aa9-9dc4-0245f45326c6",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "2",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "",
+            "tag": "BUTTON",
+            "text": "保存复核记录"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 876,
+          "hash": "#workspace",
+          "message": "Review note: enter 1–2000 characters."
+        }
+      }
+    },
+    {
+      "name": "synthetic pending next evidence blocks save and late completion does not steal editing focus",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "synthetic": true,
+        "selected": {
+          "event": "event:review-2",
+          "heading": {
+            "text": "通道占用线索",
+            "top": 51.640625,
+            "bottom": 82.03125,
+            "visible": true
+          },
+          "source": {
+            "text": "测试镜头 · 测试通道 · object-2",
+            "top": 88.03125,
+            "bottom": 107.21875,
+            "visible": true
+          },
+          "badge": {
+            "text": "优先核查",
+            "top": 23.25,
+            "bottom": 42.25,
+            "visible": true
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "第二对象附件待加载时的草稿",
+            "top": 940.625,
+            "bottom": 1028.625,
+            "visible": false
+          },
+          "note": "第二对象附件待加载时的草稿",
+          "status": "open",
+          "media": null,
+          "media_status": "正在检查「delayed-second-public-photo.jpg」是否可打开。尚未载入可查看的证据，复核草稿已保留。检查完成后可保存复核记录。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "1",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "通道占用线索"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 821,
+          "hash": "#workspace",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        },
+        "before": {
+          "event": "event:review-2",
+          "heading": {
+            "text": "通道占用线索",
+            "top": -484.359375,
+            "bottom": -453.96875,
+            "visible": false
+          },
+          "source": {
+            "text": "测试镜头 · 测试通道 · object-2",
+            "top": -447.96875,
+            "bottom": -428.78125,
+            "visible": false
+          },
+          "badge": {
+            "text": "优先核查",
+            "top": -512.75,
+            "bottom": -493.75,
+            "visible": false
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "第二对象附件待加载时的草稿",
+            "top": 404.625,
+            "bottom": 492.625,
+            "visible": true
+          },
+          "note": "继续编辑第二对象，不能被迟到附件移走焦点",
+          "status": "open",
+          "media": null,
+          "media_status": "正在检查「delayed-second-public-photo.jpg」是否可打开。尚未载入可查看的证据，复核草稿已保留。检查完成后可保存复核记录。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "1",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "decision-note",
+            "tag": "TEXTAREA",
+            "text": "第二对象附件待加载时的草稿"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 1357,
+          "hash": "#workspace",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        },
+        "after": {
+          "event": "event:review-2",
+          "heading": {
+            "text": "通道占用线索",
+            "top": -484.359375,
+            "bottom": -453.96875,
+            "visible": false
+          },
+          "source": {
+            "text": "测试镜头 · 测试通道 · object-2",
+            "top": -447.96875,
+            "bottom": -428.78125,
+            "visible": false
+          },
+          "badge": {
+            "text": "优先核查",
+            "top": -512.75,
+            "bottom": -493.75,
+            "visible": false
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "第二对象附件待加载时的草稿",
+            "top": 603.6875,
+            "bottom": 691.6875,
+            "visible": true
+          },
+          "note": "继续编辑第二对象，不能被迟到附件移走焦点",
+          "status": "open",
+          "media": "blob:http://127.0.0.1:8767/f832f5a3-db7d-4bbe-867a-df7cce2ae51a",
+          "media_status": "图片已解码，请核对画面是否对应本事件。",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "queue_count": "1",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "decision-note",
+            "tag": "TEXTAREA",
+            "text": "第二对象附件待加载时的草稿"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 1357,
+          "hash": "#workspace",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        }
+      }
+    },
+    {
+      "name": "synthetic final closure focuses empty state and keyboard reaches handover without changing filter",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "synthetic": true,
+        "after": {
+          "heading": null,
+          "source": null,
+          "badge": null,
+          "empty": {
+            "text": "此视图暂无待办",
+            "top": 438.84375,
+            "bottom": 461.234375,
+            "visible": true
+          },
+          "note_rect": null,
+          "media": null,
+          "queue_count": "0",
+          "filter": "review",
+          "area": "all",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "此视图暂无待办"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 419,
+          "hash": "#workspace",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        },
+        "audit": [
+          {
+            "event_id": "event:review-1",
+            "status": "resolved",
+            "note": "最后一项已经人工完成，准备交班。",
+            "at": "2026-10-24T14:22:29.009Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "synthetic reopening within resolved filter reveals the next closed object and preserves filters",
+      "passed": true,
+      "evidence": {
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "synthetic": true,
+        "after": {
+          "event": "event:review-2",
+          "heading": {
+            "text": "通道占用线索",
+            "top": 51.953125,
+            "bottom": 82.34375,
+            "visible": true
+          },
+          "source": {
+            "text": "测试镜头 · 测试通道 · object-2",
+            "top": 88.34375,
+            "bottom": 107.53125,
+            "visible": true
+          },
+          "badge": {
+            "text": "已排除",
+            "top": 23.5625,
+            "bottom": 42.5625,
+            "visible": true
+          },
+          "empty": null,
+          "note_rect": {
+            "text": "第二对象原来已排除。",
+            "top": 818.96875,
+            "bottom": 906.96875,
+            "visible": true
+          },
+          "note": "第二对象原来已排除。",
+          "status": "dismissed",
+          "media": null,
+          "media_status": "未载入本地证据。请选择与本事件对应的图片或视频。",
+          "history": "复核历史 · 1 条2026/10/24 22:22:29 · 已排除：第二对象原来已排除。",
+          "queue_count": "1",
+          "filter": "resolved",
+          "area": "Shared space",
+          "focus": {
+            "id": "",
+            "tag": "H3",
+            "text": "通道占用线索"
+          },
+          "calls": [
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            },
+            {
+              "method": "focus",
+              "id": "",
+              "tag": "H3"
+            },
+            {
+              "method": "scrollIntoView",
+              "id": "incident-detail",
+              "tag": "ARTICLE"
+            }
+          ],
+          "scroll_y": 319,
+          "hash": "#workspace",
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。"
+        },
+        "decisions": {
+          "event:review-1": {
+            "status": "open",
+            "note": "第一对象重开，需下一班再次核查。",
+            "at": "2026-10-24T14:22:29.515Z"
+          },
+          "event:review-2": {
+            "status": "dismissed",
+            "note": "第二对象原来已排除。",
+            "at": "2026-10-24T14:22:29.417Z"
+          }
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-24T14:22:29.770Z",
+  "passed": 8,
+  "failed": 0,
+  "ok": true
+}

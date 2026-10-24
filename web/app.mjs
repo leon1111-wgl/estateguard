@@ -16,11 +16,14 @@ const titles={analyze:'视频与图片分析',workspace:'事件复核',parking:'
 function navigate(){const view=Object.hasOwn(titles,location.hash.slice(1))?location.hash.slice(1):'analyze';for(const section of document.querySelectorAll('[data-page]'))section.hidden=section.id!==view;for(const a of document.querySelectorAll('[data-nav]'))a.classList.toggle('active',a.dataset.nav===view);$('view-title').textContent=titles[view];}
 window.addEventListener('hashchange',navigate);navigate();
 function message(text,error=false){$('message').textContent=text;$('message').classList.toggle('error',error);}
+function focusReviewStart(){
+ if($('workspace').hidden)return;
+ const heading=$('incident-detail').querySelector('.detail-header h3, .empty h3');
+ if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});$('incident-detail').scrollIntoView({block:'start',behavior:'instant'});}
+}
 function revealNewReview(){
  // 先显示目标页再同步定位；后续附件解码无需再次触发定位。
- location.hash='workspace';navigate();
- const heading=$('incident-detail').querySelector('.detail-header h3');
- if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});$('incident-detail').scrollIntoView({block:'start',behavior:'instant'});}
+ location.hash='workspace';navigate();focusReviewStart();
 }
 function clearMedia(){media.clear();}
 const hasUnsavedWork=()=>dirty||drafts.size>0;
@@ -50,7 +53,7 @@ function renderDetail(){const e=events.find(x=>x.id===selected);if(!e){$('incide
   const badges=$('queue-list').querySelector('.event-button.active [data-review-badges]');
   if(selected===e.id&&badges)badges.innerHTML=reviewBadges(e);
  };$('decision-status').addEventListener('change',saveDraft);$('decision-note').addEventListener('input',saveDraft);
- $('decision-form').addEventListener('submit',event=>{event.preventDefault();if(media.state(e.id).status==='loading'){renderMedia(e.id);return;}try{ws=applyDecision(ws,e.id,$('decision-status').value,$('decision-note').value);drafts.delete(e.id);dirty=true;render();message('复核记录已保存在当前标签页。导出工作区后可以恢复。');}catch(err){message(err.message,true);}});
+ $('decision-form').addEventListener('submit',event=>{event.preventDefault();if(media.state(e.id).status==='loading'){renderMedia(e.id);return;}try{ws=applyDecision(ws,e.id,$('decision-status').value,$('decision-note').value);drafts.delete(e.id);dirty=true;render();message('复核记录已保存在当前标签页。导出工作区后可以恢复。');if(selected!==e.id)focusReviewStart();}catch(err){message(err.message,true);}});
  $('media-file').addEventListener('change',event=>{const file=event.target.files[0];event.target.value='';if(file)void media.replace(e.id,file);});renderMedia(e.id);
 }
 function renderMedia(id){

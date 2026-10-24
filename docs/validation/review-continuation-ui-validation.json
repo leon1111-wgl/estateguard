@@ -1,0 +1,1930 @@
+{
+  "scope": "Actual default D-FINE public CC0 photo inference at both widths. Operator notes/camera/time are fixtures. One real native image decode completion is held briefly to inspect late media without mocking image success. UI focus and review continuity only, not domain accuracy.",
+  "app_sha256": "749072aaf7cc2ec582430aca6279ecbedba936fbf715391ec4a7a727b7b16809",
+  "checks": [
+    {
+      "width": 1440,
+      "name": "real default D-FINE handoff still starts at a focused contextual title",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "same-event save keeps the reading form without additional positioning",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "failed save leaves selected event, form, draft and position intact",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "manual filter does not invoke new title positioning",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "closing an event still visible under All does not jump",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "successful selection change exposes next title, target, risk and keyboard focus exactly once",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "next event keeps its own draft and prior preview while actual replacement decode is held",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "late actual media completion preserves title focus and adds no positioning callback",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "Tab from next event title continues to its attachment control",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "last visible event reveals and focuses the existing empty state",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "keyboard continues to handover and exports all saved records",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "completed workspace remains restorable and both responsive layouts stay within viewport width",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "real default D-FINE handoff still starts at a focused contextual title",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "same-event save keeps the reading form without additional positioning",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "failed save leaves selected event, form, draft and position intact",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "manual filter does not invoke new title positioning",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "closing an event still visible under All does not jump",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "successful selection change exposes next title, target, risk and keyboard focus exactly once",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "next event keeps its own draft and prior preview while actual replacement decode is held",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "late actual media completion preserves title focus and adds no positioning callback",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "Tab from next event title continues to its attachment control",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "last visible event reveals and focuses the existing empty state",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "keyboard continues to handover and exports all saved records",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "completed workspace remains restorable and both responsive layouts stay within viewport width",
+      "passed": true
+    }
+  ],
+  "widths": [
+    {
+      "width": 1440,
+      "screenshots": [
+        "next-review-designer-after-20261024-evening-next-title-loading-1440.png",
+        "next-review-designer-after-20261024-evening-next-title-ready-1440.png",
+        "next-review-designer-after-20261024-evening-next-tab-1440.png",
+        "next-review-designer-after-20261024-evening-last-empty-1440.png"
+      ],
+      "detection": {
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frames": 1,
+        "candidates": 2
+      },
+      "initial": {
+        "scrollY": 319,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": 51.953125,
+          "bottom": 82.34375,
+          "visible": true
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": 88.34375,
+          "bottom": 107.53125,
+          "visible": true
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": 23.5625,
+          "bottom": 42.5625,
+          "visible": true
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": 131.53125,
+          "bottom": 170.71875,
+          "visible": true
+        },
+        "note": {
+          "text": "",
+          "top": 1142.15625,
+          "bottom": 1230.15625,
+          "visible": false
+        },
+        "note_value": "",
+        "message": {
+          "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+          "top": -166.015625,
+          "bottom": -124.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 1293.34375,
+          "bottom": 1346.125,
+          "visible": false
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "H3",
+          "id": "",
+          "text": "通道占用线索",
+          "tabIndex": -1
+        }
+      },
+      "normal_before": {
+        "scrollY": 893,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -522.046875,
+          "bottom": -491.65625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -485.65625,
+          "bottom": -466.46875,
+          "visible": false
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": -550.4375,
+          "bottom": -531.4375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -442.46875,
+          "bottom": -403.28125,
+          "visible": false
+        },
+        "note": {
+          "text": "",
+          "top": 568.15625,
+          "bottom": 656.15625,
+          "visible": true
+        },
+        "note_value": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+        "message": {
+          "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+          "top": -740.015625,
+          "bottom": -698.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 719.34375,
+          "bottom": 772.125,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "",
+          "tabIndex": 0
+        }
+      },
+      "normal_after": {
+        "scrollY": 893,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -522.046875,
+          "bottom": -491.65625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -485.65625,
+          "bottom": -466.46875,
+          "visible": false
+        },
+        "badges": {
+          "text": "待补充证据",
+          "top": -550.4375,
+          "bottom": -531.4375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -442.46875,
+          "bottom": -403.28125,
+          "visible": false
+        },
+        "note": {
+          "text": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 568.15625,
+          "bottom": 656.15625,
+          "visible": true
+        },
+        "note_value": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -740.015625,
+          "bottom": -698.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 1 条2026/10/24 22:23:30 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 719.34375,
+          "bottom": 781.53125,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "text": "跳转到工作区\nEstateGuard社区巡检工作台社社区巡检本地工作空间工作台视频与图片分析事件复核车位巡检场景规则评测与模型项目说明 文件仅在本机处理本地工作区 · v0.3查看项目源码 ↗\n工作空",
+          "tabIndex": -1
+        }
+      },
+      "failure_before": {
+        "scrollY": 893,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -522.046875,
+          "bottom": -491.65625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -485.65625,
+          "bottom": -466.46875,
+          "visible": false
+        },
+        "badges": {
+          "text": "待补充证据",
+          "top": -550.4375,
+          "bottom": -531.4375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -442.46875,
+          "bottom": -403.28125,
+          "visible": false
+        },
+        "note": {
+          "text": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 568.15625,
+          "bottom": 656.15625,
+          "visible": true
+        },
+        "note_value": "  ",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -740.015625,
+          "bottom": -698.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 1 条2026/10/24 22:23:30 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 719.34375,
+          "bottom": 781.53125,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "tabIndex": 0
+        }
+      },
+      "failure_after": {
+        "scrollY": 893,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -522.046875,
+          "bottom": -491.65625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -485.65625,
+          "bottom": -466.46875,
+          "visible": false
+        },
+        "badges": {
+          "text": "待补充证据",
+          "top": -550.4375,
+          "bottom": -531.4375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -442.46875,
+          "bottom": -403.28125,
+          "visible": false
+        },
+        "note": {
+          "text": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 568.15625,
+          "bottom": 656.15625,
+          "visible": true
+        },
+        "note_value": "  ",
+        "message": {
+          "text": "Review note: enter 1–2000 characters.",
+          "top": -740.015625,
+          "bottom": -698.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 1 条2026/10/24 22:23:30 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 719.34375,
+          "bottom": 781.53125,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "BUTTON",
+          "id": "",
+          "text": "保存复核记录",
+          "tabIndex": 0
+        },
+        "same_form": true
+      },
+      "all_before": {
+        "scrollY": 893,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "all",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -522.046875,
+          "bottom": -491.65625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -485.65625,
+          "bottom": -466.46875,
+          "visible": false
+        },
+        "badges": {
+          "text": "待补充证据",
+          "top": -550.4375,
+          "bottom": -531.4375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -442.46875,
+          "bottom": -403.28125,
+          "visible": false
+        },
+        "note": {
+          "text": "  ",
+          "top": 568.15625,
+          "bottom": 656.15625,
+          "visible": true
+        },
+        "note_value": "流程测试：在全部事件中关闭当前项。",
+        "message": {
+          "text": "Review note: enter 1–2000 characters.",
+          "top": -740.015625,
+          "bottom": -698.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 1 条2026/10/24 22:23:30 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 719.34375,
+          "bottom": 781.53125,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "  ",
+          "tabIndex": 0
+        }
+      },
+      "all_after": {
+        "scrollY": 893,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "all",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -522.046875,
+          "bottom": -491.65625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -485.65625,
+          "bottom": -466.46875,
+          "visible": false
+        },
+        "badges": {
+          "text": "已排除",
+          "top": -550.4375,
+          "bottom": -531.4375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -442.46875,
+          "bottom": -403.28125,
+          "visible": false
+        },
+        "note": {
+          "text": "流程测试：在全部事件中关闭当前项。",
+          "top": 568.15625,
+          "bottom": 656.15625,
+          "visible": true
+        },
+        "note_value": "流程测试：在全部事件中关闭当前项。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -740.015625,
+          "bottom": -698.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 2 条2026/10/24 22:23:30 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。2026/10/24 22:23:30 · 已排除：流程测试：在全部事件中关闭当前项。",
+          "top": 719.34375,
+          "bottom": 799.125,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "text": "跳转到工作区\nEstateGuard社区巡检工作台社社区巡检本地工作空间工作台视频与图片分析事件复核车位巡检场景规则评测与模型项目说明 文件仅在本机处理本地工作区 · v0.3查看项目源码 ↗\n工作空",
+          "tabIndex": -1
+        }
+      },
+      "second_before": {
+        "scrollY": 893,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -522.046875,
+          "bottom": -491.65625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": -485.65625,
+          "bottom": -466.46875,
+          "visible": false
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": -550.4375,
+          "bottom": -531.4375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -442.46875,
+          "bottom": -403.28125,
+          "visible": false
+        },
+        "note": {
+          "text": "",
+          "top": 568.15625,
+          "bottom": 656.15625,
+          "visible": true
+        },
+        "note_value": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -740.015625,
+          "bottom": -698.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 719.34375,
+          "bottom": 772.125,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "",
+          "tabIndex": 0
+        }
+      },
+      "close_before": {
+        "scrollY": 937,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -566.046875,
+          "bottom": -535.65625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -529.65625,
+          "bottom": -510.46875,
+          "visible": false
+        },
+        "badges": {
+          "text": "待复核",
+          "top": -594.4375,
+          "bottom": -575.4375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -486.46875,
+          "bottom": -447.28125,
+          "visible": false
+        },
+        "note": {
+          "text": "流程测试：为连续复核验收重新打开第一项。",
+          "top": 524.15625,
+          "bottom": 612.15625,
+          "visible": true
+        },
+        "note_value": "流程测试：第一项已排除，继续阅读下一目标。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -784.015625,
+          "bottom": -742.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 3 条2026/10/24 22:23:30 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。2026/10/24 22:23:30 · 已排除：流程测试：在全部事件中关闭当前项。2026/10/24 22:23:30 · 待复核：流程测试：为连续复核验收重新打开第一项。",
+          "top": 675.34375,
+          "bottom": 772.71875,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "流程测试：为连续复核验收重新打开第一项。",
+          "tabIndex": 0
+        }
+      },
+      "close_after": {
+        "scrollY": 319,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "1",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": 51.953125,
+          "bottom": 82.34375,
+          "visible": true
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": 88.34375,
+          "bottom": 107.53125,
+          "visible": true
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": 23.5625,
+          "bottom": 42.5625,
+          "visible": true
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": 131.53125,
+          "bottom": 170.71875,
+          "visible": true
+        },
+        "note": {
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "top": 1142.15625,
+          "bottom": 1230.15625,
+          "visible": false
+        },
+        "note_value": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -166.015625,
+          "bottom": -124.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 1293.34375,
+          "bottom": 1346.125,
+          "visible": false
+        },
+        "media": "正在检查「bus.jpg」是否可打开。仍保留原证据「公开示例-校车.jpg」和复核草稿。检查完成后可保存复核记录。",
+        "image_url": "blob:http://127.0.0.1:8767/1fac705f-5de5-4792-8aaa-3542a4693e6f",
+        "image_width": 960,
+        "save_disabled": true,
+        "detailScrolls": 2,
+        "active": {
+          "tag": "H3",
+          "id": "",
+          "text": "通道占用线索",
+          "tabIndex": -1
+        }
+      },
+      "media_after": {
+        "scrollY": 319,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "1",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": 51.953125,
+          "bottom": 82.34375,
+          "visible": true
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": 88.34375,
+          "bottom": 107.53125,
+          "visible": true
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": 23.5625,
+          "bottom": 42.5625,
+          "visible": true
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": 131.53125,
+          "bottom": 170.71875,
+          "visible": true
+        },
+        "note": {
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "top": 1142.15625,
+          "bottom": 1230.15625,
+          "visible": false
+        },
+        "note_value": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -166.015625,
+          "bottom": -124.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 1293.34375,
+          "bottom": 1346.125,
+          "visible": false
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/29d71182-294c-4e4c-a6f7-5eeaf187c2d7",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 2,
+        "active": {
+          "tag": "H3",
+          "id": "",
+          "text": "通道占用线索",
+          "tabIndex": -1
+        }
+      },
+      "next_tab": {
+        "scrollY": 319,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "1",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": 51.953125,
+          "bottom": 82.34375,
+          "visible": true
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": 88.34375,
+          "bottom": 107.53125,
+          "visible": true
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": 23.5625,
+          "bottom": 42.5625,
+          "visible": true
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": 131.53125,
+          "bottom": 170.71875,
+          "visible": true
+        },
+        "note": {
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "top": 1142.15625,
+          "bottom": 1230.15625,
+          "visible": false
+        },
+        "note_value": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -166.015625,
+          "bottom": -124.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 1293.34375,
+          "bottom": 1346.125,
+          "visible": false
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/29d71182-294c-4e4c-a6f7-5eeaf187c2d7",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 2,
+        "active": {
+          "tag": "INPUT",
+          "id": "media-file",
+          "text": "",
+          "tabIndex": 0
+        }
+      },
+      "last_before": {
+        "scrollY": 893,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "1",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -522.046875,
+          "bottom": -491.65625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": -485.65625,
+          "bottom": -466.46875,
+          "visible": false
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": -550.4375,
+          "bottom": -531.4375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -442.46875,
+          "bottom": -403.28125,
+          "visible": false
+        },
+        "note": {
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "top": 568.15625,
+          "bottom": 656.15625,
+          "visible": true
+        },
+        "note_value": "流程测试：第二项已排除，两个公开图候选均已处理。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -740.015625,
+          "bottom": -698.828125,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 719.34375,
+          "bottom": 772.125,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/29d71182-294c-4e4c-a6f7-5eeaf187c2d7",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 2,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "tabIndex": 0
+        }
+      },
+      "last_after": {
+        "scrollY": 0,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": null,
+        "count": "0",
+        "filter": "review",
+        "heading": {
+          "text": "此视图暂无待办",
+          "top": 367.5625,
+          "bottom": 389.953125,
+          "visible": true
+        },
+        "source": null,
+        "badges": null,
+        "reason": null,
+        "note": null,
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": 152.984375,
+          "bottom": 194.171875,
+          "visible": true
+        },
+        "history": null,
+        "detailScrolls": 3,
+        "active": {
+          "tag": "H3",
+          "id": "",
+          "text": "此视图暂无待办",
+          "tabIndex": -1
+        }
+      },
+      "last_tab": {
+        "scrollY": 0,
+        "viewport": 1000,
+        "overflow": 0,
+        "selected": null,
+        "count": "0",
+        "filter": "review",
+        "heading": {
+          "text": "此视图暂无待办",
+          "top": 367.5625,
+          "bottom": 389.953125,
+          "visible": true
+        },
+        "source": null,
+        "badges": null,
+        "reason": null,
+        "note": null,
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": 152.984375,
+          "bottom": 194.171875,
+          "visible": true
+        },
+        "history": null,
+        "detailScrolls": 3,
+        "active": {
+          "tag": "BUTTON",
+          "id": "export-brief",
+          "text": "导出交接单 .md",
+          "tabIndex": 0
+        }
+      },
+      "restore": {
+        "filter": "all",
+        "count": "2",
+        "history": "复核历史 · 4 条2026/10/24 22:23:30 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。2026/10/24 22:23:30 · 已排除：流程测试：在全部事件中关闭当前项。2026/10/24 22:23:30 · 待复核：流程测试：为连续复核验收重新打开第一项。2026/10/24 22:23:31 · 已排除：流程测试：第一项已排除，继续阅读下一目标。",
+        "overflow": 0
+      }
+    },
+    {
+      "width": 390,
+      "screenshots": [
+        "next-review-designer-after-20261024-evening-next-title-loading-390.png",
+        "next-review-designer-after-20261024-evening-next-title-ready-390.png",
+        "next-review-designer-after-20261024-evening-next-tab-390.png",
+        "next-review-designer-after-20261024-evening-last-empty-390.png"
+      ],
+      "detection": {
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frames": 1,
+        "candidates": 2
+      },
+      "initial": {
+        "scrollY": 953,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": 51.046875,
+          "bottom": 81.4375,
+          "visible": true
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": 87.4375,
+          "bottom": 106.625,
+          "visible": true
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": 22.65625,
+          "bottom": 41.65625,
+          "visible": true
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": 154.625,
+          "bottom": 213,
+          "visible": true
+        },
+        "note": {
+          "text": "",
+          "top": 1249.4375,
+          "bottom": 1337.4375,
+          "visible": false
+        },
+        "note_value": "",
+        "message": {
+          "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+          "top": -677.046875,
+          "bottom": -616.671875,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 1400.625,
+          "bottom": 1453.40625,
+          "visible": false
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "H3",
+          "id": "",
+          "text": "通道占用线索",
+          "tabIndex": -1
+        }
+      },
+      "normal_before": {
+        "scrollY": 1797,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -792.953125,
+          "bottom": -762.5625,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -756.5625,
+          "bottom": -737.375,
+          "visible": false
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": -821.34375,
+          "bottom": -802.34375,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -689.375,
+          "bottom": -631,
+          "visible": false
+        },
+        "note": {
+          "text": "",
+          "top": 405.4375,
+          "bottom": 493.4375,
+          "visible": true
+        },
+        "note_value": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+        "message": {
+          "text": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+          "top": -1521.046875,
+          "bottom": -1460.671875,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 556.625,
+          "bottom": 609.40625,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "",
+          "tabIndex": 0
+        }
+      },
+      "normal_after": {
+        "scrollY": 1777,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -792.140625,
+          "bottom": -761.75,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -755.75,
+          "bottom": -736.5625,
+          "visible": false
+        },
+        "badges": {
+          "text": "待补充证据",
+          "top": -820.53125,
+          "bottom": -801.53125,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -688.5625,
+          "bottom": -630.1875,
+          "visible": false
+        },
+        "note": {
+          "text": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 406.25,
+          "bottom": 494.25,
+          "visible": true
+        },
+        "note_value": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -1501.046875,
+          "bottom": -1459.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 1 条2026/10/24 22:23:32 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 557.4375,
+          "bottom": 637.21875,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "text": "跳转到工作区\nEstateGuard社区巡检工作台社社区巡检本地工作空间工作台视频与图片分析事件复核车位巡检场景规则评测与模型项目说明 文件仅在本机处理本地工作区 · v0.3查看项目源码 ↗\n工作空",
+          "tabIndex": -1
+        }
+      },
+      "failure_before": {
+        "scrollY": 1777,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -792.140625,
+          "bottom": -761.75,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -755.75,
+          "bottom": -736.5625,
+          "visible": false
+        },
+        "badges": {
+          "text": "待补充证据",
+          "top": -820.53125,
+          "bottom": -801.53125,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -688.5625,
+          "bottom": -630.1875,
+          "visible": false
+        },
+        "note": {
+          "text": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 406.25,
+          "bottom": 494.25,
+          "visible": true
+        },
+        "note_value": "  ",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -1501.046875,
+          "bottom": -1459.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 1 条2026/10/24 22:23:32 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 557.4375,
+          "bottom": 637.21875,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "tabIndex": 0
+        }
+      },
+      "failure_after": {
+        "scrollY": 1777,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -792.140625,
+          "bottom": -761.75,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -755.75,
+          "bottom": -736.5625,
+          "visible": false
+        },
+        "badges": {
+          "text": "待补充证据",
+          "top": -820.53125,
+          "bottom": -801.53125,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -688.5625,
+          "bottom": -630.1875,
+          "visible": false
+        },
+        "note": {
+          "text": "公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 406.25,
+          "bottom": 494.25,
+          "visible": true
+        },
+        "note_value": "  ",
+        "message": {
+          "text": "Review note: enter 1–2000 characters.",
+          "top": -1501.046875,
+          "bottom": -1459.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 1 条2026/10/24 22:23:32 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 557.4375,
+          "bottom": 637.21875,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "BUTTON",
+          "id": "",
+          "text": "保存复核记录",
+          "tabIndex": 0
+        },
+        "same_form": true
+      },
+      "all_before": {
+        "scrollY": 1777,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "all",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -792.140625,
+          "bottom": -761.75,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -755.75,
+          "bottom": -736.5625,
+          "visible": false
+        },
+        "badges": {
+          "text": "待补充证据",
+          "top": -820.53125,
+          "bottom": -801.53125,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -688.5625,
+          "bottom": -630.1875,
+          "visible": false
+        },
+        "note": {
+          "text": "  ",
+          "top": 406.25,
+          "bottom": 494.25,
+          "visible": true
+        },
+        "note_value": "流程测试：在全部事件中关闭当前项。",
+        "message": {
+          "text": "Review note: enter 1–2000 characters.",
+          "top": -1501.046875,
+          "bottom": -1459.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 1 条2026/10/24 22:23:32 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。",
+          "top": 557.4375,
+          "bottom": 637.21875,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "  ",
+          "tabIndex": 0
+        }
+      },
+      "all_after": {
+        "scrollY": 1777,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "all",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -792.140625,
+          "bottom": -761.75,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -755.75,
+          "bottom": -736.5625,
+          "visible": false
+        },
+        "badges": {
+          "text": "已排除",
+          "top": -820.53125,
+          "bottom": -801.53125,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -688.5625,
+          "bottom": -630.1875,
+          "visible": false
+        },
+        "note": {
+          "text": "流程测试：在全部事件中关闭当前项。",
+          "top": 406.25,
+          "bottom": 494.25,
+          "visible": true
+        },
+        "note_value": "流程测试：在全部事件中关闭当前项。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -1501.046875,
+          "bottom": -1459.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 2 条2026/10/24 22:23:32 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。2026/10/24 22:23:32 · 已排除：流程测试：在全部事件中关闭当前项。",
+          "top": 557.4375,
+          "bottom": 672.40625,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 1,
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "text": "跳转到工作区\nEstateGuard社区巡检工作台社社区巡检本地工作空间工作台视频与图片分析事件复核车位巡检场景规则评测与模型项目说明 文件仅在本机处理本地工作区 · v0.3查看项目源码 ↗\n工作空",
+          "tabIndex": -1
+        }
+      },
+      "second_before": {
+        "scrollY": 1778,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -793.140625,
+          "bottom": -762.75,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": -756.75,
+          "bottom": -737.5625,
+          "visible": false
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": -821.53125,
+          "bottom": -802.53125,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -689.5625,
+          "bottom": -631.1875,
+          "visible": false
+        },
+        "note": {
+          "text": "",
+          "top": 405.25,
+          "bottom": 493.25,
+          "visible": true
+        },
+        "note_value": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -1502.046875,
+          "bottom": -1460.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 556.4375,
+          "bottom": 609.21875,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 2,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "",
+          "tabIndex": 0
+        }
+      },
+      "close_before": {
+        "scrollY": 1778,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-1-1",
+        "count": "2",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -793.140625,
+          "bottom": -762.75,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-1",
+          "top": -756.75,
+          "bottom": -737.5625,
+          "visible": false
+        },
+        "badges": {
+          "text": "待复核",
+          "top": -821.53125,
+          "bottom": -802.53125,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -689.5625,
+          "bottom": -631.1875,
+          "visible": false
+        },
+        "note": {
+          "text": "流程测试：为连续复核验收重新打开第一项。",
+          "top": 405.25,
+          "bottom": 493.25,
+          "visible": true
+        },
+        "note_value": "流程测试：第一项已排除，继续阅读下一目标。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -1502.046875,
+          "bottom": -1460.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 3 条2026/10/24 22:23:32 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。2026/10/24 22:23:32 · 已排除：流程测试：在全部事件中关闭当前项。2026/10/24 22:23:32 · 待复核：流程测试：为连续复核验收重新打开第一项。",
+          "top": 556.4375,
+          "bottom": 706.59375,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 3,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "流程测试：为连续复核验收重新打开第一项。",
+          "tabIndex": 0
+        }
+      },
+      "close_after": {
+        "scrollY": 821,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "1",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": 51.640625,
+          "bottom": 82.03125,
+          "visible": true
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": 88.03125,
+          "bottom": 107.21875,
+          "visible": true
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": 23.25,
+          "bottom": 42.25,
+          "visible": true
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": 155.21875,
+          "bottom": 213.59375,
+          "visible": true
+        },
+        "note": {
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "top": 1267.625,
+          "bottom": 1355.625,
+          "visible": false
+        },
+        "note_value": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -545.046875,
+          "bottom": -503.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 1418.8125,
+          "bottom": 1471.59375,
+          "visible": false
+        },
+        "media": "正在检查「bus.jpg」是否可打开。仍保留原证据「公开示例-校车.jpg」和复核草稿。检查完成后可保存复核记录。",
+        "image_url": "blob:http://127.0.0.1:8767/bc06540d-20e6-4c94-b45b-94b4db3a9f3e",
+        "image_width": 960,
+        "save_disabled": true,
+        "detailScrolls": 4,
+        "active": {
+          "tag": "H3",
+          "id": "",
+          "text": "通道占用线索",
+          "tabIndex": -1
+        }
+      },
+      "media_after": {
+        "scrollY": 821,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "1",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": 51.640625,
+          "bottom": 82.03125,
+          "visible": true
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": 88.03125,
+          "bottom": 107.21875,
+          "visible": true
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": 23.25,
+          "bottom": 42.25,
+          "visible": true
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": 155.21875,
+          "bottom": 213.59375,
+          "visible": true
+        },
+        "note": {
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "top": 1250.03125,
+          "bottom": 1338.03125,
+          "visible": false
+        },
+        "note_value": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -545.046875,
+          "bottom": -503.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 1401.21875,
+          "bottom": 1454,
+          "visible": false
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/d950fc1b-4ea5-4f14-8ca0-800dd7a31fca",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 4,
+        "active": {
+          "tag": "H3",
+          "id": "",
+          "text": "通道占用线索",
+          "tabIndex": -1
+        }
+      },
+      "next_tab": {
+        "scrollY": 821,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "1",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": 51.640625,
+          "bottom": 82.03125,
+          "visible": true
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": 88.03125,
+          "bottom": 107.21875,
+          "visible": true
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": 23.25,
+          "bottom": 42.25,
+          "visible": true
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": 155.21875,
+          "bottom": 213.59375,
+          "visible": true
+        },
+        "note": {
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "top": 1250.03125,
+          "bottom": 1338.03125,
+          "visible": false
+        },
+        "note_value": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -545.046875,
+          "bottom": -503.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 1401.21875,
+          "bottom": 1454,
+          "visible": false
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/d950fc1b-4ea5-4f14-8ca0-800dd7a31fca",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 4,
+        "active": {
+          "tag": "INPUT",
+          "id": "media-file",
+          "text": "",
+          "tabIndex": 0
+        }
+      },
+      "last_before": {
+        "scrollY": 1675,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": "event:vision-track-3-2",
+        "count": "1",
+        "filter": "review",
+        "heading": {
+          "text": "通道占用线索",
+          "top": -802.359375,
+          "bottom": -771.96875,
+          "visible": false
+        },
+        "source": {
+          "text": "连续复核流程验收镜头 · 公开图合成测试区域 · track-3",
+          "top": -765.96875,
+          "bottom": -746.78125,
+          "visible": false
+        },
+        "badges": {
+          "text": "证据不足",
+          "top": -830.75,
+          "bottom": -811.75,
+          "visible": false
+        },
+        "reason": {
+          "text": "画面质量不足、证据缺失或低分高风险线索，需要人工核实。",
+          "top": -698.78125,
+          "bottom": -640.40625,
+          "visible": false
+        },
+        "note": {
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "top": 396.03125,
+          "bottom": 484.03125,
+          "visible": true
+        },
+        "note_value": "流程测试：第二项已排除，两个公开图候选均已处理。",
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -1399.046875,
+          "bottom": -1357.859375,
+          "visible": false
+        },
+        "history": {
+          "text": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "top": 547.21875,
+          "bottom": 600,
+          "visible": true
+        },
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "image_url": "blob:http://127.0.0.1:8767/d950fc1b-4ea5-4f14-8ca0-800dd7a31fca",
+        "image_width": 960,
+        "save_disabled": false,
+        "detailScrolls": 4,
+        "active": {
+          "tag": "TEXTAREA",
+          "id": "decision-note",
+          "text": "第二项目标已有未保存草稿：稍后核对背景车辆，不能复用首项判断。",
+          "tabIndex": 0
+        }
+      },
+      "last_after": {
+        "scrollY": 419,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": null,
+        "count": "0",
+        "filter": "review",
+        "heading": {
+          "text": "此视图暂无待办",
+          "top": 438.84375,
+          "bottom": 461.234375,
+          "visible": true
+        },
+        "source": null,
+        "badges": null,
+        "reason": null,
+        "note": null,
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -143.046875,
+          "bottom": -101.859375,
+          "visible": false
+        },
+        "history": null,
+        "detailScrolls": 5,
+        "active": {
+          "tag": "H3",
+          "id": "",
+          "text": "此视图暂无待办",
+          "tabIndex": -1
+        }
+      },
+      "last_tab": {
+        "scrollY": 419,
+        "viewport": 844,
+        "overflow": 0,
+        "selected": null,
+        "count": "0",
+        "filter": "review",
+        "heading": {
+          "text": "此视图暂无待办",
+          "top": 438.84375,
+          "bottom": 461.234375,
+          "visible": true
+        },
+        "source": null,
+        "badges": null,
+        "reason": null,
+        "note": null,
+        "message": {
+          "text": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "top": -143.046875,
+          "bottom": -101.859375,
+          "visible": false
+        },
+        "history": null,
+        "detailScrolls": 5,
+        "active": {
+          "tag": "BUTTON",
+          "id": "export-brief",
+          "text": "导出交接单 .md",
+          "tabIndex": 0
+        }
+      },
+      "restore": {
+        "filter": "all",
+        "count": "2",
+        "history": "复核历史 · 4 条2026/10/24 22:23:32 · 待补充证据：公开图流程验收：先保存待补证据，尚无真实现场结论。2026/10/24 22:23:32 · 已排除：流程测试：在全部事件中关闭当前项。2026/10/24 22:23:32 · 待复核：流程测试：为连续复核验收重新打开第一项。2026/10/24 22:23:33 · 已排除：流程测试：第一项已排除，继续阅读下一目标。",
+        "overflow": 0
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "passed": 24,
+  "failed": 0,
+  "ok": true,
+  "visual_review": {
+    "inspected": [
+      "next-review-designer-after-20261024-evening-next-title-ready-1440.png",
+      "next-review-designer-after-20261024-evening-next-title-ready-390.png",
+      "next-review-designer-after-20261024-evening-last-empty-390.png"
+    ],
+    "blockers": [],
+    "adaptation_required": false,
+    "assessment": "The next event presents status and risk badge, title, camera/region/track and rule context before evidence controls. Native heading focus provides keyboard reading anchor; Tab moves to media-file. The final empty state remains visible and offers handover export. Existing layout/CSS are sufficient.",
+    "limitations": [
+      "This is scoped to successful saves that change the visible selected event, not full-site reading-position restoration.",
+      "Synthetic notes and scene context on a public CC0 photo validate workflow only; no actual incident determination or domain accuracy claimed.",
+      "Native image decode was completed successfully before its Promise resolution was held; no synthetic successful pixels or detector outputs were injected."
+    ]
+  }
+}

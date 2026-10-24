@@ -1,5 +1,27 @@
 # 验证记录 · 2026-10-15
 
+## 2026-10-24 晚间 · 连续复核明确呈现下一个对象
+
+```bash
+node --test tests/*.test.mjs
+node scripts/review-continuation-check.cjs
+node scripts/handoff-navigation-check.cjs
+node scripts/review-draft-check.cjs
+node scripts/model-check.cjs
+python3 scripts/verify_assets.py
+```
+
+本轮仍在隔离工作树，服务为 `ESTATEGUARD_URL=http://127.0.0.1:8767`，Playwright 与 Google Chrome 路径通过 `PLAYWRIGHT_MODULE`、`CHROME_PATH` 配置。核对远端 `fe9d034` 和上一轮成功发布后继续，未纳入主目录并行停车研究。
+
+- [实际原版红基线](validation/review-continuation-baseline.json) 0/2：1440 / 390px 各运行一次默认 D-FINE-N，公开校车图生成 2 个通道候选。排除第一对象后已选中 track-3，队列 2→1，但标题分别在视口上方约 522 / 793px，焦点 BODY；相同素材和空理由框使目标变化不明显。独立设计师另用冻结的 `fe9d034` app/engine 复现，不能靠键盘 Tab 补回阅读上下文。
+- [修复后专项](validation/review-continuation-validation.json) 8/8：2 项实际 D-FINE 流程与 6 类明确合成的操作边界。标题恢复至视口顶部约 52px，来源轨迹、状态和风险可见，标题接受程序焦点，Tab 进入附件或复核控件。两个实际候选分别保存不同结论，导出后对象与历史一致。合成边界覆盖同项普通保存、全部事件中结案不定位、下一项独立草稿与附件、空白理由失败、下一项附件加载期间禁止保存及迟到完成不抢焦点、末项空态与键盘导出、已处理筛选中重开。
+- [独立代码回归](validation/review-continuation-code-validation.json) 9/9：桌面/手机非首项结案保持原先首个可见项选择规则；场景最后一项清空不跳到其他场景；50,000 条历史达到保存上限时拒绝新增，当前状态不变且重新导出与原始记录一致。图片解码通知延迟、自动换项后立即离开复核页，再完成解码，没有拉回页面、焦点或滚动位置。无页面异常，源文件 SHA 与最终实现一致。
+- [独立界面回归](validation/review-continuation-ui-validation.json) 24/24，两宽度各 12 项。设计师与主代理均实际查看下一对象和末项空态截图，标题/轨迹/风险可读，草稿与正确附件保留，Tab 可从空态到交接单导出。无横向溢出、页面异常或外部请求。导航、布局、字体、控件与 CSS 未修改。
+- 146 项 JS、26 项资产哈希通过。原候选首次送审定位 8/8、草稿工作流 11/11，均包含真实 D-FINE 调用。原 SSDLite 图片/短视频回归通过：大巴分数 0.9916937947、7 帧视频、重复推理张量数 262→262，无外域请求。检测权重、阈值、规则和数据格式未变。
+- 原 `model-check` 首次并行运行在送审后等待复核页可见超时 30 秒；保留 `artifacts/review-continuation-model.log`。仅增加失败时页面状态输出的诊断重跑、随后原脚本原样复跑均完整通过，未再复现，根因尚未确定；未据此猜测修改产品或放宽断言。最终日志为 `artifacts/review-continuation-model-recheck.log`，这次单独失败不算通过。
+
+限制：固定的是保存换项时的阅读交接，不是全站阅读位置恢复，也没有改变下一项的排序策略。标题使用 `tabIndex=-1`，并未新增常规 Tab 停靠点；只验证 Chrome 键盘流程，未做实际读屏软件兼容认证。公开照片、合成区域和时间只验证真实推理与复核链路，本轮没有新增训练、现场违规准确率或效率收益证据。
+
 ## 2026-10-24 · 跨浏览器语言交班与旧编号兼容
 
 ```bash
