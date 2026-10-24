@@ -1,0 +1,614 @@
+{
+  "scope": "Independent actual browser UI at 1440/390 with en-US/zh-CN locales. Synthetic Unicode batch checks cross-language handover and actual legacy files. One real D-FINE public-photo run checks candidate handover, not onsite accuracy.",
+  "started_at": "2026-10-24T02:22:21.864Z",
+  "source_sha256": {
+    "app.mjs": "e67f976dcaf1c6929ce063e6e5e319c1521a8746b1d2b5cb758c4e113bbb7529",
+    "engine.mjs": "ed45dd63c0cd8b4f902806e99db0642305d226703f6afb27d8fa6cef83f0e722"
+  },
+  "checks": [
+    {
+      "scope": "cross-language",
+      "name": "new event ID remains identical across actual en-US and zh-CN browsers",
+      "passed": true
+    },
+    {
+      "scope": 1440,
+      "name": "new-opposite-locale restores the correct human decision, pending event and full history",
+      "passed": true
+    },
+    {
+      "scope": 1440,
+      "name": "legacy-en restores the correct human decision, pending event and full history",
+      "passed": true
+    },
+    {
+      "scope": 1440,
+      "name": "legacy-zh restores the correct human decision, pending event and full history",
+      "passed": true
+    },
+    {
+      "scope": 1440,
+      "name": "continuing a legacy Chinese event keeps its original event ID and earlier audit",
+      "passed": true
+    },
+    {
+      "scope": 1440,
+      "name": "invalid reference rejects atomically with original draft, history and attachment DOM retained",
+      "passed": true
+    },
+    {
+      "scope": 1440,
+      "name": "cancelled valid replacement preserves current manual work",
+      "passed": true
+    },
+    {
+      "scope": 1440,
+      "name": "restored and error states retain the approved responsive layout without page overflow",
+      "passed": true
+    },
+    {
+      "scope": 390,
+      "name": "new-opposite-locale restores the correct human decision, pending event and full history",
+      "passed": true
+    },
+    {
+      "scope": 390,
+      "name": "legacy-en restores the correct human decision, pending event and full history",
+      "passed": true
+    },
+    {
+      "scope": 390,
+      "name": "legacy-zh restores the correct human decision, pending event and full history",
+      "passed": true
+    },
+    {
+      "scope": 390,
+      "name": "continuing a legacy Chinese event keeps its original event ID and earlier audit",
+      "passed": true
+    },
+    {
+      "scope": 390,
+      "name": "invalid reference rejects atomically with original draft, history and attachment DOM retained",
+      "passed": true
+    },
+    {
+      "scope": 390,
+      "name": "cancelled valid replacement preserves current manual work",
+      "passed": true
+    },
+    {
+      "scope": 390,
+      "name": "restored and error states retain the approved responsive layout without page overflow",
+      "passed": true
+    },
+    {
+      "scope": "real inference",
+      "name": "actual default D-FINE creates two review candidates with one saved decision",
+      "passed": true
+    },
+    {
+      "scope": "real inference",
+      "name": "real model handover crosses en-US to zh-CN without changing candidates or audit",
+      "passed": true
+    }
+  ],
+  "widths": [
+    {
+      "width": 1440,
+      "locale": "zh-CN",
+      "cases": [
+        {
+          "name": "new-opposite-locale",
+          "state": {
+            "locale": "zh-CN",
+            "batch": "跨浏览器语言交班验收",
+            "queue": "review",
+            "ids": [
+              "event:a-1"
+            ],
+            "badge": "待补充证据",
+            "status": "needs_evidence",
+            "note": "当前版 en-US 合成交班：请下一班核查预约有效性。",
+            "history": "复核历史 · 1 条2026/10/24 10:22:22 · 待补充证据：当前版 en-US 合成交班：请下一班核查预约有效性。",
+            "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+            "media": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "overflow": 0
+          },
+          "reexport": {
+            "version": 1,
+            "decisions": {
+              "event:a-1": {
+                "status": "needs_evidence",
+                "note": "当前版 en-US 合成交班：请下一班核查预约有效性。",
+                "at": "2026-10-24T02:22:22.669Z"
+              }
+            },
+            "audit": [
+              {
+                "event_id": "event:a-1",
+                "status": "needs_evidence",
+                "note": "当前版 en-US 合成交班：请下一班核查预约有效性。",
+                "at": "2026-10-24T02:22:22.669Z"
+              }
+            ]
+          }
+        },
+        {
+          "name": "legacy-en",
+          "state": {
+            "locale": "zh-CN",
+            "batch": "跨浏览器语言交班验收",
+            "queue": "review",
+            "ids": [
+              "event:a-1"
+            ],
+            "badge": "待补充证据",
+            "status": "needs_evidence",
+            "note": "合成跨语言交班验收：请下一班复查预约有效性。",
+            "history": "复核历史 · 1 条2026/10/24 10:17:17 · 待补充证据：合成跨语言交班验收：请下一班复查预约有效性。",
+            "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+            "media": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "overflow": 0
+          },
+          "reexport": {
+            "version": 1,
+            "decisions": {
+              "event:a-1": {
+                "status": "needs_evidence",
+                "note": "合成跨语言交班验收：请下一班复查预约有效性。",
+                "at": "2026-10-24T02:17:17.323Z"
+              }
+            },
+            "audit": [
+              {
+                "event_id": "event:a-1",
+                "status": "needs_evidence",
+                "note": "合成跨语言交班验收：请下一班复查预约有效性。",
+                "at": "2026-10-24T02:17:17.323Z"
+              }
+            ]
+          }
+        },
+        {
+          "name": "legacy-zh",
+          "state": {
+            "locale": "zh-CN",
+            "batch": "跨浏览器语言交班验收",
+            "queue": "review",
+            "ids": [
+              "event:中-1"
+            ],
+            "badge": "待复核",
+            "status": "open",
+            "note": "旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+            "history": "复核历史 · 1 条2026/10/24 10:18:16 · 待复核：旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+            "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+            "media": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "overflow": 0
+          },
+          "reexport": {
+            "version": 1,
+            "decisions": {
+              "event:中-1": {
+                "status": "open",
+                "note": "旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+                "at": "2026-10-24T02:18:16.064Z"
+              }
+            },
+            "audit": [
+              {
+                "event_id": "event:中-1",
+                "status": "open",
+                "note": "旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+                "at": "2026-10-24T02:18:16.064Z"
+              }
+            ]
+          }
+        }
+      ],
+      "screenshots": [
+        "locale-handover-designer-after-20261024-import-success-1440.png",
+        "locale-handover-designer-after-20261024-restored-event-1440.png",
+        "locale-handover-designer-after-20261024-restored-history-1440.png",
+        "locale-handover-designer-after-20261024-invalid-retains-1440.png"
+      ],
+      "current_file": "/tmp/estateguard-review-flow-20261020/artifacts/locale-handover-designer-after-20261024-continued-legacy-zh-1440.json",
+      "continued": {
+        "id": "event:中-1",
+        "audit": [
+          {
+            "event_id": "event:中-1",
+            "status": "open",
+            "note": "旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+            "at": "2026-10-24T02:18:16.064Z"
+          },
+          {
+            "event_id": "event:中-1",
+            "status": "needs_evidence",
+            "note": "旧版中文交班接续验收：补查预约仍需证据，保留原历史。",
+            "at": "2026-10-24T02:22:23.821Z"
+          }
+        ]
+      },
+      "invalid": {
+        "locale": "zh-CN",
+        "batch": "跨浏览器语言交班验收",
+        "queue": "review",
+        "ids": [
+          "event:中-1"
+        ],
+        "badge": "待补充证据",
+        "status": "needs_evidence",
+        "note": "旧版中文交班接续验收：补查预约仍需证据，保留原历史。\n未保存草稿：等待人工补查。",
+        "history": "复核历史 · 2 条2026/10/24 10:18:16 · 待复核：旧版中文浏览器合成交班：人工明确要求重新核查预约。2026/10/24 10:22:23 · 待补充证据：旧版中文交班接续验收：补查预约仍需证据，保留原历史。",
+        "message": "导入被拒绝，原工作区未改变。审查历史包含无法对应的事件编号，请核对原始交班文件。",
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "overflow": 0,
+        "sameNodes": true
+      },
+      "cancelled": {
+        "locale": "zh-CN",
+        "batch": "跨浏览器语言交班验收",
+        "queue": "review",
+        "ids": [
+          "event:中-1"
+        ],
+        "badge": "待补充证据",
+        "status": "needs_evidence",
+        "note": "旧版中文交班接续验收：补查预约仍需证据，保留原历史。\n未保存草稿：等待人工补查。",
+        "history": "复核历史 · 2 条2026/10/24 10:18:16 · 待复核：旧版中文浏览器合成交班：人工明确要求重新核查预约。2026/10/24 10:22:23 · 待补充证据：旧版中文交班接续验收：补查预约仍需证据，保留原历史。",
+        "message": "已取消替换，当前记录、草稿和附件保持不变。",
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "overflow": 0
+      }
+    },
+    {
+      "width": 390,
+      "locale": "en-US",
+      "cases": [
+        {
+          "name": "new-opposite-locale",
+          "state": {
+            "locale": "en-US",
+            "batch": "跨浏览器语言交班验收",
+            "queue": "review",
+            "ids": [
+              "event:a-1"
+            ],
+            "badge": "待补充证据",
+            "status": "needs_evidence",
+            "note": "当前版 zh-CN 合成交班：请下一班核查预约有效性。",
+            "history": "复核历史 · 1 条2026/10/24 10:22:23 · 待补充证据：当前版 zh-CN 合成交班：请下一班核查预约有效性。",
+            "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+            "media": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "overflow": 0
+          },
+          "reexport": {
+            "version": 1,
+            "decisions": {
+              "event:a-1": {
+                "status": "needs_evidence",
+                "note": "当前版 zh-CN 合成交班：请下一班核查预约有效性。",
+                "at": "2026-10-24T02:22:23.140Z"
+              }
+            },
+            "audit": [
+              {
+                "event_id": "event:a-1",
+                "status": "needs_evidence",
+                "note": "当前版 zh-CN 合成交班：请下一班核查预约有效性。",
+                "at": "2026-10-24T02:22:23.140Z"
+              }
+            ]
+          }
+        },
+        {
+          "name": "legacy-en",
+          "state": {
+            "locale": "en-US",
+            "batch": "跨浏览器语言交班验收",
+            "queue": "review",
+            "ids": [
+              "event:a-1"
+            ],
+            "badge": "待补充证据",
+            "status": "needs_evidence",
+            "note": "合成跨语言交班验收：请下一班复查预约有效性。",
+            "history": "复核历史 · 1 条2026/10/24 10:17:17 · 待补充证据：合成跨语言交班验收：请下一班复查预约有效性。",
+            "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+            "media": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "overflow": 0
+          },
+          "reexport": {
+            "version": 1,
+            "decisions": {
+              "event:a-1": {
+                "status": "needs_evidence",
+                "note": "合成跨语言交班验收：请下一班复查预约有效性。",
+                "at": "2026-10-24T02:17:17.323Z"
+              }
+            },
+            "audit": [
+              {
+                "event_id": "event:a-1",
+                "status": "needs_evidence",
+                "note": "合成跨语言交班验收：请下一班复查预约有效性。",
+                "at": "2026-10-24T02:17:17.323Z"
+              }
+            ]
+          }
+        },
+        {
+          "name": "legacy-zh",
+          "state": {
+            "locale": "en-US",
+            "batch": "跨浏览器语言交班验收",
+            "queue": "review",
+            "ids": [
+              "event:中-1"
+            ],
+            "badge": "待复核",
+            "status": "open",
+            "note": "旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+            "history": "复核历史 · 1 条2026/10/24 10:18:16 · 待复核：旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+            "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+            "media": "未载入本地证据。请选择与本事件对应的图片或视频。",
+            "overflow": 0
+          },
+          "reexport": {
+            "version": 1,
+            "decisions": {
+              "event:中-1": {
+                "status": "open",
+                "note": "旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+                "at": "2026-10-24T02:18:16.064Z"
+              }
+            },
+            "audit": [
+              {
+                "event_id": "event:中-1",
+                "status": "open",
+                "note": "旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+                "at": "2026-10-24T02:18:16.064Z"
+              }
+            ]
+          }
+        }
+      ],
+      "screenshots": [
+        "locale-handover-designer-after-20261024-import-success-390.png",
+        "locale-handover-designer-after-20261024-restored-event-390.png",
+        "locale-handover-designer-after-20261024-restored-history-390.png",
+        "locale-handover-designer-after-20261024-invalid-retains-390.png"
+      ],
+      "current_file": "/tmp/estateguard-review-flow-20261020/artifacts/locale-handover-designer-after-20261024-continued-legacy-zh-390.json",
+      "continued": {
+        "id": "event:中-1",
+        "audit": [
+          {
+            "event_id": "event:中-1",
+            "status": "open",
+            "note": "旧版中文浏览器合成交班：人工明确要求重新核查预约。",
+            "at": "2026-10-24T02:18:16.064Z"
+          },
+          {
+            "event_id": "event:中-1",
+            "status": "needs_evidence",
+            "note": "旧版中文交班接续验收：补查预约仍需证据，保留原历史。",
+            "at": "2026-10-24T02:22:24.608Z"
+          }
+        ]
+      },
+      "invalid": {
+        "locale": "en-US",
+        "batch": "跨浏览器语言交班验收",
+        "queue": "review",
+        "ids": [
+          "event:中-1"
+        ],
+        "badge": "待补充证据",
+        "status": "needs_evidence",
+        "note": "旧版中文交班接续验收：补查预约仍需证据，保留原历史。\n未保存草稿：等待人工补查。",
+        "history": "复核历史 · 2 条2026/10/24 10:18:16 · 待复核：旧版中文浏览器合成交班：人工明确要求重新核查预约。2026/10/24 10:22:24 · 待补充证据：旧版中文交班接续验收：补查预约仍需证据，保留原历史。",
+        "message": "导入被拒绝，原工作区未改变。审查历史包含无法对应的事件编号，请核对原始交班文件。",
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "overflow": 0,
+        "sameNodes": true
+      },
+      "cancelled": {
+        "locale": "en-US",
+        "batch": "跨浏览器语言交班验收",
+        "queue": "review",
+        "ids": [
+          "event:中-1"
+        ],
+        "badge": "待补充证据",
+        "status": "needs_evidence",
+        "note": "旧版中文交班接续验收：补查预约仍需证据，保留原历史。\n未保存草稿：等待人工补查。",
+        "history": "复核历史 · 2 条2026/10/24 10:18:16 · 待复核：旧版中文浏览器合成交班：人工明确要求重新核查预约。2026/10/24 10:22:24 · 待补充证据：旧版中文交班接续验收：补查预约仍需证据，保留原历史。",
+        "message": "已取消替换，当前记录、草稿和附件保持不变。",
+        "media": "图片已解码，请核对画面是否对应本事件。",
+        "overflow": 0
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "current_files": {
+    "en-US": {
+      "file": "/tmp/estateguard-review-flow-20261020/artifacts/locale-handover-designer-after-20261024-current-en-US.json",
+      "data": {
+        "format": "estateguard-workspace",
+        "version": 1,
+        "batch": {
+          "schema_version": 1,
+          "name": "跨浏览器语言交班验收",
+          "provenance": "原创合成观察，只验证事件ID和审查历史恢复。",
+          "observations": [
+            {
+              "id": "中-1",
+              "camera": "C1",
+              "zone": "客梯",
+              "track": "搬运1",
+              "category": "bulky_load",
+              "start": "2026-10-23T08:00:00+08:00",
+              "end": "2026-10-23T08:00:10+08:00",
+              "score": 0.9,
+              "quality": 0.9,
+              "summary": "同一时刻的合成观察",
+              "evidence": [
+                "synthetic.jpg"
+              ]
+            },
+            {
+              "id": "a-1",
+              "camera": "C1",
+              "zone": "客梯",
+              "track": "搬运1",
+              "category": "bulky_load",
+              "start": "2026-10-23T08:00:00+08:00",
+              "end": "2026-10-23T08:00:10+08:00",
+              "score": 0.9,
+              "quality": 0.9,
+              "summary": "同一时刻的合成观察",
+              "evidence": [
+                "synthetic.jpg"
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "score_threshold": 0.6,
+          "quality_threshold": 0.5,
+          "merge_gap_seconds": 30,
+          "parking_grace_seconds": 30
+        },
+        "decisions": {
+          "event:a-1": {
+            "status": "needs_evidence",
+            "note": "当前版 en-US 合成交班：请下一班核查预约有效性。",
+            "at": "2026-10-24T02:22:22.669Z"
+          }
+        },
+        "audit": [
+          {
+            "event_id": "event:a-1",
+            "status": "needs_evidence",
+            "note": "当前版 en-US 合成交班：请下一班核查预约有效性。",
+            "at": "2026-10-24T02:22:22.669Z"
+          }
+        ],
+        "exported_at": "2026-10-24T02:22:22.718Z"
+      },
+      "locale": "en-US"
+    },
+    "zh-CN": {
+      "file": "/tmp/estateguard-review-flow-20261020/artifacts/locale-handover-designer-after-20261024-current-zh-CN.json",
+      "data": {
+        "format": "estateguard-workspace",
+        "version": 1,
+        "batch": {
+          "schema_version": 1,
+          "name": "跨浏览器语言交班验收",
+          "provenance": "原创合成观察，只验证事件ID和审查历史恢复。",
+          "observations": [
+            {
+              "id": "中-1",
+              "camera": "C1",
+              "zone": "客梯",
+              "track": "搬运1",
+              "category": "bulky_load",
+              "start": "2026-10-23T08:00:00+08:00",
+              "end": "2026-10-23T08:00:10+08:00",
+              "score": 0.9,
+              "quality": 0.9,
+              "summary": "同一时刻的合成观察",
+              "evidence": [
+                "synthetic.jpg"
+              ]
+            },
+            {
+              "id": "a-1",
+              "camera": "C1",
+              "zone": "客梯",
+              "track": "搬运1",
+              "category": "bulky_load",
+              "start": "2026-10-23T08:00:00+08:00",
+              "end": "2026-10-23T08:00:10+08:00",
+              "score": 0.9,
+              "quality": 0.9,
+              "summary": "同一时刻的合成观察",
+              "evidence": [
+                "synthetic.jpg"
+              ]
+            }
+          ]
+        },
+        "policy": {
+          "score_threshold": 0.6,
+          "quality_threshold": 0.5,
+          "merge_gap_seconds": 30,
+          "parking_grace_seconds": 30
+        },
+        "decisions": {
+          "event:a-1": {
+            "status": "needs_evidence",
+            "note": "当前版 zh-CN 合成交班：请下一班核查预约有效性。",
+            "at": "2026-10-24T02:22:23.140Z"
+          }
+        },
+        "audit": [
+          {
+            "event_id": "event:a-1",
+            "status": "needs_evidence",
+            "note": "当前版 zh-CN 合成交班：请下一班核查预约有效性。",
+            "at": "2026-10-24T02:22:23.140Z"
+          }
+        ],
+        "exported_at": "2026-10-24T02:22:23.181Z"
+      },
+      "locale": "zh-CN"
+    }
+  },
+  "real_model": {
+    "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+    "candidates": 2,
+    "frames": 1,
+    "decisions": {
+      "event:vision-track-1-1": {
+        "status": "needs_evidence",
+        "note": "真实模型流程验收：公开照片需要补充现场证据，不认定实际违规。",
+        "at": "2026-10-24T02:22:26.075Z"
+      }
+    },
+    "audit": [
+      {
+        "event_id": "event:vision-track-1-1",
+        "status": "needs_evidence",
+        "note": "真实模型流程验收：公开照片需要补充现场证据，不认定实际违规。",
+        "at": "2026-10-24T02:22:26.075Z"
+      }
+    ],
+    "screenshot": "locale-handover-designer-after-20261024-actual-dfine-restored-390.png"
+  },
+  "passed": 17,
+  "failed": 0,
+  "ok": true,
+  "finished_at": "2026-10-24T02:22:26.599Z",
+  "visual_review": {
+    "inspected": [
+      "locale-handover-designer-after-20261024-import-success-1440.png",
+      "locale-handover-designer-after-20261024-restored-history-390.png",
+      "locale-handover-designer-after-20261024-invalid-retains-390.png",
+      "locale-handover-designer-after-20261024-actual-dfine-restored-390.png"
+    ],
+    "blockers": [],
+    "adaptation_required": false,
+    "assessment": "Success notice, current pending badge, source and retained history are readable within the fixed layout. Chinese invalid-reference message wraps inside the existing message box and explains which record is invalid while preserving old work. No new component or CSS required.",
+    "limitations": [
+      "Only actual Chrome en-US and zh-CN locales checked by this UI audit; not every locale or browser engine.",
+      "Unicode examples are synthetic; default D-FINE uses public CC0 image and synthetic scene metadata, not real community incident evidence.",
+      "Imported media correctly remains absent and must be selected separately. No private media or product files edited."
+    ]
+  }
+}

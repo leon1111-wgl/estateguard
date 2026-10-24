@@ -1,0 +1,64 @@
+{
+  "at": "2026-10-24T02:24:17.172Z",
+  "head": "31411602251e2d79e5256f71b2027cf937840673",
+  "engine_sha256": "ed45dd63c0cd8b4f902806e99db0642305d226703f6afb27d8fa6cef83f0e722",
+  "app_sha256": "e67f976dcaf1c6929ce063e6e5e319c1521a8746b1d2b5cb758c4e113bbb7529",
+  "scope": "Independent engine contract fixtures; legacy export code loaded from unchanged HEAD with explicit en-US/zh-CN collation. No model inference or product edits.",
+  "checks": [
+    {
+      "name": "Stable identities ignore input order and never call localeCompare",
+      "passed": true,
+      "observations": 168,
+      "events": 72
+    },
+    {
+      "name": "Legacy en-US export keeps group membership, original audit, and anchor after another save",
+      "passed": true,
+      "events": 72,
+      "audit_entries": 144,
+      "legacy_different_ids": 0
+    },
+    {
+      "name": "Legacy zh-CN export keeps group membership, original audit, and anchor after another save",
+      "passed": true,
+      "events": 72,
+      "audit_entries": 144,
+      "legacy_different_ids": 48
+    },
+    {
+      "name": "Offsets match instants while colon, quotes, spaces and combining marks remain exact identifiers",
+      "passed": true
+    },
+    {
+      "name": "Non-earliest aliases, competing anchors, mismatched decision keys and policy-merged histories reject atomically",
+      "passed": true,
+      "rejected": 5,
+      "errors": [
+        "审查历史包含无法对应的事件编号，请核对原始交班文件。",
+        "同一事件在审查历史中使用了多个编号，请核对原始交班文件。",
+        "同一事件在审查历史中使用了多个编号，请核对原始交班文件。",
+        "Review decisions do not match audit history.",
+        "审查历史包含无法对应的事件编号，请核对原始交班文件。"
+      ]
+    },
+    {
+      "name": "10,000 observations / 50,000 audit entries preserve anchors with linear audit lookup",
+      "passed": true,
+      "compact_history_5000": {
+        "ms": 107.327875,
+        "date_parse_calls": 174262,
+        "event_count": 5000
+      },
+      "maximum_history_50000": {
+        "ms": 92.10133299999995,
+        "date_parse_calls": 174262,
+        "event_count": 5000
+      },
+      "workspace_bytes": 8349288,
+      "export_ms": 347.61041600000004,
+      "import_ms": 336.723334,
+      "notes": "Date.parse work is unchanged when only history grows tenfold; wall-clock timing is a local observation, not a browser performance guarantee."
+    }
+  ],
+  "ok": true
+}

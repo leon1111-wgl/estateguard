@@ -1,0 +1,254 @@
+{
+  "started_at": "2026-10-24T02:17:45.108Z",
+  "base": "http://127.0.0.1:8767",
+  "scope": "Real Chrome import, manual review, JSON download and import across en-US/zh-CN locales using valid synthetic observations. Model workflows, if present, are labelled separately.",
+  "checks": [
+    {
+      "name": "UI same-start handover en-US to zh-CN",
+      "passed": false,
+      "error": "a valid reviewed workspace should restore in the receiving browser locale",
+      "evidence": {
+        "synthetic": true,
+        "before_save": {
+          "locale": "en-US",
+          "language": "en-US",
+          "compare": 1,
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "batch": "跨语言交班-same-start",
+          "event": "event:a-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "events": [
+            "event:a-1"
+          ]
+        },
+        "saved": {
+          "locale": "en-US",
+          "language": "en-US",
+          "compare": 1,
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "batch": "跨语言交班-same-start",
+          "event": "event:a-1",
+          "status": "needs_evidence",
+          "note": "请下一班核对同一搬运事件的预约有效性",
+          "history": "复核历史 · 1 条2026/10/24 10:17:46 · 待补充证据：请下一班核对同一搬运事件的预约有效性",
+          "events": [
+            "event:a-1"
+          ]
+        },
+        "exported": {
+          "version": 1,
+          "decisions": {
+            "event:a-1": {
+              "status": "needs_evidence",
+              "note": "请下一班核对同一搬运事件的预约有效性",
+              "at": "2026-10-24T02:17:46.651Z"
+            }
+          },
+          "audit": [
+            {
+              "event_id": "event:a-1",
+              "status": "needs_evidence",
+              "note": "请下一班核对同一搬运事件的预约有效性",
+              "at": "2026-10-24T02:17:46.651Z"
+            }
+          ]
+        },
+        "restored": {
+          "locale": "zh-CN",
+          "language": "zh-CN",
+          "compare": -1,
+          "message": "导入被拒绝，原工作区未改变。Invalid audit event.",
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "events": [
+            "event:door-held-1",
+            "event:impact-1",
+            "event:van-route-1",
+            "event:reverse-1",
+            "event:dark-route-1",
+            "event:unbooked-1",
+            "event:bay-17-1",
+            "event:bags-1",
+            "event:full-bin-1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "UI same-start handover zh-CN to en-US",
+      "passed": false,
+      "error": "a valid reviewed workspace should restore in the receiving browser locale",
+      "evidence": {
+        "synthetic": true,
+        "before_save": {
+          "locale": "zh-CN",
+          "language": "zh-CN",
+          "compare": -1,
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "batch": "跨语言交班-same-start",
+          "event": "event:中-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "events": [
+            "event:中-1"
+          ]
+        },
+        "saved": {
+          "locale": "zh-CN",
+          "language": "zh-CN",
+          "compare": -1,
+          "message": "复核记录已保存在当前标签页。导出工作区后可以恢复。",
+          "batch": "跨语言交班-same-start",
+          "event": "event:中-1",
+          "status": "needs_evidence",
+          "note": "请下一班核对同一搬运事件的预约有效性",
+          "history": "复核历史 · 1 条2026/10/24 10:17:47 · 待补充证据：请下一班核对同一搬运事件的预约有效性",
+          "events": [
+            "event:中-1"
+          ]
+        },
+        "exported": {
+          "version": 1,
+          "decisions": {
+            "event:中-1": {
+              "status": "needs_evidence",
+              "note": "请下一班核对同一搬运事件的预约有效性",
+              "at": "2026-10-24T02:17:47.310Z"
+            }
+          },
+          "audit": [
+            {
+              "event_id": "event:中-1",
+              "status": "needs_evidence",
+              "note": "请下一班核对同一搬运事件的预约有效性",
+              "at": "2026-10-24T02:17:47.310Z"
+            }
+          ]
+        },
+        "restored": {
+          "locale": "en-US",
+          "language": "en-US",
+          "compare": 1,
+          "message": "导入被拒绝，原工作区未改变。Invalid audit event.",
+          "batch": "枫庭小区 · 模拟早班",
+          "event": "event:door-held-1",
+          "status": "open",
+          "note": "",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "events": [
+            "event:door-held-1",
+            "event:impact-1",
+            "event:van-route-1",
+            "event:reverse-1",
+            "event:dark-route-1",
+            "event:unbooked-1",
+            "event:bay-17-1",
+            "event:bags-1",
+            "event:full-bin-1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "UI control different-groups across locales",
+      "passed": true,
+      "evidence": {
+        "synthetic": true,
+        "exported": {
+          "decisions": {
+            "event:a-1": {
+              "status": "needs_evidence",
+              "note": "独立事件复核：event:a-1",
+              "at": "2026-10-24T02:17:47.898Z"
+            },
+            "event:中-1": {
+              "status": "needs_evidence",
+              "note": "独立事件复核：event:中-1",
+              "at": "2026-10-24T02:17:47.944Z"
+            }
+          },
+          "audit": [
+            {
+              "event_id": "event:a-1",
+              "status": "needs_evidence",
+              "note": "独立事件复核：event:a-1",
+              "at": "2026-10-24T02:17:47.898Z"
+            },
+            {
+              "event_id": "event:中-1",
+              "status": "needs_evidence",
+              "note": "独立事件复核：event:中-1",
+              "at": "2026-10-24T02:17:47.944Z"
+            }
+          ]
+        },
+        "restored": {
+          "locale": "zh-CN",
+          "language": "zh-CN",
+          "compare": -1,
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "batch": "跨语言交班-different-groups",
+          "event": "event:中-1",
+          "status": "needs_evidence",
+          "note": "独立事件复核：event:中-1",
+          "history": "复核历史 · 1 条2026/10/24 10:17:47 · 待补充证据：独立事件复核：event:中-1",
+          "events": [
+            "event:中-1",
+            "event:a-1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "UI control different-starts across locales",
+      "passed": true,
+      "evidence": {
+        "synthetic": true,
+        "exported": {
+          "decisions": {
+            "event:中-1": {
+              "status": "needs_evidence",
+              "note": "独立事件复核：event:中-1",
+              "at": "2026-10-24T02:17:48.539Z"
+            }
+          },
+          "audit": [
+            {
+              "event_id": "event:中-1",
+              "status": "needs_evidence",
+              "note": "独立事件复核：event:中-1",
+              "at": "2026-10-24T02:17:48.539Z"
+            }
+          ]
+        },
+        "restored": {
+          "locale": "zh-CN",
+          "language": "zh-CN",
+          "compare": -1,
+          "message": "JSON 已导入并通过校验。引用的媒体文件需另行打开。",
+          "batch": "跨语言交班-different-starts",
+          "event": "event:中-1",
+          "status": "needs_evidence",
+          "note": "独立事件复核：event:中-1",
+          "history": "复核历史 · 1 条2026/10/24 10:17:48 · 待补充证据：独立事件复核：event:中-1",
+          "events": [
+            "event:中-1"
+          ]
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-24T02:17:48.772Z",
+  "passed": 2,
+  "failed": 2,
+  "ok": false
+}

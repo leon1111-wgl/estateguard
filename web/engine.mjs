@@ -16,6 +16,9 @@ export const MAX_WORKSPACE_BYTES=32*1024*1024;
 export const MAX_AUDIT_ENTRIES=50000;
 const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
 const utf8=new TextEncoder();
+// UTF-16 code-unit order is independent of the browser's language/ICU collation.
+const compareIds=(a,b)=>a<b?-1:a>b?1:0;
+const compareEvents=(a,b)=>Number(b.urgent)-Number(a.urgent)||Date.parse(a.start)-Date.parse(b.start)||compareIds(a.id,b.id);
 function requireValue(ok,message){if(!ok)throw new Error(message);}
 function textValue(x,key,max=240){requireValue(typeof x==='string'&&x.trim().length>0&&x.length<=max,`${key}: enter 1–${max} characters.`);}
 function numberValue(x,key,min,max){requireValue(typeof x==='number'&&Number.isFinite(x)&&x>=min&&x<=max,`${key}: expected a finite number from ${min} to ${max}.`);}
@@ -90,7 +93,7 @@ export function buildEvents(input,policy=defaultPolicy){
  for(const r of batch.observations){const key=JSON.stringify([r.camera,r.zone,r.track,r.category,r.stable_segment_id??null]);if(!groups.has(key))groups.set(key,[]);groups.get(key).push(r);}
  const events=[];
  for(const rows of groups.values()){
-  rows.sort((a,b)=>Date.parse(a.start)-Date.parse(b.start)||a.id.localeCompare(b.id));
+  rows.sort((a,b)=>Date.parse(a.start)-Date.parse(b.start)||compareIds(a.id,b.id));
   let pending=[],end=-Infinity;
   for(const row of rows){
    if(pending.length&&Date.parse(row.start)>end+policy.merge_gap_seconds*1000){events.push(finishEvent(pending,policy));pending=[];end=-Infinity;}
@@ -98,7 +101,25 @@ export function buildEvents(input,policy=defaultPolicy){
   }
   if(pending.length)events.push(finishEvent(pending,policy));
  }
- return events.sort((a,b)=>Number(b.urgent)-Number(a.urgent)||Date.parse(a.start)-Date.parse(b.start)||a.id.localeCompare(b.id));
+ return events.sort(compareEvents);
+}
+export function buildWorkspaceEvents(workspace){
+ requireValue(object(workspace)&&Array.isArray(workspace.audit)&&workspace.audit.length<=MAX_AUDIT_ENTRIES,'审查历史格式无效，最多允许 50,000 条记录。');
+ const events=buildEvents(workspace.batch,workspace.policy);
+ const starts=new Map(workspace.batch.observations.map(r=>[r.id,Date.parse(r.start)])),aliases=new Map(),anchors=new Map();
+ // Old version-1 exports chose a locale-dependent first member when starts tied.
+ // Only earliest members of this exact derived event can be legacy anchors.
+ for(const event of events)for(const id of event.observation_ids){
+  if(starts.get(id)===Date.parse(event.start))aliases.set(`event:${id}`,event);
+ }
+ for(const entry of workspace.audit){
+  requireValue(object(entry)&&typeof entry.event_id==='string'&&aliases.has(entry.event_id),'审查历史包含无法对应的事件编号，请核对原始交班文件。');
+  const event=aliases.get(entry.event_id),anchor=anchors.get(event);
+  requireValue(anchor===undefined||anchor===entry.event_id,'同一事件在审查历史中使用了多个编号，请核对原始交班文件。');
+  anchors.set(event,entry.event_id);
+ }
+ for(const [event,id] of anchors)event.id=id;
+ return events.sort(compareEvents);
 }
 export const inReviewQueue=e=>['review','urgent_review','insufficient_evidence'].includes(e.routing);
 function overlap(a,b){const x=Math.max(0,Math.min(Date.parse(a.end),Date.parse(b.end))-Math.max(Date.parse(a.start),Date.parse(b.start)));const u=Math.max(Date.parse(a.end),Date.parse(b.end))-Math.min(Date.parse(a.start),Date.parse(b.start));return u?x/u:0;}
@@ -115,7 +136,7 @@ export function evaluate(predicted,reference,threshold=.1){
 export function applyDecision(workspace,id,status,note){
  requireValue(statuses.includes(status),'Unknown decision.'); textValue(note,'Review note',2000);
  requireValue(Array.isArray(workspace.audit)&&workspace.audit.length<MAX_AUDIT_ENTRIES,'Audit history is limited to 50,000 entries. Export this review and start a new one before saving more decisions.');
- requireValue(buildEvents(workspace.batch,workspace.policy).some(e=>e.id===id),'Unknown event. Reload the queue.');
+ requireValue(buildWorkspaceEvents(workspace).some(e=>e.id===id),'Unknown event. Reload the queue.');
  const next=structuredClone(workspace),entry={event_id:id,status,note:note.trim(),at:new Date().toISOString()};
  next.decisions[id]={status:entry.status,note:entry.note,at:entry.at};next.audit.push(entry);
  // Reject growth before returning a new state; the previous review remains exportable.
@@ -132,8 +153,9 @@ export function importWorkspace(data){
  if(data.format!=='estateguard-workspace')return {batch:validateBatch(data),policy:{...defaultPolicy},decisions:{},audit:[]};
  requireValue(data.version===1,'Unsupported workspace version.');
  jsonWithinLimit(data,MAX_WORKSPACE_BYTES,'Workspace');
- const batch=validateBatch(data.batch),policy=validatePolicy(data.policy),valid=new Set(buildEvents(batch,policy).map(e=>e.id));
+ const batch=validateBatch(data.batch),policy=validatePolicy(data.policy);
  requireValue(object(data.decisions)&&Array.isArray(data.audit)&&data.audit.length<=MAX_AUDIT_ENTRIES,'Invalid review history. Audit history is limited to 50,000 entries.');
+ const valid=new Set(buildWorkspaceEvents({batch,policy,audit:data.audit}).map(e=>e.id));
  const rebuilt={};
  for(const entry of data.audit){requireValue(object(entry)&&valid.has(entry.event_id)&&statuses.includes(entry.status),'Invalid audit event.');textValue(entry.note,'Audit note',2000);timeValue(entry.at,'Audit time');rebuilt[entry.event_id]={status:entry.status,note:entry.note,at:entry.at};}
  requireValue(Object.keys(data.decisions).length===Object.keys(rebuilt).length,'Review decisions do not match audit history.');

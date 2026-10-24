@@ -1,0 +1,407 @@
+{
+  "at": "2026-10-24T02:25:29.574Z",
+  "engine_sha256": "ed45dd63c0cd8b4f902806e99db0642305d226703f6afb27d8fa6cef83f0e722",
+  "scope": "Real Chrome en-US and zh-CN module execution; no inference, original HEAD legacy exporter loaded via test route.",
+  "locales": [
+    {
+      "locale": "en-US",
+      "language": "en-US",
+      "canonical_ids": [
+        "event:a:1",
+        "event:a:3",
+        "event:a:5",
+        "event:a:7",
+        "event:a:0",
+        "event:a:2",
+        "event:a:4",
+        "event:a:6"
+      ],
+      "legacy_ids": [
+        "event:a:1",
+        "event:a:3",
+        "event:a:5",
+        "event:a:7",
+        "event:a:0",
+        "event:a:2",
+        "event:a:4",
+        "event:a:6"
+      ]
+    },
+    {
+      "locale": "zh-CN",
+      "language": "zh-CN",
+      "canonical_ids": [
+        "event:a:1",
+        "event:a:3",
+        "event:a:5",
+        "event:a:7",
+        "event:a:0",
+        "event:a:2",
+        "event:a:4",
+        "event:a:6"
+      ],
+      "legacy_ids": [
+        "event:中:1",
+        "event:中:3",
+        "event:中:5",
+        "event:中:7",
+        "event:中:0",
+        "event:中:2",
+        "event:中:4",
+        "event:中:6"
+      ]
+    }
+  ],
+  "cross_imports": [
+    {
+      "from": "en-US",
+      "to": "en-US",
+      "pass": true,
+      "ordered": [
+        {
+          "id": "event:a:1",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:1",
+          "observation_ids": [
+            "a:1",
+            "中:1"
+          ]
+        },
+        {
+          "id": "event:a:3",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:3",
+          "observation_ids": [
+            "a:3",
+            "中:3"
+          ]
+        },
+        {
+          "id": "event:a:5",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:5",
+          "observation_ids": [
+            "a:5",
+            "中:5"
+          ]
+        },
+        {
+          "id": "event:a:7",
+          "urgent": true,
+          "start": "2026-10-24T00:00:05.000Z",
+          "track": "group:7",
+          "observation_ids": [
+            "a:7",
+            "中:7"
+          ]
+        },
+        {
+          "id": "event:a:0",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:0",
+          "observation_ids": [
+            "a:0",
+            "中:0"
+          ]
+        },
+        {
+          "id": "event:a:2",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:2",
+          "observation_ids": [
+            "a:2",
+            "中:2"
+          ]
+        },
+        {
+          "id": "event:a:4",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:4",
+          "observation_ids": [
+            "a:4",
+            "中:4"
+          ]
+        },
+        {
+          "id": "event:a:6",
+          "urgent": false,
+          "start": "2026-10-24T00:00:05.000Z",
+          "track": "group:6",
+          "observation_ids": [
+            "a:6",
+            "中:6"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "en-US",
+      "to": "zh-CN",
+      "pass": true,
+      "ordered": [
+        {
+          "id": "event:a:1",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:1",
+          "observation_ids": [
+            "a:1",
+            "中:1"
+          ]
+        },
+        {
+          "id": "event:a:3",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:3",
+          "observation_ids": [
+            "a:3",
+            "中:3"
+          ]
+        },
+        {
+          "id": "event:a:5",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:5",
+          "observation_ids": [
+            "a:5",
+            "中:5"
+          ]
+        },
+        {
+          "id": "event:a:7",
+          "urgent": true,
+          "start": "2026-10-24T00:00:05.000Z",
+          "track": "group:7",
+          "observation_ids": [
+            "a:7",
+            "中:7"
+          ]
+        },
+        {
+          "id": "event:a:0",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:0",
+          "observation_ids": [
+            "a:0",
+            "中:0"
+          ]
+        },
+        {
+          "id": "event:a:2",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:2",
+          "observation_ids": [
+            "a:2",
+            "中:2"
+          ]
+        },
+        {
+          "id": "event:a:4",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:4",
+          "observation_ids": [
+            "a:4",
+            "中:4"
+          ]
+        },
+        {
+          "id": "event:a:6",
+          "urgent": false,
+          "start": "2026-10-24T00:00:05.000Z",
+          "track": "group:6",
+          "observation_ids": [
+            "a:6",
+            "中:6"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "zh-CN",
+      "to": "en-US",
+      "pass": true,
+      "ordered": [
+        {
+          "id": "event:中:1",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:1",
+          "observation_ids": [
+            "a:1",
+            "中:1"
+          ]
+        },
+        {
+          "id": "event:中:3",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:3",
+          "observation_ids": [
+            "a:3",
+            "中:3"
+          ]
+        },
+        {
+          "id": "event:中:5",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:5",
+          "observation_ids": [
+            "a:5",
+            "中:5"
+          ]
+        },
+        {
+          "id": "event:中:7",
+          "urgent": true,
+          "start": "2026-10-24T00:00:05.000Z",
+          "track": "group:7",
+          "observation_ids": [
+            "a:7",
+            "中:7"
+          ]
+        },
+        {
+          "id": "event:中:0",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:0",
+          "observation_ids": [
+            "a:0",
+            "中:0"
+          ]
+        },
+        {
+          "id": "event:中:2",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:2",
+          "observation_ids": [
+            "a:2",
+            "中:2"
+          ]
+        },
+        {
+          "id": "event:中:4",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:4",
+          "observation_ids": [
+            "a:4",
+            "中:4"
+          ]
+        },
+        {
+          "id": "event:中:6",
+          "urgent": false,
+          "start": "2026-10-24T00:00:05.000Z",
+          "track": "group:6",
+          "observation_ids": [
+            "a:6",
+            "中:6"
+          ]
+        }
+      ]
+    },
+    {
+      "from": "zh-CN",
+      "to": "zh-CN",
+      "pass": true,
+      "ordered": [
+        {
+          "id": "event:中:1",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:1",
+          "observation_ids": [
+            "a:1",
+            "中:1"
+          ]
+        },
+        {
+          "id": "event:中:3",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:3",
+          "observation_ids": [
+            "a:3",
+            "中:3"
+          ]
+        },
+        {
+          "id": "event:中:5",
+          "urgent": true,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:5",
+          "observation_ids": [
+            "a:5",
+            "中:5"
+          ]
+        },
+        {
+          "id": "event:中:7",
+          "urgent": true,
+          "start": "2026-10-24T00:00:05.000Z",
+          "track": "group:7",
+          "observation_ids": [
+            "a:7",
+            "中:7"
+          ]
+        },
+        {
+          "id": "event:中:0",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:0",
+          "observation_ids": [
+            "a:0",
+            "中:0"
+          ]
+        },
+        {
+          "id": "event:中:2",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:2",
+          "observation_ids": [
+            "a:2",
+            "中:2"
+          ]
+        },
+        {
+          "id": "event:中:4",
+          "urgent": false,
+          "start": "2026-10-24T00:00:00.000Z",
+          "track": "group:4",
+          "observation_ids": [
+            "a:4",
+            "中:4"
+          ]
+        },
+        {
+          "id": "event:中:6",
+          "urgent": false,
+          "start": "2026-10-24T00:00:05.000Z",
+          "track": "group:6",
+          "observation_ids": [
+            "a:6",
+            "中:6"
+          ]
+        }
+      ]
+    }
+  ],
+  "page_errors": [],
+  "ok": true
+}

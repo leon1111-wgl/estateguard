@@ -1,5 +1,30 @@
 # 验证记录 · 2026-10-15
 
+## 2026-10-24 · 跨浏览器语言交班与旧编号兼容
+
+```bash
+node --test tests/*.test.mjs
+node scripts/locale-handover-check.cjs
+node scripts/model-check.cjs
+node scripts/reopened-review-check.cjs
+node scripts/candidate-handoff-check.cjs
+node scripts/browser-check.cjs
+python3 scripts/verify_assets.py
+node scripts/evaluate.mjs data/demo.json data/reference.json
+```
+
+本轮在隔离工作树运行，静态服务为 `ESTATEGUARD_URL=http://127.0.0.1:8767`；浏览器脚本通过 `PLAYWRIGHT_MODULE` 指向已安装 Playwright，通过 `CHROME_PATH` 指向 Google Chrome。没有更改主目录的并行停车研究。
+
+- [旧版实际 UI 红基线](validation/locale-handover-baseline.json)：版本 `3141160` 的 app/engine，Chrome en-US 与 zh-CN 经页面导入合法合成观察、保存待补证据、下载 JSON，再交给另一语言的浏览器。并列起点的 `中-1` / `a-1` 分别生成不同编号，两方向均拒绝 `Invalid audit event`；不同组、不同起点两个对照通过，合计 2/4。旧版真实下载文件内嵌于新验收脚本，最终回归不依赖本地 artifacts 或旧 Git 历史。
+- [修复后专项](validation/locale-handover-validation.json) 9/9：8 类合成身份/交接边界及 1 条真实 D-FINE-N 流程。覆盖新版双向恢复、旧 en/zh 文件分别在两语言恢复并继续保存再交班、无历史批次的稳定编号、不同事件隔离，以及多锚点冲突/非最早成员/未知编号/决策不一致的原子拒绝。失败不弹替换确认，不改变当前草稿、保存历史、附件地址或表单/图片 DOM。
+- 默认 D-FINE 实际读取既有许可的公开校车图，大巴分数 0.9651602078，产生 2 个通道规则候选；不同对象保存不同人工结论后跨语言恢复，批次、任务标识、政策、决策和历史逐项一致。模型结果未注入或伪造；区域、来源名和拍摄时间为人工测试设置，不是照片的真实现场标注。导出不包含媒体，恢复后没有擅自复用附件。
+- [独立设计师报告](validation/locale-handover-ui-validation.json) 17/17：1440px / 390px 两宽度检查新旧文件、旧编号继续保存、坏文件保留草稿与附件、取消替换和布局；另有真实 D-FINE 桌面到手机交班。设计师和主代理均查看实际恢复、历史与错误截图，无横向溢出、页面异常或外部请求。既有导航、布局、字体、控件、CSS 均未修改。
+- 新增 8 项单测先在旧版失败再通过，全部 JS 146/146。包含子进程的 en_US/zh_CN 环境与输入反序、带冒号/空白/组合字符 ID、等时区偏移、不同时间分段和稳定段、旧编号续写、无效历史/容量上限，以及规则重置后回到新编号。26 项资产哈希通过；原合成评测 JSON 与已发布 benchmark 完全一致。
+- [独立代码边界](validation/locale-handover-code-validation.json) 6 项检查通过：旧版 72 事件 / 144 条历史恢复与续写、5 类冲突拒绝；10,000 观察 / 50,000 历史可用，增大历史没有增加成员解析次数（本机 Node 观察，不是手机性能承诺）。另在[真实 Chrome 两语言](validation/locale-handover-order-validation.json)验证同起点跨组最终排序和 4 向旧文件恢复，原编号、成员、历史和人工结论不串联，无页面异常。
+- 原真实 SSDLite 回归通过：图片大巴分数 0.9916937947、合成短视频 7 帧、重复推理张量数 262→262；原人工重开 6/6、候选交接 10/10、browser-check 通过。相关专项页面错误与跨站请求为 0。
+
+限制：这是新版读取旧版本 1 文件的兼容修复，不保证旧程序读取所有新导出；历史可编辑，不是签名认证。固定编号不提供跨批次去重、多人合并或可信媒体绑定。本轮未更改模型训练、权重、分数门槛或行为规则，未产生社区精度或部署收益证据；Chrome 之外的浏览器尚未专项测试。关闭当前事件后下一项标题可能在屏外的阅读问题仍单独列在 BACKLOG。
+
 ## 2026-10-23 晚间 · 人工重开优先于规则分流
 
 旧版 `14fce0d` 中，已有预约大件事件先保存为已排除或已处理，再保存「待复核」与重查理由，JSON 正确保留了两条历史和 `open`，但待办仍为 0、徽标仍为预约例外；导入后仍遗漏。[直接基线](validation/reopened-review-direct-baseline.json)含两种原结案状态。正式最小[红测试 0/1](validation/reopened-review-baseline.json)通过浏览器路由提供该提交的原 `app.mjs`，其余模块未变；不能把最终六项都计成旧版失败数。
