@@ -1,0 +1,237 @@
+{
+  "at": "2026-10-25T14:28:21.922Z",
+  "base": "http://127.0.0.1:8768",
+  "baseline": false,
+  "parking_sha256": "62568d175fa5425f6d48e4eb38a210fbd626cb715c966a74f0eb26a7afbd20b1",
+  "scope": "Real DINOv2 and MLP32 on the existing first 53-patch public snapshot. Explicit HTTP500 only for the selected DINO input fetch; image preview and scores are not fabricated. One saved human label is a synthetic workflow fixture, and one-date calibration cannot certify thresholds. Published weights unchanged.",
+  "steps": {
+    "mlp_initial": {
+      "prediction_model": "mlp32",
+      "samples": 53,
+      "target": {
+        "id": "B-20150708-0805-1",
+        "dataset": "cnrpark",
+        "camera": "B",
+        "slot": "1",
+        "source_time": "20150708 0805",
+        "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+        "split": "test",
+        "image": "images/B-20150708-0805-1.jpg",
+        "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+        "predicted_occupied_score": 0.028534001165953025,
+        "prediction": 0,
+        "review_state": "free",
+        "dataset_label": 0
+      },
+      "pending": false,
+      "failures": [],
+      "failures_by_model": {
+        "mlp32": [],
+        "mobilenet": [],
+        "dinov2": []
+      },
+      "by_model_counts": {
+        "mlp32": 53,
+        "mobilenet": 0,
+        "dinov2": 0
+      },
+      "onsite": "摄像头 B：已人工确认且已分析 0 条（占用 0 / 空闲 0）。尚未校准，全部送人工。检验以“车位·日”计数，需覆盖至少 2 个日期；要通过错报空闲 ≤ 1%，至少需要约 637 个无错的车位·日（当前可用 0 个、0 个日期）。保存本摄像头的空闲/占用结论（需填写说明）后，可校准或自适应。",
+      "target_tile": "B:1空闲2.9% 占用未人工复核"
+    },
+    "dino_initial": {
+      "prediction_model": "dinov2",
+      "samples": 53,
+      "target": {
+        "id": "B-20150708-0805-1",
+        "dataset": "cnrpark",
+        "camera": "B",
+        "slot": "1",
+        "source_time": "20150708 0805",
+        "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+        "split": "test",
+        "image": "images/B-20150708-0805-1.jpg",
+        "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+        "predicted_occupied_score": 0.5738718826691331,
+        "calibrated_occupied_score": 0.5807610389047504,
+        "audit": false,
+        "prediction": 1,
+        "review_state": "uncertain",
+        "dataset_label": 0
+      },
+      "pending": false,
+      "failures": [],
+      "failures_by_model": {
+        "mlp32": [],
+        "mobilenet": [],
+        "dinov2": []
+      },
+      "by_model_counts": {
+        "mlp32": 53,
+        "mobilenet": 0,
+        "dinov2": 53
+      },
+      "onsite": "摄像头 B：已人工确认且已分析 0 条（占用 0 / 空闲 0）。尚未校准，全部送人工。检验以“车位·日”计数，需覆盖至少 2 个日期；要通过错报空闲 ≤ 1%，至少需要约 637 个无错的车位·日（当前可用 0 个、0 个日期）。保存本摄像头的空闲/占用结论（需填写说明）后，可校准或自适应。",
+      "target_tile": "B:1需人工复核58.1% 占用未人工复核"
+    },
+    "after_failed_retry": {
+      "prediction_model": "dinov2",
+      "samples": 52,
+      "target": null,
+      "pending": true,
+      "failures": [
+        {
+          "id": "B-20150708-0805-1",
+          "error": "图片读取失败 (500)"
+        }
+      ],
+      "failures_by_model": {
+        "mlp32": [],
+        "mobilenet": [],
+        "dinov2": [
+          {
+            "id": "B-20150708-0805-1",
+            "error": "图片读取失败 (500)"
+          }
+        ]
+      },
+      "by_model_counts": {
+        "mlp32": 53,
+        "mobilenet": 0,
+        "dinov2": 52
+      },
+      "onsite": "摄像头 B：已人工确认且已分析 0 条（占用 0 / 空闲 0）。最近一次检验：人工结论只来自 1 个日期，单日数据不能代表其他时段，仍全部送人工。保存本摄像头的空闲/占用结论（需填写说明）后，可校准或自适应。",
+      "target_tile": "B:1读取失败—已确认占用"
+    },
+    "after_onsite_reset": {
+      "prediction_model": "dinov2",
+      "samples": 52,
+      "target": null,
+      "pending": true,
+      "failures": [
+        {
+          "id": "B-20150708-0805-1",
+          "error": "图片读取失败 (500)"
+        }
+      ],
+      "failures_by_model": {
+        "mlp32": [],
+        "mobilenet": [],
+        "dinov2": [
+          {
+            "id": "B-20150708-0805-1",
+            "error": "图片读取失败 (500)"
+          }
+        ]
+      },
+      "by_model_counts": {
+        "mlp32": 53,
+        "mobilenet": 0,
+        "dinov2": 52
+      },
+      "onsite": "摄像头 B：已人工确认且已分析 0 条（占用 0 / 空闲 0）。尚未校准，全部送人工。检验以“车位·日”计数，需覆盖至少 2 个日期；要通过错报空闲 ≤ 1%，至少需要约 637 个无错的车位·日（当前可用 0 个、0 个日期）。保存本摄像头的空闲/占用结论（需填写说明）后，可校准或自适应。",
+      "target_tile": "B:1读取失败—已确认占用"
+    },
+    "unrun_other_transfer": {
+      "prediction_model": "mobilenet",
+      "samples": 0,
+      "target": null,
+      "pending": true,
+      "failures": [],
+      "failures_by_model": {
+        "mlp32": [],
+        "mobilenet": [],
+        "dinov2": [
+          {
+            "id": "B-20150708-0805-1",
+            "error": "图片读取失败 (500)"
+          }
+        ]
+      },
+      "by_model_counts": {
+        "mlp32": 53,
+        "mobilenet": 0,
+        "dinov2": 52
+      },
+      "onsite": "摄像头 B：已人工确认且已分析 0 条（占用 0 / 空闲 0）。尚未校准，全部送人工。检验以“车位·日”计数，需覆盖至少 2 个日期；要通过错报空闲 ≤ 1%，至少需要约 637 个无错的车位·日（当前可用 0 个、0 个日期）。保存本摄像头的空闲/占用结论（需填写说明）后，可校准或自适应。",
+      "target_tile": "B:1未分析—已确认占用"
+    },
+    "mlp_retry_keeps_dino_failure": {
+      "prediction_model": "mlp32",
+      "samples": 53,
+      "target": {
+        "id": "B-20150708-0805-1",
+        "dataset": "cnrpark",
+        "camera": "B",
+        "slot": "1",
+        "source_time": "20150708 0805",
+        "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+        "split": "test",
+        "image": "images/B-20150708-0805-1.jpg",
+        "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+        "predicted_occupied_score": 0.028534001165953025,
+        "prediction": 0,
+        "review_state": "free",
+        "dataset_label": 0
+      },
+      "pending": false,
+      "failures": [],
+      "failures_by_model": {
+        "mlp32": [],
+        "mobilenet": [],
+        "dinov2": [
+          {
+            "id": "B-20150708-0805-1",
+            "error": "图片读取失败 (500)"
+          }
+        ]
+      },
+      "by_model_counts": {
+        "mlp32": 53,
+        "mobilenet": 0,
+        "dinov2": 52
+      },
+      "onsite": "摄像头 B：已人工确认且已分析 0 条（占用 0 / 空闲 0）。尚未校准，全部送人工。检验以“车位·日”计数，需覆盖至少 2 个日期；要通过错报空闲 ≤ 1%，至少需要约 637 个无错的车位·日（当前可用 0 个、0 个日期）。保存本摄像头的空闲/占用结论（需填写说明）后，可校准或自适应。",
+      "target_tile": "B:1空闲2.9% 占用已确认占用"
+    },
+    "real_retry_recovers": {
+      "prediction_model": "dinov2",
+      "samples": 53,
+      "target": {
+        "id": "B-20150708-0805-1",
+        "dataset": "cnrpark",
+        "camera": "B",
+        "slot": "1",
+        "source_time": "20150708 0805",
+        "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+        "split": "test",
+        "image": "images/B-20150708-0805-1.jpg",
+        "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+        "predicted_occupied_score": 0.5738718826691331,
+        "calibrated_occupied_score": 0.5807610389047504,
+        "audit": false,
+        "prediction": 1,
+        "review_state": "uncertain",
+        "dataset_label": 0
+      },
+      "pending": false,
+      "failures": [],
+      "failures_by_model": {
+        "mlp32": [],
+        "mobilenet": [],
+        "dinov2": []
+      },
+      "by_model_counts": {
+        "mlp32": 53,
+        "mobilenet": 0,
+        "dinov2": 53
+      },
+      "onsite": "摄像头 B：已人工确认且已分析 1 条（占用 1 / 空闲 0）。影子对比（模型 0.5 阈值 vs 人工，1 条）：有车报空闲 0 条，空位报占用 0 条。尚未校准，全部送人工。检验以“车位·日”计数，需覆盖至少 2 个日期；要通过错报空闲 ≤ 1%，至少需要约 637 个无错的车位·日（当前可用 1 个、1 个日期）。",
+      "target_tile": "B:1需人工复核58.1% 占用已确认占用"
+    }
+  },
+  "page_errors": [],
+  "external_requests": [],
+  "sample_id": "B-20150708-0805-1",
+  "resurrected_after_reset": false,
+  "ok": true
+}

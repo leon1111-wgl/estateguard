@@ -1,0 +1,770 @@
+{
+  "at": "2026-10-25T14:25:15.950Z",
+  "base": "http://127.0.0.1:8768",
+  "previous_baseline_commit": "3ba5132",
+  "baseline_report": "parking-model-failure-validation.red.json",
+  "scope": "Actual MLP32 and DINOv2 inference on public CNRPark images. Controlled HTTP500 faults do not replace pixels, model weights or successful model outputs. Workflow checks are not accuracy claims.",
+  "checks": [
+    {
+      "name": "actual MLP32 public snapshot succeeds and matches published scores",
+      "passed": true,
+      "evidence": {
+        "export": {
+          "model": {
+            "key": "mlp32",
+            "name": "MLP32",
+            "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b"
+          },
+          "samples": [
+            {
+              "id": "B-20150708-0805-1",
+              "dataset": "cnrpark",
+              "camera": "B",
+              "slot": "1",
+              "source_time": "20150708 0805",
+              "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+              "split": "test",
+              "image": "images/B-20150708-0805-1.jpg",
+              "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+              "predicted_occupied_score": 0.028534001165953025,
+              "prediction": 0,
+              "review_state": "free",
+              "dataset_label": 0
+            },
+            {
+              "id": "B-20150708-0805-10",
+              "dataset": "cnrpark",
+              "camera": "B",
+              "slot": "10",
+              "source_time": "20150708 0805",
+              "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+              "split": "test",
+              "image": "images/B-20150708-0805-10.jpg",
+              "source_sha256": "2edffdd1e757759c5a1b2a5705d6afbec4749ff86b8732b5d8036fdf047202ea",
+              "predicted_occupied_score": 0.0033581298101084886,
+              "prediction": 0,
+              "review_state": "free",
+              "dataset_label": 0
+            }
+          ],
+          "sample_count": 53,
+          "failures": [],
+          "failures_by_model": {
+            "mlp32": [],
+            "mobilenet": [],
+            "dinov2": []
+          },
+          "evidence_failures": [],
+          "frame_summary": {
+            "total": 53,
+            "free": 39,
+            "busy": 13,
+            "uncertain": 1,
+            "pending": 0
+          },
+          "unanalysed_sample_ids": []
+        },
+        "max_difference": 4.440892098500626e-16
+      }
+    },
+    {
+      "name": "DINOv2 failure is recorded while original evidence and manual review remain available",
+      "passed": true,
+      "evidence": {
+        "export": {
+          "model": {
+            "key": "dinov2",
+            "name": "DINOv2-small 线性探针",
+            "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+          },
+          "samples": [
+            {
+              "id": "B-20150708-0805-10",
+              "dataset": "cnrpark",
+              "camera": "B",
+              "slot": "10",
+              "source_time": "20150708 0805",
+              "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+              "split": "test",
+              "image": "images/B-20150708-0805-10.jpg",
+              "source_sha256": "2edffdd1e757759c5a1b2a5705d6afbec4749ff86b8732b5d8036fdf047202ea",
+              "predicted_occupied_score": 0.00016564429864364557,
+              "calibrated_occupied_score": 0.00007254893195619312,
+              "audit": false,
+              "prediction": 0,
+              "review_state": "uncertain",
+              "dataset_label": 0
+            }
+          ],
+          "sample_count": 52,
+          "failures": [
+            {
+              "id": "B-20150708-0805-1",
+              "error": "图片读取失败 (500)"
+            }
+          ],
+          "failures_by_model": {
+            "mlp32": [],
+            "mobilenet": [],
+            "dinov2": [
+              {
+                "id": "B-20150708-0805-1",
+                "error": "图片读取失败 (500)"
+              }
+            ]
+          },
+          "evidence_failures": [],
+          "frame_summary": {
+            "total": 53,
+            "free": 0,
+            "busy": 0,
+            "uncertain": 52,
+            "pending": 1
+          },
+          "unanalysed_sample_ids": [
+            "B-20150708-0805-1"
+          ]
+        },
+        "ui": {
+          "model": "dinov2",
+          "tile": "B:1读取失败—需补证据",
+          "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05模型DINOv2-small 线性探针校准后占用概率未运行模型自动判定未校准 · 全部送人工数据分区B 视角 · 开发比较温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。模型输入读取失败，仍计入未分析；可重新分析重试。",
+          "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+        },
+        "injected_requests": 1
+      }
+    },
+    {
+      "name": "switching to successful or unused models does not inherit another model error",
+      "passed": true,
+      "evidence": {
+        "mlp": {
+          "export": {
+            "model": {
+              "key": "mlp32",
+              "name": "MLP32",
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b"
+            },
+            "samples": [
+              {
+                "id": "B-20150708-0805-1",
+                "dataset": "cnrpark",
+                "camera": "B",
+                "slot": "1",
+                "source_time": "20150708 0805",
+                "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+                "split": "test",
+                "image": "images/B-20150708-0805-1.jpg",
+                "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+                "predicted_occupied_score": 0.028534001165953025,
+                "prediction": 0,
+                "review_state": "free",
+                "dataset_label": 0
+              },
+              {
+                "id": "B-20150708-0805-10",
+                "dataset": "cnrpark",
+                "camera": "B",
+                "slot": "10",
+                "source_time": "20150708 0805",
+                "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+                "split": "test",
+                "image": "images/B-20150708-0805-10.jpg",
+                "source_sha256": "2edffdd1e757759c5a1b2a5705d6afbec4749ff86b8732b5d8036fdf047202ea",
+                "predicted_occupied_score": 0.0033581298101084886,
+                "prediction": 0,
+                "review_state": "free",
+                "dataset_label": 0
+              }
+            ],
+            "sample_count": 53,
+            "failures": [],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": [
+                {
+                  "id": "B-20150708-0805-1",
+                  "error": "图片读取失败 (500)"
+                }
+              ]
+            },
+            "evidence_failures": [],
+            "frame_summary": {
+              "total": 53,
+              "free": 39,
+              "busy": 13,
+              "uncertain": 1,
+              "pending": 0
+            },
+            "unanalysed_sample_ids": []
+          },
+          "ui": {
+            "model": "mlp32",
+            "tile": "B:1空闲2.9% 占用需补证据",
+            "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1空闲原始采样时间2015/07/08 08:05占用分数2.85%数据分区B 视角 · 开发比较分数未做概率校准，低分空闲也可能漏掉占用车辆。模型输出、数据标注与人工结论分别保留。",
+            "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+          }
+        },
+        "unused_mobilenet": {
+          "export": {
+            "model": {
+              "key": "mobilenet",
+              "name": "MobileNetV2 迁移头",
+              "model_sha256": "6c007e73b6899dd1a2e40449a37117efafdd2c83467c8d8d78cd999b551ca79b"
+            },
+            "samples": [],
+            "sample_count": 0,
+            "failures": [],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": [
+                {
+                  "id": "B-20150708-0805-1",
+                  "error": "图片读取失败 (500)"
+                }
+              ]
+            },
+            "evidence_failures": [],
+            "frame_summary": {
+              "total": 53,
+              "free": 0,
+              "busy": 0,
+              "uncertain": 0,
+              "pending": 53
+            },
+            "unanalysed_sample_ids": [
+              "B-20150708-0805-1",
+              "B-20150708-0805-10",
+              "B-20150708-0805-11",
+              "B-20150708-0805-12",
+              "B-20150708-0805-13",
+              "B-20150708-0805-14",
+              "B-20150708-0805-15",
+              "B-20150708-0805-16",
+              "B-20150708-0805-17",
+              "B-20150708-0805-18",
+              "B-20150708-0805-19",
+              "B-20150708-0805-2",
+              "B-20150708-0805-20",
+              "B-20150708-0805-21",
+              "B-20150708-0805-22",
+              "B-20150708-0805-23",
+              "B-20150708-0805-24",
+              "B-20150708-0805-25",
+              "B-20150708-0805-26",
+              "B-20150708-0805-27",
+              "B-20150708-0805-28",
+              "B-20150708-0805-29",
+              "B-20150708-0805-3",
+              "B-20150708-0805-30",
+              "B-20150708-0805-31",
+              "B-20150708-0805-32",
+              "B-20150708-0805-33",
+              "B-20150708-0805-34",
+              "B-20150708-0805-35",
+              "B-20150708-0805-36",
+              "B-20150708-0805-37",
+              "B-20150708-0805-38",
+              "B-20150708-0805-39",
+              "B-20150708-0805-4",
+              "B-20150708-0805-40",
+              "B-20150708-0805-41",
+              "B-20150708-0805-42",
+              "B-20150708-0805-43",
+              "B-20150708-0805-44",
+              "B-20150708-0805-45",
+              "B-20150708-0805-46",
+              "B-20150708-0805-47",
+              "B-20150708-0805-48",
+              "B-20150708-0805-49",
+              "B-20150708-0805-5",
+              "B-20150708-0805-50",
+              "B-20150708-0805-51",
+              "B-20150708-0805-52",
+              "B-20150708-0805-53",
+              "B-20150708-0805-6",
+              "B-20150708-0805-7",
+              "B-20150708-0805-8",
+              "B-20150708-0805-9"
+            ]
+          },
+          "ui": {
+            "model": "mobilenet",
+            "tile": "B:1未分析—需补证据",
+            "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05模型MobileNetV2 迁移头校准后占用概率未运行模型自动判定未校准 · 全部送人工数据分区B 视角 · 开发比较温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。",
+            "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+          }
+        }
+      }
+    },
+    {
+      "name": "successful MLP32 retry cannot erase the unresolved DINOv2 error",
+      "passed": true,
+      "evidence": {
+        "export": {
+          "model": {
+            "key": "dinov2",
+            "name": "DINOv2-small 线性探针",
+            "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+          },
+          "samples": [
+            {
+              "id": "B-20150708-0805-10",
+              "dataset": "cnrpark",
+              "camera": "B",
+              "slot": "10",
+              "source_time": "20150708 0805",
+              "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+              "split": "test",
+              "image": "images/B-20150708-0805-10.jpg",
+              "source_sha256": "2edffdd1e757759c5a1b2a5705d6afbec4749ff86b8732b5d8036fdf047202ea",
+              "predicted_occupied_score": 0.00016564429864364557,
+              "calibrated_occupied_score": 0.00007254893195619312,
+              "audit": false,
+              "prediction": 0,
+              "review_state": "uncertain",
+              "dataset_label": 0
+            }
+          ],
+          "sample_count": 52,
+          "failures": [
+            {
+              "id": "B-20150708-0805-1",
+              "error": "图片读取失败 (500)"
+            }
+          ],
+          "failures_by_model": {
+            "mlp32": [],
+            "mobilenet": [],
+            "dinov2": [
+              {
+                "id": "B-20150708-0805-1",
+                "error": "图片读取失败 (500)"
+              }
+            ]
+          },
+          "evidence_failures": [],
+          "frame_summary": {
+            "total": 53,
+            "free": 0,
+            "busy": 0,
+            "uncertain": 52,
+            "pending": 1
+          },
+          "unanalysed_sample_ids": [
+            "B-20150708-0805-1"
+          ]
+        },
+        "ui": {
+          "model": "dinov2",
+          "tile": "B:1读取失败—需补证据",
+          "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05模型DINOv2-small 线性探针校准后占用概率未运行模型自动判定未校准 · 全部送人工数据分区B 视角 · 开发比较温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。模型输入读取失败，仍计入未分析；可重新分析重试。",
+          "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+        }
+      }
+    },
+    {
+      "name": "simultaneous failures retain separate model and sample identities",
+      "passed": true,
+      "evidence": {
+        "export": {
+          "model": {
+            "key": "mlp32",
+            "name": "MLP32",
+            "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b"
+          },
+          "samples": [
+            {
+              "id": "B-20150708-0805-1",
+              "dataset": "cnrpark",
+              "camera": "B",
+              "slot": "1",
+              "source_time": "20150708 0805",
+              "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+              "split": "test",
+              "image": "images/B-20150708-0805-1.jpg",
+              "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+              "predicted_occupied_score": 0.028534001165953025,
+              "prediction": 0,
+              "review_state": "free",
+              "dataset_label": 0
+            }
+          ],
+          "sample_count": 52,
+          "failures": [
+            {
+              "id": "B-20150708-0805-10",
+              "error": "The source image cannot be decoded."
+            }
+          ],
+          "failures_by_model": {
+            "mlp32": [
+              {
+                "id": "B-20150708-0805-10",
+                "error": "The source image cannot be decoded."
+              }
+            ],
+            "mobilenet": [],
+            "dinov2": [
+              {
+                "id": "B-20150708-0805-1",
+                "error": "图片读取失败 (500)"
+              }
+            ]
+          },
+          "evidence_failures": [],
+          "frame_summary": {
+            "total": 53,
+            "free": 38,
+            "busy": 13,
+            "uncertain": 1,
+            "pending": 1
+          },
+          "unanalysed_sample_ids": [
+            "B-20150708-0805-10"
+          ]
+        },
+        "injected_mlp_requests": 1
+      }
+    },
+    {
+      "name": "actual DINOv2 recovery clears only its own error while MLP32 remains failed",
+      "passed": true,
+      "evidence": {
+        "dino": {
+          "model": {
+            "key": "dinov2",
+            "name": "DINOv2-small 线性探针",
+            "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+          },
+          "samples": [
+            {
+              "id": "B-20150708-0805-10",
+              "dataset": "cnrpark",
+              "camera": "B",
+              "slot": "10",
+              "source_time": "20150708 0805",
+              "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+              "split": "test",
+              "image": "images/B-20150708-0805-10.jpg",
+              "source_sha256": "2edffdd1e757759c5a1b2a5705d6afbec4749ff86b8732b5d8036fdf047202ea",
+              "predicted_occupied_score": 0.00016564429864364557,
+              "calibrated_occupied_score": 0.00007254893195619312,
+              "audit": false,
+              "prediction": 0,
+              "review_state": "uncertain",
+              "dataset_label": 0
+            },
+            {
+              "id": "B-20150708-0805-1",
+              "dataset": "cnrpark",
+              "camera": "B",
+              "slot": "1",
+              "source_time": "20150708 0805",
+              "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+              "split": "test",
+              "image": "images/B-20150708-0805-1.jpg",
+              "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+              "predicted_occupied_score": 0.5738718826691331,
+              "calibrated_occupied_score": 0.5807610389047504,
+              "audit": false,
+              "prediction": 1,
+              "review_state": "uncertain",
+              "dataset_label": 0
+            }
+          ],
+          "sample_count": 53,
+          "failures": [],
+          "failures_by_model": {
+            "mlp32": [
+              {
+                "id": "B-20150708-0805-10",
+                "error": "The source image cannot be decoded."
+              }
+            ],
+            "mobilenet": [],
+            "dinov2": []
+          },
+          "evidence_failures": [],
+          "frame_summary": {
+            "total": 53,
+            "free": 0,
+            "busy": 0,
+            "uncertain": 53,
+            "pending": 0
+          },
+          "unanalysed_sample_ids": []
+        },
+        "mlp": {
+          "export": {
+            "model": {
+              "key": "mlp32",
+              "name": "MLP32",
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b"
+            },
+            "samples": [
+              {
+                "id": "B-20150708-0805-1",
+                "dataset": "cnrpark",
+                "camera": "B",
+                "slot": "1",
+                "source_time": "20150708 0805",
+                "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+                "split": "test",
+                "image": "images/B-20150708-0805-1.jpg",
+                "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+                "predicted_occupied_score": 0.028534001165953025,
+                "prediction": 0,
+                "review_state": "free",
+                "dataset_label": 0
+              }
+            ],
+            "sample_count": 52,
+            "failures": [
+              {
+                "id": "B-20150708-0805-10",
+                "error": "The source image cannot be decoded."
+              }
+            ],
+            "failures_by_model": {
+              "mlp32": [
+                {
+                  "id": "B-20150708-0805-10",
+                  "error": "The source image cannot be decoded."
+                }
+              ],
+              "mobilenet": [],
+              "dinov2": []
+            },
+            "evidence_failures": [],
+            "frame_summary": {
+              "total": 53,
+              "free": 38,
+              "busy": 13,
+              "uncertain": 1,
+              "pending": 1
+            },
+            "unanalysed_sample_ids": [
+              "B-20150708-0805-10"
+            ]
+          },
+          "ui": {
+            "model": "mlp32",
+            "tile": "B:10读取失败—未人工复核",
+            "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1空闲原始采样时间2015/07/08 08:05占用分数2.85%数据分区B 视角 · 开发比较分数未做概率校准，低分空闲也可能漏掉占用车辆。模型输出、数据标注与人工结论分别保留。",
+            "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+          }
+        }
+      }
+    },
+    {
+      "name": "model switching preserves saved reviews and the selected sample draft",
+      "passed": true,
+      "evidence": {
+        "draft": {
+          "decision": "uncertain",
+          "note": "尚未保存的第二车位说明，切换模型时应保留。"
+        },
+        "observed": [
+          {
+            "model": "mobilenet",
+            "selected": "B-20150708-0805-10",
+            "decision": "uncertain",
+            "note": "尚未保存的第二车位说明，切换模型时应保留。"
+          },
+          {
+            "model": "dinov2",
+            "selected": "B-20150708-0805-10",
+            "decision": "uncertain",
+            "note": "尚未保存的第二车位说明，切换模型时应保留。"
+          },
+          {
+            "model": "mlp32",
+            "selected": "B-20150708-0805-10",
+            "decision": "uncertain",
+            "note": "尚未保存的第二车位说明，切换模型时应保留。"
+          }
+        ],
+        "reviews": {
+          "B-20150708-0805-1": {
+            "decision": "uncertain",
+            "note": "人工记录：需要现场核查；模型更换不能删除该说明。",
+            "at": "2026-10-25T14:25:17.420Z"
+          },
+          "B-20150708-0805-10": {
+            "decision": "uncertain",
+            "note": "尚未保存的第二车位说明，切换模型时应保留。",
+            "at": "2026-10-25T14:25:28.503Z"
+          }
+        }
+      }
+    },
+    {
+      "name": "fresh handover restores human decisions but never adopts exported predictions or failure state",
+      "passed": true,
+      "evidence": {
+        "source": {
+          "model": {
+            "key": "mlp32",
+            "name": "MLP32",
+            "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b"
+          },
+          "samples": [
+            {
+              "id": "B-20150708-0805-1",
+              "dataset": "cnrpark",
+              "camera": "B",
+              "slot": "1",
+              "source_time": "20150708 0805",
+              "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+              "split": "test",
+              "image": "images/B-20150708-0805-1.jpg",
+              "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+              "predicted_occupied_score": 0.028534001165953025,
+              "prediction": 0,
+              "review_state": "free",
+              "dataset_label": 0
+            }
+          ],
+          "sample_count": 52,
+          "failures": [
+            {
+              "id": "B-20150708-0805-10",
+              "error": "The source image cannot be decoded."
+            }
+          ],
+          "failures_by_model": {
+            "mlp32": [
+              {
+                "id": "B-20150708-0805-10",
+                "error": "The source image cannot be decoded."
+              }
+            ],
+            "mobilenet": [],
+            "dinov2": []
+          },
+          "evidence_failures": [],
+          "frame_summary": {
+            "total": 53,
+            "free": 38,
+            "busy": 13,
+            "uncertain": 1,
+            "pending": 1
+          },
+          "unanalysed_sample_ids": [
+            "B-20150708-0805-10"
+          ]
+        },
+        "restored": {
+          "model": {
+            "key": "mlp32",
+            "name": "MLP32",
+            "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b"
+          },
+          "samples": [],
+          "sample_count": 0,
+          "failures": [],
+          "failures_by_model": {
+            "mlp32": [],
+            "mobilenet": [],
+            "dinov2": []
+          },
+          "evidence_failures": [],
+          "frame_summary": {
+            "total": 53,
+            "free": 0,
+            "busy": 0,
+            "uncertain": 0,
+            "pending": 53
+          },
+          "unanalysed_sample_ids": [
+            "B-20150708-0805-1",
+            "B-20150708-0805-10",
+            "B-20150708-0805-11",
+            "B-20150708-0805-12",
+            "B-20150708-0805-13",
+            "B-20150708-0805-14",
+            "B-20150708-0805-15",
+            "B-20150708-0805-16",
+            "B-20150708-0805-17",
+            "B-20150708-0805-18",
+            "B-20150708-0805-19",
+            "B-20150708-0805-2",
+            "B-20150708-0805-20",
+            "B-20150708-0805-21",
+            "B-20150708-0805-22",
+            "B-20150708-0805-23",
+            "B-20150708-0805-24",
+            "B-20150708-0805-25",
+            "B-20150708-0805-26",
+            "B-20150708-0805-27",
+            "B-20150708-0805-28",
+            "B-20150708-0805-29",
+            "B-20150708-0805-3",
+            "B-20150708-0805-30",
+            "B-20150708-0805-31",
+            "B-20150708-0805-32",
+            "B-20150708-0805-33",
+            "B-20150708-0805-34",
+            "B-20150708-0805-35",
+            "B-20150708-0805-36",
+            "B-20150708-0805-37",
+            "B-20150708-0805-38",
+            "B-20150708-0805-39",
+            "B-20150708-0805-4",
+            "B-20150708-0805-40",
+            "B-20150708-0805-41",
+            "B-20150708-0805-42",
+            "B-20150708-0805-43",
+            "B-20150708-0805-44",
+            "B-20150708-0805-45",
+            "B-20150708-0805-46",
+            "B-20150708-0805-47",
+            "B-20150708-0805-48",
+            "B-20150708-0805-49",
+            "B-20150708-0805-5",
+            "B-20150708-0805-50",
+            "B-20150708-0805-51",
+            "B-20150708-0805-52",
+            "B-20150708-0805-53",
+            "B-20150708-0805-6",
+            "B-20150708-0805-7",
+            "B-20150708-0805-8",
+            "B-20150708-0805-9"
+          ]
+        },
+        "ui": {
+          "model": "mlp32",
+          "tile": "B:10未分析—需补证据",
+          "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 10未分析原始采样时间2015/07/08 08:05占用分数未运行模型数据分区B 视角 · 开发比较分数未做概率校准，低分空闲也可能漏掉占用车辆。模型输出、数据标注与人工结论分别保留。",
+          "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+        },
+        "reviews": {
+          "B-20150708-0805-1": {
+            "decision": "uncertain",
+            "note": "人工记录：需要现场核查；模型更换不能删除该说明。",
+            "at": "2026-10-25T14:25:17.420Z"
+          },
+          "B-20150708-0805-10": {
+            "decision": "uncertain",
+            "note": "尚未保存的第二车位说明，切换模型时应保留。",
+            "at": "2026-10-25T14:25:28.503Z"
+          }
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "sample_ids": {
+    "dino_fault": "B-20150708-0805-1",
+    "mlp_fault": "B-20150708-0805-10"
+  },
+  "finished_at": "2026-10-25T14:25:29.059Z",
+  "passed": 8,
+  "failed": 0,
+  "ok": true
+}

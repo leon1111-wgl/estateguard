@@ -1,0 +1,223 @@
+{
+  "at": "2026-10-25T14:23:05.577Z",
+  "base": "http://127.0.0.1:8768",
+  "baseline_commit": "3ba5132",
+  "fault": "Only DINOv2 fetch for one existing public image returns HTTP500; image element requests and model output are unchanged.",
+  "steps": {
+    "mlp_success": {
+      "ui": {
+        "model": "mlp32",
+        "tile": "B:1空闲2.9% 占用未人工复核",
+        "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1空闲原始采样时间2015/07/08 08:05占用分数2.85%数据分区B 视角 · 开发比较分数未做概率校准，低分空闲也可能漏掉占用车辆。模型输出、数据标注与人工结论分别保留。",
+        "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+      },
+      "export": {
+        "model": {
+          "key": "mlp32",
+          "name": "MLP32",
+          "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b"
+        },
+        "sample": {
+          "id": "B-20150708-0805-1",
+          "dataset": "cnrpark",
+          "camera": "B",
+          "slot": "1",
+          "source_time": "20150708 0805",
+          "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+          "split": "test",
+          "image": "images/B-20150708-0805-1.jpg",
+          "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+          "predicted_occupied_score": 0.028534001165953025,
+          "prediction": 0,
+          "review_state": "free",
+          "dataset_label": 0
+        },
+        "sample_count": 53,
+        "failures": [],
+        "evidence_failures": [],
+        "frame_summary": {
+          "total": 53,
+          "free": 39,
+          "busy": 13,
+          "uncertain": 1,
+          "pending": 0
+        },
+        "unanalysed_sample_ids": []
+      }
+    },
+    "dino_failure": {
+      "ui": {
+        "model": "dinov2",
+        "tile": "B:1读取失败—未人工复核",
+        "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05模型DINOv2-small 线性探针校准后占用概率未运行模型自动判定未校准 · 全部送人工数据分区B 视角 · 开发比较温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。模型输入读取失败，仍计入未分析；可重新分析重试。",
+        "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+      },
+      "export": {
+        "model": {
+          "key": "dinov2",
+          "name": "DINOv2-small 线性探针",
+          "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+        },
+        "sample": null,
+        "sample_count": 52,
+        "failures": [
+          {
+            "id": "B-20150708-0805-1",
+            "error": "图片读取失败 (500)"
+          }
+        ],
+        "evidence_failures": [],
+        "frame_summary": {
+          "total": 53,
+          "free": 0,
+          "busy": 0,
+          "uncertain": 52,
+          "pending": 1
+        },
+        "unanalysed_sample_ids": [
+          "B-20150708-0805-1"
+        ]
+      },
+      "injected_requests": 1
+    },
+    "switch_back_without_running": {
+      "ui": {
+        "model": "mlp32",
+        "tile": "B:1读取失败2.9% 占用未人工复核",
+        "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1空闲原始采样时间2015/07/08 08:05占用分数2.85%数据分区B 视角 · 开发比较分数未做概率校准，低分空闲也可能漏掉占用车辆。模型输出、数据标注与人工结论分别保留。模型输入读取失败，仍计入未分析；可重新分析重试。",
+        "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+      },
+      "export": {
+        "model": {
+          "key": "mlp32",
+          "name": "MLP32",
+          "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b"
+        },
+        "sample": {
+          "id": "B-20150708-0805-1",
+          "dataset": "cnrpark",
+          "camera": "B",
+          "slot": "1",
+          "source_time": "20150708 0805",
+          "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+          "split": "test",
+          "image": "images/B-20150708-0805-1.jpg",
+          "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+          "predicted_occupied_score": 0.028534001165953025,
+          "prediction": 0,
+          "review_state": "free",
+          "dataset_label": 0
+        },
+        "sample_count": 53,
+        "failures": [
+          {
+            "id": "B-20150708-0805-1",
+            "error": "图片读取失败 (500)"
+          }
+        ],
+        "evidence_failures": [],
+        "frame_summary": {
+          "total": 53,
+          "free": 39,
+          "busy": 13,
+          "uncertain": 1,
+          "pending": 0
+        },
+        "unanalysed_sample_ids": []
+      }
+    },
+    "other_model_success_erases_error": {
+      "ui": {
+        "model": "dinov2",
+        "tile": "B:1未分析—未人工复核",
+        "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1未分析原始采样时间2015/07/08 08:05模型DINOv2-small 线性探针校准后占用概率未运行模型自动判定未校准 · 全部送人工数据分区B 视角 · 开发比较温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。",
+        "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+      },
+      "export": {
+        "model": {
+          "key": "dinov2",
+          "name": "DINOv2-small 线性探针",
+          "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+        },
+        "sample": null,
+        "sample_count": 52,
+        "failures": [],
+        "evidence_failures": [],
+        "frame_summary": {
+          "total": 53,
+          "free": 0,
+          "busy": 0,
+          "uncertain": 52,
+          "pending": 1
+        },
+        "unanalysed_sample_ids": [
+          "B-20150708-0805-1"
+        ]
+      }
+    },
+    "dino_actual_retry": {
+      "ui": {
+        "model": "dinov2",
+        "tile": "B:1需人工复核58.1% 占用未人工复核",
+        "detail": "复核原图已载入，请结合画面填写人工结论。重试原图摄像头 B · 车位 1需人工复核原始采样时间2015/07/08 08:05模型DINOv2-small 线性探针校准后占用概率58.08%（未校准分数 57.39%）自动判定未校准 · 全部送人工数据分区B 视角 · 开发比较温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。",
+        "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。"
+      },
+      "export": {
+        "model": {
+          "key": "dinov2",
+          "name": "DINOv2-small 线性探针",
+          "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+        },
+        "sample": {
+          "id": "B-20150708-0805-1",
+          "dataset": "cnrpark",
+          "camera": "B",
+          "slot": "1",
+          "source_time": "20150708 0805",
+          "source_timezone": "Source local wall-clock, timezone not declared; not converted to UTC+8",
+          "split": "test",
+          "image": "images/B-20150708-0805-1.jpg",
+          "source_sha256": "d1382236887817b94b82e96c575a002c936388ea222875213ae16de038f0b4bf",
+          "predicted_occupied_score": 0.5738718826691331,
+          "calibrated_occupied_score": 0.5807610389047504,
+          "audit": false,
+          "prediction": 1,
+          "review_state": "uncertain",
+          "dataset_label": 0
+        },
+        "sample_count": 53,
+        "failures": [],
+        "evidence_failures": [],
+        "frame_summary": {
+          "total": 53,
+          "free": 0,
+          "busy": 0,
+          "uncertain": 53,
+          "pending": 0
+        },
+        "unanalysed_sample_ids": []
+      }
+    }
+  },
+  "page_errors": [],
+  "external_requests": [],
+  "sample_id": "B-20150708-0805-1",
+  "findings": {
+    "wrong_model_marked_failed": true,
+    "failed_model_error_lost": true
+  },
+  "checks": [
+    {
+      "name": "another model failure cannot mark successful MLP32 failed",
+      "passed": false
+    },
+    {
+      "name": "successful MLP32 retry cannot erase DINOv2 failure",
+      "passed": false
+    }
+  ],
+  "passed": 0,
+  "failed": 2,
+  "ok": false,
+  "finished_at": "2026-10-25T14:23:17.978Z"
+}

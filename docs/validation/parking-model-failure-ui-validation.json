@@ -1,0 +1,584 @@
+{
+  "mode": "after",
+  "base": "http://127.0.0.1:8768",
+  "module_sha256": "62568d175fa5425f6d48e4eb38a210fbd626cb715c966a74f0eb26a7afbd20b1",
+  "scope": "Real published CNRPark crops and actual MLP32/DINOv2 inference; explicit HTTP500 only for one DINO input. No model output mocking, no field accuracy claim.",
+  "widths": [
+    {
+      "width": 1440,
+      "id": "B-20150708-0805-1",
+      "steps": {
+        "initial": {
+          "key": "mlp32",
+          "count": 53,
+          "score": 0.028534001165953025,
+          "failures": [],
+          "failures_by_model": {
+            "mlp32": [],
+            "mobilenet": [],
+            "dinov2": []
+          },
+          "pending": 0,
+          "unanalysed": [],
+          "reviews": {}
+        },
+        "dino_failure": {
+          "ui": {
+            "model": "dinov2",
+            "tile": "B:1\n读取失败\n—\n未人工复核",
+            "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n未分析\n原始采样时间\n2015/07/08 08:05\n模型\nDINOv2-small 线性探针\n校准后占用概率\n未运行模型\n自动判定\n未校准 · 全部送人工\n数据分区\nB 视角 · 开发比较\n\n温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。\n\n模型输入读取失败，仍计入未分析；可重新分析重试。",
+            "message": "当前快照分析完成（2015/07/08 08:05 · DINOv2-small 线性探针）：52 / 53 个车位，4689 ms（含图片读取，约 88 ms/个）；编码器加载 363 ms。读取失败项保留为未分析，可重试。",
+            "metrics": "53\n当前快照车位\n0\n自动判空闲\n0\n自动判占用\n52 / 1\n需人工复核 / 未分析",
+            "overflow": {
+              "scrollWidth": 1440,
+              "width": 1440
+            },
+            "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+            "note": "",
+            "decision": "pending",
+            "evidence": {
+              "id": "B-20150708-0805-1",
+              "loaded": true,
+              "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+            }
+          },
+          "export": {
+            "key": "dinov2",
+            "count": 52,
+            "score": null,
+            "failures": [
+              {
+                "id": "B-20150708-0805-1",
+                "error": "图片读取失败 (500)"
+              }
+            ],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": [
+                {
+                  "id": "B-20150708-0805-1",
+                  "error": "图片读取失败 (500)"
+                }
+              ]
+            },
+            "pending": 1,
+            "unanalysed": [
+              "B-20150708-0805-1"
+            ],
+            "reviews": {}
+          },
+          "faultCount": 1
+        },
+        "mlp_return": {
+          "ui": {
+            "model": "mlp32",
+            "tile": "B:1\n空闲\n2.9% 占用\n未人工复核",
+            "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n空闲\n原始采样时间\n2015/07/08 08:05\n占用分数\n2.85%\n数据分区\nB 视角 · 开发比较\n\n分数未做概率校准，低分空闲也可能漏掉占用车辆。模型输出、数据标注与人工结论分别保留。",
+            "message": "已切换到 MLP32 基线。当前快照已有 53 个该模型的结果。各模型结果分别保留，人工结论不受影响。",
+            "metrics": "53\n当前快照车位\n39\n模型预测空闲\n13\n模型预测占用\n1 / 0\n模型不确定 / 未分析",
+            "overflow": {
+              "scrollWidth": 1440,
+              "width": 1440
+            },
+            "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+            "note": "",
+            "decision": "pending",
+            "evidence": {
+              "id": "B-20150708-0805-1",
+              "loaded": true,
+              "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+            }
+          },
+          "export": {
+            "key": "mlp32",
+            "count": 53,
+            "score": 0.028534001165953025,
+            "failures": [],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": [
+                {
+                  "id": "B-20150708-0805-1",
+                  "error": "图片读取失败 (500)"
+                }
+              ]
+            },
+            "pending": 0,
+            "unanalysed": [],
+            "reviews": {}
+          }
+        },
+        "dino_return": {
+          "ui": {
+            "model": "dinov2",
+            "tile": "B:1\n读取失败\n—\n未人工复核",
+            "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n未分析\n原始采样时间\n2015/07/08 08:05\n模型\nDINOv2-small 线性探针\n校准后占用概率\n未运行模型\n自动判定\n未校准 · 全部送人工\n数据分区\nB 视角 · 开发比较\n\n温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。\n\n模型输入读取失败，仍计入未分析；可重新分析重试。",
+            "message": "已切换到 DINOv2-small 线性探针。当前快照已有 52 个该模型的结果。各模型结果分别保留，人工结论不受影响。",
+            "metrics": "53\n当前快照车位\n0\n自动判空闲\n0\n自动判占用\n52 / 1\n需人工复核 / 未分析",
+            "overflow": {
+              "scrollWidth": 1440,
+              "width": 1440
+            },
+            "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+            "note": "",
+            "decision": "pending",
+            "evidence": {
+              "id": "B-20150708-0805-1",
+              "loaded": true,
+              "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+            }
+          },
+          "export": {
+            "key": "dinov2",
+            "count": 52,
+            "score": null,
+            "failures": [
+              {
+                "id": "B-20150708-0805-1",
+                "error": "图片读取失败 (500)"
+              }
+            ],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": [
+                {
+                  "id": "B-20150708-0805-1",
+                  "error": "图片读取失败 (500)"
+                }
+              ]
+            },
+            "pending": 1,
+            "unanalysed": [
+              "B-20150708-0805-1"
+            ],
+            "reviews": {}
+          }
+        },
+        "draft_after_switch": {
+          "model": "dinov2",
+          "tile": "B:1\n读取失败\n—\n未人工复核",
+          "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n未分析\n原始采样时间\n2015/07/08 08:05\n模型\nDINOv2-small 线性探针\n校准后占用概率\n未运行模型\n自动判定\n未校准 · 全部送人工\n数据分区\nB 视角 · 开发比较\n\n温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。\n\n模型输入读取失败，仍计入未分析；可重新分析重试。",
+          "message": "已切换到 DINOv2-small 线性探针。当前快照已有 52 个该模型的结果。各模型结果分别保留，人工结论不受影响。",
+          "metrics": "53\n当前快照车位\n0\n自动判空闲\n0\n自动判占用\n52 / 1\n需人工复核 / 未分析",
+          "overflow": {
+            "scrollWidth": 1440,
+            "width": 1440
+          },
+          "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "保留此车位的人工草稿：等待模型重试，与数据集标注分开。",
+          "decision": "uncertain",
+          "evidence": {
+            "id": "B-20150708-0805-1",
+            "loaded": true,
+            "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+          }
+        },
+        "recovered": {
+          "ui": {
+            "model": "dinov2",
+            "tile": "B:1\n需人工复核\n58.1% 占用\n需补证据",
+            "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n需人工复核\n原始采样时间\n2015/07/08 08:05\n模型\nDINOv2-small 线性探针\n校准后占用概率\n58.08%（未校准分数 57.39%）\n自动判定\n未校准 · 全部送人工\n数据分区\nB 视角 · 开发比较\n\n温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。",
+            "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+            "metrics": "53\n当前快照车位\n0\n自动判空闲\n0\n自动判占用\n53 / 0\n需人工复核 / 未分析",
+            "overflow": {
+              "scrollWidth": 1440,
+              "width": 1440
+            },
+            "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+            "note": "保留此车位的人工草稿：等待模型重试，与数据集标注分开。",
+            "decision": "uncertain",
+            "evidence": {
+              "id": "B-20150708-0805-1",
+              "loaded": true,
+              "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+            }
+          },
+          "export": {
+            "key": "dinov2",
+            "count": 53,
+            "score": 0.5738718826691331,
+            "failures": [],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": []
+            },
+            "pending": 0,
+            "unanalysed": [],
+            "reviews": {
+              "B-20150708-0805-1": {
+                "decision": "uncertain",
+                "note": "保留此车位的人工草稿：等待模型重试，与数据集标注分开。",
+                "at": "2026-10-25T14:25:45.198Z"
+              }
+            }
+          }
+        },
+        "review_saved": {
+          "key": "dinov2",
+          "count": 53,
+          "score": 0.5738718826691331,
+          "failures": [],
+          "failures_by_model": {
+            "mlp32": [],
+            "mobilenet": [],
+            "dinov2": []
+          },
+          "pending": 0,
+          "unanalysed": [],
+          "reviews": {
+            "B-20150708-0805-1": {
+              "decision": "free",
+              "note": "界面回归：公开历史车位图可见，仅记录本图占用复核。",
+              "at": "2026-10-25T14:25:50.133Z"
+            }
+          }
+        }
+      },
+      "checks": [
+        {
+          "name": "MLP real predictions complete before fault",
+          "passed": true
+        },
+        {
+          "name": "DINO injected single failure leaves 52 predictions",
+          "passed": true
+        },
+        {
+          "name": "MLP successful prediction not marked failed",
+          "passed": true
+        },
+        {
+          "name": "DINO failure retained after MLP rerun",
+          "passed": true
+        },
+        {
+          "name": "No horizontal document overflow",
+          "passed": true
+        },
+        {
+          "name": "Model switch retains human draft and correct loaded crop",
+          "passed": true
+        },
+        {
+          "name": "Input failure still permits evidence-based human note export",
+          "passed": true
+        },
+        {
+          "name": "Export separates failure models",
+          "passed": true
+        },
+        {
+          "name": "DINO actual retry recovers all 53 and clears its error",
+          "passed": true
+        },
+        {
+          "name": "Human review remains separate and exportable",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "artifacts/parking-model-state-designer-after-20261025-mlp-return-1440.png",
+        "artifacts/parking-model-state-designer-after-20261025-mlp-return-full-1440.png",
+        "artifacts/parking-model-state-designer-after-20261025-dino-return-1440.png",
+        "artifacts/parking-model-state-designer-after-20261025-dino-return-full-1440.png",
+        "artifacts/parking-model-state-designer-after-20261025-recovered-review-1440.png",
+        "artifacts/parking-model-state-designer-after-20261025-recovered-review-full-1440.png"
+      ]
+    },
+    {
+      "width": 390,
+      "id": "B-20150708-0805-1",
+      "steps": {
+        "initial": {
+          "key": "mlp32",
+          "count": 53,
+          "score": 0.028534001165953025,
+          "failures": [],
+          "failures_by_model": {
+            "mlp32": [],
+            "mobilenet": [],
+            "dinov2": []
+          },
+          "pending": 0,
+          "unanalysed": [],
+          "reviews": {}
+        },
+        "dino_failure": {
+          "ui": {
+            "model": "dinov2",
+            "tile": "B:1\n读取失败\n—\n未人工复核",
+            "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n未分析\n原始采样时间\n2015/07/08 08:05\n模型\nDINOv2-small 线性探针\n校准后占用概率\n未运行模型\n自动判定\n未校准 · 全部送人工\n数据分区\nB 视角 · 开发比较\n\n温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。\n\n模型输入读取失败，仍计入未分析；可重新分析重试。",
+            "message": "当前快照分析完成（2015/07/08 08:05 · DINOv2-small 线性探针）：52 / 53 个车位，4620 ms（含图片读取，约 87 ms/个）；编码器加载 350 ms。读取失败项保留为未分析，可重试。",
+            "metrics": "53\n当前快照车位\n0\n自动判空闲\n0\n自动判占用\n52 / 1\n需人工复核 / 未分析",
+            "overflow": {
+              "scrollWidth": 390,
+              "width": 390
+            },
+            "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+            "note": "",
+            "decision": "pending",
+            "evidence": {
+              "id": "B-20150708-0805-1",
+              "loaded": true,
+              "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+            }
+          },
+          "export": {
+            "key": "dinov2",
+            "count": 52,
+            "score": null,
+            "failures": [
+              {
+                "id": "B-20150708-0805-1",
+                "error": "图片读取失败 (500)"
+              }
+            ],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": [
+                {
+                  "id": "B-20150708-0805-1",
+                  "error": "图片读取失败 (500)"
+                }
+              ]
+            },
+            "pending": 1,
+            "unanalysed": [
+              "B-20150708-0805-1"
+            ],
+            "reviews": {}
+          },
+          "faultCount": 1
+        },
+        "mlp_return": {
+          "ui": {
+            "model": "mlp32",
+            "tile": "B:1\n空闲\n2.9% 占用\n未人工复核",
+            "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n空闲\n原始采样时间\n2015/07/08 08:05\n占用分数\n2.85%\n数据分区\nB 视角 · 开发比较\n\n分数未做概率校准，低分空闲也可能漏掉占用车辆。模型输出、数据标注与人工结论分别保留。",
+            "message": "已切换到 MLP32 基线。当前快照已有 53 个该模型的结果。各模型结果分别保留，人工结论不受影响。",
+            "metrics": "53\n当前快照车位\n39\n模型预测空闲\n13\n模型预测占用\n1 / 0\n模型不确定 / 未分析",
+            "overflow": {
+              "scrollWidth": 390,
+              "width": 390
+            },
+            "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+            "note": "",
+            "decision": "pending",
+            "evidence": {
+              "id": "B-20150708-0805-1",
+              "loaded": true,
+              "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+            }
+          },
+          "export": {
+            "key": "mlp32",
+            "count": 53,
+            "score": 0.028534001165953025,
+            "failures": [],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": [
+                {
+                  "id": "B-20150708-0805-1",
+                  "error": "图片读取失败 (500)"
+                }
+              ]
+            },
+            "pending": 0,
+            "unanalysed": [],
+            "reviews": {}
+          }
+        },
+        "dino_return": {
+          "ui": {
+            "model": "dinov2",
+            "tile": "B:1\n读取失败\n—\n未人工复核",
+            "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n未分析\n原始采样时间\n2015/07/08 08:05\n模型\nDINOv2-small 线性探针\n校准后占用概率\n未运行模型\n自动判定\n未校准 · 全部送人工\n数据分区\nB 视角 · 开发比较\n\n温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。\n\n模型输入读取失败，仍计入未分析；可重新分析重试。",
+            "message": "已切换到 DINOv2-small 线性探针。当前快照已有 52 个该模型的结果。各模型结果分别保留，人工结论不受影响。",
+            "metrics": "53\n当前快照车位\n0\n自动判空闲\n0\n自动判占用\n52 / 1\n需人工复核 / 未分析",
+            "overflow": {
+              "scrollWidth": 390,
+              "width": 390
+            },
+            "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+            "note": "",
+            "decision": "pending",
+            "evidence": {
+              "id": "B-20150708-0805-1",
+              "loaded": true,
+              "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+            }
+          },
+          "export": {
+            "key": "dinov2",
+            "count": 52,
+            "score": null,
+            "failures": [
+              {
+                "id": "B-20150708-0805-1",
+                "error": "图片读取失败 (500)"
+              }
+            ],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": [
+                {
+                  "id": "B-20150708-0805-1",
+                  "error": "图片读取失败 (500)"
+                }
+              ]
+            },
+            "pending": 1,
+            "unanalysed": [
+              "B-20150708-0805-1"
+            ],
+            "reviews": {}
+          }
+        },
+        "draft_after_switch": {
+          "model": "dinov2",
+          "tile": "B:1\n读取失败\n—\n未人工复核",
+          "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n未分析\n原始采样时间\n2015/07/08 08:05\n模型\nDINOv2-small 线性探针\n校准后占用概率\n未运行模型\n自动判定\n未校准 · 全部送人工\n数据分区\nB 视角 · 开发比较\n\n温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。\n\n模型输入读取失败，仍计入未分析；可重新分析重试。",
+          "message": "已切换到 DINOv2-small 线性探针。当前快照已有 52 个该模型的结果。各模型结果分别保留，人工结论不受影响。",
+          "metrics": "53\n当前快照车位\n0\n自动判空闲\n0\n自动判占用\n52 / 1\n需人工复核 / 未分析",
+          "overflow": {
+            "scrollWidth": 390,
+            "width": 390
+          },
+          "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 0）",
+          "note": "保留此车位的人工草稿：等待模型重试，与数据集标注分开。",
+          "decision": "uncertain",
+          "evidence": {
+            "id": "B-20150708-0805-1",
+            "loaded": true,
+            "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+          }
+        },
+        "recovered": {
+          "ui": {
+            "model": "dinov2",
+            "tile": "B:1\n需人工复核\n58.1% 占用\n需补证据",
+            "detail": "复核原图已载入，请结合画面填写人工结论。\n\n摄像头 B · 车位 1\n需人工复核\n原始采样时间\n2015/07/08 08:05\n模型\nDINOv2-small 线性探针\n校准后占用概率\n58.08%（未校准分数 57.39%）\n自动判定\n未校准 · 全部送人工\n数据分区\nB 视角 · 开发比较\n\n温度校准只在训练视角验证；换视角后概率会偏，需现场校准才能自动判定。模型输出、数据标注与人工结论分别保留。",
+            "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+            "metrics": "53\n当前快照车位\n0\n自动判空闲\n0\n自动判占用\n53 / 0\n需人工复核 / 未分析",
+            "overflow": {
+              "scrollWidth": 390,
+              "width": 390
+            },
+            "review_progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+            "note": "保留此车位的人工草稿：等待模型重试，与数据集标注分开。",
+            "decision": "uncertain",
+            "evidence": {
+              "id": "B-20150708-0805-1",
+              "loaded": true,
+              "src": "http://127.0.0.1:8768/data/parking/images/B-20150708-0805-1.jpg"
+            }
+          },
+          "export": {
+            "key": "dinov2",
+            "count": 53,
+            "score": 0.5738718826691331,
+            "failures": [],
+            "failures_by_model": {
+              "mlp32": [],
+              "mobilenet": [],
+              "dinov2": []
+            },
+            "pending": 0,
+            "unanalysed": [],
+            "reviews": {
+              "B-20150708-0805-1": {
+                "decision": "uncertain",
+                "note": "保留此车位的人工草稿：等待模型重试，与数据集标注分开。",
+                "at": "2026-10-25T14:25:57.515Z"
+              }
+            }
+          }
+        },
+        "review_saved": {
+          "key": "dinov2",
+          "count": 53,
+          "score": 0.5738718826691331,
+          "failures": [],
+          "failures_by_model": {
+            "mlp32": [],
+            "mobilenet": [],
+            "dinov2": []
+          },
+          "pending": 0,
+          "unanalysed": [],
+          "reviews": {
+            "B-20150708-0805-1": {
+              "decision": "free",
+              "note": "界面回归：公开历史车位图可见，仅记录本图占用复核。",
+              "at": "2026-10-25T14:26:02.465Z"
+            }
+          }
+        }
+      },
+      "checks": [
+        {
+          "name": "MLP real predictions complete before fault",
+          "passed": true
+        },
+        {
+          "name": "DINO injected single failure leaves 52 predictions",
+          "passed": true
+        },
+        {
+          "name": "MLP successful prediction not marked failed",
+          "passed": true
+        },
+        {
+          "name": "DINO failure retained after MLP rerun",
+          "passed": true
+        },
+        {
+          "name": "No horizontal document overflow",
+          "passed": true
+        },
+        {
+          "name": "Model switch retains human draft and correct loaded crop",
+          "passed": true
+        },
+        {
+          "name": "Input failure still permits evidence-based human note export",
+          "passed": true
+        },
+        {
+          "name": "Export separates failure models",
+          "passed": true
+        },
+        {
+          "name": "DINO actual retry recovers all 53 and clears its error",
+          "passed": true
+        },
+        {
+          "name": "Human review remains separate and exportable",
+          "passed": true
+        }
+      ],
+      "screenshots": [
+        "artifacts/parking-model-state-designer-after-20261025-mlp-return-390.png",
+        "artifacts/parking-model-state-designer-after-20261025-mlp-return-full-390.png",
+        "artifacts/parking-model-state-designer-after-20261025-dino-return-390.png",
+        "artifacts/parking-model-state-designer-after-20261025-dino-return-full-390.png",
+        "artifacts/parking-model-state-designer-after-20261025-recovered-review-390.png",
+        "artifacts/parking-model-state-designer-after-20261025-recovered-review-full-390.png"
+      ]
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "passed": 20,
+  "total": 20,
+  "at": "2026-10-25T14:26:02.980Z",
+  "publication_note": "截图路径已转为项目相对路径；截图保留在本地 artifacts，不随此报告发布。"
+}

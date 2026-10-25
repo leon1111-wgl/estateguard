@@ -1,5 +1,32 @@
 # 验证记录 · 2026-10-15
 
+
+## 2026-10-25 晚间 · 车位模型的失败记录各自保留
+
+旧版 `3ba5132` 的[正式红基线 0/2](validation/parking-model-failure-baseline.json)：真实 MLP32 成功分析首个快照 53 个车位；对 DINOv2 的单张原图 fetch 明确注入 HTTP 500，其余 52 张实际推理。切回 MLP32，界面显示“读取失败”但仍有有效分数，导出同时有 53 个结果、0 个未分析和另一模型的失败。MLP32 再分析成功后，DINOv2 仍缺该图，却丢掉错误提示。原图 img 请求保持正常，故障不替换模型、像素或成功结果。
+
+修复后[专项 8/8](validation/parking-model-failure-validation.json)：成功模型与未运行的第三模型不继承错误；两个模型不同样本同时失败仍分别记录；成功重试只清除该模型的失败。当前导出 `failures` 与 `prediction_model` 对应，`failures_by_model` 保留各模型错误，与原图证据读取失败分开。模型切换保留所选车位草稿和人工结论，新页面导入只恢复人工结论与位置，不采用文件分数或失败记录。MLP32 的 53 张分数与既有发布值最大差 `4.44e-16`；DINOv2 重试恢复 53/53。前者是同一公开输入的一致性检查，后者是故障恢复检查，均不是新的盲测准确率。
+
+[独立特征重试复核](validation/parking-feature-retry-validation.json)的 7 个阶段通过；[旧版对照](validation/parking-feature-retry-baseline.json)确认先成功后失败的样本会在现场重置时从 52 项恢复成 53 项，且旧错误仍在。修复后重置保持 52 项，该样本不再计为已分析的校准/自适应证据；实际重新推理成功才恢复 53 项。其他模型的 53 个分数逐项不变。这里保存的一条人工标签是明确的合成流程设置，单日校准没有通过任何自动分流阈值。
+
+[独立界面回归 20/20](validation/parking-model-failure-ui-validation.json)：1440px / 390px 各 10 项。设计师与主代理查看实际截图，正常模型有分数且无错误提示，失败模型保留未分析与重试提示，原图、草稿、保存和导出可用，无横向溢出。保留用户认可的导航、控件、字体和布局，没有修改 HTML 或 CSS。专项与界面检查均无页面异常或外域请求。
+
+```bash
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-model-failure-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-feature-retry-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-error-audit-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-handover-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/model-check.cjs
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+python3 scripts/verify_parking.py
+python scripts/verify_parking_transfer.py
+```
+
+浏览器依赖通过 `PLAYWRIGHT_MODULE`、`CHROME_PATH` 指向已有 Playwright 与 Chrome；故障隔离专项用 `PARKING_FAILURE_REPORT` 指定报告文件名；特征重试专项用 `PARKING_EMBEDDING_REPORT` 指定，设置 `PARKING_EMBEDDING_BASELINE=1` 可在本地 Git 含旧提交时载入原模块复现旧问题。原错例审查 8/8、车位交班 14/14、JS 146/146、26 个资源哈希、12,830 个公开数据文件哈希通过。使用带 NumPy 的 Python 环境重算迁移验证：两分类头、B 分数、全部 144,965 张 EXT 的既有分数、27 个快照与抽检回放一致；系统 Python 初次因缺 NumPy 未执行该校验，切换已有依赖环境后通过，未更改数据、阈值或评测协议。原 SSDLite 实际图片与 7 帧合成视频回归通过，大巴分数 `0.9916937947`，重复推理张量 `262 → 262`。
+
+限制：HTTP 500 是明确注入的故障，不是数据集损坏统计；公开停车场图片不是社区违停真值。未训练新模型、改权重或阈值，未测真实部署收益。各模型历史失败只保存在当前标签页并可导出，恢复不自动重放失败状态或推理；实际原图可读性仍需重新检查。CI、远程提交和线上验证另行核对，不能由本地通过代替。
+
 ## 2026-10-24 晚间 · 连续复核明确呈现下一个对象
 
 ```bash
