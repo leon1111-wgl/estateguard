@@ -1,0 +1,678 @@
+{
+  "date": "2026-10-26T15:58:19.805860+00:00",
+  "baseline_commit": "585074b",
+  "base": "http://127.0.0.1:8768",
+  "passed": 24,
+  "total": 24,
+  "failed": 0,
+  "module_sha256": "52adb389586c8f6690cc45bfa0fb53765d054bf35854dc7842d2834289b74c34",
+  "visual_files_unchanged": {
+    "index.html": true,
+    "style.css": true
+  },
+  "scope": "独立人工复核与交班界面回归，1440和390各12项。采用已有公开车位图和明确测试备注，不运行新模型、不新增数据或精度声明。",
+  "baseline": {
+    "source_report": "artifacts/parking-draft-designer-baseline-20261026.json",
+    "reproduced_at_widths": [
+      1440,
+      390
+    ],
+    "findings": [
+      "已保存备注改动再改回，仍错误阻止导出。",
+      "人工状态改动再改回，仍错误阻止导出。",
+      "真实跨车位草稿能保留，修复必须延续此保护。"
+    ]
+  },
+  "visual_review": {
+    "actual_images_viewed": true,
+    "blockers": [],
+    "findings": [
+      "撤回修改后导出成功，原记录、备注和时间戳保持一致。",
+      "真实跨车位草稿仍阻止导出；其他车位撤回不会清除它。",
+      "输入期间同一表单和原图节点保留，焦点及光标不跳动。",
+      "保存但未导出的工作仍触发替换确认；纯临时修改撤回不会制造确认。",
+      "无横向溢出，保留已批准版面，未增加控件。"
+    ],
+    "screenshots": [
+      "artifacts/parking-draft-designer-after-20261026-reverted-export-1440.png",
+      "artifacts/parking-draft-designer-after-20261026-reverted-export-390.png",
+      "artifacts/parking-draft-designer-form-20261026-390.png"
+    ],
+    "mobile_form_evidence": "补拍390px实际viewport，直接定位parking-review-fields并保持textarea焦点。decision顶部291.875px，note顶部359.0625px，两控件完整可见；选区18–18，原图与表单均为同一DOM。",
+    "capture_note": "原unchanged-form-390.png落在校准/上传区，不作为手机表单可读性证据；以上form-390补拍已实际查看。补拍断言是对既有检查的确认，不重复增加24项计数。",
+    "asset_note": "截图保留本地artifacts，相对路径为证据索引；图片不随本报告自动发布。"
+  },
+  "limits": [
+    "本机Chrome/Playwright验证，未覆盖其他浏览器或实际读屏软件。",
+    "只验证车位人工编辑和交班状态；本轮设计报告不宣称模型质量或真实物业效率收益。",
+    "页面的全局阅读位置恢复和新增草稿导航不属于本轮范围。"
+  ],
+  "workflow": {
+    "base": "http://127.0.0.1:8768",
+    "baseline": "585074b",
+    "module_sha256": "52adb389586c8f6690cc45bfa0fb53765d054bf35854dc7842d2834289b74c34",
+    "scope": "Manual-review editor and handover state on existing public CNRPark crops. No model or data changes; no detector quality claim. Import fixtures only change manual test notes.",
+    "widths": [
+      {
+        "width": 1440,
+        "ids": [
+          "B-20150708-0805-1",
+          "B-20150708-0805-10"
+        ],
+        "checks": [
+          {
+            "name": "Untouched default restored without creating a review",
+            "passed": true
+          },
+          {
+            "name": "Input preserves focus caret and the existing original-image DOM",
+            "passed": true
+          },
+          {
+            "name": "Reverted saved note exports with identical record and timestamp",
+            "passed": true
+          },
+          {
+            "name": "Save-time outer whitespace equivalence creates no new record",
+            "passed": true
+          },
+          {
+            "name": "Reverted decision exports with identical saved review",
+            "passed": true
+          },
+          {
+            "name": "Reverting another slot cannot erase a genuine draft",
+            "passed": true
+          },
+          {
+            "name": "The other slot retains its actual draft",
+            "passed": true
+          },
+          {
+            "name": "Reverting every difference allows export and clears export error",
+            "passed": true
+          },
+          {
+            "name": "Reverted draft does not clear unexported saved-work protection",
+            "passed": true
+          },
+          {
+            "name": "Clean temporary edit does not invent a replacement warning",
+            "passed": true
+          },
+          {
+            "name": "Imported CRLF and outer whitespace remain byte-for-byte in saved history",
+            "passed": true
+          },
+          {
+            "name": "Approved layout has no horizontal overflow",
+            "passed": true
+          }
+        ],
+        "steps": {
+          "default_reverted": {
+            "downloaded": true,
+            "ui": {
+              "selected": "B-20150708-0805-1",
+              "note": "",
+              "decision": "pending",
+              "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+              "message_error": false,
+              "reviewMessage": "",
+              "overflow": false
+            },
+            "export_summary": {
+              "version": 1,
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+              "reviews": {},
+              "view": {
+                "version": 1,
+                "frame_id": "B-20150708-0805",
+                "sample_id": "B-20150708-0805-1",
+                "model_key": "dinov2",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+                "filter": "all",
+                "show_truth": false
+              },
+              "prediction_model": {
+                "key": "dinov2",
+                "name": "DINOv2-small 线性探针",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+              },
+              "review_summary": {
+                "total": 53,
+                "confirmed": 0,
+                "pending": 53,
+                "needs_evidence": 0
+              },
+              "prediction_count": 0,
+              "unanalysed_count": 53
+            }
+          },
+          "saved": {
+            "B-20150708-0805-1": {
+              "decision": "uncertain",
+              "note": "公开历史车位图。\n需要补充遮挡信息。",
+              "at": "2026-10-26T15:54:36.808Z"
+            }
+          },
+          "editor_identity": {
+            "sameNote": true,
+            "sameDecision": true,
+            "sameImage": true,
+            "focus": "parking-note",
+            "caret": 18,
+            "note": "公开历史车位图。\n需要补充遮挡信息。"
+          },
+          "note_reverted": {
+            "downloaded": true,
+            "ui": {
+              "selected": "B-20150708-0805-1",
+              "note": "公开历史车位图。\n需要补充遮挡信息。",
+              "decision": "uncertain",
+              "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+              "message_error": false,
+              "reviewMessage": "已保存 2015/07/08 08:05 · B:1：需补证据。当前快照还剩 53 个待人工复核。",
+              "overflow": false
+            },
+            "export_summary": {
+              "version": 1,
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+              "reviews": {
+                "B-20150708-0805-1": {
+                  "decision": "uncertain",
+                  "note": "公开历史车位图。\n需要补充遮挡信息。",
+                  "at": "2026-10-26T15:54:36.808Z"
+                }
+              },
+              "view": {
+                "version": 1,
+                "frame_id": "B-20150708-0805",
+                "sample_id": "B-20150708-0805-1",
+                "model_key": "dinov2",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+                "filter": "all",
+                "show_truth": false
+              },
+              "prediction_model": {
+                "key": "dinov2",
+                "name": "DINOv2-small 线性探针",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+              },
+              "review_summary": {
+                "total": 53,
+                "confirmed": 0,
+                "pending": 52,
+                "needs_evidence": 1
+              },
+              "prediction_count": 0,
+              "unanalysed_count": 53
+            }
+          },
+          "cross_slot_blocked": {
+            "downloaded": false,
+            "data": null,
+            "ui": {
+              "selected": "B-20150708-0805-10",
+              "note": "",
+              "decision": "pending",
+              "message": "还有未保存的车位草稿，请先保存复核记录。",
+              "message_error": true,
+              "reviewMessage": "",
+              "overflow": false
+            }
+          },
+          "cross_slot_restored": {
+            "selected": "B-20150708-0805-1",
+            "note": "公开历史车位图。\n需要补充遮挡信息。真实草稿",
+            "decision": "uncertain",
+            "message": "还有未保存的车位草稿，请先保存复核记录。",
+            "message_error": true,
+            "reviewMessage": "",
+            "overflow": false
+          },
+          "all_reverted": {
+            "downloaded": true,
+            "ui": {
+              "selected": "B-20150708-0805-1",
+              "note": "公开历史车位图。\n需要补充遮挡信息。",
+              "decision": "uncertain",
+              "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+              "message_error": false,
+              "reviewMessage": "",
+              "overflow": false
+            },
+            "export_summary": {
+              "version": 1,
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+              "reviews": {
+                "B-20150708-0805-1": {
+                  "decision": "uncertain",
+                  "note": "公开历史车位图。\n需要补充遮挡信息。",
+                  "at": "2026-10-26T15:54:36.808Z"
+                }
+              },
+              "view": {
+                "version": 1,
+                "frame_id": "B-20150708-0805",
+                "sample_id": "B-20150708-0805-1",
+                "model_key": "dinov2",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+                "filter": "all",
+                "show_truth": false
+              },
+              "prediction_model": {
+                "key": "dinov2",
+                "name": "DINOv2-small 线性探针",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+              },
+              "review_summary": {
+                "total": 53,
+                "confirmed": 0,
+                "pending": 52,
+                "needs_evidence": 1
+              },
+              "prediction_count": 0,
+              "unanalysed_count": 53
+            }
+          },
+          "cancelled_import": {
+            "selected": "B-20150708-0805-1",
+            "note": "公开历史车位图。\n需要补充遮挡信息。已保存但尚未导出的改动",
+            "decision": "uncertain",
+            "message": "已取消恢复，本页记录和位置保持不变。",
+            "message_error": false,
+            "reviewMessage": "已保存 2015/07/08 08:05 · B:1：需补证据。当前快照还剩 53 个待人工复核。",
+            "overflow": false
+          },
+          "legacy": {
+            "downloaded": true,
+            "ui": {
+              "selected": "B-20150708-0805-1",
+              "note": "历史原文\n下一行",
+              "decision": "uncertain",
+              "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+              "message_error": false,
+              "reviewMessage": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。",
+              "overflow": false
+            },
+            "export_summary": {
+              "version": 1,
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+              "reviews": {
+                "B-20150708-0805-1": {
+                  "decision": "uncertain",
+                  "note": "  历史原文\r\n下一行  ",
+                  "at": "2026-10-26T15:54:39.240Z"
+                }
+              },
+              "view": {
+                "version": 1,
+                "frame_id": "B-20150708-0805",
+                "sample_id": "B-20150708-0805-1",
+                "model_key": "dinov2",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+                "filter": "all",
+                "show_truth": false
+              },
+              "prediction_model": {
+                "key": "dinov2",
+                "name": "DINOv2-small 线性探针",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+              },
+              "review_summary": {
+                "total": 53,
+                "confirmed": 0,
+                "pending": 52,
+                "needs_evidence": 1
+              },
+              "prediction_count": 0,
+              "unanalysed_count": 53
+            }
+          }
+        },
+        "screenshots": [
+          "artifacts/parking-draft-designer-after-20261026-reverted-export-full-1440.png",
+          "artifacts/parking-draft-designer-after-20261026-reverted-export-1440.png",
+          "artifacts/parking-draft-designer-after-20261026-unchanged-form-full-1440.png",
+          "artifacts/parking-draft-designer-after-20261026-unchanged-form-1440.png"
+        ]
+      },
+      {
+        "width": 390,
+        "ids": [
+          "B-20150708-0805-1",
+          "B-20150708-0805-10"
+        ],
+        "checks": [
+          {
+            "name": "Untouched default restored without creating a review",
+            "passed": true
+          },
+          {
+            "name": "Input preserves focus caret and the existing original-image DOM",
+            "passed": true
+          },
+          {
+            "name": "Reverted saved note exports with identical record and timestamp",
+            "passed": true
+          },
+          {
+            "name": "Save-time outer whitespace equivalence creates no new record",
+            "passed": true
+          },
+          {
+            "name": "Reverted decision exports with identical saved review",
+            "passed": true
+          },
+          {
+            "name": "Reverting another slot cannot erase a genuine draft",
+            "passed": true
+          },
+          {
+            "name": "The other slot retains its actual draft",
+            "passed": true
+          },
+          {
+            "name": "Reverting every difference allows export and clears export error",
+            "passed": true
+          },
+          {
+            "name": "Reverted draft does not clear unexported saved-work protection",
+            "passed": true
+          },
+          {
+            "name": "Clean temporary edit does not invent a replacement warning",
+            "passed": true
+          },
+          {
+            "name": "Imported CRLF and outer whitespace remain byte-for-byte in saved history",
+            "passed": true
+          },
+          {
+            "name": "Approved layout has no horizontal overflow",
+            "passed": true
+          }
+        ],
+        "steps": {
+          "default_reverted": {
+            "downloaded": true,
+            "ui": {
+              "selected": "B-20150708-0805-1",
+              "note": "",
+              "decision": "pending",
+              "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+              "message_error": false,
+              "reviewMessage": "",
+              "overflow": false
+            },
+            "export_summary": {
+              "version": 1,
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+              "reviews": {},
+              "view": {
+                "version": 1,
+                "frame_id": "B-20150708-0805",
+                "sample_id": "B-20150708-0805-1",
+                "model_key": "dinov2",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+                "filter": "all",
+                "show_truth": false
+              },
+              "prediction_model": {
+                "key": "dinov2",
+                "name": "DINOv2-small 线性探针",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+              },
+              "review_summary": {
+                "total": 53,
+                "confirmed": 0,
+                "pending": 53,
+                "needs_evidence": 0
+              },
+              "prediction_count": 0,
+              "unanalysed_count": 53
+            }
+          },
+          "saved": {
+            "B-20150708-0805-1": {
+              "decision": "uncertain",
+              "note": "公开历史车位图。\n需要补充遮挡信息。",
+              "at": "2026-10-26T15:54:39.861Z"
+            }
+          },
+          "editor_identity": {
+            "sameNote": true,
+            "sameDecision": true,
+            "sameImage": true,
+            "focus": "parking-note",
+            "caret": 18,
+            "note": "公开历史车位图。\n需要补充遮挡信息。"
+          },
+          "note_reverted": {
+            "downloaded": true,
+            "ui": {
+              "selected": "B-20150708-0805-1",
+              "note": "公开历史车位图。\n需要补充遮挡信息。",
+              "decision": "uncertain",
+              "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+              "message_error": false,
+              "reviewMessage": "已保存 2015/07/08 08:05 · B:1：需补证据。当前快照还剩 53 个待人工复核。",
+              "overflow": false
+            },
+            "export_summary": {
+              "version": 1,
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+              "reviews": {
+                "B-20150708-0805-1": {
+                  "decision": "uncertain",
+                  "note": "公开历史车位图。\n需要补充遮挡信息。",
+                  "at": "2026-10-26T15:54:39.861Z"
+                }
+              },
+              "view": {
+                "version": 1,
+                "frame_id": "B-20150708-0805",
+                "sample_id": "B-20150708-0805-1",
+                "model_key": "dinov2",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+                "filter": "all",
+                "show_truth": false
+              },
+              "prediction_model": {
+                "key": "dinov2",
+                "name": "DINOv2-small 线性探针",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+              },
+              "review_summary": {
+                "total": 53,
+                "confirmed": 0,
+                "pending": 52,
+                "needs_evidence": 1
+              },
+              "prediction_count": 0,
+              "unanalysed_count": 53
+            }
+          },
+          "cross_slot_blocked": {
+            "downloaded": false,
+            "data": null,
+            "ui": {
+              "selected": "B-20150708-0805-10",
+              "note": "",
+              "decision": "pending",
+              "message": "还有未保存的车位草稿，请先保存复核记录。",
+              "message_error": true,
+              "reviewMessage": "",
+              "overflow": false
+            }
+          },
+          "cross_slot_restored": {
+            "selected": "B-20150708-0805-1",
+            "note": "公开历史车位图。\n需要补充遮挡信息。真实草稿",
+            "decision": "uncertain",
+            "message": "还有未保存的车位草稿，请先保存复核记录。",
+            "message_error": true,
+            "reviewMessage": "",
+            "overflow": false
+          },
+          "all_reverted": {
+            "downloaded": true,
+            "ui": {
+              "selected": "B-20150708-0805-1",
+              "note": "公开历史车位图。\n需要补充遮挡信息。",
+              "decision": "uncertain",
+              "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+              "message_error": false,
+              "reviewMessage": "",
+              "overflow": false
+            },
+            "export_summary": {
+              "version": 1,
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+              "reviews": {
+                "B-20150708-0805-1": {
+                  "decision": "uncertain",
+                  "note": "公开历史车位图。\n需要补充遮挡信息。",
+                  "at": "2026-10-26T15:54:39.861Z"
+                }
+              },
+              "view": {
+                "version": 1,
+                "frame_id": "B-20150708-0805",
+                "sample_id": "B-20150708-0805-1",
+                "model_key": "dinov2",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+                "filter": "all",
+                "show_truth": false
+              },
+              "prediction_model": {
+                "key": "dinov2",
+                "name": "DINOv2-small 线性探针",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+              },
+              "review_summary": {
+                "total": 53,
+                "confirmed": 0,
+                "pending": 52,
+                "needs_evidence": 1
+              },
+              "prediction_count": 0,
+              "unanalysed_count": 53
+            }
+          },
+          "cancelled_import": {
+            "selected": "B-20150708-0805-1",
+            "note": "公开历史车位图。\n需要补充遮挡信息。已保存但尚未导出的改动",
+            "decision": "uncertain",
+            "message": "已取消恢复，本页记录和位置保持不变。",
+            "message_error": false,
+            "reviewMessage": "已保存 2015/07/08 08:05 · B:1：需补证据。当前快照还剩 53 个待人工复核。",
+            "overflow": false
+          },
+          "legacy": {
+            "downloaded": true,
+            "ui": {
+              "selected": "B-20150708-0805-1",
+              "note": "历史原文\n下一行",
+              "decision": "uncertain",
+              "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+              "message_error": false,
+              "reviewMessage": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。",
+              "overflow": false
+            },
+            "export_summary": {
+              "version": 1,
+              "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+              "reviews": {
+                "B-20150708-0805-1": {
+                  "decision": "uncertain",
+                  "note": "  历史原文\r\n下一行  ",
+                  "at": "2026-10-26T15:54:42.078Z"
+                }
+              },
+              "view": {
+                "version": 1,
+                "frame_id": "B-20150708-0805",
+                "sample_id": "B-20150708-0805-1",
+                "model_key": "dinov2",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65",
+                "filter": "all",
+                "show_truth": false
+              },
+              "prediction_model": {
+                "key": "dinov2",
+                "name": "DINOv2-small 线性探针",
+                "model_sha256": "5d2c4deec159ce9abca59e6f5054ffa1225215dc8d1a29f4176069ddd445dc65"
+              },
+              "review_summary": {
+                "total": 53,
+                "confirmed": 0,
+                "pending": 52,
+                "needs_evidence": 1
+              },
+              "prediction_count": 0,
+              "unanalysed_count": 53
+            }
+          }
+        },
+        "screenshots": [
+          "artifacts/parking-draft-designer-after-20261026-reverted-export-full-390.png",
+          "artifacts/parking-draft-designer-after-20261026-reverted-export-390.png",
+          "artifacts/parking-draft-designer-after-20261026-unchanged-form-full-390.png",
+          "artifacts/parking-draft-designer-after-20261026-unchanged-form-390.png"
+        ]
+      }
+    ],
+    "page_errors": [],
+    "external_requests": [],
+    "passed": 24,
+    "total": 24,
+    "at": "2026-10-26T15:54:42.270Z"
+  },
+  "mobile_form_supplement": {
+    "base": "http://127.0.0.1:8768",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "module_sha256": "52adb389586c8f6690cc45bfa0fb53765d054bf35854dc7842d2834289b74c34",
+    "scope": "Supplemental visible mobile editor evidence. Restore the same manual test review, type and revert one character, then capture the actual review fields before any full-page screenshot.",
+    "page_errors": [],
+    "editor": {
+      "note": "公开历史车位图。\n需要补充遮挡信息。",
+      "decision": "uncertain",
+      "focus": "parking-note",
+      "selectionStart": 18,
+      "selectionEnd": 18,
+      "sameNote": true,
+      "sameDecision": true,
+      "sameImage": true,
+      "imageLoaded": true,
+      "noteRect": {
+        "top": 359.0625,
+        "bottom": 447.0625,
+        "left": 33,
+        "right": 357,
+        "visible": true
+      },
+      "decisionRect": {
+        "top": 291.875,
+        "bottom": 323.875,
+        "left": 33,
+        "right": 357,
+        "visible": true
+      },
+      "overflow": false
+    },
+    "screenshot": "artifacts/parking-draft-designer-form-20261026-390.png",
+    "assertions": {
+      "editor_and_image_identity": true,
+      "focus_and_selection": true,
+      "actual_controls_fully_visible": true,
+      "export_record_unchanged": true
+    },
+    "ok": true
+  },
+  "detail_note": "公开报告保留断言、界面状态与人工记录的导出摘要；重复的完整导出结构保留在本地 artifacts/parking-draft-ui-validation-full.json，未修改实测值。"
+}

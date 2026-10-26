@@ -1,0 +1,56 @@
+{
+  "at": "2026-10-26T15:55:38.575Z",
+  "sha256": "52adb389586c8f6690cc45bfa0fb53765d054bf35854dc7842d2834289b74c34",
+  "scope": "Independent current-page review-state validation, no source interception or inference. Public sample IDs and synthetic human notes are workflow fixtures; beforeunload dispatched as cancelable event.",
+  "checks": [
+    {
+      "name": "note_and_decision_reverted_no_ghost_export_unload_or_replace_guard",
+      "passed": true,
+      "reviews": {},
+      "replace_dialogs": 0
+    },
+    {
+      "name": "legacy_crlf_cr_and_edge_whitespace_compare_only_preserve_original_record",
+      "passed": true,
+      "record": {
+        "decision": "uncertain",
+        "note": " \r\n旧记录第一行\r\n第二行\r第三行 \t",
+        "at": "2026-01-01T00:00:00.000Z"
+      }
+    },
+    {
+      "name": "reverted_draft_keeps_saved_dirty_and_cancelled_import_keeps_record",
+      "passed": true,
+      "dialog": "恢复将替换本页人工记录。请先导出已有记录。继续恢复？",
+      "record": {
+        "decision": "pending",
+        "note": "已保存但未导出的流程记录",
+        "at": "2026-10-26T15:55:40.904Z"
+      }
+    },
+    {
+      "name": "clearing_one_sample_draft_keeps_other_raw_draft_until_explicit_save",
+      "passed": true,
+      "ids": [
+        "B-20150708-0805-1",
+        "B-20150708-0805-10"
+      ],
+      "raw": "  草稿  内部空格\n\n第二段 \n ",
+      "saved": {
+        "decision": "pending",
+        "note": "草稿  内部空格\n\n第二段",
+        "at": "2026-10-26T15:55:41.387Z"
+      }
+    },
+    {
+      "name": "internal_spaces_and_blank_lines_remain_real_changes",
+      "passed": true
+    },
+    {
+      "name": "failed_save_keeps_true_draft_revert_restores_clean_state_without_fake_record",
+      "passed": true
+    }
+  ],
+  "page_errors": [],
+  "ok": true
+}

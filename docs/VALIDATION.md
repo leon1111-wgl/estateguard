@@ -1,5 +1,27 @@
 # 验证记录 · 2026-10-15
 
+## 2026-10-26 晚间 · 撤回车位编辑后正常交班
+
+已发布 `585074b` 的[正式红基线](validation/parking-draft-baseline.json)为 2/4：真正跨车位草稿保护与正常恢复通过，但新备注输入再清空、已保存结论和备注改出再改回，都会被“未保存的车位草稿”阻止导出，且触发离开保护。原代码每次输入无条件保存草稿并设置 `changed=true`，没有与已保存记录比较。基线真实运行 MLP32，首快照 53 张，无模型或产品状态替换。
+
+修复后[专项 8/8](validation/parking-draft-validation.json)：空值/纯空白撤回不生成记录；已保存结论和备注撤回后原文与时间不变；其他车位真实草稿仍阻挡导出；已经保存但未导出的工作仍触发恢复确认和离开保护；撤回已导出内容不再误弹确认；旧交班 CRLF/CR 与首尾空白只在比较时对齐，导出原文不变；内部空格/空行仍算真实修改；坏导入和空理由保存失败保留草稿。新页面恢复人工记录与位置，预测数仍为 0，不把导入分数当本次模型输出。
+
+[独立代码边界 6/6](validation/parking-draft-independent-validation.json)另验撤回、旧记录原文、已保存未导出保护、跨车位原始草稿、内部空白与失败保存；[独立界面回归 24/24](validation/parking-draft-ui-validation.json)使用桌面 1440px 与手机 390px 的实际截图，检查导出、原图/输入 DOM、焦点与布局。手机另补拍实际可见的结论、备注与光标截图，设计师与主代理均查看；补拍不重复计数。产品仅修改车位输入监听，不重绘表单、修改 HTML 或 CSS，也不改显式保存的时间语义。
+
+```bash
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-draft-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-review-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-handover-check.cjs
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+```
+
+浏览器使用已有 `PLAYWRIGHT_MODULE`、`CHROME_PATH`；新专项以 `PARKING_DRAFT_REPORT` 指定输出名称，可直接换 `ESTATEGUARD_URL` 验证线上页面，不拦截产品源码。实际 MLP32 的 53 个分数在编辑前后逐项相同，与既有 Python 记录最大差 `4.44e-16`。原车位复核 9/9、交班恢复 14/14、JS 146/146、26 个模型资源哈希通过。人工备注与旧交班内容是流程夹具，离开保护通过可取消的 `beforeunload` 事件检查，没有把这等同于所有浏览器的原生关闭弹窗验证。
+
+首次找茬脚本用不存在的 `#parking-review` 定位截图导致中断，已单独保留，不计入产品失败；更正为 `.parking-review` 后冻结完整红报告，再修改产品。独立代码检查也有一次新页面初始导出等待超时，后续独立专项与 5/5 连续新页面导出对照均通过，原因未确定；保留诊断，不据此改产品或放宽草稿断言。
+
+限制：本轮没有新训练、权重或准确率变化。真正草稿仍须逐条保存或改回原值后才能导出；没有自动保存、跨会话草稿恢复或多人同步。CI、远程提交与线上文件/流程另外核对。
+
 ## 2026-10-26 · 本地车位图片可以取消并保留成功结果
 
 从已发布 `52bdabb` 复现：[正式红基线 0/2](validation/parking-upload-baseline.json)。首次 DINOv2 下载期间没有本地取消入口，交班恢复却要求先停止；坏 JPEG 替换清空成功图片、文件名和分数，只留下英文解码错误。等待真实资源放行后实际得到 DINOv2 输出，不使用伪造模型返回。

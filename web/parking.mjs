@@ -197,7 +197,14 @@ $('parking-session').addEventListener('change',setSession);
 $('parking-frame').addEventListener('input',()=>{stopPlayback();chooseFrame(Number($('parking-frame').value));});
 $('parking-prev').addEventListener('click',()=>{stopPlayback();chooseFrame(frameIndex-1);});$('parking-next').addEventListener('click',()=>{stopPlayback();chooseFrame(frameIndex+1);});$('parking-play').addEventListener('click',playback);
 for(const id of ['parking-filter','parking-show-truth'])$(id).addEventListener('change',render);
-for(const id of ['parking-note','parking-decision'])$(id).addEventListener('input',()=>{if(selected){stopPlayback();drafts.set(selected,{decision:$('parking-decision').value,note:$('parking-note').value});changed=true;}});
+// Compare the editor's line endings and save-time trimming without rewriting imported notes.
+const comparableNote=note=>note.replace(/\r\n?/g,'\n').trim();
+for(const id of ['parking-note','parking-decision'])$(id).addEventListener('input',()=>{
+ if(!selected)return;stopPlayback();
+ const draft={decision:$('parking-decision').value,note:$('parking-note').value},saved=reviews[selected]||{decision:'pending',note:''};
+ if(draft.decision===saved.decision&&comparableNote(draft.note)===comparableNote(saved.note))drafts.delete(selected);else drafts.set(selected,draft);
+ // changed tracks saved work that has not been exported; draft edits must not set or clear it.
+});
 const context=()=>({model_sha256:evaluation.model_sha256,sample_ids:[...samples.keys()]});
 const handoverContext=()=>({frames:allFrames,current_model:current,models:{mlp32:evaluation.model_sha256,...Object.fromEntries(['mobilenet','dinov2'].filter(key=>heads[key]).map(key=>[key,transferEvaluation.models[key].model_sha256]))}});
 function savedView(){if(!frames[frameIndex])throw new Error('公开快照尚未加载完成，请稍后再导出');return {version:1,frame_id:frames[frameIndex].id,sample_id:selected,model_key:current,model_sha256:handoverContext().models[current],filter:$('parking-filter').value,show_truth:$('parking-show-truth').checked};}

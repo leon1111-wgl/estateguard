@@ -1,0 +1,122 @@
+{
+  "started_at": "2026-10-26T15:54:43.153Z",
+  "base": "http://127.0.0.1:8768",
+  "previous_baseline_commit": "585074b",
+  "baseline_report": "parking-draft-baseline.json",
+  "scope": "Actual Chrome, real MLP32 on 53 public CNRPark patches. Only UI inputs and user-supplied handover files are changed; no product-source interception or mocked inference. beforeunload is inspected with a cancelable event without closing the page.",
+  "checks": [
+    {
+      "name": "new review values reverted to empty create no record and allow handover",
+      "passed": true,
+      "evidence": {
+        "variants": [
+          {
+            "note": "",
+            "review_count": 0
+          },
+          {
+            "note": " \t\n  ",
+            "review_count": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "reverting saved values preserves the original note and timestamp",
+      "passed": true,
+      "evidence": {
+        "original": {
+          "decision": "uncertain",
+          "note": "原图阴影遮挡，请接班员核查。",
+          "at": "2026-10-26T15:54:44.255Z"
+        },
+        "after": {
+          "decision": "uncertain",
+          "note": "原图阴影遮挡，请接班员核查。",
+          "at": "2026-10-26T15:54:44.255Z"
+        }
+      }
+    },
+    {
+      "name": "reverting one slot keeps genuine drafts on another slot protected",
+      "passed": true,
+      "evidence": {
+        "blocked": "还有未保存的车位草稿，请先保存复核记录。",
+        "other_draft_preserved": true
+      }
+    },
+    {
+      "name": "reverting a draft cannot clear saved but unexported review protection",
+      "passed": true,
+      "evidence": {
+        "confirmation": {
+          "type": "confirm",
+          "message": "恢复将替换本页人工记录。请先导出已有记录。继续恢复？",
+          "choice": "dismiss"
+        },
+        "record": {
+          "decision": "uncertain",
+          "note": "本班实际保存，还没有交接导出。",
+          "at": "2026-10-26T15:54:44.721Z"
+        }
+      }
+    },
+    {
+      "name": "exported work reverted to saved values needs no replacement confirmation",
+      "passed": true,
+      "evidence": {
+        "confirmations": 0
+      }
+    },
+    {
+      "name": "legacy whitespace and CRLF or CR compare like the editor without rewriting history",
+      "passed": true,
+      "evidence": {
+        "records": [
+          {
+            "decision": "uncertain",
+            "note": "  第一行\r\n第二行  ",
+            "at": "2026-10-01T01:02:03.000Z"
+          },
+          {
+            "decision": "uncertain",
+            "note": "\t第一行\r第二行\t",
+            "at": "2026-10-01T01:02:03.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "name": "bad imports and rejected saves preserve real drafts and other saved work",
+      "passed": true,
+      "evidence": {
+        "import_error": "恢复失败：Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+        "save_error": "保存失败：请填写复核说明（判断依据）后再保存。"
+      }
+    },
+    {
+      "name": "real MLP outputs stay identical and a fresh handover restores only human work",
+      "passed": true,
+      "evidence": {
+        "max_score_difference": 4.440892098500626e-16,
+        "sample_count": 53,
+        "first_score": 0.028534001165953025,
+        "restored_reviews": {
+          "B-20150708-0805-1": {
+            "decision": "uncertain",
+            "note": "原图阴影遮挡，请接班员核查。",
+            "at": "2026-10-26T15:54:44.255Z"
+          }
+        },
+        "restored_prediction_count": 0
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-26T15:54:46.330Z",
+  "passed": 8,
+  "failed": 0,
+  "ok": true
+}

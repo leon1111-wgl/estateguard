@@ -1,0 +1,89 @@
+{
+  "baseline_commit": "585074b",
+  "base": "http://127.0.0.1:8768",
+  "started_at": "2026-10-26T15:51:19.217Z",
+  "scope": "Actual Chrome UI, real MLP32 on the 53 public CNRPark patches at B 2015-07-08 08:05. No inference or application state is mocked.",
+  "cases": [
+    {
+      "name": "empty note restored to original should permit unchanged handover export",
+      "passed": false,
+      "error": "unchanged form should export; actual: 还有未保存的车位草稿，请先保存复核记录。\n\n0 !== 1\n",
+      "evidence": {
+        "original": {
+          "decision": "pending",
+          "note": "",
+          "leave_protected": false
+        },
+        "after": {
+          "decision": "pending",
+          "note": "",
+          "leave_protected": true
+        },
+        "message": "还有未保存的车位草稿，请先保存复核记录。",
+        "downloads": 0
+      }
+    },
+    {
+      "name": "saved note and decision restored to original should preserve original handover",
+      "passed": false,
+      "error": "restored saved form should export; actual: 还有未保存的车位草稿，请先保存复核记录。\n\n0 !== 1\n",
+      "evidence": {
+        "saved": {
+          "decision": "uncertain",
+          "note": "原图阴影遮挡，请接班员核查。",
+          "at": "2026-10-26T15:51:20.515Z"
+        },
+        "message": "还有未保存的车位草稿，请先保存复核记录。",
+        "downloads": 0,
+        "leave_protected": true
+      }
+    },
+    {
+      "name": "genuine edits on another slot remain protected and survive slot changes",
+      "passed": true,
+      "evidence": {
+        "note": "此车位有真实未保存备注",
+        "leave_protected": true,
+        "message": "还有未保存的车位草稿，请先保存复核记录。",
+        "downloads": 0
+      }
+    },
+    {
+      "name": "normal exported records restore without inference results being trusted",
+      "passed": true,
+      "evidence": {
+        "reviews": {
+          "B-20150708-0805-1": {
+            "decision": "uncertain",
+            "note": "原图阴影遮挡，请接班员核查。",
+            "at": "2026-10-26T15:51:20.515Z"
+          }
+        },
+        "view": {
+          "version": 1,
+          "frame_id": "B-20150708-0805",
+          "sample_id": "B-20150708-0805-1",
+          "model_key": "mlp32",
+          "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b",
+          "filter": "all",
+          "show_truth": false
+        },
+        "leave_protected": false
+      }
+    }
+  ],
+  "page_errors": [],
+  "browser": "155.0.8059.85",
+  "model": {
+    "key": {
+      "key": "mlp32",
+      "name": "MLP32",
+      "model_sha256": "f82d56b0c1ed3935c351a5b479961dde19d786d8151f775abe4325d41685192b"
+    },
+    "samples": 53,
+    "first_score": 0.028534001165953025
+  },
+  "finished_at": "2026-10-26T15:51:21.005Z",
+  "passed": 2,
+  "failed": 2
+}
