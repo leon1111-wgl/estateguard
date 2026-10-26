@@ -1,5 +1,32 @@
 # 验证记录 · 2026-10-15
 
+## 2026-10-26 · 本地车位图片可以取消并保留成功结果
+
+从已发布 `52bdabb` 复现：[正式红基线 0/2](validation/parking-upload-baseline.json)。首次 DINOv2 下载期间没有本地取消入口，交班恢复却要求先停止；坏 JPEG 替换清空成功图片、文件名和分数，只留下英文解码错误。等待真实资源放行后实际得到 DINOv2 输出，不使用伪造模型返回。
+
+修复后[专项 7/7](validation/parking-upload-validation.json)：首次下载取消后恢复交班；真实 DINOv2 重试；坏图/错误类型保留同一结果 DOM 与 URL；MLP32 成功替换后才回收旧 URL；真实计算返回被受控延迟时保持互斥、允许人工复核，取消待计算结束才解锁；再次重试保留人工记录；公开快照分析中禁止并发上传，停止保留已完成的真实结果。空 `change` 是明确构造的边界，不当作原生文件选择器取消的证据。本地进度不再覆盖交班恢复失败提示。
+
+独立代码审查还在初版修复中发现[核心配置等待无法取消](validation/parking-upload-core-baseline.json)：控制挂起核心 JSON，点击取消后仍锁住文件、模型、快照与播放按钮。补充取消共享请求的本地等待后，[核心专项 3/3](validation/parking-upload-core-validation.json)通过：请求尚未放行即可解除本地任务；迟到成功不写回已取消图片；立即新上传仍持有自己的锁；迟到 503 不覆盖取消状态，下一次上传可重新读取配置并完成真实 MLP32 推理。[独立事务补充 5/5](validation/parking-upload-transaction-validation.json)核对取消解码、空变更、旧 URL 回收、真实 DINOv2 重试与公开快照分数/人工结论隔离。
+
+[独立界面回归 32/32](validation/parking-upload-ui-validation.json)检查 1440px / 390px 的进度、取消、重试、中文坏图提示、长文件名和复核导出。22 项在最终 JavaScript 上完成，另 10 项在局部禁用态 CSS 加入后检查核心配置取消与布局，报告分别记录两组。使用原按钮、工具条和消息样式，只为本地上传的禁用标签加既有禁用态；导航、字体和布局保持。设计师与主代理查看了实际截图，未见横向溢出；截图留在本地 `artifacts/parking-upload-designer-*`，公开报告只记录相对位置。
+
+```bash
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-upload-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-upload-core-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-handover-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/parking-error-audit-check.cjs
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/model-check.cjs
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+```
+
+使用已有 `PLAYWRIGHT_MODULE` / `CHROME_PATH` 浏览器依赖。上传专项用 `PARKING_UPLOAD_REPORT` 指定报告名；核心专项用 `ESTATEGUARD_ARTIFACT_DIR` 指定目录。在线专项从被测站获取编码器源码，仅注入真实计算返回的等待，不把本地产品模块当线上版本；核心专项不拦截产品脚本。延迟、损坏 JPEG、HTTP 503 与人工备注都是明确测试条件，不是公开数据损坏率或现场观察。
+
+原车位巡检通过，53 个 MLP32 分数与既有 Python 记录最大差 `4.44e-16`；车位交班 14/14、错例审查 8/8、JS 146/146、26 个资源哈希通过。原 SSDLite 图片及 7 帧合成短片实推通过，大巴分数 `0.9916937947`，张量 `262 → 262`。首次模型回归误把 URL 作为位置参数，脚本实际连接默认 8766 而失败；改用文档中的 `ESTATEGUARD_URL` 后通过，未修改产品或测试断言。专项、独立审查无页面异常；正式专项与界面检查无外域请求。
+
+限制：已开始的解码或 WASM 计算仍可能需要等到返回才能完成取消；共享核心配置可在本地任务取消后继续加载。保留结果仅在当前标签页，本地图片不包含在车位交班导出中。没有新增模型训练、改权重或阈值，不能据此声称社区精度或实际效率提高。远程提交、CI 与线上文件和流程另行核验。
+
 
 ## 2026-10-25 晚间 · 车位模型的失败记录各自保留
 

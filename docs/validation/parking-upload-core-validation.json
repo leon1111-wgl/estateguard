@@ -1,0 +1,156 @@
+{
+  "started_at": "2026-10-26T02:32:43.695Z",
+  "base": "http://127.0.0.1:8768",
+  "scope": "Actual public CNRPark crop and real MLP32 upload inference. Explicit first-core-fetch stalls/503 and decode-completion gates test cancellation; no product-source interception, fabricated scores, training or field-accuracy claim.",
+  "checks": [
+    {
+      "name": "cancel_does_not_wait_for_core_late_success_does_not_publish_cancelled_file",
+      "passed": true,
+      "cancelled": {
+        "elapsed_ms": 50,
+        "status": "已取消本地图片分析，可重新选择图片。",
+        "result": "",
+        "image": false,
+        "model": "dinov2",
+        "file_disabled": false,
+        "run_disabled": false,
+        "model_disabled": false,
+        "play_disabled": false,
+        "cancel_hidden": true,
+        "requests": 1,
+        "core_released": false
+      },
+      "late": {
+        "status": "已取消本地图片分析，可重新选择图片。",
+        "result": "",
+        "image": false,
+        "model": "dinov2",
+        "file_disabled": false,
+        "run_disabled": false,
+        "model_disabled": false,
+        "play_disabled": false,
+        "cancel_hidden": true,
+        "requests": 1,
+        "core_released": true
+      },
+      "retry": {
+        "status": "已完成「real-after-core.jpg」的分析。",
+        "result": "real-after-core.jpg空闲 · 占用分数 2.85% · MLP32新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+        "image": true,
+        "model": "mlp32",
+        "file_disabled": false,
+        "run_disabled": false,
+        "model_disabled": false,
+        "play_disabled": false,
+        "cancel_hidden": true,
+        "requests": 1,
+        "core_released": true
+      }
+    },
+    {
+      "name": "immediate_retry_owns_lock_after_shared_core_resolves",
+      "passed": true,
+      "cancelled": {
+        "elapsed_ms": 30,
+        "status": "已取消本地图片分析，可重新选择图片。",
+        "result": "",
+        "image": false,
+        "model": "dinov2",
+        "file_disabled": false,
+        "run_disabled": false,
+        "model_disabled": false,
+        "play_disabled": false,
+        "cancel_hidden": true,
+        "requests": 1,
+        "core_released": false
+      },
+      "waiting": {
+        "status": "正在分析「held-after-cancel.jpg」…",
+        "result": "",
+        "image": false,
+        "model": "mlp32",
+        "file_disabled": true,
+        "run_disabled": true,
+        "model_disabled": true,
+        "play_disabled": true,
+        "cancel_hidden": false,
+        "requests": 1,
+        "core_released": false
+      },
+      "held": {
+        "status": "正在分析「held-after-cancel.jpg」…",
+        "result": "",
+        "image": false,
+        "model": "mlp32",
+        "file_disabled": true,
+        "run_disabled": true,
+        "model_disabled": true,
+        "play_disabled": true,
+        "cancel_hidden": false,
+        "requests": 1,
+        "core_released": true
+      },
+      "retry": {
+        "status": "已完成「held-after-cancel.jpg」的分析。",
+        "result": "held-after-cancel.jpg空闲 · 占用分数 2.85% · MLP32新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+        "image": true,
+        "model": "mlp32",
+        "file_disabled": false,
+        "run_disabled": false,
+        "model_disabled": false,
+        "play_disabled": false,
+        "cancel_hidden": true,
+        "requests": 1,
+        "core_released": true
+      }
+    },
+    {
+      "name": "late_core_failure_keeps_cancelled_upload_and_next_upload_retries_core",
+      "passed": true,
+      "cancelled": {
+        "elapsed_ms": 28,
+        "status": "已取消本地图片分析，可重新选择图片。",
+        "result": "",
+        "image": false,
+        "model": "dinov2",
+        "file_disabled": false,
+        "run_disabled": false,
+        "model_disabled": false,
+        "play_disabled": false,
+        "cancel_hidden": true,
+        "requests": 1,
+        "core_released": false
+      },
+      "failed": {
+        "status": "已取消本地图片分析，可重新选择图片。",
+        "result": "",
+        "image": false,
+        "model": "dinov2",
+        "file_disabled": false,
+        "run_disabled": false,
+        "model_disabled": false,
+        "play_disabled": false,
+        "cancel_hidden": true,
+        "requests": 1,
+        "core_released": true
+      },
+      "retry": {
+        "status": "已完成「real-after-core-error.jpg」的分析。",
+        "result": "real-after-core-error.jpg空闲 · 占用分数 2.85% · MLP32新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+        "image": true,
+        "model": "mlp32",
+        "file_disabled": false,
+        "run_disabled": false,
+        "model_disabled": false,
+        "play_disabled": false,
+        "cancel_hidden": true,
+        "requests": 2,
+        "core_released": true
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "ok": true
+}

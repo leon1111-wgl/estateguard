@@ -1,0 +1,45 @@
+{
+  "at": "2026-10-26T02:32:58.071Z",
+  "sha256": "fa9e85ad48ceed6e7275ac7b883d869814c4e4598c22cca3c84695d62c9fdc7b",
+  "scope": "Independent supplemental transaction tests. Existing public CNR patch, real MLP32 and DINO inference. Explicit decode gates and first-model-fetch stall; human note is workflow fixture. No fake scores.",
+  "checks": [
+    {
+      "name": "bad_replacement_preserves_exact_dom_url_and_real_score",
+      "passed": true,
+      "result": "first-real.jpg空闲 · 占用分数 2.85% · MLP32新场景结果未经验证，没有数据集标签可对照。不是违规判断。"
+    },
+    {
+      "name": "cancelled_decode_keeps_committed_result_until_next_success",
+      "passed": true
+    },
+    {
+      "name": "empty_change_does_not_cancel_job_and_success_revokes_old_url",
+      "passed": true
+    },
+    {
+      "name": "model_download_cancel_then_immediate_real_retry_with_review_kept",
+      "passed": true,
+      "result": "dino-real-retry.jpg倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+      "fetches": [
+        {
+          "aborted": true
+        },
+        {
+          "aborted": false
+        }
+      ]
+    },
+    {
+      "name": "upload_never_fabricates_public_snapshot_scores_or_erases_review",
+      "passed": true,
+      "review": {
+        "decision": "uncertain",
+        "note": "独立上传互斥检查的流程备注，不作现场结论。",
+        "at": "2026-10-26T02:32:58.903Z"
+      },
+      "samples": 0
+    }
+  ],
+  "page_errors": [],
+  "ok": true
+}

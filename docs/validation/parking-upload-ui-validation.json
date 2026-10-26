@@ -1,0 +1,608 @@
+{
+  "date": "2026-10-26T02:35:00.696748+00:00",
+  "previous_baseline_commit": "52bdabb",
+  "base": "http://127.0.0.1:8768",
+  "passed": 32,
+  "total": 32,
+  "failed": 0,
+  "final_source_hashes": {
+    "parking.mjs": "fa9e85ad48ceed6e7275ac7b883d869814c4e4598c22cca3c84695d62c9fdc7b",
+    "style.css": "1249cbdc3ba8bacfb1377f3dc7e4b3add4ded046cb33975d53e6da2932986e48",
+    "index.html": "c31fdb02d834c05af49af2691be5a8704f577e4483e9484498efe7f177348695"
+  },
+  "scope": "独立界面回归：保持已批准中文布局，验证本地车位图片分析的取消、真实重试、失败保留与人工复核。使用公开 CNRPark 图片和实际 DINOv2 / MLP32；受控延迟只作用于模型资源或基础元数据读取，不伪造推理输出。",
+  "test_group_boundaries": [
+    {
+      "name": "upload_workflow",
+      "passed": 22,
+      "total": 22,
+      "widths": [
+        1440,
+        390
+      ],
+      "source_state": "最终 JavaScript（含 waitForUploadCore 取消补丁）；局部 label 禁用 CSS 加入之前。",
+      "source_report": "artifacts/parking-upload-designer-after-20261026.json"
+    },
+    {
+      "name": "final_css_and_core_cancel",
+      "passed": 10,
+      "total": 10,
+      "widths": [
+        1440,
+        390
+      ],
+      "source_state": "最终 JavaScript、HTML 和局部禁用 CSS 之后；不重复模型推理，只补共享基础请求等待取消、按钮状态恢复、迟到初始化和布局。",
+      "source_report": "artifacts/parking-upload-designer-core-20261026.json"
+    }
+  ],
+  "visual_review": {
+    "actual_images_viewed": true,
+    "blockers": [],
+    "observations": [
+      "取消按钮和状态在上传卡片就地显示，390px 两个控件可同排。",
+      "长中英文文件名自然换行；中文错误与保留的旧图、模型名称和分数能同时阅读。",
+      "最终局部 label 禁用样式与 button:disabled 一致（opacity 0.46，cursor not-allowed）；取消后恢复正常样式。",
+      "文档宽度在1440与390均不超出视口；上传期间公开车位人工结论仍可保存与导出。"
+    ],
+    "screenshots": [
+      {
+        "path": "artifacts/parking-upload-designer-core-20261026-disabled-1440.png",
+        "stage": "最终CSS后，基础请求等待、可取消与禁用态"
+      },
+      {
+        "path": "artifacts/parking-upload-designer-core-20261026-disabled-390.png",
+        "stage": "最终CSS后，手机控件与状态"
+      },
+      {
+        "path": "artifacts/parking-upload-designer-core-20261026-cancelled-full-390.png",
+        "stage": "最终CSS后，取消状态与入口恢复"
+      },
+      {
+        "path": "artifacts/parking-upload-designer-after-20261026-loading-1440.png",
+        "stage": "最终JS、CSS适配前，真实模型字节进度"
+      },
+      {
+        "path": "artifacts/parking-upload-designer-after-20261026-loading-390.png",
+        "stage": "最终JS、CSS适配前，手机真实字节进度"
+      },
+      {
+        "path": "artifacts/parking-upload-designer-after-20261026-bad-keeps-result-1440.png",
+        "stage": "最终JS、CSS适配前，错误与旧结果"
+      },
+      {
+        "path": "artifacts/parking-upload-designer-after-20261026-bad-keeps-result-390.png",
+        "stage": "最终JS、CSS适配前，长文件名与错误保留"
+      }
+    ],
+    "screenshot_storage": "截图仅保留在本地 artifacts；相对路径为本轮证据索引，不表示图片随公开仓库发布。"
+  },
+  "limits": [
+    "检查为本机 Chrome / Playwright；没有验证其他浏览器或实际读屏软件。",
+    "22项流程检查未在纯CSS修改后重复全部模型推理；最终JS字节一致，CSS后另跑10项针对性检查。",
+    "受控取消耗时只说明本机故障注入流程，不是设备性能指标；不可中断WASM计算期间的等待由其他专项验证，本报告不额外宣称。",
+    "公开图片、本地上传和人工测试说明不代表真实小区精度、领域违规识别或生产收益。"
+  ],
+  "groups": {
+    "upload_workflow": {
+      "base": "http://127.0.0.1:8768",
+      "module_sha256": "fa9e85ad48ceed6e7275ac7b883d869814c4e4598c22cca3c84695d62c9fdc7b",
+      "scope": "Actual local upload inference on published CNRPark JPG and PNG; one ONNX network request deliberately delayed. Invalid JPEG bytes are a fault fixture, human notes are workflow test notes, no field quality claim.",
+      "widths": [
+        {
+          "width": 1440,
+          "steps": {
+            "loading": {
+              "status": "正在加载 DINOv2-small 线性探针：13.7 / 13.7 MiB · 网络读取 13.7 MiB · 复用缓存 0.0 MiB。可取消。",
+              "error": false,
+              "cancelVisible": true,
+              "cancelDisabled": false,
+              "uploadDisabled": true,
+              "modelDisabled": true,
+              "runDisabled": true,
+              "saveDisabled": false,
+              "scrollWidth": 1440,
+              "width": 1440
+            },
+            "loading_panel_box": {
+              "x": 1112,
+              "y": 670.078125,
+              "width": 300,
+              "height": 307.703125
+            },
+            "public_review_during_upload": {
+              "B-20150708-0805-1": {
+                "decision": "uncertain",
+                "note": "公开图片界面回归：上传加载时仍可记录该车位需要补充证据。",
+                "at": "2026-10-26T02:30:13.576Z"
+              }
+            },
+            "cancelled": {
+              "status": "已取消本地图片分析，可重新选择图片。",
+              "error": false,
+              "cancelVisible": false,
+              "cancelDisabled": false,
+              "uploadDisabled": false,
+              "modelDisabled": false,
+              "runDisabled": false,
+              "saveDisabled": false,
+              "scrollWidth": 1440,
+              "width": 1440,
+              "ms": 46,
+              "result": {
+                "text": "",
+                "url": null,
+                "loaded": false
+              }
+            },
+            "cancelled_panel_box": {
+              "x": 1112,
+              "y": 601.453125,
+              "width": 300,
+              "height": 269.328125
+            },
+            "retry": {
+              "state": {
+                "status": "已完成「物业现场车位图_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_仅用于公开图片界面回归_20261026.jpg」的分析。",
+                "error": false,
+                "cancelVisible": false,
+                "cancelDisabled": false,
+                "uploadDisabled": false,
+                "modelDisabled": false,
+                "runDisabled": false,
+                "saveDisabled": false,
+                "scrollWidth": 1440,
+                "width": 1440
+              },
+              "result": {
+                "text": "物业现场车位图_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_仅用于公开图片界面回归_20261026.jpg\n\n倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针\n\n新画面没有现场风险校准，按规则应送人工复核。\n\n新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+                "url": "blob:http://127.0.0.1:8768/a8d4a45f-eb69-4c27-9ece-6ae288e7d6db",
+                "loaded": true
+              }
+            },
+            "bad": {
+              "state": {
+                "status": "分析失败：图片无法读取，请确认文件能正常打开，或重新导出为 JPEG、PNG、WebP 后再试。下方保留上次成功结果。",
+                "error": true,
+                "cancelVisible": false,
+                "cancelDisabled": false,
+                "uploadDisabled": false,
+                "modelDisabled": false,
+                "runDisabled": false,
+                "saveDisabled": false,
+                "scrollWidth": 1440,
+                "width": 1440
+              },
+              "result": {
+                "text": "物业现场车位图_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_仅用于公开图片界面回归_20261026.jpg\n\n倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针\n\n新画面没有现场风险校准，按规则应送人工复核。\n\n新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+                "url": "blob:http://127.0.0.1:8768/a8d4a45f-eb69-4c27-9ece-6ae288e7d6db",
+                "loaded": true
+              },
+              "same_image": true
+            },
+            "bad-keeps-result_panel_box": {
+              "x": 1112,
+              "y": 291.859375,
+              "width": 300,
+              "height": 707.796875
+            },
+            "mlp": {
+              "state": {
+                "status": "已完成「有效替换_32px.png」的分析。",
+                "error": false,
+                "cancelVisible": false,
+                "cancelDisabled": false,
+                "uploadDisabled": false,
+                "modelDisabled": false,
+                "runDisabled": false,
+                "saveDisabled": false,
+                "scrollWidth": 1440,
+                "width": 1440
+              },
+              "result": {
+                "text": "有效替换_32px.png\n\n空闲 · 占用分数 2.85% · MLP32\n\n新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+                "url": "blob:http://127.0.0.1:8768/5ea31496-cc4d-449c-b1f9-bde0d03ab692",
+                "loaded": true
+              }
+            }
+          },
+          "checks": [
+            {
+              "name": "Cold model shows byte progress and local enabled cancel",
+              "passed": true
+            },
+            {
+              "name": "Status is announced using live region",
+              "passed": true
+            },
+            {
+              "name": "Public manual review and export work during upload",
+              "passed": true
+            },
+            {
+              "name": "Cancel settles promptly and releases controls",
+              "passed": true
+            },
+            {
+              "name": "Late download cannot install a cancelled result",
+              "passed": true
+            },
+            {
+              "name": "Retry performs actual DINOv2 inference",
+              "passed": true
+            },
+            {
+              "name": "Bad image keeps the original successful image and score",
+              "passed": true
+            },
+            {
+              "name": "Bad image gives Chinese recovery instructions",
+              "passed": true
+            },
+            {
+              "name": "Valid replacement clears error and runs actual MLP32",
+              "passed": true
+            },
+            {
+              "name": "Human review remains unchanged after retry and replacement",
+              "passed": true
+            },
+            {
+              "name": "Long filename and controls remain within both viewport widths",
+              "passed": true
+            }
+          ],
+          "screenshots": [
+            "artifacts/parking-upload-designer-after-20261026-loading-full-1440.png",
+            "artifacts/parking-upload-designer-after-20261026-loading-1440.png",
+            "artifacts/parking-upload-designer-after-20261026-cancelled-full-1440.png",
+            "artifacts/parking-upload-designer-after-20261026-cancelled-1440.png",
+            "artifacts/parking-upload-designer-after-20261026-bad-keeps-result-full-1440.png",
+            "artifacts/parking-upload-designer-after-20261026-bad-keeps-result-1440.png"
+          ]
+        },
+        {
+          "width": 390,
+          "steps": {
+            "loading": {
+              "status": "正在加载 DINOv2-small 线性探针：13.7 / 13.7 MiB · 网络读取 13.7 MiB · 复用缓存 0.0 MiB。可取消。",
+              "error": false,
+              "cancelVisible": true,
+              "cancelDisabled": false,
+              "uploadDisabled": true,
+              "modelDisabled": true,
+              "runDisabled": true,
+              "saveDisabled": false,
+              "scrollWidth": 390,
+              "width": 390
+            },
+            "loading_panel_box": {
+              "x": 16,
+              "y": 494.328125,
+              "width": 358,
+              "height": 269.328125
+            },
+            "public_review_during_upload": {
+              "B-20150708-0805-1": {
+                "decision": "uncertain",
+                "note": "公开图片界面回归：上传加载时仍可记录该车位需要补充证据。",
+                "at": "2026-10-26T02:30:16.578Z"
+              }
+            },
+            "cancelled": {
+              "status": "已取消本地图片分析，可重新选择图片。",
+              "error": false,
+              "cancelVisible": false,
+              "cancelDisabled": false,
+              "uploadDisabled": false,
+              "modelDisabled": false,
+              "runDisabled": false,
+              "saveDisabled": false,
+              "scrollWidth": 390,
+              "width": 390,
+              "ms": 31,
+              "result": {
+                "text": "",
+                "url": null,
+                "loaded": false
+              }
+            },
+            "cancelled_panel_box": {
+              "x": 16,
+              "y": 424.328125,
+              "width": 358,
+              "height": 250.140625
+            },
+            "retry": {
+              "state": {
+                "status": "已完成「物业现场车位图_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_仅用于公开图片界面回归_20261026.jpg」的分析。",
+                "error": false,
+                "cancelVisible": false,
+                "cancelDisabled": false,
+                "uploadDisabled": false,
+                "modelDisabled": false,
+                "runDisabled": false,
+                "saveDisabled": false,
+                "scrollWidth": 390,
+                "width": 390
+              },
+              "result": {
+                "text": "物业现场车位图_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_仅用于公开图片界面回归_20261026.jpg\n\n倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针\n\n新画面没有现场风险校准，按规则应送人工复核。\n\n新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+                "url": "blob:http://127.0.0.1:8768/65ba2e0c-44eb-48a2-9d55-11cf07bdd544",
+                "loaded": true
+              }
+            },
+            "bad": {
+              "state": {
+                "status": "分析失败：图片无法读取，请确认文件能正常打开，或重新导出为 JPEG、PNG、WebP 后再试。下方保留上次成功结果。",
+                "error": true,
+                "cancelVisible": false,
+                "cancelDisabled": false,
+                "uploadDisabled": false,
+                "modelDisabled": false,
+                "runDisabled": false,
+                "saveDisabled": false,
+                "scrollWidth": 390,
+                "width": 390
+              },
+              "result": {
+                "text": "物业现场车位图_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_ABCDEFGHIJKLMNOPQRSTUVWXYZ_仅用于公开图片界面回归_20261026.jpg\n\n倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针\n\n新画面没有现场风险校准，按规则应送人工复核。\n\n新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+                "url": "blob:http://127.0.0.1:8768/65ba2e0c-44eb-48a2-9d55-11cf07bdd544",
+                "loaded": true
+              },
+              "same_image": true
+            },
+            "bad-keeps-result_panel_box": {
+              "x": 16,
+              "y": 191.734375,
+              "width": 358,
+              "height": 651.828125
+            },
+            "mlp": {
+              "state": {
+                "status": "已完成「有效替换_32px.png」的分析。",
+                "error": false,
+                "cancelVisible": false,
+                "cancelDisabled": false,
+                "uploadDisabled": false,
+                "modelDisabled": false,
+                "runDisabled": false,
+                "saveDisabled": false,
+                "scrollWidth": 390,
+                "width": 390
+              },
+              "result": {
+                "text": "有效替换_32px.png\n\n空闲 · 占用分数 2.85% · MLP32\n\n新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+                "url": "blob:http://127.0.0.1:8768/9f9ea87a-d2a6-4244-a119-18b9a3c825da",
+                "loaded": true
+              }
+            }
+          },
+          "checks": [
+            {
+              "name": "Cold model shows byte progress and local enabled cancel",
+              "passed": true
+            },
+            {
+              "name": "Status is announced using live region",
+              "passed": true
+            },
+            {
+              "name": "Public manual review and export work during upload",
+              "passed": true
+            },
+            {
+              "name": "Cancel settles promptly and releases controls",
+              "passed": true
+            },
+            {
+              "name": "Late download cannot install a cancelled result",
+              "passed": true
+            },
+            {
+              "name": "Retry performs actual DINOv2 inference",
+              "passed": true
+            },
+            {
+              "name": "Bad image keeps the original successful image and score",
+              "passed": true
+            },
+            {
+              "name": "Bad image gives Chinese recovery instructions",
+              "passed": true
+            },
+            {
+              "name": "Valid replacement clears error and runs actual MLP32",
+              "passed": true
+            },
+            {
+              "name": "Human review remains unchanged after retry and replacement",
+              "passed": true
+            },
+            {
+              "name": "Long filename and controls remain within both viewport widths",
+              "passed": true
+            }
+          ],
+          "screenshots": [
+            "artifacts/parking-upload-designer-after-20261026-loading-full-390.png",
+            "artifacts/parking-upload-designer-after-20261026-loading-390.png",
+            "artifacts/parking-upload-designer-after-20261026-cancelled-full-390.png",
+            "artifacts/parking-upload-designer-after-20261026-cancelled-390.png",
+            "artifacts/parking-upload-designer-after-20261026-bad-keeps-result-full-390.png",
+            "artifacts/parking-upload-designer-after-20261026-bad-keeps-result-390.png"
+          ]
+        }
+      ],
+      "page_errors": [],
+      "external_requests": [],
+      "passed": 22,
+      "total": 22,
+      "at": "2026-10-26T02:30:18.354Z"
+    },
+    "final_css_and_core_cancel": {
+      "base": "http://127.0.0.1:8768",
+      "scope": "Supplemental UI check of shared core metadata wait cancellation and only local upload label disabled styling. No model-output mocks and no inference needed.",
+      "hashes": {
+        "parking.mjs": "fa9e85ad48ceed6e7275ac7b883d869814c4e4598c22cca3c84695d62c9fdc7b",
+        "style.css": "1249cbdc3ba8bacfb1377f3dc7e4b3add4ded046cb33975d53e6da2932986e48",
+        "index.html": "c31fdb02d834c05af49af2691be5a8704f577e4483e9484498efe7f177348695"
+      },
+      "widths": [
+        {
+          "width": 1440,
+          "held": true,
+          "loading": {
+            "status": "正在分析「等待基础模型时取消的公开车位图.jpg」…",
+            "disabled": true,
+            "opacity": "0.46",
+            "cursor": "not-allowed",
+            "cancelVisible": true,
+            "result": "",
+            "width": 1440,
+            "scrollWidth": 1440,
+            "labelBox": {
+              "x": 1129,
+              "width": 110
+            }
+          },
+          "checks": [
+            {
+              "name": "Pending shared core can be cancelled immediately",
+              "passed": true
+            },
+            {
+              "name": "Disabled local label matches existing disabled buttons",
+              "passed": true
+            },
+            {
+              "name": "Enabled local label regains normal styling",
+              "passed": true
+            },
+            {
+              "name": "Shared page initialization finishes without cancelled upload result",
+              "passed": true
+            },
+            {
+              "name": "Scoped upload controls fit viewport",
+              "passed": true
+            }
+          ],
+          "screenshots": [
+            "artifacts/parking-upload-designer-core-20261026-disabled-full-1440.png",
+            "artifacts/parking-upload-designer-core-20261026-disabled-1440.png",
+            "artifacts/parking-upload-designer-core-20261026-cancelled-full-1440.png",
+            "artifacts/parking-upload-designer-core-20261026-cancelled-1440.png"
+          ],
+          "cancelled": {
+            "status": "已取消本地图片分析，可重新选择图片。",
+            "disabled": false,
+            "opacity": "1",
+            "cursor": "pointer",
+            "cancelVisible": false,
+            "result": "",
+            "width": 1440,
+            "scrollWidth": 1440,
+            "labelBox": {
+              "x": 1129,
+              "width": 110
+            },
+            "ms": 29
+          },
+          "after_shared_core": {
+            "status": "已取消本地图片分析，可重新选择图片。",
+            "disabled": false,
+            "opacity": "1",
+            "cursor": "pointer",
+            "cancelVisible": false,
+            "result": "",
+            "width": 1440,
+            "scrollWidth": 1440,
+            "labelBox": {
+              "x": 1129,
+              "width": 110
+            }
+          }
+        },
+        {
+          "width": 390,
+          "held": true,
+          "loading": {
+            "status": "正在分析「等待基础模型时取消的公开车位图.jpg」…",
+            "disabled": true,
+            "opacity": "0.46",
+            "cursor": "not-allowed",
+            "cancelVisible": true,
+            "result": "",
+            "width": 390,
+            "scrollWidth": 390,
+            "labelBox": {
+              "x": 33,
+              "width": 158
+            }
+          },
+          "checks": [
+            {
+              "name": "Pending shared core can be cancelled immediately",
+              "passed": true
+            },
+            {
+              "name": "Disabled local label matches existing disabled buttons",
+              "passed": true
+            },
+            {
+              "name": "Enabled local label regains normal styling",
+              "passed": true
+            },
+            {
+              "name": "Shared page initialization finishes without cancelled upload result",
+              "passed": true
+            },
+            {
+              "name": "Scoped upload controls fit viewport",
+              "passed": true
+            }
+          ],
+          "screenshots": [
+            "artifacts/parking-upload-designer-core-20261026-disabled-full-390.png",
+            "artifacts/parking-upload-designer-core-20261026-disabled-390.png",
+            "artifacts/parking-upload-designer-core-20261026-cancelled-full-390.png",
+            "artifacts/parking-upload-designer-core-20261026-cancelled-390.png"
+          ],
+          "cancelled": {
+            "status": "已取消本地图片分析，可重新选择图片。",
+            "disabled": false,
+            "opacity": "1",
+            "cursor": "pointer",
+            "cancelVisible": false,
+            "result": "",
+            "width": 390,
+            "scrollWidth": 390,
+            "labelBox": {
+              "x": 33,
+              "width": 324
+            },
+            "ms": 27
+          },
+          "after_shared_core": {
+            "status": "已取消本地图片分析，可重新选择图片。",
+            "disabled": false,
+            "opacity": "1",
+            "cursor": "pointer",
+            "cancelVisible": false,
+            "result": "",
+            "width": 390,
+            "scrollWidth": 390,
+            "labelBox": {
+              "x": 33,
+              "width": 324
+            }
+          }
+        }
+      ],
+      "page_errors": [],
+      "total": 10,
+      "passed": 10,
+      "at": "2026-10-26T02:33:04.294Z"
+    }
+  }
+}

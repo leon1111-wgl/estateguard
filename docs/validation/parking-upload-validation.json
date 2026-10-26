@@ -1,0 +1,114 @@
+{
+  "started_at": "2026-10-26T02:32:15.567Z",
+  "base": "http://127.0.0.1:8768",
+  "previous_baseline_commit": "52bdabb",
+  "baseline_report": "parking-upload-baseline.json",
+  "scope": "Actual DINOv2 and MLP32 on existing public CNRPark patches selected as local files. Native model-resource completion and actual DINO embedding return may be delayed. The embedding delay is injected into the actual encoder source fetched from the tested site, without replacing model outputs. Synthetic empty change is explicitly not a native file-picker cancellation.",
+  "checks": [
+    {
+      "name": "cold local model loading is cancellable and immediately permits handover restoration",
+      "passed": true,
+      "evidence": {
+        "loading": "正在加载 DINOv2-small 线性探针：2.1 / 13.7 MiB · 网络读取 2.1 MiB · 复用缓存 0.0 MiB。可取消。",
+        "blocked": "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复",
+        "cancel_ms": 28,
+        "restored": "已恢复人工复核 0 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。"
+      }
+    },
+    {
+      "name": "retry performs actual DINOv2 inference with a local public image",
+      "passed": true,
+      "evidence": {
+        "result": {
+          "text": "real-dino-retry.jpg倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+          "url": "blob:http://127.0.0.1:8768/d7335c63-14dd-4596-8b47-9664a6e83c5c",
+          "naturalWidth": 150
+        },
+        "status": "已完成「real-dino-retry.jpg」的分析。"
+      }
+    },
+    {
+      "name": "malformed JPEG and unsupported type preserve the previous successful result and URL",
+      "passed": true,
+      "evidence": {
+        "attempts": [
+          {
+            "name": "broken.jpg",
+            "message": "分析失败：图片无法读取，请确认文件能正常打开，或重新导出为 JPEG、PNG、WebP 后再试。下方保留上次成功结果。",
+            "result": {
+              "text": "real-dino-retry.jpg倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+              "url": "blob:http://127.0.0.1:8768/d7335c63-14dd-4596-8b47-9664a6e83c5c",
+              "naturalWidth": 150
+            }
+          },
+          {
+            "name": "unsupported.txt",
+            "message": "请选择不超过 10 MB 的 JPEG、PNG 或 WebP 单车位裁剪图。上次成功结果已保留。",
+            "result": {
+              "text": "real-dino-retry.jpg倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+              "url": "blob:http://127.0.0.1:8768/d7335c63-14dd-4596-8b47-9664a6e83c5c",
+              "naturalWidth": 150
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "successful MLP32 replacement commits real pixels and revokes only the old result URL",
+      "passed": true,
+      "evidence": {
+        "result": {
+          "text": "real-mlp-patch.png空闲 · 占用分数 2.85% · MLP32新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+          "url": "blob:http://127.0.0.1:8768/cdeacc3c-d26c-41cf-8b15-6569ef5ae140",
+          "naturalWidth": 32
+        }
+      }
+    },
+    {
+      "name": "local computation serializes model operations while manual review remains usable",
+      "passed": true,
+      "evidence": {
+        "disabled": {
+          "parking-run": true,
+          "parking-upload": true,
+          "parking-model-choice": true
+        },
+        "reviews": {
+          "B-20150708-0805-1": {
+            "decision": "uncertain",
+            "note": "本地图片分析期间继续保存公开车位复核。",
+            "at": "2026-10-26T02:32:17.771Z"
+          }
+        },
+        "cancelling": "正在取消，等待当前读取或计算结束…下方保留上次成功结果。",
+        "cancelled": "已取消本地图片分析，可重新选择图片。下方保留上次成功结果。"
+      }
+    },
+    {
+      "name": "actual retry after compute cancellation succeeds without altering manual review",
+      "passed": true,
+      "evidence": {
+        "result": {
+          "text": "dino-after-cancel.jpg倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+          "url": "blob:http://127.0.0.1:8768/a8b57bb0-1e4c-48ab-aa0c-318a2eabc3f0",
+          "naturalWidth": 150
+        }
+      }
+    },
+    {
+      "name": "public snapshot analysis prevents local model overlap and releases controls after stop",
+      "passed": true,
+      "evidence": {
+        "message": "分析已停止（2015/07/08 08:05 · DINOv2-small 线性探针）：1 / 53 个车位，134 ms（含图片读取，约 134 ms/个）。本相机尚未完成风险校准，所有车位送人工复核；模型倾向与概率可作参考。",
+        "completed_samples": 1
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "155.0.8059.85",
+  "finished_at": "2026-10-26T02:32:18.644Z",
+  "passed": 7,
+  "failed": 0,
+  "ok": true
+}

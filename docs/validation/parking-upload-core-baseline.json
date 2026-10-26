@@ -1,0 +1,18 @@
+{
+  "at": "2026-10-26T02:29:26.347Z",
+  "sha256": "ef6fe284d6668b62a853d738c79e7b11cc3d893c2c5f5083eb426b24effaca42",
+  "scope": "Controlled cold-start core JSON fetch stall. Uses existing public patch; no fake model outputs.",
+  "page_errors": [],
+  "after_cancel": {
+    "status": "正在取消，等待当前读取或计算结束…",
+    "run_disabled": true,
+    "file_disabled": true,
+    "model_disabled": true,
+    "play_disabled": true,
+    "cancel_disabled": true,
+    "cancel_hidden": false
+  },
+  "blocked": true,
+  "after_release": "已取消本地图片分析，可重新选择图片。",
+  "ok": true
+}

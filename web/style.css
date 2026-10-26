@@ -349,6 +349,8 @@ footer { max-width: 1480px; margin: 0 auto; padding: 16px 28px; border-top: 1px 
 #parking .parking-review-fields .button { justify-self: start; }
 #parking .parking-review-fields > p { margin: 0; }
 #parking .parking-upload-panel > p { font-size: 12px; color: var(--muted); }
+#parking .parking-upload-panel .file-button:has(#parking-upload:disabled) { opacity: .46; cursor: not-allowed; }
+#parking #parking-upload:disabled { cursor: not-allowed; }
 #parking .parking-model-panel, #parking #parking-onsite:not([hidden]) { display: grid; gap: 11px; }
 #parking .parking-model-panel > h2, #parking .parking-model-panel p { margin: 0; }
 #parking #parking-onsite { padding-top: 12px; border-top: 1px solid var(--line); }

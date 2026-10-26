@@ -1,0 +1,95 @@
+{
+  "at": "2026-10-26T02:22:57.073Z",
+  "base": "http://127.0.0.1:8768",
+  "baseline_commit": "52bdabb",
+  "scope": "用既有公开 CNRPark 图片作为本地文件。临时延迟真实 DINOv2 资源请求后放行，输出来自真实模型；非现场精度测试。",
+  "page_errors": [],
+  "external_requests": [],
+  "pending": {
+    "result": "正在分析本地车位图片…",
+    "message": "已导出模型版本、样本来源、预测、原始标签和人工结论。",
+    "stop_hidden": true,
+    "upload_disabled": false,
+    "visible_cancel_controls": []
+  },
+  "restore_during_upload": {
+    "current": "正在加载 DINOv2-small 线性探针：13.7 / 13.7 MiB · 网络读取 13.7 MiB · 复用缓存 0.0 MiB。",
+    "history": [
+      "正在加载 DINOv2-small 线性探针：0.0 / 13.7 MiB · 网络读取 0.0 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：0.1 / 13.7 MiB · 网络读取 0.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：1.2 / 13.7 MiB · 网络读取 1.2 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：1.9 / 13.7 MiB · 网络读取 1.9 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：2.1 / 13.7 MiB · 网络读取 2.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：2.2 / 13.7 MiB · 网络读取 2.2 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：2.3 / 13.7 MiB · 网络读取 2.3 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：2.3 / 13.7 MiB · 网络读取 2.3 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：2.3 / 13.7 MiB · 网络读取 2.3 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：2.7 / 13.7 MiB · 网络读取 2.7 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：2.8 / 13.7 MiB · 网络读取 2.8 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：2.9 / 13.7 MiB · 网络读取 2.9 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.1 / 13.7 MiB · 网络读取 3.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.1 / 13.7 MiB · 网络读取 3.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.2 / 13.7 MiB · 网络读取 3.2 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.3 / 13.7 MiB · 网络读取 3.3 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.3 / 13.7 MiB · 网络读取 3.3 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.4 / 13.7 MiB · 网络读取 3.4 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.4 / 13.7 MiB · 网络读取 3.4 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.4 / 13.7 MiB · 网络读取 3.4 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.6 / 13.7 MiB · 网络读取 3.6 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.8 / 13.7 MiB · 网络读取 3.8 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.8 / 13.7 MiB · 网络读取 3.8 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：3.9 / 13.7 MiB · 网络读取 3.9 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：4.0 / 13.7 MiB · 网络读取 4.0 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：4.1 / 13.7 MiB · 网络读取 4.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：4.1 / 13.7 MiB · 网络读取 4.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：4.2 / 13.7 MiB · 网络读取 4.2 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：4.3 / 13.7 MiB · 网络读取 4.3 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：4.4 / 13.7 MiB · 网络读取 4.4 MiB · 复用缓存 0.0 MiB。",
+      "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复",
+      "正在加载 DINOv2-small 线性探针：5.6 / 13.7 MiB · 网络读取 5.6 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：6.1 / 13.7 MiB · 网络读取 6.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：6.6 / 13.7 MiB · 网络读取 6.6 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：7.0 / 13.7 MiB · 网络读取 7.0 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：7.5 / 13.7 MiB · 网络读取 7.5 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：7.9 / 13.7 MiB · 网络读取 7.9 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：8.1 / 13.7 MiB · 网络读取 8.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：8.4 / 13.7 MiB · 网络读取 8.4 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：8.8 / 13.7 MiB · 网络读取 8.8 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：9.3 / 13.7 MiB · 网络读取 9.3 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：9.7 / 13.7 MiB · 网络读取 9.7 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：10.1 / 13.7 MiB · 网络读取 10.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：10.6 / 13.7 MiB · 网络读取 10.6 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：11.1 / 13.7 MiB · 网络读取 11.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：11.7 / 13.7 MiB · 网络读取 11.7 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：12.1 / 13.7 MiB · 网络读取 12.1 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：12.7 / 13.7 MiB · 网络读取 12.7 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：13.3 / 13.7 MiB · 网络读取 13.3 MiB · 复用缓存 0.0 MiB。",
+      "正在加载 DINOv2-small 线性探针：13.7 / 13.7 MiB · 网络读取 13.7 MiB · 复用缓存 0.0 MiB。"
+    ]
+  },
+  "completed": "local-parking-patch.jpg倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+  "restore_after_completion": "已恢复人工复核 0 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+  "prior_success": {
+    "text": "local-parking-patch.jpg倾向占用 · 校准后占用概率 58.08%（未校准 57.39%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。",
+    "image": "blob:http://127.0.0.1:8768/0e7fa468-8449-4e7d-b45d-1da532ea1021"
+  },
+  "failed_replacement": {
+    "text": "The source image could not be decoded.",
+    "images": 0,
+    "image": null
+  },
+  "checks": [
+    {
+      "name": "local upload offers an accessible cancellation control during model loading",
+      "passed": false
+    },
+    {
+      "name": "failed JPEG replacement retains the previous successful result and URL",
+      "passed": false
+    }
+  ],
+  "passed": 0,
+  "failed": 2,
+  "ok": false,
+  "finished_at": "2026-10-26T02:22:58.764Z"
+}

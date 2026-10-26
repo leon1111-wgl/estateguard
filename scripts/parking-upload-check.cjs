@@ -1,0 +1,66 @@
+/** Real local parking inference, cancellation and atomic result replacement.
+ * Faults only delay a native resource or the return of an actual DINO embedding; no model outputs are mocked. */
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const root=path.join(__dirname,'..'),out=path.join(root,'artifacts'),base=(process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766').replace(/\/$/,'');
+const reportName=process.env.PARKING_UPLOAD_REPORT||'parking-upload-validation.json';fs.mkdirSync(out,{recursive:true});
+const report={started_at:new Date().toISOString(),base,previous_baseline_commit:'52bdabb',baseline_report:'parking-upload-baseline.json',scope:'Actual DINOv2 and MLP32 on existing public CNRPark patches selected as local files. Native model-resource completion and actual DINO embedding return may be delayed. The embedding delay is injected into the actual encoder source fetched from the tested site, without replacing model outputs. Synthetic empty change is explicitly not a native file-picker cancellation.',checks:[],page_errors:[],external_requests:[]};
+const image=fs.readFileSync(path.join(root,'web/data/parking/images/B-20150708-0805-1.jpg'));
+const patch=fs.readFileSync(path.join(root,'web/data/parking/inputs/B-20150708-0805-1.png'));
+(async()=>{
+ const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});report.browser=await browser.version();let p,releaseDownload;
+ const test=async(name,fn)=>{const evidence={};try{await fn(evidence);report.checks.push({name,passed:true,evidence});console.log('PASS: '+name);}catch(e){report.checks.push({name,passed:false,error:e.message,evidence});console.error('FAIL: '+name+': '+e.message);throw e;}};
+ try{
+  p=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});p.setDefaultTimeout(30000);p.on('dialog',d=>d.accept());p.on('pageerror',e=>report.page_errors.push(e.message));p.on('request',r=>{if(r.url().startsWith('http')&&new URL(r.url()).origin!==new URL(base).origin)report.external_requests.push(r.url());});
+  await p.addInitScript(()=>{window.__revoked=[];window.__parkingMessages=[];const revoke=URL.revokeObjectURL;URL.revokeObjectURL=function(url){window.__revoked.push(url);return revoke.call(this,url);};document.addEventListener('DOMContentLoaded',()=>{new MutationObserver(()=>window.__parkingMessages.push(document.getElementById('parking-message').textContent)).observe(document.getElementById('parking-message'),{childList:true,subtree:true,characterData:true});});});
+  const nativeReturn='return dinoPool(hidden.data,hidden.dims[1],hidden.dims[2]);';
+  await p.route('**/parking-encoders.mjs',async route=>{const response=await route.fetch(),encoders=await response.text();assert.ok(encoders.includes(nativeReturn),'tested site embedding-return hook moved; update the test deliberately');await route.fulfill({response,body:encoders.replace(nativeReturn,'const actual=dinoPool(hidden.data,hidden.dims[1],hidden.dims[2]);if(globalThis.__holdUploadEmbed){globalThis.__uploadEmbedEntered=true;await new Promise(resolve=>globalThis.__releaseUploadEmbed=resolve);}return actual;')});});
+  await p.goto(base+'/#parking');await p.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===53&&document.getElementById('parking-model-choice').value==='dinov2');
+  const exportData=async()=>{const[d]=await Promise.all([p.waitForEvent('download'),p.locator('#parking-export').click()]);return JSON.parse(fs.readFileSync(await d.path(),'utf8'));};
+  const restore=async data=>{await p.locator('#parking-import').setInputFiles({name:'handover.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(data))});await p.waitForFunction(()=>document.getElementById('parking-message').textContent.startsWith('已恢复人工复核'));};
+  const result=()=>p.evaluate(()=>({text:document.getElementById('parking-upload-result').textContent,url:document.querySelector('#parking-upload-result img')?.src||null,naturalWidth:document.querySelector('#parking-upload-result img')?.naturalWidth||0}));
+  const status=()=>p.locator('#parking-upload-status').textContent();
+  const idle=()=>p.waitForFunction(()=>!document.getElementById('parking-upload').disabled&&!document.getElementById('parking-run').disabled&&!document.getElementById('parking-model-choice').disabled);
+  const success=async name=>{await p.waitForFunction(name=>document.querySelector('#parking-upload-result img')?.naturalWidth>0&&document.getElementById('parking-upload-result').textContent.includes(name)&&!document.getElementById('parking-upload').disabled,name,{timeout:180000});};
+  const upload=(name,bytes=image,mimeType='image/jpeg')=>p.locator('#parking-upload').setInputFiles({name,mimeType,buffer:bytes});
+  const initial=await exportData();let dinoResult,mlpResult,humanHandover;
+
+  await test('cold local model loading is cancellable and immediately permits handover restoration',async evidence=>{
+   let held;const entered=new Promise(r=>held=r),gate=new Promise(r=>releaseDownload=r);await p.route('**/models/dinov2-small/model_quantized.onnx*',async route=>{held();await gate;await route.continue().catch(()=>{});});
+   await upload('cold-dino.jpg');await entered;assert.equal(await p.locator('#parking-upload-cancel').isVisible(),true);assert.equal(await p.locator('#parking-upload-cancel').isEnabled(),true);assert.equal(await p.locator('#parking-upload-status').getAttribute('role'),'status');
+   evidence.loading=await status();await p.locator('#parking-import').setInputFiles({name:'handover.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(initial))});await p.waitForFunction(()=>window.__parkingMessages.some(s=>s.startsWith('恢复失败')));evidence.blocked=await p.locator('#parking-message').textContent();assert.match(evidence.blocked,/恢复失败/);
+   const start=Date.now();await p.locator('#parking-upload-cancel').click();await p.waitForFunction(()=>!document.getElementById('parking-upload').disabled&&!document.getElementById('parking-run').disabled,null,{timeout:1500});evidence.cancel_ms=Date.now()-start;assert.ok(evidence.cancel_ms<=1500);assert.equal((await result()).url,null);await restore(initial);evidence.restored=await p.locator('#parking-message').textContent();
+   releaseDownload();await p.unroute('**/models/dinov2-small/model_quantized.onnx*');await p.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));assert.equal((await result()).url,null);assert.match(await p.locator('#parking-message').textContent(),/^已恢复人工复核/);
+  });
+  await test('retry performs actual DINOv2 inference with a local public image',async evidence=>{
+   await upload('real-dino-retry.jpg');await success('real-dino-retry.jpg');dinoResult=await result();evidence.result=dinoResult;evidence.status=await status();assert.match(dinoResult.text,/DINOv2-small/);assert.match(dinoResult.text,/58\.08%/);assert.match(dinoResult.text,/57\.39%/);assert.match(dinoResult.text,/未.*验证|未经验证/);assert.equal(await p.locator('#parking-upload-cancel').isVisible(),false);
+  });
+  await test('malformed JPEG and unsupported type preserve the previous successful result and URL',async evidence=>{
+   evidence.attempts=[];await p.evaluate(()=>window.__lastUploadImage=document.querySelector('#parking-upload-result img'));
+   for(const [name,bytes,type] of [['broken.jpg',Buffer.from('not a JPEG'),'image/jpeg'],['unsupported.txt',Buffer.from('unsupported'),'text/plain']]){
+    await upload(name,bytes,type);await idle();await p.waitForFunction(()=>document.getElementById('parking-upload-status').classList.contains('error'));const after=await result(),message=await status();evidence.attempts.push({name,message,result:after});assert.deepEqual(after,dinoResult);assert.equal(await p.evaluate(()=>window.__lastUploadImage===document.querySelector('#parking-upload-result img')),true);assert.match(message,/[\u4e00-\u9fff]/);assert.equal(await p.evaluate(url=>window.__revoked.includes(url),dinoResult.url),false);
+   }
+  });
+  await test('successful MLP32 replacement commits real pixels and revokes only the old result URL',async evidence=>{
+   await p.locator('#parking-model-choice').selectOption('mlp32');await upload('real-mlp-patch.png',patch,'image/png');await success('real-mlp-patch.png');mlpResult=await result();evidence.result=mlpResult;assert.match(mlpResult.text,/MLP32/);assert.match(mlpResult.text,/2\.85%/);assert.notEqual(mlpResult.url,dinoResult.url);assert.equal(await p.evaluate(url=>window.__revoked.includes(url),dinoResult.url),true);assert.equal(await p.evaluate(url=>window.__revoked.includes(url),mlpResult.url),false);
+  });
+  await test('local computation serializes model operations while manual review remains usable',async evidence=>{
+   await p.locator('#parking-model-choice').selectOption('dinov2');await p.evaluate(()=>{window.__holdUploadEmbed=true;window.__uploadEmbedEntered=false;});await upload('cancel-computing.jpg');await p.waitForFunction(()=>window.__uploadEmbedEntered===true,null,{timeout:180000});
+   evidence.disabled={};for(const id of ['parking-run','parking-upload','parking-model-choice']){evidence.disabled[id]=await p.locator('#'+id).isDisabled();assert.equal(evidence.disabled[id],true);}
+   assert.equal(await p.locator('#parking-save').isEnabled(),true);await p.locator('#parking-decision').selectOption('uncertain');await p.locator('#parking-note').fill('本地图片分析期间继续保存公开车位复核。');await p.locator('#parking-save').click();await p.waitForFunction(()=>document.getElementById('parking-review-message').textContent.startsWith('已保存'));humanHandover=await exportData();assert.equal(Object.keys(humanHandover.reviews).length,1);assert.deepEqual(await result(),mlpResult);evidence.reviews=humanHandover.reviews;
+   // Explicit synthetic empty change, not a native file-picker cancel. It must not abandon task ownership.
+   await p.locator('#parking-upload').dispatchEvent('change');assert.equal(await p.locator('#parking-run').isDisabled(),true);assert.equal(await p.locator('#parking-upload-cancel').isVisible(),true);
+   await p.locator('#parking-upload-cancel').click();evidence.cancelling=await status();assert.equal(await p.locator('#parking-run').isDisabled(),true,'the original embedding has not returned; no second model task may start');assert.deepEqual(await result(),mlpResult);
+   await p.evaluate(()=>{window.__holdUploadEmbed=false;window.__releaseUploadEmbed();});await idle();evidence.cancelled=await status();assert.deepEqual(await result(),mlpResult);assert.equal(await p.evaluate(url=>window.__revoked.includes(url),mlpResult.url),false);await restore(humanHandover);assert.deepEqual((await exportData()).reviews,humanHandover.reviews);
+  });
+  await test('actual retry after compute cancellation succeeds without altering manual review',async evidence=>{
+   await upload('dino-after-cancel.jpg');await success('dino-after-cancel.jpg');const after=await result();evidence.result=after;assert.match(after.text,/58\.08%/);assert.notEqual(after.url,mlpResult.url);assert.equal(await p.evaluate(url=>window.__revoked.includes(url),mlpResult.url),true);assert.deepEqual((await exportData()).reviews,humanHandover.reviews);
+  });
+  await test('public snapshot analysis prevents local model overlap and releases controls after stop',async evidence=>{
+   const before=await result();let held,release;const entered=new Promise(r=>held=r),gate=new Promise(r=>release=r);const sample='B-20150708-0805-1',pattern='**/data/parking/images/'+sample+'.jpg';
+   await p.route(pattern,async route=>{if(route.request().resourceType()==='fetch'){held();await gate;}await route.continue();});await p.locator('#parking-run').click();await entered;assert.equal(await p.locator('#parking-upload').isDisabled(),true);assert.equal(await p.locator('#parking-model-choice').isDisabled(),true);assert.equal(await p.locator('#parking-upload-cancel').isVisible(),false);await p.locator('#parking-stop').click();release();await p.unroute(pattern);await idle();assert.deepEqual(await result(),before);evidence.message=await p.locator('#parking-message').textContent();assert.match(evidence.message,/分析已停止/);const exported=await exportData();evidence.completed_samples=exported.samples.length;assert.ok(exported.samples.length>=1);assert.deepEqual(exported.reviews,humanHandover.reviews);
+  });
+  await p.screenshot({path:path.join(out,reportName.replace(/\.json$/,'')+'-desktop.png'),fullPage:true});
+ }catch(e){report.fatal_error=e.stack;console.error(e);}
+ finally{releaseDownload?.();await p?.evaluate(()=>{window.__holdUploadEmbed=false;window.__releaseUploadEmbed?.();}).catch(()=>{});await browser.close();report.finished_at=new Date().toISOString();report.passed=report.checks.filter(c=>c.passed).length;report.failed=report.checks.filter(c=>!c.passed).length;report.ok=report.checks.length===7&&!report.failed&&!report.fatal_error&&!report.page_errors.length&&!report.external_requests.length;fs.writeFileSync(path.join(out,reportName),JSON.stringify(report,null,2));console.log(JSON.stringify({report:'artifacts/'+reportName,passed:report.passed,failed:report.failed,ok:report.ok}));if(!report.ok)process.exitCode=1;}
+})();

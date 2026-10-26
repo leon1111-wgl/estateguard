@@ -11,16 +11,16 @@ const routedLabels={free:'自动判空闲',busy:'自动判占用',uncertain:'需
 const base=new URL('./data/parking/',import.meta.url),extBase=new URL('./data/parking-ext/',import.meta.url),transferBase=new URL('./data/parking-transfer/',import.meta.url);
 const src=(r,field='image')=>new URL(r[field],r.base||base);
 const mib=bytes=>(bytes/1048576).toFixed(1);
-let model=null,evaluation=null,manifest=null,corePromise=null,dataPromise=null,samples=new Map(),frames=[],frameIndex=0,selected=null,running=false,playTimer=null,playSequence=0,cancelled=false,uploadSequence=0,importSequence=0,uploadURL=null,changed=false,analysisPromise=null,analysisFrameId=null,analysisSequence=0;
+let model=null,evaluation=null,manifest=null,corePromise=null,dataPromise=null,samples=new Map(),frames=[],frameIndex=0,selected=null,running=false,playTimer=null,playSequence=0,cancelled=false,importSequence=0,uploadURL=null,changed=false,analysisPromise=null,analysisFrameId=null,analysisSequence=0;
 // Model-input failures belong to that model; review-photo failures remain separate.
 const failures={mlp32:new Map(),mobilenet:new Map(),dinov2:new Map()},reviews={},drafts=new Map();
 // One prediction map per model; transfer models also keep calibrated scores and embeddings for on-site adaptation.
 const sets={mlp32:new Map(),mobilenet:new Map(),dinov2:new Map()},calibratedSets={mobilenet:new Map(),dinov2:new Map()},embeddings={mobilenet:new Map(),dinov2:new Map()};
-const heads={},encoders={},encoderPromises={},adaptations={mobilenet:{},dinov2:{}},onsiteRouting={mobilenet:{},dinov2:{}},driftLog={};
+const heads={},encoders={},encoderPromises={},encoderControllers={},adaptations={mobilenet:{},dinov2:{}},onsiteRouting={mobilenet:{},dinov2:{}},driftLog={};
 // driftLog[camera] = {evidence_from, history}: a revocation says this camera's scene changed, so it restricts every
 // model's recalibration and survives recalibration, target changes, adaptation, clearing and restoring review files
 // (restores merge the file's records in). Only reloading the page forgets it, so it is exported with every review file.
-let current='mlp32',predictions=sets.mlp32,transferEvaluation=null,auditReplay=null,encoderController=null,modelChosenByUser=false;
+let current='mlp32',predictions=sets.mlp32,transferEvaluation=null,auditReplay=null,modelChosenByUser=false;
 const transfer=()=>current!=='mlp32';
 const labelOf=state=>(transfer()?routedLabels:labels)[state];
 // A side revoked by spot checks stops auto-deciding; the certified thresholds stay on record for the export.
@@ -41,8 +41,9 @@ function auditSide(id,key=current){
 function stateOf(id,p){if(!transfer())return classifyScore(p);const side=routeScore(calibratedSets[current].get(id),routingFor(samples.get(id)?.camera));return side==='review'||auditSide(id)?'uncertain':side;}
 function scoreSample(id,key=current){const r=samples.get(id),z=embeddings[key].get(id);if(!z)return;const {score,calibrated}=predictHead(z,heads[key],adaptations[key][r.camera]);sets[key].set(id,score);calibratedSets[key].set(id,calibrated);}
 const evidenceFailures=new Map(),evidenceAttempts=new Map();
-let errorAudit=null,errorPredictionsHash=null,errorJumpSequence=0,uploadPending=false;
+let errorAudit=null,errorPredictionsHash=null,errorJumpSequence=0,uploadPending=false,uploadJob=null;
 const notice=(s,error=false)=>{$('parking-message').textContent=s;$('parking-message').classList.toggle('error',error);};
+const uploadNotice=(s,error=false)=>{$('parking-upload-status').textContent=s;$('parking-upload-status').classList.toggle('error',error);};
 const reviewNotice=(s,error=false)=>{$('parking-review-message').textContent=s;$('parking-review-message').classList.toggle('error',error);};
 const download=(name,value)=>{const url=URL.createObjectURL(new Blob([typeof value==='string'?value:JSON.stringify(value)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 async function json(url){const r=await fetch(url);if(!r.ok)throw new Error(`资源加载失败 (${r.status})`);return r.json();}
@@ -87,9 +88,9 @@ async function loadData(){
   // The CNR-EXT subset is optional: the B test set stays usable if it fails to load.
   try{const ext=await json(new URL('manifest.json',extBase));for(const r of ext.samples){r.base=extBase;samples.set(r.id,r);}extManifest=ext;allFrames.push(...ext.frames);}catch(e){extManifest=null;}
   const sessions=[...new Set(allFrames.map(f=>f.session))];$('parking-session').replaceChildren(...sessions.map(s=>{const option=document.createElement('option');option.value=s;const fs=allFrames.filter(f=>f.session===s),f=fs[0];option.textContent=f.weather?`摄像头 ${f.camera} · CNR-EXT 保留测试 · ${fs.map(x=>weatherLabels[x.weather]).join('/')} ${fs.length} 个快照`:`摄像头 ${f.camera} · ${formatDate(f.date)} · 测试集`;return option;}));
-  setSession();$('parking-run').disabled=false;
+  setSession();updateAnalysisControls();
   notice(`已加载完整测试集：${next.samples.length} 张真实车位图片，${next.frames.length} 个历史快照${extManifest?`；另有 CNR-EXT 保留测试 ${extManifest.samples.length} 张、${extManifest.frames.length} 个快照（9 个新视角，未参与训练与选模）`:'；CNR-EXT 保留测试子集加载失败，可刷新重试'}。点击“分析当前快照”运行模型。`,!extManifest);
- })().catch(e=>{dataPromise=null;manifest=null;$('parking-run').disabled=false;throw e;});return dataPromise;
+ })().catch(e=>{dataPromise=null;manifest=null;updateAnalysisControls();throw e;});return dataPromise;
 }
 function formatDate(d){return `${d.slice(0,4)}/${d.slice(4,6)}/${d.slice(6,8)}`;}
 function walltime(f){return `${formatDate(f.date)} ${f.time.slice(0,2)}:${f.time.slice(2)}`;}
@@ -145,18 +146,25 @@ function renderDetail(){
  const d=drafts.get(r.id)||reviews[r.id]||{decision:'pending',note:''};$('parking-decision').value=d.decision;$('parking-note').value=d.note;
 }
 async function pixels(url){const image=new Image();image.src=url;let timer;try{await Promise.race([image.decode(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('图片读取超时，请重试')),15000);})]);}catch(error){image.src='';throw error;}finally{clearTimeout(timer);}if(image.naturalWidth*image.naturalHeight>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');const c=document.createElement('canvas');c.width=image.naturalWidth;c.height=image.naturalHeight;if(c.width*c.height>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0);const source=ctx.getImageData(0,0,c.width,c.height).data;const out=new Uint8ClampedArray(4096);for(let y=0;y<32;y++)for(let x=0;x<32;x++){const sx=Math.floor((x+.5)*c.width/32),sy=Math.floor((y+.5)*c.height/32),i=(sy*c.width+sx)*4;out.set(source.subarray(i,i+4),(y*32+x)*4);}return out;}
-function busy(value){running=value;$('parking-stop').hidden=!value;for(const id of ['parking-run','parking-session','parking-frame','parking-upload','parking-save','parking-save-next','parking-model-choice','parking-import'])$(id).disabled=value;render();}
+function updateAnalysisControls(){
+ for(const id of ['parking-run','parking-upload','parking-model-choice'])$(id).disabled=running||!!analysisPromise||uploadPending;
+ $('parking-play').disabled=uploadPending;
+ $('parking-upload-cancel').hidden=!uploadPending;
+ $('parking-upload-cancel').disabled=!!uploadJob?.controller.signal.aborted;
+}
+function busy(value){running=value;$('parking-stop').hidden=!value;for(const id of ['parking-session','parking-frame','parking-save','parking-save-next','parking-import'])$(id).disabled=value;updateAnalysisControls();render();}
 // Encoders are cached per page; loading reports verified bytes and can be cancelled from the stop button.
-function ensureEncoder(key){
+function ensureEncoder(key,{onProgress}={}){
  if(encoders[key])return Promise.resolve(encoders[key]);
  if(!encoderPromises[key]){
-  const controller=new AbortController();encoderController=controller;
-  encoderPromises[key]=loadEncoder(key,{signal:controller.signal,onProgress:p=>{if(controller.signal.aborted)return;const line=`正在加载 ${ENCODERS[key].label}：${mib(p.loaded)} / ${mib(p.total)} MiB · 网络读取 ${mib(p.networkBytes)} MiB · 复用缓存 ${mib(p.cacheBytes)} MiB`;notice(`${line}。${running?'可停止。':''}`);if(uploadPending)$('parking-upload-result').textContent=`${line}…`;}})
-   .then(e=>{encoders[key]=e;updateModelBar();updateModelPanel();if(!running)notice(`${ENCODERS[key].label} 已加载（${e.backend}），之后分析复用本页模型。`);return e;}).finally(()=>{encoderPromises[key]=null;if(encoderController===controller)encoderController=null;});
+  const controller=new AbortController();encoderControllers[key]=controller;
+  encoderPromises[key]=loadEncoder(key,{signal:controller.signal,onProgress:p=>{if(controller.signal.aborted)return;const line=`正在加载 ${ENCODERS[key].label}：${mib(p.loaded)} / ${mib(p.total)} MiB · 网络读取 ${mib(p.networkBytes)} MiB · 复用缓存 ${mib(p.cacheBytes)} MiB`;if(onProgress)onProgress(line);else notice(`${line}。可停止。`);}})
+   .then(e=>{encoders[key]=e;updateModelBar();updateModelPanel();return e;}).finally(()=>{if(encoderControllers[key]===controller){encoderPromises[key]=null;delete encoderControllers[key];}});
  }
  return encoderPromises[key];
 }
 function runCurrent(){
+ if(uploadPending){notice('正在分析本地车位图片，请先取消或等待完成，再分析快照。',true);return Promise.resolve();}
  // Playback must await an existing manual run instead of treating it as finished.
  if(analysisPromise){
   const wanted=frames[frameIndex]?.id,ticket=analysisSequence;
@@ -173,15 +181,17 @@ function runCurrent(){
    failedInputs.delete(r.id);}catch(e){failedInputs.set(r.id,e.message);target.delete(r.id);calibratedSets[key]?.delete(r.id);embeddings[key]?.delete(r.id);}done++;notice(`正在分析快照 ${frameTime}：${done} / ${rows.length} 个车位。`);}}));
   const failed=rows.filter(r=>failedInputs.has(r.id)).length,elapsed=performance.now()-start,count=rows.filter(r=>target.has(r.id)).length,revoked=key==='mlp32'||!rows.length?[]:checkAudit(rows[0].camera);if(revoked.length)modelNotice(revoked.join(''),true);
   notice(`${cancelled?'分析已停止':'当前快照分析完成'}（${frameTime} · ${key==='mlp32'?'MLP32':ENCODERS[key].label}）：${count} / ${rows.length} 个车位，${Math.round(elapsed)} ms（含图片读取${count?`，约 ${Math.round(elapsed/Math.max(1,done))} ms/个`:''}）${loadMs>50?`；编码器加载 ${Math.round(loadMs)} ms`:''}。${failed?'读取失败项保留为未分析，可重试。':key==='mlp32'?'预测来自图片像素；原始标注只用于对照。':routingNote(frames[frameIndex].camera)}`,!!failed);
- }catch(e){if(e?.name==='AbortError')notice('已停止加载编码器。已下载并校验的资源会缓存，可重新分析。');else notice(e.message,true);}finally{busy(false);}})().finally(()=>{analysisPromise=null;analysisFrameId=null;});
+ }catch(e){if(e?.name==='AbortError')notice('已停止加载编码器。已下载并校验的资源会缓存，可重新分析。');else notice(e.message,true);}finally{busy(false);}})().finally(()=>{analysisPromise=null;analysisFrameId=null;updateAnalysisControls();});
+ updateAnalysisControls();
  return analysisPromise;
 }
 async function playback(){
+ if(uploadPending){notice('正在分析本地车位图片，请先取消或等待完成，再播放快照。',true);return;}
  if(playTimer){stopPlayback();return;}if(!manifest)return;
  const ticket=++playSequence;playTimer=-1;$('parking-play').textContent='停止回放';$('parking-play').setAttribute('aria-pressed','true');
  const tick=async()=>{if(ticket!==playSequence||location.hash!=='#parking')return;await runCurrent();if(ticket!==playSequence)return;if(frameIndex>=frames.length-1){stopPlayback();return;}playTimer=setTimeout(()=>{if(ticket!==playSequence)return;chooseFrame(frameIndex+1);tick();},1800);};tick();
 }
-const stopButton=document.createElement('button');stopButton.id='parking-stop';stopButton.className='button';stopButton.type='button';stopButton.textContent='停止分析';stopButton.hidden=true;$('parking-run').after(stopButton);stopButton.addEventListener('click',()=>{analysisSequence++;cancelled=true;encoderController?.abort(new DOMException('已取消加载','AbortError'));stopPlayback();notice('正在停止，已完成的预测会保留。');});
+const stopButton=document.createElement('button');stopButton.id='parking-stop';stopButton.className='button';stopButton.type='button';stopButton.textContent='停止分析';stopButton.hidden=true;$('parking-run').after(stopButton);stopButton.addEventListener('click',()=>{if(!running)return;analysisSequence++;cancelled=true;encoderControllers[current]?.abort(new DOMException('已取消加载','AbortError'));stopPlayback();notice('正在停止，已完成的预测会保留。');});
 $('parking-run').addEventListener('click',runCurrent);
 $('parking-session').addEventListener('change',setSession);
 $('parking-frame').addEventListener('input',()=>{stopPlayback();chooseFrame(Number($('parking-frame').value));});
@@ -262,10 +272,56 @@ importer.addEventListener('change',async e=>{
   revealSelectedTile();
  }catch(e){if(ticket===importSequence)notice(`恢复失败：${e.message}`,true);}
 });
-$('parking-upload').addEventListener('change',async e=>{const file=e.target.files[0],ticket=++uploadSequence;e.target.value='';if(!file)return;let url;try{if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>10*1024*1024)throw new Error('请选择不超过 10 MB 的 JPEG、PNG 或 WebP 单车位裁剪图');$('parking-upload-result').textContent='正在分析本地车位图片…';uploadPending=true;await loadCore();url=URL.createObjectURL(file);const key=current;let html;
- if(key==='mlp32'){const data=await pixels(url);if(ticket!==uploadSequence){URL.revokeObjectURL(url);return;}const score=predictPatch(data,model);html=`<p>${labels[classifyScore(score)]} · 占用分数 ${(score*100).toFixed(2)}% · MLP32</p>`;}
- else{const encoder=await ensureEncoder(key),bitmap=await decodeImage(url);let z;try{z=await encoder.embed(bitmap);}finally{bitmap.close();}if(ticket!==uploadSequence){URL.revokeObjectURL(url);return;}const {score,calibrated}=predictHead(z,heads[key]);html=`<p>${calibrated>=.5?'倾向占用':'倾向空闲'} · 校准后占用概率 ${(calibrated*100).toFixed(2)}%（未校准 ${(score*100).toFixed(2)}%）· ${text(ENCODERS[key].label)}</p><p class="subtle">新画面没有现场风险校准，按规则应送人工复核。</p>`;}
- if(uploadURL)URL.revokeObjectURL(uploadURL);uploadURL=url;$('parking-upload-result').innerHTML=`<img src="${url}" alt="本地单车位裁剪图"><strong>${text(file.name)}</strong>${html}<p class="subtle">新场景结果未经验证，没有数据集标签可对照。不是违规判断。</p>`;}catch(e){if(url)URL.revokeObjectURL(url);if(ticket===uploadSequence)$('parking-upload-result').textContent=e.name==='AbortError'?'模型加载已停止，可重新选择图片。':e.message;}finally{if(ticket===uploadSequence)uploadPending=false;}});
+async function waitForUploadCore(signal){
+ // Page initialization shares this request. Cancel only the upload's wait, not other consumers.
+ let abort;try{return await Promise.race([loadCore(),new Promise((_,reject)=>{
+  abort=()=>reject(signal.reason);if(signal.aborted)abort();else signal.addEventListener('abort',abort,{once:true});
+ })]);}finally{signal.removeEventListener('abort',abort);}
+}
+$('parking-upload-cancel').addEventListener('click',()=>{
+ const job=uploadJob;if(!job||job.controller.signal.aborted)return;
+ job.controller.abort(new DOMException('已取消本地图片分析','AbortError'));
+ encoderControllers[job.key]?.abort(job.controller.signal.reason);
+ uploadNotice(`正在取消，等待当前读取或计算结束…${uploadURL?'下方保留上次成功结果。':''}`);
+ updateAnalysisControls();
+});
+$('parking-upload').addEventListener('change',async e=>{
+ const file=e.target.files[0];e.target.value='';if(!file)return;
+ // One parking inference job at a time. A failed/cancelled attempt never owns the committed preview.
+ if(uploadPending||running||analysisPromise){uploadNotice('已有车位分析正在运行，请先停止或等待完成，再选择图片。',true);return;}
+ if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>10*1024*1024){uploadNotice(`请选择不超过 10 MB 的 JPEG、PNG 或 WebP 单车位裁剪图。${uploadURL?'上次成功结果已保留。':''}`,true);return;}
+ const job={controller:new AbortController(),key:null};uploadJob=job;uploadPending=true;stopPlayback();updateAnalysisControls();
+ const retained=()=>uploadURL?'下方保留上次成功结果。':'';
+ const check=()=>{if(job.controller.signal.aborted||uploadJob!==job)throw job.controller.signal.reason||new DOMException('任务已取消','AbortError');};
+ let url,stage='prepare';
+ uploadNotice(`正在分析「${file.name}」…${retained()}`);
+ try{
+  await waitForUploadCore(job.controller.signal);check();const key=current;job.key=key;url=URL.createObjectURL(file);let html;
+  if(key==='mlp32'){
+   stage='image';const data=await pixels(url);check();stage='inference';const score=predictPatch(data,model);
+   html=`<p>${labels[classifyScore(score)]} · 占用分数 ${(score*100).toFixed(2)}% · MLP32</p>`;
+  }else{
+   stage='model';const encoder=await ensureEncoder(key,{onProgress:line=>{if(uploadJob===job&&!job.controller.signal.aborted)uploadNotice(`${line}。可取消。${retained()}`);}});check();
+   stage='image';uploadNotice(`正在读取「${file.name}」…${retained()}`);const bitmap=await decodeImage(url,{signal:job.controller.signal});let z;
+   try{check();stage='inference';uploadNotice(`正在计算「${file.name}」…${retained()}`);z=await encoder.embed(bitmap);check();}finally{bitmap.close();}
+   const {score,calibrated}=predictHead(z,heads[key]);
+   html=`<p>${calibrated>=.5?'倾向占用':'倾向空闲'} · 校准后占用概率 ${(calibrated*100).toFixed(2)}%（未校准 ${(score*100).toFixed(2)}%）· ${text(ENCODERS[key].label)}</p><p class="subtle">新画面没有现场风险校准，按规则应送人工复核。</p>`;
+  }
+  check();const previous=uploadURL;
+  $('parking-upload-result').innerHTML=`<img src="${url}" alt="本地单车位裁剪图"><strong>${text(file.name)}</strong>${html}<p class="subtle">新场景结果未经验证，没有数据集标签可对照。不是违规判断。</p>`;
+  uploadURL=url;url=null;if(previous)URL.revokeObjectURL(previous);
+  uploadNotice(`已完成「${file.name}」的分析。`);
+ }catch(error){
+  if(uploadJob===job){
+   if(job.controller.signal.aborted||error.name==='AbortError')uploadNotice(`已取消本地图片分析，可重新选择图片。${retained()}`);
+   else{const reason=/[\u4e00-\u9fff]/.test(error.message)?error.message:stage==='image'?'图片无法读取，请确认文件能正常打开，或重新导出为 JPEG、PNG、WebP 后再试':stage==='inference'?'模型计算失败，请重新选择图片重试':'模型加载失败，请检查网络后重试';uploadNotice(`分析失败：${reason}。${retained()}`,true);}
+  }
+ }finally{
+  if(url)URL.revokeObjectURL(url);
+  // Do not unlock while non-interruptible decoding / WASM work or a cancelled loader is still settling.
+  if(uploadJob===job){uploadJob=null;uploadPending=false;updateAnalysisControls();}
+ }
+});
 window.addEventListener('beforeunload',e=>{if(changed||drafts.size){e.preventDefault();e.returnValue='';}});
 const errorFilters=()=>({type:$('parking-error-type').value,slot:$('parking-error-slot').value});
 function updateErrorFilters(){
@@ -279,6 +335,7 @@ function updateErrorFilters(){
 }
 async function openAuditSample(id){
  if(!id)return;const r=samples.get(id),ticket=++errorJumpSequence;
+ if(uploadPending){const message='正在分析本地车位图片，请先取消或等待完成，再打开错例。';$('parking-error-status').classList.add('error');$('parking-error-status').textContent=message;$('parking-error-example').value='';return;}
  // The audit lists MLP32's frozen errors, so re-inference uses MLP32; other models stay one switch away.
  if(current!=='mlp32'&&running){const message='车位巡检正在用其他模型分析，请先停止或等待完成，再打开 MLP32 错例。';notice(message,true);$('parking-error-status').classList.add('error');$('parking-error-status').textContent=message;$('parking-error-example').value='';return;}
  if(current!=='mlp32'){modelChosenByUser=true;current='mlp32';predictions=sets.mlp32;$('parking-model-choice').value='mlp32';updateModelBar();modelNotice('错例清单来自 MLP32 基线，已切换到 MLP32 用真实像素重新推理；可切换其他模型对比同一车位。');reviewNotice('已切换到 MLP32 重新推理此错例；可在“占用模型”中切换对比。');}
@@ -465,7 +522,7 @@ function updateModelPanel(){
  $('parking-onsite-status').textContent=status;
  $('parking-calibrate').disabled=running||!fresh.length;$('parking-adapt').disabled=running||!all.length;$('parking-adapt-reset').disabled=running||!ad&&!route;
 }
-$('parking-model-choice').addEventListener('change',()=>{if(running)return;modelChosenByUser=true;current=$('parking-model-choice').value;predictions=sets[current];updateModelBar();modelNotice('');render();const n=currentRows().filter(r=>predictions.has(r.id)).length;notice(`已切换到 ${current==='mlp32'?'MLP32 基线':ENCODERS[current].label}。${n?`当前快照已有 ${n} 个该模型的结果。`:'请点击“分析当前快照”运行该模型。'}各模型结果分别保留，人工结论不受影响。`);});
+$('parking-model-choice').addEventListener('change',()=>{if(running||analysisPromise||uploadPending){$('parking-model-choice').value=current;return;}modelChosenByUser=true;current=$('parking-model-choice').value;predictions=sets[current];updateModelBar();modelNotice('');render();const n=currentRows().filter(r=>predictions.has(r.id)).length;notice(`已切换到 ${current==='mlp32'?'MLP32 基线':ENCODERS[current].label}。${n?`当前快照已有 ${n} 个该模型的结果。`:'请点击“分析当前快照”运行该模型。'}各模型结果分别保留，人工结论不受影响。`);});
 $('parking-risk-target').addEventListener('change',()=>{const had=['mobilenet','dinov2'].some(key=>Object.values(onsiteRouting[key]).some(o=>certified(o.routing)));for(const key of ['mobilenet','dinov2'])onsiteRouting[key]={};modelNotice(had?'风险目标已改变，所有模型已通过的阈值作废，请重新校准。':'');render();});
 $('parking-calibrate').addEventListener('click',()=>{try{
  const camera=frames[frameIndex].camera,{from,items}=calibrationItems(camera);if(!items.length)throw new Error(from?`本相机阈值曾被抽检撤销，需要 ${formatDate(from)} 及之后快照的人工确认结论才能重新校准。`:'当前摄像头还没有可用于校准的人工确认结论。');
