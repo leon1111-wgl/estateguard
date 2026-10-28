@@ -15,7 +15,7 @@
 <section id="parking" data-page hidden>
   <div class="page-heading">
     <div><h1>车位巡检</h1><p>分析公开停车场的历史车位裁剪图，逐个核对空闲与占用状态。</p></div>
-    <div class="toolbar"><button id="parking-export" class="button" type="button">导出巡检 JSON</button><button id="parking-run" class="button primary" type="button" disabled>分析当前快照</button></div>
+    <div class="toolbar"><button id="parking-export" class="button" type="button">导出巡检 JSON</button><button id="parking-open-draft" class="button" type="button" hidden>查看未保存草稿</button><button id="parking-run" class="button primary" type="button" disabled>分析当前快照</button></div>
   </div>
   <div class="model-bar"><span class="status-dot" aria-hidden="true"></span><strong id="parking-model-status">占用分类器尚未加载</strong><span id="parking-model-source">本项目使用公开标签训练</span><span id="parking-model-data">CNRPark 基础子集</span><a href="#results">训练与评测记录</a></div>
   <p id="parking-message" class="message" role="status" aria-live="polite">历史裁剪图片快照，不是视频或实时摄像头。车位占用不代表违停。</p>

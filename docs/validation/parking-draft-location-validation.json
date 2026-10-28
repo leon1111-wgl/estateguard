@@ -1,0 +1,125 @@
+{
+  "started_at": "2026-10-28T15:57:04.888Z",
+  "base": "http://127.0.0.1:8768",
+  "previous_baseline_commit": "bd37657",
+  "baseline_report": "parking-draft-location-baseline.json",
+  "scope": "Actual Chrome and real MLP32 on public CNRPark pixels. No product modules or model outputs are replaced. Controlled public-input image delays and HTTP 500 test busy/stop/failure recovery. CNR-EXT is used only to locate human drafts, not to tune a model.",
+  "checks": [
+    {
+      "name": "an off-screen draft has a direct route back to its original snapshot",
+      "passed": true,
+      "evidence": {
+        "export_message": "还有未保存的车位草稿（1 条），请点击“查看未保存草稿”定位并处理后再导出。",
+        "current_sample": "B-20150708-0810-1",
+        "visible_note": "",
+        "locator_count": 1,
+        "returned_sample": "B-20150708-0805-1"
+      }
+    },
+    {
+      "name": "oldest draft wins across camera, date and hidden filters without changing model or truth view",
+      "passed": true,
+      "evidence": {
+        "oldest": "B-20150708-0805-1",
+        "other": {
+          "id": "C1-20151116-1210-184",
+          "frame_id": "C1-20151116-1210",
+          "session": "C1-ext"
+        },
+        "model": "mobilenet",
+        "truth": true,
+        "auto_saved": false
+      }
+    },
+    {
+      "name": "saving one draft reveals the next and reverting it removes only that draft",
+      "passed": true,
+      "evidence": {
+        "saved": {
+          "B-20150708-0805-1": {
+            "decision": "uncertain",
+            "note": "08:05 第一车位的真实待交接备注",
+            "at": "2026-10-28T15:57:06.287Z"
+          }
+        },
+        "reverted_without_record": "C1-20151116-1210-184"
+      }
+    },
+    {
+      "name": "failed saves and invalid handovers keep the draft count, identity and editable text",
+      "passed": true,
+      "evidence": {
+        "import_error": "恢复失败：Expected property name or '}' in JSON at position 1 (line 1 column 2)",
+        "save_error": "保存失败：请填写复核说明（判断依据）后再保存。",
+        "saved_ids": [
+          "B-20150708-0805-1",
+          "C1-20151116-1210-184"
+        ]
+      }
+    },
+    {
+      "name": "running inference rejects draft jumps and stopping restores access to the same draft",
+      "passed": true,
+      "evidence": {
+        "during": {
+          "sample": "B-20150708-0805-1",
+          "disabled": true
+        },
+        "stopped": "分析已停止（2015/07/08 08:05 · MLP32）：53 / 53 个车位，66 ms（含图片读取，约 17 ms/个）。预测来自图片像素；原始标注只用于对照。"
+      }
+    },
+    {
+      "name": "input-image failure leaves draft navigation available and does not erase saved conclusions",
+      "passed": true,
+      "evidence": {
+        "message": "当前快照分析完成（2015/07/08 08:05 · MLP32）：52 / 53 个车位，84 ms（含图片读取，约 2 ms/个）。读取失败项保留为未分析，可重试。",
+        "failed_sample": "B-20150708-0805-1",
+        "saved_ids": [
+          "B-20150708-0805-1",
+          "C1-20151116-1210-184"
+        ]
+      }
+    },
+    {
+      "name": "retry restores identical 53 scores and a fresh handover restores reviews with no phantom drafts",
+      "passed": true,
+      "evidence": {
+        "max_reference_difference": 4.440892098500626e-16,
+        "samples": 53,
+        "restored_reviews": {
+          "B-20150708-0805-1": {
+            "decision": "uncertain",
+            "note": "08:05 第一车位的真实待交接备注",
+            "at": "2026-10-28T15:57:06.287Z"
+          },
+          "C1-20151116-1210-184": {
+            "decision": "uncertain",
+            "note": "跨相机跨日期的真实草稿",
+            "at": "2026-10-28T15:57:06.620Z"
+          }
+        },
+        "restored_prediction_count": 0
+      }
+    },
+    {
+      "name": "opening a draft during the playback interval pauses playback without a delayed jump",
+      "passed": true,
+      "evidence": {
+        "sample_after_interval": "C1-20151116-1210-184",
+        "playing": false
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "156.0.8078.49",
+  "model": {
+    "name": "MLP32",
+    "samples": 53,
+    "first_score": 0.028534001165953025
+  },
+  "finished_at": "2026-10-28T15:57:10.342Z",
+  "passed": 8,
+  "failed": 0,
+  "ok": true
+}

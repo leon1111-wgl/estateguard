@@ -1,0 +1,201 @@
+{
+  "name": "车位未保存草稿定位 · 独立界面回归",
+  "checked_at": "2026-10-28T16:04:34.706936+00:00",
+  "base": "http://127.0.0.1:8768",
+  "browser": "156.0.8078.49",
+  "baseline_commit": "bd37657",
+  "parking_module_sha256": "1caa0416a4ca9e731a18dcbde0580825ccd10e008ed4301892820424511dadf1",
+  "result": {
+    "passed": 20,
+    "failed": 0,
+    "checks_per_width": 10,
+    "blockers": []
+  },
+  "scope": "本地 Chrome 实际 1440×1000 / 390×844 界面。公共 CNRPark 首快照 MLP32 真实推理 53 张；模拟人工备注用于验证交接流程。未替换产品模块或模型输出，未验证社区识别精度、其他浏览器、读屏软件或线上部署。",
+  "sources": [
+    "artifacts/designer-20261028-draft-location-ui.json",
+    "artifacts/designer-20261028-draft-location-ui-desktop-final.json"
+  ],
+  "check_count_policy": "使用首轮完整手机 10 项与桌面重跑 10 项，共 20 个唯一检查；桌面首轮重复检查不累加。",
+  "checks": [
+    {
+      "width": 1440,
+      "name": "initial locator is hidden without occupying layout",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "real MLP32 snapshot remains available before draft work",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "draft count updates without replacing input or original image",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "two hidden drafts block export with reachable counted action",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "keyboard locator restores oldest B52 snapshot with visible evidence and title",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "image completion keeps heading focus and Tab reaches the review control",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "save resolves only first draft and exposes next C7 draft",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "remaining real draft blocks export and reverting creates no record",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "invalid handover preserves visible draft and existing image/input DOM",
+      "passed": true
+    },
+    {
+      "width": 1440,
+      "name": "cleared locator restores normal toolbar and final export preserves saved review",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "initial locator is hidden without occupying layout",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "real MLP32 snapshot remains available before draft work",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "draft count updates without replacing input or original image",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "two hidden drafts block export with reachable counted action",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "keyboard locator restores oldest B52 snapshot with visible evidence and title",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "image completion keeps heading focus and Tab reaches the review control",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "save resolves only first draft and exposes next C7 draft",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "remaining real draft blocks export and reverting creates no record",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "invalid handover preserves visible draft and existing image/input DOM",
+      "passed": true
+    },
+    {
+      "width": 390,
+      "name": "cleared locator restores normal toolbar and final export preserves saved review",
+      "passed": true
+    }
+  ],
+  "evidence": {
+    "oldest_draft": {
+      "sample_id": "B-20150708-1645-52",
+      "session": "B-20150708",
+      "frame_index": 104,
+      "time": "2015/07/08 16:45"
+    },
+    "next_draft": {
+      "sample_id": "C7-20151112-1147-206",
+      "session": "C7-ext",
+      "frame_index": 0,
+      "time": "2015/11/12 11:47"
+    },
+    "preserved": {
+      "model": "mlp32",
+      "truth_visible": true,
+      "note_decision_and_other_draft": true,
+      "all_53_prior_predictions_identical": true,
+      "saved_record_unchanged_after_later_bad_import_and_revert": true
+    },
+    "counts": [
+      0,
+      1,
+      2,
+      1,
+      0
+    ],
+    "keyboard": "导出按钮 → Tab → 查看未保存草稿 → Enter → 车位标题；下一次 Tab 进入人工结论。后续鼠标定位同样聚焦标题。",
+    "position": [
+      {
+        "width": 1440,
+        "image_top": 71.546875,
+        "heading_top": 263.140625,
+        "heading_focused": true,
+        "selected_tile_inside_grid": true,
+        "horizontal_overflow": false
+      },
+      {
+        "width": 390,
+        "image_top": 71.765625,
+        "heading_top": 263.359375,
+        "heading_focused": true,
+        "selected_tile_inside_grid": true,
+        "horizontal_overflow": false
+      }
+    ],
+    "hidden_state": "初始和全部草稿解决后 getClientRects().length = 0，入口不占位。手机从两行工具条恢复为正常一行，导航与组件未改。",
+    "input": "计数变化只更新入口，原 textarea/select/image DOM 与输入焦点、选区保留。",
+    "failure": "坏 JSON 恢复显示中文失败，草稿数量、备注、原图和输入 DOM 保持；真实草稿继续阻止导出。",
+    "page_errors": [],
+    "external_requests": []
+  },
+  "visual_review": {
+    "view_image_inspected": true,
+    "screenshots": [
+      "artifacts/designer-20261028-draft-location-ui-desktop-final-export-blocked-action-1440.png",
+      "artifacts/designer-20261028-draft-location-ui-desktop-final-located-b52-1440.png",
+      "artifacts/designer-20261028-draft-location-ui-located-b52-390.png",
+      "artifacts/designer-20261028-draft-location-ui-located-form-390.png",
+      "artifacts/designer-20261028-draft-location-ui-export-blocked-action-390.png",
+      "artifacts/designer-20261028-draft-location-ui-located-c7-390.png",
+      "artifacts/designer-20261028-draft-location-ui-desktop-final-located-c7-1440.png",
+      "artifacts/designer-20261028-draft-location-ui-resolved-toolbar-390.png",
+      "artifacts/designer-20261028-draft-location-ui-desktop-final-resolved-toolbar-1440.png",
+      "artifacts/designer-20261028-draft-location-ui-initial-390.png",
+      "artifacts/designer-20261028-draft-location-ui-desktop-final-initial-1440.png"
+    ],
+    "assessment": "两宽原图、相机/车位、原始采样时间、人工输入与就地定位提示清楚；390px 工具条自然换行，无横向溢出。选中车位在内部网格可见，输入不重建。固定视觉框架无需适配。"
+  },
+  "initial_diagnostic": {
+    "report": "artifacts/designer-20261028-draft-location-ui.json",
+    "screenshot": "artifacts/designer-20261028-draft-location-ui-failure-1440.png",
+    "reason": "桌面初次严格 top>=0 断言失败；后续实测按钮 top=-0.109375px，bottom=33.078125px，文字完整且中心 hit-test 为按钮，实际 Tab/Enter 可达。只为视口边界加入 1px 取整容差，不改产品。手机首轮完整通过未重跑推理。"
+  },
+  "limitations": [
+    "草稿仍仅在当前标签页；入口不是跨会话自动保存。",
+    "本设计报告覆盖定位、可达性、原图和保存/撤回闭环；推理运行中禁用、回放停止等故障边界由独立功能专项验证，不计入本 20 项。",
+    "未宣称修复普通保存后的下一项阅读定位或全站滚动恢复。"
+  ]
+}

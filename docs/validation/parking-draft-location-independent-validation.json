@@ -1,0 +1,145 @@
+{
+  "started_at": "2026-10-28T15:57:15.316Z",
+  "base": "http://127.0.0.1:8768",
+  "head": "bd37657",
+  "source_sha256": {
+    "web/parking.mjs": "1caa0416a4ca9e731a18dcbde0580825ccd10e008ed4301892820424511dadf1",
+    "web/index.html": "f1d52e0c529622753f50dffb29528074c3fd1fad2179ee03b69790772f00bda7"
+  },
+  "scope": "真实 Chrome UI；公开图与冻结 MLP32 实际推理。未替换产品源码或模型结果。并发夹具只延迟指定原图/输入请求及本地图片 decode，释放后仍用原始字节。",
+  "checks": [
+    {
+      "name": "EXT 共享 session 跨日期与最早草稿顺序；保留其他草稿和所选模型",
+      "passed": true,
+      "evidence": {
+        "target": {
+          "session": "C1-ext",
+          "frame": 2,
+          "sample": "C1-20151121-1210-184",
+          "model": "mobilenet",
+          "filter": "all",
+          "note": "  跨日期草稿\n第一行  内部空白\n第二行  ",
+          "decision": "uncertain",
+          "time": "2015/11/21 12:10 · 雨天 · 第 3 / 3 张 · 距上一张约 5 天 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "draft_button": "查看未保存草稿（2）"
+        },
+        "heading_has_focus": true
+      }
+    },
+    {
+      "name": "拒绝保存不删草稿；撤回第一条后定位第二条完整样本",
+      "passed": true,
+      "evidence": {
+        "target": {
+          "session": "B-20150708",
+          "frame": 1,
+          "sample": "B-20150708-0810-1",
+          "model": "mobilenet",
+          "filter": "all",
+          "note": "  下个快照的真实草稿\n请核对原图  ",
+          "decision": "uncertain",
+          "time": "2015/07/08 08:10 · 第 2 / 121 张 · 距上一张 5 分钟 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "draft_button": "查看未保存草稿（1）"
+        }
+      }
+    },
+    {
+      "name": "保存清计数但保留未导出保护；定位不改变真实模型分数或伪造分析",
+      "passed": true,
+      "evidence": {
+        "record": {
+          "decision": "uncertain",
+          "note": "下个快照的真实草稿\n请核对原图",
+          "at": "2026-10-28T15:57:16.589Z"
+        },
+        "prediction_counts": {
+          "mlp32": 53,
+          "mobilenet": 0,
+          "dinov2": 0
+        }
+      }
+    },
+    {
+      "name": "快照分析锁阻止按钮及程序事件旁路，停止后可回草稿",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "session": "C1-ext",
+          "frame": 0,
+          "sample": "C1-20151112-1209-184",
+          "model": "mlp32",
+          "filter": "all",
+          "note": "",
+          "decision": "pending",
+          "time": "2015/11/12 12:09 · 晴天 · 第 1 / 3 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "draft_button": "查看未保存草稿（1）"
+        },
+        "during": {
+          "session": "C1-ext",
+          "frame": 0,
+          "sample": "C1-20151112-1209-184",
+          "model": "mlp32",
+          "filter": "all",
+          "note": "",
+          "decision": "pending",
+          "time": "2015/11/12 12:09 · 晴天 · 第 1 / 3 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "draft_button": "查看未保存草稿（1）"
+        },
+        "exact_input_delayed": "http://127.0.0.1:8768/data/parking-ext/inputs/C1-20151112-1209-184.png"
+      }
+    },
+    {
+      "name": "本地上传等待期间允许定位，实际晚到推理不改变草稿视图",
+      "passed": true,
+      "evidence": {
+        "view": {
+          "session": "B-20150708",
+          "frame": 0,
+          "sample": "B-20150708-0805-10",
+          "model": "mlp32",
+          "filter": "all",
+          "note": "运行锁需要保留的草稿",
+          "decision": "uncertain",
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "draft_button": "查看未保存草稿（1）"
+        },
+        "actual_local_result": "B-20150708-0805-1.jpg空闲 · 占用分数 2.85% · MLP32新场景结果未经验证，没有数据集标签可对照。不是违规判断。"
+      }
+    },
+    {
+      "name": "原图迟到后不会将已离开的页面或焦点拉回复核",
+      "passed": true,
+      "evidence": {
+        "before": {
+          "hash": "#analyze",
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "nav": null
+          },
+          "scrollY": 248
+        },
+        "after": {
+          "hash": "#analyze",
+          "active": {
+            "tag": "BODY",
+            "id": "",
+            "nav": null
+          },
+          "scrollY": 248
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "156.0.8078.49",
+  "actual_model": {
+    "name": "MLP32",
+    "sample_count": 53,
+    "max_abs_diff": 4.440892098500626e-16
+  },
+  "finished_at": "2026-10-28T15:57:17.475Z",
+  "passed": 6,
+  "ok": true
+}

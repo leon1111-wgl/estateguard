@@ -123,8 +123,27 @@ function render(){
   button.addEventListener('click',()=>{selected=r.id;reviewNotice('');render();if(matchMedia('(max-width:650px)').matches)document.querySelector('.parking-review')?.scrollIntoView({block:'start'});});return button;
  }));
  if(!visible.length){const p=document.createElement('p');p.className='empty';p.textContent=({review:'当前快照人工复核已完成。',confirmed:'当前快照还没有已人工确认的车位。',evidence:'当前快照没有标记为需补证据的车位。',audit:'当前快照没有被抽检的车位。'})[filter]||(hasAny?'当前快照没有符合筛选的车位。':'请先分析当前快照，再筛选模型结果。');$('parking-grid').append(p);}
- renderDetail();updateModelPanel();
+ renderDetail();updateModelPanel();updateDraftControl();
 }
+function updateDraftControl(){
+ const button=$('parking-open-draft');button.hidden=!drafts.size;button.disabled=running||!!analysisPromise;
+ button.textContent=`查看未保存草稿（${drafts.size}）`;
+}
+function openDraft(){
+ if(running||analysisPromise||!drafts.size)return;
+ const id=drafts.keys().next().value,sample=samples.get(id),target=allFrames.find(f=>f.sample_ids.includes(id));
+ if(!sample||!target){notice('未能找到草稿对应的公开快照，草稿仍保留，请勿关闭页面。',true);return;}
+ const nextFrames=allFrames.filter(f=>f.session===target.session),nextIndex=nextFrames.findIndex(f=>f.id===target.id);
+ // Stage the full sample location before changing the view; EXT sessions span several dates.
+ if(nextIndex<0)return;
+ stopPlayback();errorJumpSequence++;
+ $('parking-session').value=target.session;frames=nextFrames;frameIndex=nextIndex;selected=id;
+ $('parking-frame').max=String(frames.length-1);$('parking-filter').value='all';render();revealSelectedTile();
+ const message=`已定位未保存草稿：${walltime(sample)} · 摄像头 ${sample.camera} · 车位 ${sample.slot}。请核对原图后保存，或将内容改回原值。还有 ${drafts.size} 条草稿待处理。`;
+ reviewNotice(message);notice(message);
+ if(!$('parking').hidden){const heading=$('parking-detail').querySelector('h3');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});document.querySelector('.parking-review').scrollIntoView({block:'start',behavior:'instant'});}}
+}
+$('parking-open-draft').addEventListener('click',openDraft);
 function decisionNote(r){
  const o=onsiteRouting[current]?.[r.camera],cal=calibratedSets[current]?.get(r.id);if(!o)return '未校准 · 全部送人工';if(!certified(o.routing))return '证据不足 · 全部送人工';
  const side=cal===undefined?null:routeScore(cal,o.routing);
@@ -151,6 +170,7 @@ function updateAnalysisControls(){
  $('parking-play').disabled=uploadPending;
  $('parking-upload-cancel').hidden=!uploadPending;
  $('parking-upload-cancel').disabled=!!uploadJob?.controller.signal.aborted;
+ updateDraftControl();
 }
 function busy(value){running=value;$('parking-stop').hidden=!value;for(const id of ['parking-session','parking-frame','parking-save','parking-save-next','parking-import'])$(id).disabled=value;updateAnalysisControls();render();}
 // Encoders are cached per page; loading reports verified bytes and can be cancelled from the stop button.
@@ -204,6 +224,7 @@ for(const id of ['parking-note','parking-decision'])$(id).addEventListener('inpu
  const draft={decision:$('parking-decision').value,note:$('parking-note').value},saved=reviews[selected]||{decision:'pending',note:''};
  if(draft.decision===saved.decision&&comparableNote(draft.note)===comparableNote(saved.note))drafts.delete(selected);else drafts.set(selected,draft);
  // changed tracks saved work that has not been exported; draft edits must not set or clear it.
+ updateDraftControl();
 });
 const context=()=>({model_sha256:evaluation.model_sha256,sample_ids:[...samples.keys()]});
 const handoverContext=()=>({frames:allFrames,current_model:current,models:{mlp32:evaluation.model_sha256,...Object.fromEntries(['mobilenet','dinov2'].filter(key=>heads[key]).map(key=>[key,transferEvaluation.models[key].model_sha256]))}});
@@ -241,7 +262,7 @@ function saveReview(advance){
 }
 $('parking-save').addEventListener('click',()=>saveReview(false));
 $('parking-save-next').addEventListener('click',()=>saveReview(true));
-$('parking-export').addEventListener('click',()=>{if(!manifest){notice('公开快照尚未加载完成，请稍后再导出',true);return;}try{if(drafts.size)throw new Error('还有未保存的车位草稿，请先保存复核记录。');const payload=serializeParkingReview(reviewDocument(),context());download('estateguard-parking-review.json',payload);changed=false;notice('已导出模型版本、样本来源、预测、原始标签和人工结论。');}catch(e){notice(e.message,true);}});
+$('parking-export').addEventListener('click',()=>{if(!manifest){notice('公开快照尚未加载完成，请稍后再导出',true);return;}try{if(drafts.size)throw new Error(`还有未保存的车位草稿（${drafts.size} 条），请点击“查看未保存草稿”定位并处理后再导出。`);const payload=serializeParkingReview(reviewDocument(),context());download('estateguard-parking-review.json',payload);changed=false;notice('已导出模型版本、样本来源、预测、原始标签和人工结论。');}catch(e){notice(e.message,true);}});
 // Import only validated human decisions; never trust imported model predictions as new inference.
 const importLabel=document.createElement('label');importLabel.className='button file-button';importLabel.textContent='恢复车位复核';const importer=document.createElement('input');importer.type='file';importer.accept='.json,application/json';importer.id='parking-import';importLabel.append(importer);$('parking-export').before(importLabel);
 const importBusy=()=>running||analysisPromise||uploadPending;
