@@ -1,0 +1,50 @@
+name: Browser checks
+# Real-browser regression checks, including the ones that run the in-page models.
+# They run here rather than on a developer machine; each check is its own job.
+on:
+  workflow_dispatch:
+  push:
+    branches: ['feat/**']
+permissions:
+  contents: read
+concurrency:
+  group: browser-checks-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs:
+      checks: ${{ steps.list.outputs.checks }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: list
+        run: echo "checks=$(ls scripts/*-check.cjs | xargs -n1 basename | jq -R . | jq -cs .)" >> "$GITHUB_OUTPUT"
+  check:
+    needs: list
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        check: ${{ fromJSON(needs.list.outputs.checks) }}
+    env:
+      ESTATEGUARD_URL: http://127.0.0.1:8766
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - name: Serve web/
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory web > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS -o /dev/null "$ESTATEGUARD_URL/" && exit 0; sleep 1; done; exit 1
+      - run: node scripts/${{ matrix.check }}
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.check }}
+          path: artifacts/
+          if-no-files-found: ignore
+          retention-days: 7
