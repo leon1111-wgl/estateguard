@@ -1,0 +1,102 @@
+{
+  "at": "2026-10-29T03:54:19.855Z",
+  "base": "http://127.0.0.1:8768",
+  "base_commit": "729a05d",
+  "scope": "Real D-FINE-N on repository CC0 bus pixels with actual filesystem names. Filename boundaries are synthetic fixtures, not field accuracy evidence. No product module or model output is replaced.",
+  "checks": [
+    {
+      "name": "real 232-byte filesystem name can hand off complete filename and time",
+      "passed": true,
+      "evidence": {
+        "filename_utf8_bytes": 232,
+        "filename": "camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.jpg",
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "detection_count": 3,
+        "candidate_count": 2,
+        "evidence_lengths": [
+          240,
+          240
+        ],
+        "source_time": "2026-10-29T00:00:00.000Z",
+        "before": {
+          "hash": "#analyze",
+          "batch": "枫庭小区 · 模拟早班",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "vision_message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。",
+          "workspace_message": "当前为合成班次：用于演示处理流程，不是模型识别结果。",
+          "workspace_hidden": true,
+          "send_enabled": true,
+          "vision_error": false
+        },
+        "after": {
+          "hash": "#workspace",
+          "batch": "本地模型分析 · camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.jp",
+          "note": "",
+          "status": "open",
+          "history": "复核历史 · 0 条尚无人工结论，模型分数不能代替核实。",
+          "vision_message": "候选已送入复核，原始素材可在事件详情中查看。",
+          "workspace_message": "已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。",
+          "workspace_hidden": false,
+          "send_enabled": true,
+          "vision_error": false
+        },
+        "confirmations": 0
+      }
+    },
+    {
+      "name": "real 233-byte filesystem name can hand off complete filename and time",
+      "passed": false,
+      "evidence": {
+        "filename_utf8_bytes": 233,
+        "filename": "camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.jpg",
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "detection_count": 3,
+        "candidate_count": 2,
+        "evidence_lengths": [
+          241,
+          241
+        ],
+        "source_time": "2026-10-29T00:00:00.000Z",
+        "before": {
+          "hash": "#analyze",
+          "batch": "本地模型分析 · camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.jp",
+          "note": "已有 232 字节素材复核，仍需现场核对的草稿",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/29 11:54:21 · 待补充证据：已有 232 字节素材复核",
+          "media": "blob:http://127.0.0.1:8768/2767893d-83c7-497f-ae45-af9679d86411",
+          "media_width": 960,
+          "vision_message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。",
+          "workspace_message": "已导出观察记录、规则和复核历史。媒体文件不包含在内。",
+          "workspace_hidden": true,
+          "send_enabled": true,
+          "vision_error": false
+        },
+        "after": {
+          "hash": "#analyze",
+          "batch": "本地模型分析 · camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.jp",
+          "note": "已有 232 字节素材复核，仍需现场核对的草稿",
+          "status": "needs_evidence",
+          "history": "复核历史 · 1 条2026/10/29 11:54:21 · 待补充证据：已有 232 字节素材复核",
+          "media": "blob:http://127.0.0.1:8768/2767893d-83c7-497f-ae45-af9679d86411",
+          "media_width": 960,
+          "vision_message": "分析完成：1 帧、3 条匿名轨迹、2 个待核实候选。",
+          "workspace_message": "vision-track-1-1 evidence: enter 1–240 characters.",
+          "workspace_hidden": true,
+          "send_enabled": true,
+          "vision_error": false
+        },
+        "confirmations": 0,
+        "old_review_preserved": true
+      },
+      "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '#analyze'\n- '#workspace'\n"
+    }
+  ],
+  "page_errors": [],
+  "browser": "156.0.8078.49",
+  "finished_at": "2026-10-29T03:54:22.939Z",
+  "passed": 1,
+  "failed": 1,
+  "ok": false
+}

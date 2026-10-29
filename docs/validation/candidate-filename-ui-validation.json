@@ -1,0 +1,269 @@
+{
+  "name": "长素材文件名送审 · 独立界面回归",
+  "checked_at": "2026-10-29T04:04:42.123032+00:00",
+  "base": "http://127.0.0.1:8768",
+  "browser": "156.0.8078.49",
+  "baseline_commit": "729a05d",
+  "result": {
+    "functional_ui_checks": {
+      "passed": 20,
+      "failed": 0
+    },
+    "final_css_layout_checks": {
+      "passed": 2,
+      "failed": 0
+    },
+    "blockers": []
+  },
+  "coverage": "1440×1000 与 390×844。每宽三种实际磁盘文件名，使用同一许可 CC0 校车图片运行默认 D-FINE-N。两宽均检查送审、失败、取消、正常重试、旧草稿/历史/附件保持、复核保存和导出。",
+  "execution_boundary": {
+    "functional_report": "artifacts/designer-20261029-candidate-filename-ui-final.json",
+    "functional_script": "artifacts/designer-20261029-candidate-filename-ui-final.cjs",
+    "functional_module_hashes": {
+      "app.mjs": "812d8c2ae98a19fb2bc93b2082fc40141c6ded5a5c717f11323a863ec204560b",
+      "vision.mjs": "9e6471e1d5dae75a8b35e1ad6ac2286436841ba7b99a825e0fb53aa14f5c2e28",
+      "engine.mjs": "75486bcba9b91c7e589bece8b8ba2797b60fda557fb6c7cc4c063bff93888ee0",
+      "style.css": "46932cf3895c53d8d066fa9f322f52597a4bea11e8cf10bbde435cc60b57572b"
+    },
+    "final_css_report": "artifacts/designer-20261029-candidate-filename-ui-layout.json",
+    "final_css_script": "artifacts/designer-20261029-candidate-filename-ui-layout.cjs",
+    "final_css_sha256": "73ee26fa596458b2becdcc41eaa4c4fef05e07e18579caa6d727e3a54e3d51f8",
+    "order": "完整 20 项在最初两条局部换行 CSS 后执行。随后仅新增工具条 flex-shrink:0，未改业务模块；最终追加双宽布局 2 项，每项覆盖 ASCII255 与中文名。最终 2 项使用明确标注的合成布局批次，不重复运行模型。"
+  },
+  "checks": [
+    {
+      "name": "233-byte ASCII name sends real candidates with full evidence and time",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "233-byte batch heading and evidence stay within viewport width",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "513-character synthetic dispatch fault is visible on the current analysis page",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "rejected dispatch preserves report and old draft, history and attachment DOM",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "cancelling retry uses ordinary feedback and keeps old review",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "normal retry accepts real 255-byte filename and preserves full original reference",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "255-byte batch heading and evidence stay within viewport width",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "long-name review saves and exports the same full evidence reference",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "legal Chinese filename stays intact from analysis to review",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    },
+    {
+      "name": "Chinese filename, batch title and evidence wrap without horizontal overflow",
+      "passed_widths": [
+        1440,
+        390
+      ]
+    }
+  ],
+  "functional_evidence": {
+    "filenames": [
+      {
+        "kind": "ASCII",
+        "utf8_bytes": 233,
+        "candidates": 2,
+        "evidence_length": 241,
+        "time": "2026/10/29 08:00:00 → 2026/10/29 08:00:00（UTC+8）\n顺序示意，非时间比例"
+      },
+      {
+        "kind": "ASCII",
+        "utf8_bytes": 255,
+        "candidates": 2,
+        "evidence_length": 263,
+        "time": "2026/10/29 08:00:00 → 2026/10/29 08:00:00（UTC+8）\n顺序示意，非时间比例"
+      },
+      {
+        "kind": "Chinese",
+        "utf8_bytes": 237,
+        "candidates": 2,
+        "evidence_length": null,
+        "time": "2026/10/29 08:00:00 → 2026/10/29 08:00:00（UTC+8）\n顺序示意，非时间比例"
+      }
+    ],
+    "real_inference": "三种文件名在两种宽度均实际 D-FINE-N 推理，产生 2 个候选；公开校车最高 bus 分数 0.9651602077977631。仅验证运行和流程，不代表社区效果。",
+    "injected_failure": "页面初始化时注册 capture 监听器，用开关仅一次克隆待发送 batch 并替换一条 evidence 为 513 个 ASCII 字符；不改检测报告、模型或像素。",
+    "failure_and_cancel": "失败在当前分析页显示红色中文原因，取消为普通提示；两者都保留旧工作区、真实未保存备注、1 条已保存历史以及原附件/表单 DOM，正常再次送审成功。",
+    "report_unchanged": true,
+    "full_reference_and_time_preserved": true,
+    "saved_review_and_export": true,
+    "error_viewport_rects": [
+      {
+        "width": 1440,
+        "message": "送审失败，原工作区未替换。vision-track-1-1：证据引用须为非空文本，长度不能超过 512 字符。 分析结果仍可导出。",
+        "rect": {
+          "top": 829.21875,
+          "bottom": 870.40625,
+          "left": 232,
+          "right": 1412,
+          "width": 1180,
+          "height": 41.1875
+        }
+      },
+      {
+        "width": 390,
+        "message": "送审失败，原工作区未替换。vision-track-1-1：证据引用须为非空文本，长度不能超过 512 字符。 分析结果仍可导出。",
+        "rect": {
+          "top": 614.796875,
+          "bottom": 675.171875,
+          "left": 16,
+          "right": 374,
+          "width": 358,
+          "height": 60.375
+        }
+      }
+    ],
+    "page_errors": [],
+    "external_requests": []
+  },
+  "final_layout": [
+    {
+      "width": 1440,
+      "passed": true,
+      "cases": [
+        {
+          "filename_kind": "ascii255",
+          "filename_bytes": 255,
+          "page_width": 1440,
+          "toolbar_rows": 1,
+          "button_heights": [
+            33.19,
+            33.19,
+            33.19
+          ],
+          "screenshot": "artifacts/designer-20261029-candidate-filename-ui-layout-ascii255-1440.png"
+        },
+        {
+          "filename_kind": "chinese",
+          "filename_bytes": 237,
+          "page_width": 1440,
+          "toolbar_rows": 1,
+          "button_heights": [
+            33.19,
+            33.19,
+            33.19
+          ],
+          "screenshot": "artifacts/designer-20261029-candidate-filename-ui-layout-chinese-1440.png"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "passed": true,
+      "cases": [
+        {
+          "filename_kind": "ascii255",
+          "filename_bytes": 255,
+          "page_width": 390,
+          "toolbar_rows": 1,
+          "button_heights": [
+            33.19,
+            33.19,
+            33.19
+          ],
+          "screenshot": "artifacts/designer-20261029-candidate-filename-ui-layout-ascii255-390.png"
+        },
+        {
+          "filename_kind": "chinese",
+          "filename_bytes": 237,
+          "page_width": 390,
+          "toolbar_rows": 1,
+          "button_heights": [
+            33.19,
+            33.19,
+            33.19
+          ],
+          "screenshot": "artifacts/designer-20261029-candidate-filename-ui-layout-chinese-390.png"
+        }
+      ]
+    }
+  ],
+  "visual_review": {
+    "view_image_inspected": true,
+    "screenshots": [
+      "artifacts/designer-20261029-candidate-filename-ui-final-ascii255-batch-heading-1440.png",
+      "artifacts/designer-20261029-candidate-filename-ui-final-ascii255-batch-heading-390.png",
+      "artifacts/designer-20261029-candidate-filename-ui-final-rejected-current-page-1440.png",
+      "artifacts/designer-20261029-candidate-filename-ui-final-rejected-current-page-390.png",
+      "artifacts/designer-20261029-candidate-filename-ui-final-cancelled-current-page-390.png",
+      "artifacts/designer-20261029-candidate-filename-ui-final-ascii255-evidence-390.png",
+      "artifacts/designer-20261029-candidate-filename-ui-final-chinese-source-390.png",
+      "artifacts/designer-20261029-candidate-filename-ui-final-chinese-evidence-390.png",
+      "artifacts/designer-20261029-candidate-filename-ui-layout-ascii255-1440.png",
+      "artifacts/designer-20261029-candidate-filename-ui-layout-chinese-1440.png",
+      "artifacts/designer-20261029-candidate-filename-ui-layout-ascii255-390.png",
+      "artifacts/designer-20261029-candidate-filename-ui-layout-chinese-390.png"
+    ],
+    "assessment": "最终桌面工具条三按钮保持一行，长标题承担换行；390px 三按钮保持原移动布局，无水平溢出。长中英文证据引用和媒体名称可读，时间后缀保留。错误提示位于自然点击送审后的当前视口。"
+  },
+  "diagnostics": [
+    {
+      "report": "artifacts/designer-20261029-candidate-filename-ui.json",
+      "real_finding": "初次真实 ASCII233 送审成功后批次标题溢出：桌面工具条被推到屏外，手机文字越出页面。两宽截图均已查看。",
+      "screenshots": [
+        "artifacts/designer-20261029-candidate-filename-ui-ascii233-batch-heading-1440.png",
+        "artifacts/designer-20261029-candidate-filename-ui-ascii233-batch-heading-390.png"
+      ],
+      "harness_limit": "同次首次故障注入监听器注册太晚，未在 app 前执行，后续故障相关超时不算产品缺陷；最终改为 addInitScript 预注册并断言 injection_fired。"
+    },
+    {
+      "report": "artifacts/designer-20261029-candidate-filename-ui-presentation-diagnostic.json",
+      "harness_limit": "18/20 中的两项误用 innerText 比较可见与隐藏历史区，浏览器换行表现不同；独立探针证实 textContent 不变。最终用 textContent，加入实际已保存历史，再完整通过20项。"
+    },
+    {
+      "finding": "两条换行 CSS 消除了溢出，但 ASCII255 桌面工具条仍压成三行。",
+      "screenshot": "artifacts/designer-20261029-candidate-filename-ui-final-ascii255-batch-heading-1440.png",
+      "resolution": "最终仅加工具条 flex-shrink:0，双宽追加2项与实际截图均通过。"
+    }
+  ],
+  "limitations": [
+    "公开校车是通用图片；本轮不增加领域识别准确率或现场收益声明。",
+    "批次短标题仍沿用既有240码元上限，完整原名在证据引用、媒体标签和检测报告中保留；媒体不随工作区 JSON 导出。",
+    "最终 CSS 布局批次明确是合成状态，不计入真实模型次数；未验证其他浏览器、原生手机或读屏软件。"
+  ]
+}

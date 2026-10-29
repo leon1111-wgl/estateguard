@@ -1,0 +1,193 @@
+{
+  "at": "2026-10-29T03:58:49.277Z",
+  "base": "http://127.0.0.1:8768",
+  "base_commit": "729a05d",
+  "baseline_report": "candidate-filename-baseline.json",
+  "scope": "Actual D-FINE-N on repository CC0 bus pixels. Actual filesystem names are boundary fixtures. Video is a generated still-photo clip, not surveillance evidence. The only delivery fault clones one event batch and sets a 513-character reference; no product source, weights or model outputs are replaced.",
+  "checks": [
+    {
+      "name": "real 232-byte filename preserves complete reference and source time",
+      "passed": true,
+      "evidence": {
+        "filename": "camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.jpg",
+        "filename_utf8_bytes": 232,
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frames": 1,
+        "detections": 3,
+        "candidates": 2,
+        "evidence_lengths": [
+          240,
+          240
+        ],
+        "first_time": "2026-10-29T00:00:00.000Z",
+        "confirmations": 0,
+        "handoff": {
+          "from": "#analyze",
+          "to": "#workspace",
+          "message": "候选已送入复核，原始素材可在事件详情中查看。"
+        }
+      }
+    },
+    {
+      "name": "real 233-byte filename preserves complete reference and source time",
+      "passed": true,
+      "evidence": {
+        "filename": "camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.jpg",
+        "filename_utf8_bytes": 233,
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frames": 1,
+        "detections": 3,
+        "candidates": 2,
+        "evidence_lengths": [
+          241,
+          241
+        ],
+        "first_time": "2026-10-29T00:00:00.000Z",
+        "confirmations": 1,
+        "handoff": {
+          "from": "#analyze",
+          "to": "#workspace",
+          "message": "候选已送入复核，原始素材可在事件详情中查看。"
+        }
+      }
+    },
+    {
+      "name": "maximum 255-byte ASCII and Chinese filesystem names retain model detections",
+      "passed": true,
+      "evidence": {
+        "runs": [
+          {
+            "filename": "camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.jpg",
+            "filename_utf8_bytes": 255,
+            "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+            "frames": 1,
+            "detections": 3,
+            "candidates": 2,
+            "evidence_lengths": [
+              263,
+              263
+            ],
+            "first_time": "2026-10-29T00:00:00.000Z"
+          },
+          {
+            "filename": "电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯电梯图xx.jpg",
+            "filename_utf8_bytes": 255,
+            "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+            "frames": 1,
+            "detections": 3,
+            "candidates": 2,
+            "evidence_lengths": [
+              97,
+              97
+            ],
+            "first_time": "2026-10-29T00:00:00.000Z"
+          }
+        ],
+        "detections_identical": true
+      }
+    },
+    {
+      "name": "synthetic invalid delivery reports failure on analysis page and retains old work",
+      "passed": true,
+      "evidence": {
+        "synthetic_fault": "Clone outgoing event batch, replace one evidence label by 513 characters; original real detection report remains unchanged.",
+        "visible_message": "送审失败，原工作区未替换。vision-track-1-1：证据引用须为非空文本，长度不能超过 512 字符。 分析结果仍可导出。",
+        "old_review_draft_media_dom_preserved": true,
+        "report_unchanged": true,
+        "confirmations": 0
+      }
+    },
+    {
+      "name": "cancel replacement stays on analysis and retry succeeds without losing filename",
+      "passed": true,
+      "evidence": {
+        "cancel_message": "已取消送审，原复核记录、草稿和附件保持不变。分析结果仍可导出或再次送审。",
+        "cancel_preserved": true,
+        "retry_analysis_id": "ae00cf79-342e-466d-8e6a-ce15c39f5548",
+        "audit": 1
+      }
+    },
+    {
+      "name": "repeat same analysis preserves saved record, pending draft and attachment DOM",
+      "passed": true,
+      "evidence": {
+        "saved_review_preserved": true,
+        "draft_preserved": true,
+        "attachment_dom_preserved": true
+      }
+    },
+    {
+      "name": "legacy 240-character and new long references round-trip with exact review history",
+      "passed": true,
+      "evidence": {
+        "restores": [
+          {
+            "reference_length": 240,
+            "audit": 1,
+            "observations": 2,
+            "media_embedded": false
+          },
+          {
+            "reference_length": 263,
+            "audit": 1,
+            "observations": 2,
+            "media_embedded": false
+          },
+          {
+            "reference_length": 97,
+            "audit": 1,
+            "observations": 2,
+            "media_embedded": false
+          },
+          {
+            "reference_length": 241,
+            "audit": 1,
+            "observations": 2,
+            "media_embedded": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "real D-FINE video with long filename preserves distinct sampled times through handover",
+      "passed": true,
+      "evidence": {
+        "filename": "camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.webm",
+        "filename_utf8_bytes": 233,
+        "model": "D-FINE-N（本项目由官方权重导出的 ONNX）",
+        "frames": 3,
+        "detections": 3,
+        "candidates": 2,
+        "evidence_lengths": [
+          241,
+          241
+        ],
+        "first_time": "2026-10-29T00:00:01.000Z",
+        "synthetic_video": true,
+        "sample_times": [
+          1,
+          2,
+          3
+        ],
+        "evidence": [
+          "camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.webm @ 1.00s",
+          "camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.webm @ 2.00s",
+          "camera-B-20261029-080000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.webm @ 3.00s"
+        ],
+        "restored": {
+          "audit": 1,
+          "observations": 2,
+          "media_embedded": false
+        }
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "156.0.8078.49",
+  "finished_at": "2026-10-29T03:59:00.021Z",
+  "passed": 8,
+  "failed": 0,
+  "ok": true,
+  "harness_note": "The first extended run registered its synthetic event fault too late; its four dependent failures were test setup errors. The hook was moved to page initialization and its invocation count is now asserted. Product source and model output were never replaced."
+}

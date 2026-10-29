@@ -87,10 +87,10 @@ window.addEventListener('estateguard:candidates',event=>{try{
   event.detail.accepted=true;event.detail.reused=true;location.hash='workspace';
   message('已返回本次分析的复核记录，原结论、草稿和附件保持不变。');return;
  }
- if(!replaceAllowed())return;setWorkspace(next);dirty=true;
+ if(!replaceAllowed()){event.detail.cancelled=true;return;}setWorkspace(next);dirty=true;
  if(event.detail.file)void media.replace(events.map(e=>e.id),event.detail.file);
  event.detail.accepted=true;message('已载入真实模型产生的规则候选。质量设为保守值，所有结论需人工核实。');revealNewReview();
- }catch(err){message(err.message,true);}});
+ }catch(err){event.detail.error=String(err.message||err);message(event.detail.error,true);}});
 window.addEventListener('beforeunload',event=>{if(hasUnsavedWork()){event.preventDefault();event.returnValue='';}});
 async function showBenchmark(){try{const r=await fetch('benchmark.json');if(!r.ok)throw new Error('无法读取评测');const b=await r.json();const pct=n=>n===null?'不适用':`${(n*100).toFixed(1)}%`;$('benchmark').innerHTML=`<div class="bench-result"><strong>${b.baseline.predictions} → ${b.proposed.predictions}</strong><p>固定合成班次中的待办条目减少 ${pct(b.queue_reduction)}。仍保留一个错误提示和一个完全漏掉的事件，避免把流程评测误写成完美识别。</p></div><div class="table-wrap"><table><thead><tr><th>事件级匹配</th><th>仅按分数告警</th><th>场景规则队列</th></tr></thead><tbody>${[['待办条目','predictions'],['匹配到的参考事件','true_positive'],['未匹配 / 重复条目','false_positive'],['漏掉的参考事件','missed'],['本用例精确率','precision'],['本用例召回率','recall']].map(([l,k])=>`<tr><td>${l}</td><td>${['precision','recall'].includes(k)?pct(b.baseline[k]):b.baseline[k]}</td><td>${['precision','recall'].includes(k)?pct(b.proposed[k]):b.proposed[k]}</td></tr>`).join('')}</tbody></table></div><p class="benchmark-note">${b.raw_observations} 条人工构造的观察、${b.proposed.references} 个参考事件。摄像头、区域、轨迹和类别一致，时间 IoU ≥ 0.1，按重叠从高到低一对一匹配。重复告警算未匹配条目；改进队列还保留低分高风险提示，因此这是流程对比，不是单一模型消融。</p>`;}catch(err){$('benchmark').textContent=err.message;}}
 await loadDemo();await showBenchmark();

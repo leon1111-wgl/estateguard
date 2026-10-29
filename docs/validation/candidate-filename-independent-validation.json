@@ -1,0 +1,94 @@
+{
+  "started_at": "2026-10-29T03:57:52.919Z",
+  "base": "http://127.0.0.1:8768",
+  "baseline_commit": "729a05d",
+  "scope": "独立纯函数契约与真实 Chrome 事件边界；浏览器候选为明确标注的合成数据，公开 bus.jpg 仅用于实际附件解码。未替换产品源码、未伪造模型输出；真实检测由正式专项另验。",
+  "source_sha256": {
+    "web/engine.mjs": "75486bcba9b91c7e589bece8b8ba2797b60fda557fb6c7cc4c063bff93888ee0",
+    "web/app.mjs": "812d8c2ae98a19fb2bc93b2082fc40141c6ded5a5c717f11323a863ec204560b",
+    "web/vision.mjs": "9e6471e1d5dae75a8b35e1ad6ac2286436841ba7b99a825e0fb53aa14f5c2e28",
+    "tests/evidence-reference.test.mjs": "d2a0c27e19b784720804707e167ab7e631c4c4759c4b1c72938f629f9e855cec"
+  },
+  "unit_tests": {
+    "file": "tests/evidence-reference.test.mjs",
+    "red": {
+      "passed": 5,
+      "failed": 5,
+      "reason": "五项长引用均在旧版真实校验器的 240 字符检查失败。"
+    },
+    "green": {
+      "passed": 10,
+      "failed": 0
+    }
+  },
+  "checks": [
+    {
+      "name": "长引用被原子接收，附件实际解码并可保存复核",
+      "passed": true,
+      "evidence": {
+        "result": {
+          "accepted": true,
+          "reused": false,
+          "cancelled": false,
+          "error": null,
+          "hash": "#workspace"
+        },
+        "filename_bytes": 255,
+        "reference_length": 263,
+        "reference_sha256": "4654d249b98cdee322b564e450218800db179dce3d84140170765b25a09c3def",
+        "history_count": 1
+      }
+    },
+    {
+      "name": "513 字符引用明确回传错误，不询问替换且保留历史、草稿和附件节点",
+      "passed": true,
+      "evidence": {
+        "result": {
+          "accepted": false,
+          "reused": false,
+          "cancelled": false,
+          "error": "boundary-1：证据引用须为非空文本，长度不能超过 512 字符。",
+          "hash": "#analyze"
+        },
+        "dialog_count": 0,
+        "original_state_and_dom_preserved": true
+      }
+    },
+    {
+      "name": "用户取消明确回传 cancelled，不回传错误、不导航、不替换已有记录",
+      "passed": true,
+      "evidence": {
+        "result": {
+          "accepted": false,
+          "reused": false,
+          "cancelled": true,
+          "error": null,
+          "hash": "#analyze"
+        },
+        "dialog_count": 1,
+        "original_state_and_dom_preserved": true
+      }
+    },
+    {
+      "name": "重复同任务仍返回已有复核，原历史与长引用最终导出一致",
+      "passed": true,
+      "evidence": {
+        "result": {
+          "accepted": true,
+          "reused": true,
+          "cancelled": false,
+          "error": null,
+          "hash": "#workspace"
+        },
+        "history_count": 1,
+        "export_content_unchanged": true
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "156.0.8078.49",
+  "finished_at": "2026-10-29T03:57:54.181Z",
+  "browser_passed": 4,
+  "ok": true
+}

@@ -14,6 +14,8 @@ export const statuses=['open','confirmed_concern','dismissed','needs_evidence','
 export const MAX_BATCH_BYTES=5*1024*1024;
 export const MAX_WORKSPACE_BYTES=32*1024*1024;
 export const MAX_AUDIT_ENTRIES=50000;
+// Local references include the complete filename and sampling offset.
+export const MAX_EVIDENCE_LABEL_LENGTH=512;
 const object=x=>x!==null&&typeof x==='object'&&!Array.isArray(x);
 const utf8=new TextEncoder();
 // UTF-16 code-unit order is independent of the browser's language/ICU collation.
@@ -64,7 +66,7 @@ export function validateBatch(batch){
   numberValue(r.score,`${r.id} score`,0,1); numberValue(r.quality,`${r.id} quality`,0,1);
   textValue(r.summary,`${r.id} summary`,2000);
   requireValue(Array.isArray(r.evidence)&&r.evidence.length<=20,`${r.id}: evidence must be an array of at most 20 local reference labels.`);
-  r.evidence.forEach(e=>textValue(e,`${r.id} evidence`,240));
+  r.evidence.forEach(e=>requireValue(typeof e==='string'&&e.trim().length>0&&e.length<=MAX_EVIDENCE_LABEL_LENGTH,`${r.id}：证据引用须为非空文本，长度不能超过 ${MAX_EVIDENCE_LABEL_LENGTH} 字符。`));
   requireValue(r.move_permit===undefined||typeof r.move_permit==='boolean',`${r.id}: move_permit must be boolean.`);
  });
  return structuredClone(batch);
