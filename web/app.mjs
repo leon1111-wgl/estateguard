@@ -13,7 +13,11 @@ let ws=null,events=[],selected=null,dirty=false,loadSequence=0;
 const drafts=new Map();
 const media=createEvidenceStore({onChange:id=>{if(id===selected&&$('media-status'))renderMedia(id);}});
 const titles={analyze:'视频与图片分析',workspace:'事件复核',parking:'车位巡检',policy:'场景规则',results:'评测与模型',story:'项目说明'};
-function navigate(){const view=Object.hasOwn(titles,location.hash.slice(1))?location.hash.slice(1):'analyze';for(const section of document.querySelectorAll('[data-page]'))section.hidden=section.id!==view;for(const a of document.querySelectorAll('[data-nav]'))a.classList.toggle('active',a.dataset.nav===view);$('view-title').textContent=titles[view];}
+function navigate(){const view=Object.hasOwn(titles,location.hash.slice(1))?location.hash.slice(1):'analyze';for(const section of document.querySelectorAll('[data-page]'))section.hidden=section.id!==view;for(const a of document.querySelectorAll('[data-nav]')){a.classList.toggle('active',a.dataset.nav===view);if(a.dataset.nav===view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');}$('view-title').textContent=titles[view];revealActiveTab();}
+// Phone navigation is a horizontal strip; keep the current view's tab inside it without moving the page.
+function revealActiveTab(){const a=document.querySelector('[data-nav].active'),nav=a?.closest('nav');if(!nav||nav.scrollWidth<=nav.clientWidth)return;const n=nav.getBoundingClientRect(),r=a.getBoundingClientRect();if(r.left<n.left||r.right>n.right-28)nav.scrollLeft+=r.left-n.left-16;}
+// Links to another view start at the top like a page load; programmatic jumps keep their own scrolling.
+document.addEventListener('click',e=>{const a=e.target.closest?.('a[href^="#"]');if(a&&e.button===0&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey&&Object.hasOwn(titles,a.hash.slice(1)))scrollTo({top:0,behavior:'instant'});});
 window.addEventListener('hashchange',navigate);navigate();
 function message(text,error=false){$('message').textContent=text;$('message').classList.toggle('error',error);}
 function focusReviewStart(){
