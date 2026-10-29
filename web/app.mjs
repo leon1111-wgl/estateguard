@@ -17,7 +17,7 @@ function navigate(){const view=Object.hasOwn(titles,location.hash.slice(1))?loca
 // Phone navigation is a horizontal strip; keep the current view's tab inside it without moving the page.
 function revealActiveTab(){const a=document.querySelector('[data-nav].active'),nav=a?.closest('nav');if(!nav||nav.scrollWidth<=nav.clientWidth)return;const n=nav.getBoundingClientRect(),r=a.getBoundingClientRect();if(r.left<n.left||r.right>n.right-28)nav.scrollLeft+=r.left-n.left-16;}
 // Links to another view start at the top like a page load; programmatic jumps keep their own scrolling.
-document.addEventListener('click',e=>{const a=e.target.closest?.('a[href^="#"]');if(a&&e.button===0&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey&&Object.hasOwn(titles,a.hash.slice(1)))scrollTo({top:0,behavior:'instant'});});
+document.addEventListener('click',e=>{const a=e.target.closest?.('a[href^="#"]');if(a&&!e.defaultPrevented&&e.button===0&&!e.metaKey&&!e.ctrlKey&&!e.shiftKey&&!e.altKey&&Object.hasOwn(titles,a.hash.slice(1)))scrollTo({top:0,behavior:'instant'});});
 window.addEventListener('hashchange',navigate);navigate();
 function message(text,error=false){$('message').textContent=text;$('message').classList.toggle('error',error);}
 function focusReviewStart(){

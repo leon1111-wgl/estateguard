@@ -25,14 +25,14 @@ const views=['analyze','workspace','parking','policy','results','story'];
     await page.evaluate(()=>scrollTo(0,document.documentElement.scrollHeight));
     await page.locator(`[data-nav="${view}"]`).click();
     await page.waitForFunction(v=>!document.getElementById(v).hidden&&document.querySelector('[data-nav].active')?.dataset.nav===v,view);
-    const after=await page.evaluate(()=>{const a=document.querySelector('[data-nav].active'),n=a.closest('nav').getBoundingClientRect(),r=a.getBoundingClientRect();return {scrollY,current:a.getAttribute('aria-current'),inside:r.left>=n.left-1&&r.right<=n.right+1};});
+    const after=await page.evaluate(()=>{const a=document.querySelector('[data-nav].active'),strip=a.closest('nav'),n=strip.getBoundingClientRect(),r=a.getBoundingClientRect(),fade=strip.scrollWidth>strip.clientWidth?27:-1;return {scrollY,current:a.getAttribute('aria-current'),inside:r.left>=n.left-1&&r.right<=n.right-fade};});
     assert.equal(after.scrollY,0,`${width}px nav to ${view} left the page scrolled`);
     assert.equal(after.current,'page');
     assert.ok(after.inside,`${width}px active tab ${view} is outside the navigation strip`);
    }
    // Deep links on a phone also bring the current tab into the strip.
    await page.goto(`${base}/#story`);await page.waitForFunction(()=>document.querySelector('[data-nav].active')?.dataset.nav==='story');
-   assert.ok(await page.evaluate(()=>{const a=document.querySelector('[data-nav].active'),n=a.closest('nav').getBoundingClientRect(),r=a.getBoundingClientRect();return r.left>=n.left-1&&r.right<=n.right+1;}),`${width}px deep link hides the active tab`);
+   assert.ok(await page.evaluate(()=>{const a=document.querySelector('[data-nav].active'),strip=a.closest('nav'),n=strip.getBoundingClientRect(),r=a.getBoundingClientRect(),fade=strip.scrollWidth>strip.clientWidth?27:-1;return r.left>=n.left-1&&r.right<=n.right-fade;}),`${width}px deep link hides the active tab`);
    await context.close();
   }
   // Appearance: system by default, explicit choice wins over the OS setting and survives reload.

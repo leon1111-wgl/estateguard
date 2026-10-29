@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: ['feat/**']
-    paths: ['web/**', 'scripts/**', 'data/**', 'package.json', '.github/workflows/browser-checks.yml']
+    paths: ['web/**', 'scripts/**', 'data/**', 'docs/validation/**', 'tests/fixtures/**', 'package.json', '.github/workflows/browser-checks.yml']
 permissions:
   contents: read
 concurrency:
@@ -43,7 +43,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: playwright-1.62.1-chromium-${{ runner.os }}
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package.json') }}
       - run: npx playwright install --with-deps chromium
       - name: Serve web/
         run: |
