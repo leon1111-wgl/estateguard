@@ -1,6 +1,7 @@
 /** Actual parking model failure isolation. Public pixels and original models; controlled HTTP faults only. */
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {clearBrowserImageCache}=require('./browser-image-cache.cjs');
 const root=path.join(__dirname,'..'),out=path.join(root,'artifacts');
 const base=(process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766').replace(/\/$/,'');
 const reportName=process.env.PARKING_FAILURE_REPORT||'parking-model-failure-validation.json';
@@ -44,6 +45,8 @@ const check=(name,evidence,fn)=>{try{fn();report.checks.push({name,passed:true,e
   // Independent second model failure; MLP reads a published PNG, DINO reads the original JPEG.
   await p.locator('#parking-model-choice').selectOption('mlp32');let mlpFaults=0;const mlpPattern='**/data/parking/inputs/'+otherId+'.png';
   await p.route(mlpPattern,route=>{mlpFaults++;return route.fulfill({status:500,body:'Controlled MLP32 input decode fault'});});
+  // This PNG was decoded in earlier runs; force the armed HTTP route to be reached.
+  await clearBrowserImageCache(p);
   await run();const twoErrors=await exportData();
   check('simultaneous failures retain separate model and sample identities',{export:summarize(twoErrors),injected_mlp_requests:mlpFaults},()=>{assert.equal(mlpFaults,1);assert.equal(twoErrors.samples.length,52);assert.deepEqual(twoErrors.failures.map(r=>r.id),[otherId]);assert.deepEqual(twoErrors.failures_by_model.mlp32.map(r=>r.id),[otherId]);assert.deepEqual(twoErrors.failures_by_model.dinov2.map(r=>r.id),[id]);assert.deepEqual(twoErrors.reviews,saved.reviews);assert.equal(twoErrors.evidence_failures.length,0);});
 
