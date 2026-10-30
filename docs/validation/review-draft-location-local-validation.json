@@ -1,0 +1,106 @@
+{
+  "at": "2026-10-30T04:03:23.654Z",
+  "base": "http://127.0.0.1:8768",
+  "baseline_commit": "75e9b07",
+  "baseline_report": "critic-20261030-review-draft-baseline.json",
+  "scope": "Synthetic demo events test workflow, with actual decoding of the existing CC0 bus photo and a generated still-photo video. No source or model output is replaced. Default final case runs actual D-FINE; local runs must explicitly set REVIEW_DRAFT_LOCATION_SKIP_MODEL=1.",
+  "model_skipped": true,
+  "checks": [
+    {
+      "name": "mobile hidden scene/status draft blocks JSON and Markdown, then locator restores exact event",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "blocked_json": "还有未保存草稿，请点击「查看未保存草稿」逐条保存或改回原值，再导出工作区。",
+        "blocked_markdown": "还有未保存草稿，请点击「查看未保存草稿」逐条保存或改回原值，再导出交接单。",
+        "selected": "event:door-held-1",
+        "autosaved": false
+      }
+    },
+    {
+      "name": "creation-order recovery crosses scenes; saving oldest and reverting next only resolves those drafts",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "order": [
+          "event:bags-1",
+          "event:door-held-1"
+        ],
+        "media_retained": true,
+        "restored": {
+          "audit_entries": 1,
+          "decisions": [
+            "event:bags-1"
+          ],
+          "attachments_embedded": false
+        }
+      }
+    },
+    {
+      "name": "saved record edits reverted to baseline remove only their locator entry and preserve stored history",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "audit_entries": 1,
+        "timestamp_and_original_note_unchanged": true
+      }
+    },
+    {
+      "name": "bad import and failed save preserve draft, reference, attachment and locator count",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "failure": "Review note: enter 1–2000 characters.",
+        "attachment_retained": true,
+        "restored": {
+          "audit_entries": 1,
+          "decisions": [
+            "event:door-held-1"
+          ],
+          "attachments_embedded": false
+        }
+      }
+    },
+    {
+      "name": "same-event locator preserves video DOM, playback position and note selection",
+      "passed": true,
+      "evidence": {
+        "dialogs": [],
+        "same": true,
+        "time": 1,
+        "selection": [
+          2,
+          5
+        ],
+        "paused": true,
+        "synthetic_video": true,
+        "model_inference": false
+      }
+    },
+    {
+      "name": "cancelled replacement preserves draft locator and attachment; successful restore clears locator",
+      "passed": true,
+      "evidence": {
+        "dialogs": [
+          "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？",
+          "当前标签页有未导出的记录或草稿。替换前请先保存草稿并导出工作区。仍要继续吗？"
+        ],
+        "cancel_preserved": true,
+        "successful_import_resets_count": true
+      }
+    },
+    {
+      "name": "actual D-FINE candidate draft is recovered, saved and handed over with source evidence intact",
+      "skipped": true,
+      "reason": "Local inference prohibited by AGENTS; CI runs this case by default."
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "156.0.8078.74",
+  "finished_at": "2026-10-30T04:03:34.481Z",
+  "passed": 6,
+  "failed": 0,
+  "skipped": 1,
+  "ok": true
+}

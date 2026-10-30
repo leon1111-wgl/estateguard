@@ -1,0 +1,201 @@
+{
+  "scope": "GitHub Actions完整浏览器检查；区分失败诊断、原样复跑与既有环境偏差。",
+  "run": "https://github.com/leon1111-wgl/estateguard/actions/runs/41000996420",
+  "commit": "ecd7ff6ad8343522c09f6d473f63290270301f36",
+  "attempt": 2,
+  "conclusion": "success",
+  "checks": [
+    {
+      "name": "check (analysis-parameters-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (detection-threshold-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (handoff-navigation-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (event-media-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (locale-handover-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (browser-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (detector-loading-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (media-context-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (candidate-filename-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (model-loading-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (model-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-draft-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-critic-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-draft-location-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-model-failure-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-review-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-error-audit-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-upload-core-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-feature-retry-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (partial-analysis-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (review-draft-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (reopened-review-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-handover-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-upload-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (review-continuation-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (parking-transfer-check.cjs)",
+      "conclusion": "failure"
+    },
+    {
+      "name": "check (review-draft-location-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (shell-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (vision-dwell-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (workspace-replacement-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (candidate-handoff-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (detector-check.cjs)",
+      "conclusion": "success"
+    },
+    {
+      "name": "check (critic-check.cjs)",
+      "conclusion": "success"
+    }
+  ],
+  "known_environment_failure": {
+    "check": "parking-transfer-check.cjs",
+    "mobilenet_score_difference": 1.5541358928672366e-06,
+    "limit": 1e-06,
+    "continued_by_existing_workflow": true,
+    "baseline_record": "docs/VALIDATION.md: 2026-10-29运营控制台改版"
+  },
+  "controlled_fault_diagnostic": {
+    "check": "parking-model-failure-check.cjs",
+    "first_attempt": {
+      "passed": 6,
+      "failed": 2,
+      "mlp_injected_requests": 0
+    },
+    "unchanged_rerun": {
+      "passed": 8,
+      "failed": 0,
+      "mlp_injected_requests": 1
+    },
+    "no_inference_reproduction": {
+      "browser": "156.0.8078.74",
+      "scope": "Only real PNG decoding; no model loaded or inference started.",
+      "runs": [
+        {
+          "label": "first MLP-style decode",
+          "ok": true,
+          "width": 32,
+          "pixel": 113,
+          "network_requests": 1
+        },
+        {
+          "label": "second decode after unrelated route enables interception",
+          "ok": true,
+          "width": 32,
+          "pixel": 113,
+          "network_requests": 1
+        },
+        {
+          "label": "third decode after installing HTTP500 target route",
+          "ok": true,
+          "width": 32,
+          "pixel": 113,
+          "network_requests": 0
+        },
+        {
+          "label": "after CDP clearBrowserCache and cacheDisabled",
+          "ok": false,
+          "error": "The source image cannot be decoded.",
+          "network_requests": 1
+        }
+      ],
+      "route_hits": 0,
+      "route_hits_after_cdp": 1
+    },
+    "follow_up": "故障路由需确定绕过已解码图片缓存，并保留请求命中计数断言；本轮未修改该测试或产品缓存。"
+  }
+}

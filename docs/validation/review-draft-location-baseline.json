@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-30T03:59:43.828Z",
+  "base": "http://127.0.0.1:8768",
+  "baseline_commit": "75e9b07",
+  "scope": "Synthetic event workflow and actual local media decoding. Model inference is skipped locally when REVIEW_DRAFT_LOCATION_SKIP_MODEL=1; no model output is fabricated.",
+  "model_skipped": true,
+  "checks": [
+    {
+      "name": "hidden event draft can be located without manually finding its previous filter",
+      "passed": false,
+      "evidence": {
+        "message": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。",
+        "visible_events": 0,
+        "locator_count": 0,
+        "queue": "resolved",
+        "area": "Parking",
+        "downloads": 0
+      },
+      "error": "Expected values to be strictly equal:\n\n0 !== 1\n"
+    }
+  ],
+  "page_errors": [],
+  "browser": "156.0.8078.74",
+  "passed": 0,
+  "failed": 1,
+  "ok": false,
+  "finished_at": "2026-10-30T03:59:45.260Z"
+}

@@ -1,0 +1,76 @@
+{
+  "started_at": "2026-10-30T04:04:35.098Z",
+  "base": "http://127.0.0.1:8768",
+  "baseline": "75e9b07",
+  "scope": "独立无推理浏览器复核。合成观察与旧版锚点历史；公开 CC0 bus.jpg 仅实际解码及合成短片播放。仅对指定图片的原生 decode 完成作延迟夹具，不替换产品源码。",
+  "source_sha256": {
+    "web/app.mjs": "57b83d76957a9674e0ca36327a88fe4c28baf5e70d2b656b54b47c66630a61f1",
+    "web/index.html": "f4fea8e65969cd30f32c31a309bf7c6fdd9def27f28ecf3cf00e9ac8360ae337"
+  },
+  "checks": [
+    {
+      "name": "按创建顺序找回两条草稿，精确支持含引号的旧版事件锚点与隐藏筛选",
+      "passed": true,
+      "evidence": {
+        "order": [
+          "event:b-other",
+          "event:a\"alias"
+        ],
+        "remaining": "查看未保存草稿（1）"
+      }
+    },
+    {
+      "name": "同项重复定位保留正在播放的视频和编辑器节点，不重新加载媒体",
+      "passed": true,
+      "evidence": {
+        "state": {
+          "same_video": true,
+          "same_editor": true,
+          "paused": false,
+          "reset_events": 0,
+          "note": "  甲事件未保存\n保留原文  "
+        }
+      }
+    },
+    {
+      "name": "定位仍在读取附件的草稿时保持读取锁和原附件，之后可切换到另一草稿",
+      "passed": true,
+      "evidence": {
+        "pending_save_blocked": true,
+        "current_event": "event:b-other"
+      }
+    },
+    {
+      "name": "前一事件迟到解码不会覆盖当前事件原图、草稿或焦点，回到原事件可见其结果",
+      "passed": true,
+      "evidence": {
+        "current_preserved": true,
+        "completed_attachment_returned_to_original_event": true
+      }
+    },
+    {
+      "name": "空白理由保存失败、坏导入与取消恢复均保留草稿、计数和附件",
+      "passed": true,
+      "evidence": {
+        "failure_message": "Review note validation",
+        "cancel_confirmations": 1,
+        "original_draft_and_media_preserved": true
+      }
+    },
+    {
+      "name": "撤回草稿不生成历史，合法恢复同步清除定位入口并保持原历史数据",
+      "passed": true,
+      "evidence": {
+        "history_count": 1,
+        "original_timestamp": "2026-10-30T01:00:00Z",
+        "no_added_history": true
+      }
+    }
+  ],
+  "page_errors": [],
+  "model_asset_requests": [],
+  "browser": "156.0.8078.74",
+  "finished_at": "2026-10-30T04:04:49.334Z",
+  "passed": 6,
+  "ok": true
+}

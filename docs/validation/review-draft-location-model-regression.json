@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-30T04:07:28.007Z",
+  "browser": "151.0.7922.34",
+  "scope": "Local execution smoke tests; not detection accuracy or real-world parking validation.",
+  "image_score": 0.9917388558387756,
+  "image_mean_ms": 1240,
+  "video_frames": 7,
+  "video_mean_ms": 855.1857142857147,
+  "tensors_before": 262,
+  "tensors_after": 262,
+  "external_requests": 0,
+  "passed": [
+    "real image inference",
+    "same-origin assets",
+    "candidate handoff",
+    "review dismissal",
+    "real video decoding and sampling",
+    "synthetic dwell candidate",
+    "repeat inference tensor stability",
+    "nonzero offset export and candidate timestamp",
+    "out-of-range offset rejection",
+    "mobile layout"
+  ],
+  "execution": {
+    "environment": "GitHub Actions Ubuntu / Chromium 151.0.7922.34",
+    "commit": "ecd7ff6ad8343522c09f6d473f63290270301f36",
+    "run": "https://github.com/leon1111-wgl/estateguard/actions/runs/41000996420",
+    "attempt": 1
+  }
+}

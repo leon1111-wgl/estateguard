@@ -1,5 +1,33 @@
 # 验证记录 · 2026-10-15
 
+
+## 2026-10-30 · 被筛选隐藏的事件草稿可直接找回
+
+从已发布 `75e9b07` 安全快进维护工作区后修改；没有改动主目录未提交的训练与漂移研究。代码提交为 `ecd7ff6`，仅工作区草稿入口与定位逻辑、新专项脚本，不修改模型和规则。
+
+- [独立红基线](validation/review-draft-location-baseline.json) 0/1：390px 合成班次中门受阻事件留下备注后，切到已处理与停车场，列表为空且导出受阻，没有直接定位入口。它证明流程障碍，不代表发生频率。
+- [本地专项](validation/review-draft-location-local-validation.json) 6/6，真实模型一项明确跳过：两种导出阻止、创建顺序、跨场景保存/撤回、坏导入、空白理由失败、取消与成功恢复、原历史和附件保持。公开 CC0 图片实际解码，合成短片只检查同项定位保留媒体 DOM、1 秒位置与编辑器选区。
+- [独立代码边界](validation/review-draft-location-independent-validation.json) 6/6：含引号的旧事件编号、播放中视频三次定位不暂停/重载、读取中仍锁保存、跨事件迟到解码不覆盖草稿或抢焦点、导入与保存失败保护、原历史时间不变。原生图片 decode 延迟是显式故障夹具，没有替换产品代码或模型结果。
+- [独立界面回归](validation/review-draft-location-ui-validation.json) 32/32：1440/390px × 浅/深色。设计师和主代理查看真实截图，桌面四按钮一行，手机沿用工具条自然换行；长标题不溢出，数量 0→1→2→1→0。键盘定位后标题与来源在视口内，Tab 继续到证据入口；没有 CSS 变化。本机这两份独立审查均没有请求模型权重或运行推理。
+- 全部 JS 156/156、26 项资产哈希、页面导航/主题 `shell-check` 通过。
+
+[CI 专项](validation/review-draft-location-validation.json) **7/7**，含真实 D-FINE-N 公开校车图（大巴分数 `0.9653157638`、2 个规则候选）→隐藏草稿定位→人工保存→JSON/Markdown→新页面恢复。原始观察与任务 ID、历史、结论、规则逐项一致；媒体不嵌入 JSON。页面错误与外部请求为 0。[原模型回归](validation/review-draft-location-model-regression.json) 也通过：SSDLite 大巴 `0.9917388558`、7 帧合成短片、非零起点和送审、张量 `262 → 262`。两项均在 [GitHub Actions 41000996420](https://github.com/leon1111-wgl/estateguard/actions/runs/41000996420) 的 `ecd7ff6` 运行，浏览器为 Chromium 151；没有本机模型推理。公开照片和合成短片验证工程链路，不是社区准确率评测。
+
+[完整 CI 与诊断](validation/review-draft-location-ci-validation.json)：34 个浏览器检查中 33 个通过。`parking-transfer-check` 仍有已登记的 Linux/macOS MobileNet 分数差 `1.5541e-6`（限值 `1e-6`），按原工作流允许失败，但本报告不把它计为通过。`parking-model-failure-check` 首次 6/8：后安装的 HTTP 500 路由命中数为 0，因此没有实际注入 MLP 输入故障；独立无推理实验确认已解码图片缓存可绕过路由，清缓存后原路由命中且图片解码失败。相同提交原样 CI 复跑 8/8，路由实际命中 1 次；没有改断言或忽略该作业。初次结果和后续证据一起保留，测试夹具确定性修正已登记后续项。
+
+
+```bash
+# 本机：只验证无推理流程；按本文依赖说明设置 PLAYWRIGHT_MODULE / CHROME_PATH。
+ESTATEGUARD_URL=http://127.0.0.1:8768 REVIEW_DRAFT_LOCATION_SKIP_MODEL=1 node scripts/review-draft-location-check.cjs
+node --test tests/*.test.mjs
+python3 scripts/verify_assets.py
+ESTATEGUARD_URL=http://127.0.0.1:8768 node scripts/shell-check.cjs
+# CI：专项默认包含真实 D-FINE；工作流也执行原有 model-check、送审与附件等检查。
+gh workflow run browser-checks.yml --ref codex/estateguard-maintenance-20261025
+```
+
+限制：当前标签页内定位与手动文件交班；不自动保存、不批量丢弃、不恢复跨会话草稿。当前事件重复定位保留正在播放的视频；离开后再返回另一事件不承诺恢复播放位置。没有新增训练或社区行为识别准确率结果。
+
 ## 2026-10-29 · 运营控制台改版与 CI 浏览器检查
 
 从已发布 `b0b3294` 继续，独立工作树 `feat/enterprise-redesign`；主目录与维护工作树的未提交内容未动。用户要求去掉“AI 生成 / 后台模板”观感，参照同类企业产品重做前端。改版只动页面框架与样式：`index.html` 页头和侧栏、`style.css` 全部颜色改为变量、新增 `theme.js`（外观偏好）、`app.mjs` 导航的 `aria-current`、手机标签滚入可见区和页内视图链接回到顶部。没有修改模型、规则、数据或任何业务模块。

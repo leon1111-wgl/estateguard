@@ -1,0 +1,192 @@
+{
+  "name": "事件隐藏草稿定位 · 独立界面回归",
+  "checked_at": "2026-10-30T04:05:56.621903+00:00",
+  "base": "http://127.0.0.1:8768",
+  "browser": "156.0.8078.74",
+  "baseline_commit": "75e9b07",
+  "result": {
+    "passed": 32,
+    "failed": 0,
+    "matrix": "1440×1000 / 390×844 × 浅色 / 深色，每组合8项",
+    "blockers": []
+  },
+  "scope": "沿用2026-10-29已发布运营控制台。真实 Chrome 操作现有合成班次与明确合成长批次标题；公开校车图只验证本地解码、素材设置与附件DOM，不证明它对应电梯事件。本机未启动模型分析，也未替换模型结果。推理检查由主代理另行安排CI，本报告不代替该证据。",
+  "hashes": {
+    "app.mjs": "57b83d76957a9674e0ca36327a88fe4c28baf5e70d2b656b54b47c66630a61f1",
+    "index.html": "f4fea8e65969cd30f32c31a309bf7c6fdd9def27f28ecf3cf00e9ac8360ae337",
+    "style.css": "168765513db2cc2c110f0808131013d11dfab17d864c6dd2928a73a895324c1a"
+  },
+  "raw_reports": [
+    "artifacts/designer-20261030-review-draft-baseline.json",
+    "artifacts/designer-20261030-review-draft-ui.json"
+  ],
+  "script": "artifacts/designer-20261030-review-draft-ui.cjs",
+  "baseline": {
+    "reproductions": 4,
+    "export_blocked": true,
+    "empty_filtered_queue": true,
+    "locator_absent": true,
+    "message": "还有未保存草稿，请先逐条保存复核记录，再导出工作区。",
+    "isolation": "使用 git show 75e9b07 的 HTML 与 app.mjs，避免根代理并发补丁混入。初次仅固定app、遇到新增但隐藏的HTML按钮，保留 mixed-html 诊断；正式红基线重跑同时固定两文件。"
+  },
+  "checks": [
+    {
+      "name": "initial hidden control and analysis setup retain the approved shell",
+      "passed_combinations": [
+        "1440-light",
+        "1440-dark",
+        "390-light",
+        "390-dark"
+      ]
+    },
+    {
+      "name": "editing a closed event creates one draft without replacing input or media DOM",
+      "passed_combinations": [
+        "1440-light",
+        "1440-dark",
+        "390-light",
+        "390-dark"
+      ]
+    },
+    {
+      "name": "two filtered-out drafts expose a reachable count and block JSON export",
+      "passed_combinations": [
+        "1440-light",
+        "1440-dark",
+        "390-light",
+        "390-dark"
+      ]
+    },
+    {
+      "name": "keyboard locator restores the closed event draft and starts at its title",
+      "passed_combinations": [
+        "1440-light",
+        "1440-dark",
+        "390-light",
+        "390-dark"
+      ]
+    },
+    {
+      "name": "same-event locator keeps media form and note while deliberately focusing its title",
+      "passed_combinations": [
+        "1440-light",
+        "1440-dark",
+        "390-light",
+        "390-dark"
+      ]
+    },
+    {
+      "name": "saving the located draft leaves the other draft and permits locating it next",
+      "passed_combinations": [
+        "1440-light",
+        "1440-dark",
+        "390-light",
+        "390-dark"
+      ]
+    },
+    {
+      "name": "bad import retains current draft and both exports still require resolving it",
+      "passed_combinations": [
+        "1440-light",
+        "1440-dark",
+        "390-light",
+        "390-dark"
+      ]
+    },
+    {
+      "name": "reverting only remaining draft hides locator and exports exact saved history",
+      "passed_combinations": [
+        "1440-light",
+        "1440-dark",
+        "390-light",
+        "390-dark"
+      ]
+    }
+  ],
+  "evidence": {
+    "draft_order": [
+      "event:door-held-1",
+      "event:impact-1"
+    ],
+    "count_sequence": [
+      0,
+      1,
+      2,
+      1,
+      0
+    ],
+    "closed_event_reopen_draft": "door-held-1原有已排除记录保留；草稿仅编辑为待复核并更改备注，筛选移除后仍能定位，不把草稿自动算作已保存重开。",
+    "filter_after_locate": {
+      "status": "all",
+      "scene": "all"
+    },
+    "preservation": [
+      "输入仅更新草稿数量，原输入框、表单与附件DOM不重建，光标仍在备注末尾。",
+      "同项再次定位不重建已载入媒体或表单，仅按约定聚焦标题。",
+      "坏导入保留当前草稿和DOM；JSON与Markdown都继续拒绝未解决草稿。",
+      "保存第一项只减一条；撤回第二项不产生记录；原审查历史原样保留。",
+      "最终JSON导出、Markdown导出与重新导入保持两条历史及保存结论。"
+    ],
+    "keyboard": "导出按钮 Shift+Tab 到草稿入口，Enter 定位精确事件标题；下一次 Tab 进入 media-file 证据控件。",
+    "position": [
+      {
+        "width": 1440,
+        "theme": "light",
+        "heading_top": 52.75,
+        "source_top": 83.9375,
+        "heading_focused": true,
+        "next_tab": "media-file"
+      },
+      {
+        "width": 1440,
+        "theme": "dark",
+        "heading_top": 52.75,
+        "source_top": 83.9375,
+        "heading_focused": true,
+        "next_tab": "media-file"
+      },
+      {
+        "width": 390,
+        "theme": "light",
+        "heading_top": 50.421875,
+        "source_top": 81.609375,
+        "heading_focused": true,
+        "next_tab": "media-file"
+      },
+      {
+        "width": 390,
+        "theme": "dark",
+        "heading_top": 50.421875,
+        "source_top": 81.609375,
+        "heading_focused": true,
+        "next_tab": "media-file"
+      }
+    ],
+    "model_asset_requests": 0,
+    "page_errors": [],
+    "external_requests": []
+  },
+  "visual_review": {
+    "view_image_inspected": true,
+    "screenshots": [
+      "artifacts/designer-20261030-review-draft-ui-blocked-toolbar-1440-light.png",
+      "artifacts/designer-20261030-review-draft-ui-blocked-toolbar-1440-dark.png",
+      "artifacts/designer-20261030-review-draft-ui-blocked-toolbar-390-light.png",
+      "artifacts/designer-20261030-review-draft-ui-blocked-toolbar-390-dark.png",
+      "artifacts/designer-20261030-review-draft-ui-located-title-390-dark.png",
+      "artifacts/designer-20261030-review-draft-ui-restored-form-390-dark.png",
+      "artifacts/designer-20261030-review-draft-ui-located-title-1440-light.png",
+      "artifacts/designer-20261030-review-draft-ui-located-title-1440-dark.png",
+      "artifacts/designer-20261030-review-draft-ui-located-title-390-light.png",
+      "artifacts/designer-20261030-review-draft-ui-resolved-toolbar-390-dark.png",
+      "artifacts/designer-20261030-review-draft-ui-analysis-setup-390-light.png",
+      "artifacts/designer-20261030-review-draft-ui-analysis-setup-1440-dark.png"
+    ],
+    "assessment": "四组合无水平溢出。长标题下桌面四按钮同排，390px自然换行为三个普通按钮加整行导出。浅深色状态、计数、错误说明和焦点可读；定位后事件标题、来源、时间可见，手机表单另按实际输入位置截图核对。草稿全部解决后入口隐藏且不占位，恢复正常工具条。未修改CSS或产品文件。"
+  },
+  "limits": [
+    "只有当前标签页内的草稿恢复；不承诺自动保存、跨会话草稿持久化或多人协作。",
+    "公开图片与合成班次仅用于界面和事务流程；未在本机运行模型、测量业务准确率或效率。",
+    "未验证其他浏览器、真实手机硬件或读屏软件。"
+  ]
+}
