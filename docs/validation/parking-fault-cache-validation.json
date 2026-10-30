@@ -1,0 +1,693 @@
+{
+  "date": "2026-10-31",
+  "scope": "浏览器回归夹具确定性维护。产品页面、模型、权重、数据与规则不变；本机仅做原生文件/图片解码和人工流程检查，真实模型推理在GitHub Actions运行。不是训练、精度提升或现场效果评测。",
+  "baseline": "parking-fault-cache-baseline.json",
+  "source_commit": "a34ce70ce5716a1d1de5e0835274caef8de71a16",
+  "changed_scripts": [
+    "scripts/browser-image-cache.cjs",
+    "scripts/image-fault-cache-check.cjs",
+    "scripts/parking-model-failure-check.cjs",
+    "scripts/parking-handover-check.cjs"
+  ],
+  "source_sha256": {
+    "scripts/browser-image-cache.cjs": "efb596d12ef8eb7c968e86c60aff6317f789e711add578a2f529b267b3cb87b6",
+    "scripts/image-fault-cache-check.cjs": "3f40200a908809ed7adede027e3603bc2d0e21ba8af35c81c0140262df16b3b6",
+    "scripts/parking-model-failure-check.cjs": "f3bf86dcde5cff5c3bf8a7cb51951e68d94463963a249ae67b1b4049784fda2b",
+    "scripts/parking-handover-check.cjs": "76af065db3fb5e7f480db48bedf9773006673a669e08c09206bd4d65d5e6e9db"
+  },
+  "local_cache_check": {
+    "at": "2026-10-30T16:05:35.398Z",
+    "base": "http://127.0.0.1:8768",
+    "scope": "Actual public CNRPark image decoding only. No model loading or inference. HTTP500 is a controlled test fault; original source and image pixels are not replaced.",
+    "model_inference": false,
+    "checks": [
+      {
+        "name": "cold and warm actual PNG decode to identical pixels",
+        "passed": true,
+        "evidence": {
+          "cold": {
+            "ok": true,
+            "width": 32,
+            "height": 32,
+            "pixel_sha256": "80eb5253ed3b726b627f78456402bed223dd0203cc5d827076dce08c21c9198e"
+          },
+          "warm": {
+            "ok": true,
+            "width": 32,
+            "height": 32,
+            "pixel_sha256": "80eb5253ed3b726b627f78456402bed223dd0203cc5d827076dce08c21c9198e"
+          }
+        }
+      },
+      {
+        "name": "shared cache reset makes the exact armed HTTP500 route run once",
+        "passed": true,
+        "evidence": {
+          "warm_control": {
+            "result": {
+              "ok": true,
+              "width": 32,
+              "height": 32,
+              "pixel_sha256": "80eb5253ed3b726b627f78456402bed223dd0203cc5d827076dce08c21c9198e"
+            },
+            "route_hits": 0
+          },
+          "failed": {
+            "ok": false,
+            "error": "The source image cannot be decoded."
+          },
+          "route_hits": 1,
+          "controls_unchanged": true,
+          "retained": {
+            "state": "preserve test page state",
+            "held_width": 32,
+            "cache": "public cache test sentinel"
+          }
+        }
+      },
+      {
+        "name": "removing the fault restores original pixels and another warm retry still injects once",
+        "passed": true,
+        "evidence": {
+          "recovered": {
+            "ok": true,
+            "width": 32,
+            "height": 32,
+            "pixel_sha256": "80eb5253ed3b726b627f78456402bed223dd0203cc5d827076dce08c21c9198e"
+          },
+          "second_fault": {
+            "ok": false,
+            "error": "The source image cannot be decoded."
+          },
+          "second_fault_route_hits": 1
+        }
+      }
+    ],
+    "page_errors": [],
+    "model_requests": [],
+    "browser": "156.0.8078.74",
+    "finished_at": "2026-10-30T16:05:38.231Z",
+    "passed": 3,
+    "failed": 0,
+    "ok": true
+  },
+  "independent_cache_review": {
+    "started_at": "2026-10-30T16:05:35.852Z",
+    "base": "http://127.0.0.1:8768",
+    "scope": "独立无模型验证。直接用原生 Image.decode 读取已发布 PNG；不运行停车或检测模型。受控 HTTP 500 保持真实浏览器错误路径。只清 Chromium HTTP/图片缓存，不刷新页面或清人工记录。",
+    "checks": [
+      {
+        "name": "五次暖缓存后，清缓存使真实 HTTP500 每次严格命中一次并触发原生解码失败",
+        "passed": true,
+        "evidence": {
+          "cycles": [
+            {
+              "iteration": 1,
+              "fault_hits": 1,
+              "decode": {
+                "ok": false,
+                "error": "EncodingError",
+                "width": 0
+              },
+              "recovered_pixel_sha256": "c2b7d07941257d080ddeea76bf5c90563f6e8a260f9fafa807ba2a2e0bf265e0"
+            },
+            {
+              "iteration": 2,
+              "fault_hits": 1,
+              "decode": {
+                "ok": false,
+                "error": "EncodingError",
+                "width": 0
+              },
+              "recovered_pixel_sha256": "c2b7d07941257d080ddeea76bf5c90563f6e8a260f9fafa807ba2a2e0bf265e0"
+            },
+            {
+              "iteration": 3,
+              "fault_hits": 1,
+              "decode": {
+                "ok": false,
+                "error": "EncodingError",
+                "width": 0
+              },
+              "recovered_pixel_sha256": "c2b7d07941257d080ddeea76bf5c90563f6e8a260f9fafa807ba2a2e0bf265e0"
+            },
+            {
+              "iteration": 4,
+              "fault_hits": 1,
+              "decode": {
+                "ok": false,
+                "error": "EncodingError",
+                "width": 0
+              },
+              "recovered_pixel_sha256": "c2b7d07941257d080ddeea76bf5c90563f6e8a260f9fafa807ba2a2e0bf265e0"
+            },
+            {
+              "iteration": 5,
+              "fault_hits": 1,
+              "decode": {
+                "ok": false,
+                "error": "EncodingError",
+                "width": 0
+              },
+              "recovered_pixel_sha256": "c2b7d07941257d080ddeea76bf5c90563f6e8a260f9fafa807ba2a2e0bf265e0"
+            }
+          ]
+        }
+      },
+      {
+        "name": "缓存清理保留产品视图、草稿、已解码原图节点及存储哨兵",
+        "passed": true,
+        "evidence": {
+          "retained": {
+            "same_image": true,
+            "same_note": true,
+            "image_width": 150,
+            "held_input_width": 32,
+            "local_storage": "local-state-retained",
+            "cache_storage": "cache-storage-retained"
+          }
+        }
+      },
+      {
+        "name": "撤回草稿后导出人工记录逐项不变，预测仍为空，未伪造模型运行结果",
+        "passed": true,
+        "evidence": {
+          "review_count": 1,
+          "actual_model_inference_runs": 0,
+          "predictions_by_model": {
+            "mlp32": [],
+            "mobilenet": [],
+            "dinov2": []
+          }
+        }
+      }
+    ],
+    "page_errors": [],
+    "model_asset_requests": [],
+    "browser": "156.0.8078.74",
+    "finished_at": "2026-10-30T16:05:38.135Z",
+    "passed": 3,
+    "ok": true,
+    "helper_sha256": "efb596d12ef8eb7c968e86c60aff6317f789e711add578a2f529b267b3cb87b6",
+    "static_review": {
+      "conclusion": "无阻断。正式故障注入保留真实模型和原断言；完整模型隔离仍以CI为准。",
+      "formal_assertion_lines_changed": [],
+      "products_changed": [],
+      "cache_scope": "仅独立 chromium.launch 测试实例，未连接用户已打开的浏览器。",
+      "source_sha256": {
+        "scripts/parking-model-failure-check.cjs": "f3bf86dcde5cff5c3bf8a7cb51951e68d94463963a249ae67b1b4049784fda2b",
+        "scripts/browser-image-cache.cjs": "efb596d12ef8eb7c968e86c60aff6317f789e711add578a2f529b267b3cb87b6"
+      }
+    }
+  },
+  "initial_ci": {
+    "url": "https://github.com/leon1111-wgl/estateguard/actions/runs/41086926821",
+    "headSha": "1e337d49569cee0ab167d2ea01f2c216d47a320d",
+    "conclusion": "failure",
+    "browser_checks": 35,
+    "passed": 33,
+    "nonpassing": [
+      {
+        "conclusion": "failure",
+        "id": 124170494132,
+        "name": "check (parking-transfer-check.cjs)"
+      },
+      {
+        "conclusion": "failure",
+        "id": 124170494186,
+        "name": "check (parking-handover-check.cjs)"
+      }
+    ]
+  },
+  "initial_handover_failure": {
+    "passed": 13,
+    "failed": 1,
+    "case": {
+      "name": "analysis started during a delayed file read blocks the final import commit",
+      "passed": false,
+      "error": "page.waitForFunction: Timeout 12000ms exceeded.",
+      "evidence": {
+        "before_release": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+          "note": "交班验收：请继续核对本车位。",
+          "decision": "uncertain",
+          "message": "正在读取交接文件，完成后将返回文件记录的位置。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。",
+          "play": "false",
+          "run_disabled": true
+        },
+        "state": {
+          "session": "B-20150708",
+          "frame": 0,
+          "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+          "model": "mlp32",
+          "filter": "all",
+          "truth": false,
+          "selected": "B-20150708-0805-1",
+          "visible": 53,
+          "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+          "note": "交班验收：请继续核对本车位。",
+          "decision": "uncertain",
+          "message": "正在分析快照 2015/07/08 08:05：52 / 53 个车位。",
+          "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。",
+          "play": "false",
+          "run_disabled": true
+        }
+      }
+    }
+  },
+  "isolated_message_schedule_probe": {
+    "browser": "156.0.8078.74",
+    "scope": "Native File.text and real public PNG decoding in an isolated 4-worker scheduling harness. No model loads, no model inference and no product source changes. The artificial gates deterministically expose the message overwrite; this is not a product end-to-end result.",
+    "cases": [
+      {
+        "mode": "single-input-gate",
+        "after_native_read": {
+          "message": "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复",
+          "done": 0,
+          "nativeRead": {
+            "marker": "real native text read"
+          },
+          "running": true
+        },
+        "at_poll": {
+          "message": "正在分析快照：7 / 8 个车位。",
+          "done": 7,
+          "history": [
+            "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复",
+            "正在分析快照：1 / 8 个车位。",
+            "正在分析快照：2 / 8 个车位。",
+            "正在分析快照：3 / 8 个车位。",
+            "正在分析快照：4 / 8 个车位。",
+            "正在分析快照：5 / 8 个车位。",
+            "正在分析快照：6 / 8 个车位。",
+            "正在分析快照：7 / 8 个车位。"
+          ],
+          "running": true
+        },
+        "completed": {
+          "done": 8,
+          "running": false
+        }
+      },
+      {
+        "mode": "all-inputs-gate",
+        "after_native_read": {
+          "message": "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复",
+          "done": 0,
+          "nativeRead": {
+            "marker": "real native text read"
+          },
+          "running": true
+        },
+        "at_poll": {
+          "message": "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复",
+          "done": 0,
+          "history": [
+            "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复"
+          ],
+          "running": true
+        },
+        "completed": {
+          "done": 8,
+          "running": false
+        }
+      }
+    ],
+    "passed": true
+  },
+  "handover_static_review": {
+    "scope": "只读静态审查；未在本机运行模型推理或正式脚本。",
+    "source_sha256": "76af065db3fb5e7f480db48bedf9773006673a669e08c09206bd4d65d5e6e9db",
+    "reviewed_lines": [
+      96,
+      108
+    ],
+    "blocking_findings": [],
+    "findings": [
+      "原视图、人工记录、快照、模型和最终53张预测断言保留，新增实际挂起请求数量大于零断言。",
+      "当前快照全部PNG使用同一gate，且注册路由后先清浏览器缓存；不改URL、像素或模型。",
+      "12秒请求/状态等待保留，try/finally释放gate，异常也不永久挂起请求。",
+      "这是导入拒绝的确定性夹具；不能据此声称进度消息覆盖拒绝提示的产品行为已修复。"
+    ],
+    "validation_pending": "独立静态审查时未运行推理；现由本报告ci_handover的14项真实CI结果补充。",
+    "prior_ci_evidence": "artifacts/ci-41086926821/parking-handover-check.cjs/parking-handover-validation.json",
+    "products_changed": []
+  },
+  "final_ci": {
+    "url": "https://github.com/leon1111-wgl/estateguard/actions/runs/41088409012",
+    "headSha": "a34ce70ce5716a1d1de5e0835274caef8de71a16",
+    "conclusion": "success",
+    "browser_checks": 35,
+    "passed": 34,
+    "nonpassing": [
+      {
+        "conclusion": "failure",
+        "id": 124175657697,
+        "name": "check (parking-transfer-check.cjs)"
+      }
+    ]
+  },
+  "ci_image_cache": {
+    "at": "2026-10-30T16:17:31.138Z",
+    "base": "http://127.0.0.1:8766",
+    "scope": "Actual public CNRPark image decoding only. No model loading or inference. HTTP500 is a controlled test fault; original source and image pixels are not replaced.",
+    "model_inference": false,
+    "checks": [
+      {
+        "name": "cold and warm actual PNG decode to identical pixels",
+        "passed": true,
+        "evidence": {
+          "cold": {
+            "ok": true,
+            "width": 32,
+            "height": 32,
+            "pixel_sha256": "80eb5253ed3b726b627f78456402bed223dd0203cc5d827076dce08c21c9198e"
+          },
+          "warm": {
+            "ok": true,
+            "width": 32,
+            "height": 32,
+            "pixel_sha256": "80eb5253ed3b726b627f78456402bed223dd0203cc5d827076dce08c21c9198e"
+          }
+        }
+      },
+      {
+        "name": "shared cache reset makes the exact armed HTTP500 route run once",
+        "passed": true,
+        "evidence": {
+          "warm_control": {
+            "result": {
+              "ok": true,
+              "width": 32,
+              "height": 32,
+              "pixel_sha256": "80eb5253ed3b726b627f78456402bed223dd0203cc5d827076dce08c21c9198e"
+            },
+            "route_hits": 0
+          },
+          "failed": {
+            "ok": false,
+            "error": "The source image cannot be decoded."
+          },
+          "route_hits": 1,
+          "controls_unchanged": true,
+          "retained": {
+            "state": "preserve test page state",
+            "held_width": 32,
+            "cache": "public cache test sentinel"
+          }
+        }
+      },
+      {
+        "name": "removing the fault restores original pixels and another warm retry still injects once",
+        "passed": true,
+        "evidence": {
+          "recovered": {
+            "ok": true,
+            "width": 32,
+            "height": 32,
+            "pixel_sha256": "80eb5253ed3b726b627f78456402bed223dd0203cc5d827076dce08c21c9198e"
+          },
+          "second_fault": {
+            "ok": false,
+            "error": "The source image cannot be decoded."
+          },
+          "second_fault_route_hits": 1
+        }
+      }
+    ],
+    "page_errors": [],
+    "model_requests": [],
+    "browser": "151.0.7922.34",
+    "finished_at": "2026-10-30T16:17:34.250Z",
+    "passed": 3,
+    "failed": 0,
+    "ok": true
+  },
+  "ci_model_failure": {
+    "passed": 8,
+    "failed": 0,
+    "ok": true,
+    "browser": "151.0.7922.34",
+    "cases": [
+      {
+        "name": "actual MLP32 public snapshot succeeds and matches published scores",
+        "passed": true
+      },
+      {
+        "name": "DINOv2 failure is recorded while original evidence and manual review remain available",
+        "passed": true
+      },
+      {
+        "name": "switching to successful or unused models does not inherit another model error",
+        "passed": true
+      },
+      {
+        "name": "successful MLP32 retry cannot erase the unresolved DINOv2 error",
+        "passed": true
+      },
+      {
+        "name": "simultaneous failures retain separate model and sample identities",
+        "passed": true
+      },
+      {
+        "name": "actual DINOv2 recovery clears only its own error while MLP32 remains failed",
+        "passed": true
+      },
+      {
+        "name": "model switching preserves saved reviews and the selected sample draft",
+        "passed": true
+      },
+      {
+        "name": "fresh handover restores human decisions but never adopts exported predictions or failure state",
+        "passed": true
+      }
+    ],
+    "public_mlp_samples": 53,
+    "max_mlp_score_difference": 4.440892098500626e-16,
+    "dino_injected_requests": 1,
+    "mlp_injected_requests": 1,
+    "both_failures": {
+      "mlp32": [
+        {
+          "id": "B-20150708-0805-10",
+          "error": "The source image cannot be decoded."
+        }
+      ],
+      "mobilenet": [],
+      "dinov2": [
+        {
+          "id": "B-20150708-0805-1",
+          "error": "图片读取失败 (500)"
+        }
+      ]
+    },
+    "dino_recovered_samples": 53,
+    "mlp_remaining_samples": 52,
+    "page_errors": [],
+    "external_requests": []
+  },
+  "ci_handover": {
+    "passed": 14,
+    "failed": 0,
+    "ok": true,
+    "cases": [
+      {
+        "name": "actual B52 inference exports and restores the exact review location and model",
+        "passed": true
+      },
+      {
+        "name": "actual MobileNetV2 EXT inference restores a different camera, date, confirmed filter and truth switch",
+        "passed": true
+      },
+      {
+        "name": "legacy files with frame and model metadata locate a saved review and explain the fallback",
+        "passed": true
+      },
+      {
+        "name": "minimal legacy review files keep the current location and say no bookmark was supplied",
+        "passed": true
+      },
+      {
+        "name": "invalid bookmarks and malformed drift reject the whole import without losing the current draft",
+        "passed": true
+      },
+      {
+        "name": "prediction-dependent filters fall back explicitly and never trust imported scores or thresholds",
+        "passed": true
+      },
+      {
+        "name": "a legal human filter that hides the bookmarked slot falls back without losing that slot",
+        "passed": true
+      },
+      {
+        "name": "malformed drift cannot erase or advance an existing sticky restriction or saved review",
+        "passed": true
+      },
+      {
+        "name": "restoring between playback ticks pauses playback before selecting the imported frame",
+        "passed": true
+      },
+      {
+        "name": "active snapshot inference rejects restoration without changing the current view",
+        "passed": true
+      },
+      {
+        "name": "analysis started during a delayed file read blocks the final import commit",
+        "passed": true
+      },
+      {
+        "name": "active local-image analysis rejects restoration and finishes its own result normally",
+        "passed": true
+      },
+      {
+        "name": "the last selected handover wins even when an older real file read finishes later",
+        "passed": true
+      },
+      {
+        "name": "cold-start export waits for the frame directory and then produces a restorable file",
+        "passed": true
+      }
+    ],
+    "delayed_read_evidence": {
+      "before_release": {
+        "session": "B-20150708",
+        "frame": 0,
+        "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+        "model": "mlp32",
+        "filter": "all",
+        "truth": false,
+        "selected": "B-20150708-0805-1",
+        "visible": 53,
+        "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+        "note": "交班验收：请继续核对本车位。",
+        "decision": "uncertain",
+        "message": "正在读取交接文件，完成后将返回文件记录的位置。",
+        "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。",
+        "play": "false",
+        "run_disabled": true
+      },
+      "blocked_input_requests": 4,
+      "after_rejection": {
+        "session": "B-20150708",
+        "frame": 0,
+        "time": "2015/07/08 08:05 · 第 1 / 121 张 · 首个快照 · 数据源当地钟面时间，未声明时区；间隔不证明连续停留。",
+        "model": "mlp32",
+        "filter": "all",
+        "truth": false,
+        "selected": "B-20150708-0805-1",
+        "visible": 53,
+        "progress": "当前快照：已确认 0 / 53 · 待人工复核 53（其中需补证据 1）",
+        "note": "交班验收：请继续核对本车位。",
+        "decision": "uncertain",
+        "message": "恢复失败：正在分析或读取图片，请等待完成或停止后再恢复",
+        "review_message": "人工复核已恢复 1 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。",
+        "play": "false",
+        "run_disabled": true
+      },
+      "finished_predictions": 53
+    },
+    "page_errors": [],
+    "external_requests": []
+  },
+  "ci_original_detector": {
+    "date": "2026-10-30T16:18:45.467Z",
+    "browser": "151.0.7922.34",
+    "scope": "Local execution smoke tests; not detection accuracy or real-world parking validation.",
+    "image_score": 0.9917388558387756,
+    "image_mean_ms": 1152.5,
+    "video_frames": 7,
+    "video_mean_ms": 785.6714285714281,
+    "tensors_before": 262,
+    "tensors_after": 262,
+    "external_requests": 0,
+    "passed": [
+      "real image inference",
+      "same-origin assets",
+      "candidate handoff",
+      "review dismissal",
+      "real video decoding and sampling",
+      "synthetic dwell candidate",
+      "repeat inference tensor stability",
+      "nonzero offset export and candidate timestamp",
+      "out-of-range offset rejection",
+      "mobile layout"
+    ]
+  },
+  "known_transfer_parity_failure": {
+    "fatal_error": "mobilenet score diff 0.0000015541358928672366",
+    "passing": false,
+    "threshold_changed": false,
+    "workflow_exception_changed": false
+  },
+  "interface_regression": {
+    "head": "449dce2",
+    "scope": "Small local non-inference regression: public CNRPark original crop decoding and synthetic human notes; shipped synthetic incident demo. No model execution, output mocking or product modifications.",
+    "checks": {
+      "passed": 16,
+      "failed": 0,
+      "combinations": [
+        "1440 light",
+        "1440 dark",
+        "390 light",
+        "390 dark"
+      ]
+    },
+    "result": "No blocking UI regression found in the four focused workflows.",
+    "verified": [
+      "Public CNRPark B52 original crop decodes at 150x150; manual uncertain review can be saved without model execution.",
+      "Fresh page import restores camera B, frame 104 / 16:45, selected B52, uncertain conclusion and note; review/view re-export is unchanged.",
+      "Hidden synthetic incident draft remains export-blocking, locator restores exact event and all/all filters; next Tab reaches local media input.",
+      "Saving located draft hides locator, permits export, and review decisions/history survive import and re-export."
+    ],
+    "visual_review": {
+      "method": "Actual viewport screenshots viewed using view_image.",
+      "findings": [
+        "Light/dark originals, timestamps, model-not-run state, human note and restore notice remain legible.",
+        "Desktop draft toolbar remains one row; 390 px uses three controls then full-width export, with readable blocking message.",
+        "Located event title, risk/status, source and observation time are visible; mobile evidence filenames wrap without horizontal page overflow."
+      ],
+      "viewed_screenshots": [
+        "artifacts/designer-20261031-smoke-parking-original-1440-light.png",
+        "artifacts/designer-20261031-smoke-parking-original-1440-dark.png",
+        "artifacts/designer-20261031-smoke-parking-original-390-light.png",
+        "artifacts/designer-20261031-smoke-parking-original-390-dark.png",
+        "artifacts/designer-20261031-smoke-parking-review-390-dark.png",
+        "artifacts/designer-20261031-smoke-draft-toolbar-1440-dark.png",
+        "artifacts/designer-20261031-smoke-draft-toolbar-390-light.png",
+        "artifacts/designer-20261031-smoke-draft-toolbar-390-dark.png",
+        "artifacts/designer-20261031-smoke-draft-located-1440-light.png",
+        "artifacts/designer-20261031-smoke-draft-located-390-light.png",
+        "artifacts/designer-20261031-smoke-draft-located-390-dark.png"
+      ]
+    },
+    "keyboard": {
+      "heading_top_px": {
+        "1440": 52.359375,
+        "390": 50.4375
+      },
+      "next_tab": "media-file"
+    },
+    "no_local_inference": true,
+    "model_resource_requests": 0,
+    "external_requests": 0,
+    "page_errors": 0,
+    "product_hashes_unchanged": true,
+    "product_edits": false,
+    "limitations": "Local synthetic workflow and public-image decoding checks only; not model accuracy, actual resident evidence, remote CI or deployment validation."
+  },
+  "limitations": [
+    "只验证Chromium 151/156的这些有界流程，不代表Safari/Firefox或任意缓存状态。",
+    "全输入gate保证拒绝提交断言可观察；持续推理时进度仍可能覆盖恢复拒绝提示，该产品可读性问题未在本轮修复。",
+    "HTTP500为受控故障，人工结论和交班文件为合成测试用例；真实公开图片推理不等于社区违规识别效果。",
+    "既有Linux/macOS MobileNet分数差仍超过原1e-6阈值，保留为失败；没有改模型、放宽阈值或把该项计为通过。"
+  ]
+}

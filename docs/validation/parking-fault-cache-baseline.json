@@ -1,0 +1,31 @@
+{
+  "base": "http://127.0.0.1:8768",
+  "baseline_commit": "449dce2",
+  "browser": "156.0.8078.74",
+  "scope": "Actual public PNG decode only; no model inference.",
+  "steps": [
+    {
+      "name": "cold actual PNG",
+      "ok": true,
+      "width": 32,
+      "pixel": 113
+    },
+    {
+      "name": "after unrelated route",
+      "ok": true,
+      "width": 32,
+      "pixel": 113
+    },
+    {
+      "name": "warm image after late HTTP500 route",
+      "ok": true,
+      "width": 32,
+      "pixel": 113
+    }
+  ],
+  "route_hits": 0,
+  "passed": false,
+  "error": "Expected values to be strictly equal:\n\n0 !== 1\n",
+  "purpose": "复现测试夹具在图片预热后未实际注入HTTP500；不是产品收到500却忽略错误的证据。",
+  "source": "仓库已发布CNRPark 32×32输入；只解码与读取像素，不运行模型。"
+}
