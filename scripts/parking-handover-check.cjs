@@ -1,5 +1,6 @@
 /** Real-browser parking handover checks. Scripted decisions test workflow, not model accuracy. */
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
+const {clearBrowserImageCache}=require('./browser-image-cache.cjs');
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'artifacts'),base=(process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766').replace(/\/$/,'');
 const json=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8'));
@@ -95,9 +96,13 @@ fs.mkdirSync(out,{recursive:true});
    await test('analysis started during a delayed file read blocks the final import commit',async(page,evidence)=>{
      const current=documentFor({frame:'B-20150708-0805',sample:'B-20150708-0805-1',filter:'all'});await importFile(page,current,'当前班次.json');await page.evaluate(()=>window.__holdRead='读取中交班.json');const delayed=documentFor({frame:extFrame,sample:extSample,model:'mobilenet'});
      await page.locator('#parking-import').setInputFiles({name:'读取中交班.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(delayed))});await page.waitForFunction(()=>typeof window.__readGates['读取中交班.json']?.release==='function');
-     let releaseInput;const inputGate=new Promise(resolve=>releaseInput=resolve);await page.route('**/data/parking/inputs/B-20150708-0805-1.png',async route=>{await inputGate;await route.continue();});
+     // Hold every input worker: otherwise another sample can overwrite the import
+     // rejection notice with progress before the browser assertion observes it.
+     let releaseInput;const heldInputs=[],inputGate=new Promise(resolve=>releaseInput=resolve);
+     await page.route('**/data/parking/inputs/B-20150708-0805-*.png',async route=>{heldInputs.push(route.request().url());await inputGate;await route.continue();});
+     await clearBrowserImageCache(page);
      try{
-       const requested=page.waitForRequest('**/data/parking/inputs/B-20150708-0805-1.png');await page.locator('#parking-run').click();await requested;evidence.before_release=await state(page);assert.equal(evidence.before_release.run_disabled,true);
+       const requested=page.waitForRequest('**/data/parking/inputs/B-20150708-0805-*.png');await page.locator('#parking-run').click();await requested;evidence.before_release=await state(page);evidence.blocked_input_requests=heldInputs.length;assert.ok(evidence.blocked_input_requests>0);assert.equal(evidence.before_release.run_disabled,true);
        await page.evaluate(()=>window.__readGates['读取中交班.json'].release());await page.waitForFunction(()=>document.querySelector('#parking-message').textContent.startsWith('恢复失败'));evidence.after_rejection=await state(page);assert.deepEqual(visibleState(evidence.after_rejection),visibleState(evidence.before_release));assert.equal(evidence.after_rejection.run_disabled,true);assert.match(evidence.after_rejection.message,/正在分析|读取图片/);
      }finally{releaseInput();}
      await page.waitForFunction(()=>!document.querySelector('#parking-run').disabled);const saved=(await exported(page)).data;assert.deepEqual(saved.reviews,current.reviews);assert.equal(saved.view.frame_id,current.view.frame_id);assert.equal(saved.view.model_key,'mlp32');assert.equal(saved.samples.length,53,'the original real inference must finish normally');evidence.finished_predictions=saved.samples.length;
