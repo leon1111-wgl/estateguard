@@ -5,6 +5,8 @@
   try { const saved = localStorage.getItem(key); if (modes.includes(saved)) mode = saved; } catch {}
   const apply = () => { if (mode === 'system') delete root.dataset.theme; else root.dataset.theme = mode; };
   apply();
+  // The site overview shows when the address names no console view; app.mjs keeps this in sync.
+  if (location.hash === '' || location.hash === '#home') root.toggleAttribute('data-intro', true);
   document.addEventListener('DOMContentLoaded', () => {
     const select = document.getElementById('theme-select');
     if (!select) return;

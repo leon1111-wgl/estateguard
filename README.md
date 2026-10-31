@@ -4,7 +4,9 @@
 
 [在线体验（中文版）](https://leon1111-wgl.github.io/estateguard/) · [公开数据与训练](docs/PARKING_DATA.md) · [项目案例](docs/CASE_STUDY.md) · [模型卡](docs/MODEL_CARD.md) · [数据与接口](docs/DATA_CONTRACT.md) · [研究来源](docs/RESEARCH.md)
 
-![EstateGuard 运行真实小模型的中文工作台](docs/assets/workspace.png)
+![EstateGuard 站点总览：虚构小区的站点图、摄像头视野与区域入口，检测框为示意](docs/assets/overview.png)
+
+![事件复核：原创合成的模拟早班事件队列与复核详情](docs/assets/workspace.png)
 
 早班 08:00，住户搬运柜子进客梯，系统连续提醒；配送车辆停在通道旁，另一处摄像头画面太暗。物业人员需要知道：哪些提示属于同一件事、搬运是否有预约、哪些需要现场检查、交班时如何保留理由。
 
@@ -144,6 +146,6 @@ python3 scripts/audit_annotations.py data/annotations-example.json
 
 ## 持续迭代
 
-每轮由独立审查代理扮演物业值班员、住户或部署工程师，先复现痛点，再改代码并验证。另设界面设计师，在 2026-10-29 改定的运营控制台版面内（参照 Samsara、Verkada 与 IBM Carbon 的做法，见 [DESIGN](docs/DESIGN.md)「界面规范」），审查新增功能、桌面与手机、浅色与深色适配和操作顺序，不再反复重新设计。问题、取舍和证据记录在 [IMPROVEMENT_LOG](docs/IMPROVEMENT_LOG.md)，下一步在 [BACKLOG](docs/BACKLOG.md)。自动迭代由本地 Codex 定时任务执行，仓库本身不包含自主执行的在线代理。
+每轮由独立审查代理扮演物业值班员、住户或部署工程师，先复现痛点，再改代码并验证。另设界面设计师，在 2026-11-01 改定的“站点总览 + 运营控制台”版面内（站点图与图纸编号为本项目视觉主题，控制台版式参照 Samsara、Verkada 与 IBM Carbon 的做法，见 [DESIGN](docs/DESIGN.md)「界面规范」），审查新增功能、桌面与手机、浅色与深色适配和操作顺序，不再反复重新设计。问题、取舍和证据记录在 [IMPROVEMENT_LOG](docs/IMPROVEMENT_LOG.md)，下一步在 [BACKLOG](docs/BACKLOG.md)。自动迭代由本地 Codex 定时任务执行，仓库本身不包含自主执行的在线代理。
 
 **作者：Leon Wang。** 第一版为中文，英文版在工作流成熟后增加。原创代码为 MIT；模型/运行库和示例素材按 [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES.md) 中各自许可证分发。
