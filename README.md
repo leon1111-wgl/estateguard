@@ -1,8 +1,13 @@
 # EstateGuard · 社区智能巡检
 
 **把监控线索变成能复核、能解释、能交接的物业事件。**
+Community inspection with in-browser vision: camera cues become property events a person can review, explain and hand over.
 
-[在线体验（中文版）](https://leon1111-wgl.github.io/estateguard/) · [公开数据与训练](docs/PARKING_DATA.md) · [项目案例](docs/CASE_STUDY.md) · [模型卡](docs/MODEL_CARD.md) · [数据与接口](docs/DATA_CONTRACT.md) · [研究来源](docs/RESEARCH.md)
+[在线体验（中文版）](https://leon1111-wgl.github.io/estateguard/) · [代码](https://github.com/leon1111-wgl/estateguard) · [公开数据与训练](docs/PARKING_DATA.md) · [项目案例](docs/CASE_STUDY.md) · [模型卡](docs/MODEL_CARD.md) · [数据与接口](docs/DATA_CONTRACT.md) · [研究来源](docs/RESEARCH.md)
+
+在浏览器本地运行，无后端、无素材上传 · 模拟早班为合成数据 · 尚未在真实小区验证准确率。
+
+**关键词 / Keywords**：社区 / 物业巡检 · 浏览器端目标检测 D-FINE-N（ONNX Runtime Web）· DINOv2 车位占用分类 · CNRPark 公开数据 · 场景规则与事件合并 · 人工复核 human-in-the-loop · 交班交接 · computer vision
 
 ![EstateGuard 站点总览：虚构小区的站点图、摄像头视野与区域入口，检测框为示意](docs/assets/overview.png)
 
