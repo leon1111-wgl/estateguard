@@ -69,7 +69,7 @@ async function loadTransfer(){
   try{const lock=await (await fetch(new URL('./assets.lock.json',import.meta.url),{cache:'no-store'})).json();for(const key of ['mobilenet','dinov2'])encoderBytes[key]=lock.files.filter(f=>ENCODERS[key].assets(f.path)||key==='dinov2'&&f.path.startsWith('vendor/onnxruntime-web/ort')&&f.path.endsWith('.mjs')).reduce((s,f)=>s+f.bytes,0);}catch{}
   if(!modelChosenByUser&&heads[report.default_model?.encoder]){current=report.default_model.encoder==='dinov2'&&!ortSupported?'mobilenet':report.default_model.encoder;$('parking-model-choice').value=current;predictions=sets[current];}
  }catch(e){for(const key of ['mobilenet','dinov2'])delete heads[key];current='mlp32';predictions=sets.mlp32;$('parking-model-choice').value='mlp32';notice(`迁移模型记录加载失败，已保留 MLP32 基线：${e.message}`,true);}
- for(const option of $('parking-model-choice').options)option.disabled=option.value!=='mlp32'&&!heads[option.value];
+ for(const option of $('parking-model-choice').options)option.disabled=option.value!=='mlp32'&&!heads[option.value]||option.value==='dinov2'&&!ortSupported;
 }
 function updateModelBar(){
  if(!model)return;const spec=ENCODERS[current];
