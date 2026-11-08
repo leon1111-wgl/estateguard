@@ -39,7 +39,8 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: browser-checks-${{ github.ref }}
+  # Probe runs get their own group, so they neither cancel nor get cancelled by the checks on the same branch.
+  group: browser-checks-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && inputs.image_urls != '' && format('probe-{0}', github.run_id) || 'checks' }}
   cancel-in-progress: true
 jobs:
   list:
