@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-10-17T22:48:48.756Z",
+  "checked_at": "2026-10-21T00:12:50.111Z",
   "base": "http://127.0.0.1:8766",
   "steps": {
     "encoder_parity": {
@@ -8,22 +8,22 @@
         "max_feature_diff": 0,
         "max_calibrated_diff": 2.220446049250313e-16,
         "backend": "webgl",
-        "median_embed_ms": 15.100000023841858,
-        "load_ms": 166
+        "median_embed_ms": 19.40000009536743,
+        "load_ms": 239.89999997615814
       },
       "dinov2": {
         "samples": 16,
         "max_feature_diff": 0,
         "max_calibrated_diff": 5.551115123125783e-16,
         "backend": "WASM · 1 线程",
-        "median_embed_ms": 87,
-        "load_ms": 364.89999997615814
+        "median_embed_ms": 88.29999995231628,
+        "load_ms": 462.1999999284744
       }
     },
     "default_unverified_b": {
       "default": "dinov2",
       "max_page_vs_offline_calibrated": 1.1657341758564144e-15,
-      "message": "当前快照分析完成（2015/07/08 08:05 · DINOv2-small 线性探针）：53 / 53 个车位，4685 ms（含图片读取，约 88 ms/个）；编码器加载 221 ms。本相机尚未完成风险校准，所有车位送人工复核；模型倾向与概率可作参考。"
+      "message": "当前快照分析完成（2015/07/08 08:05 · DINOv2-small 线性探针）：53 / 53 个车位，4796 ms（含图片读取，约 90 ms/个）；编码器加载 222 ms。本相机尚未完成风险校准，所有车位送人工复核；模型倾向与概率可作参考。"
     },
     "adaptation": {
       "labels": 12,
@@ -68,10 +68,37 @@
         "error_units": 6,
         "statistic": 4.1588830833596715,
         "limit": 3.6888794541139363,
-        "at": "2026-10-17T22:49:22.289Z",
+        "at": "2026-10-21T00:13:27.319Z",
         "checked": 9
       },
       "recalibrated_t_busy": null,
+      "failed_recalibration": {
+        "free": {
+          "at": "2026-10-21T00:13:27.549Z",
+          "from": null,
+          "dates": 3,
+          "calibration_n": 122,
+          "calibration_units": 122,
+          "reason": "空闲侧候选阈值最多覆盖 42 个车位·日（其中 3 个出错），证据不足以达到目标"
+        },
+        "busy": {
+          "at": "2026-10-21T00:13:27.549Z",
+          "from": "20151116",
+          "dates": 2,
+          "calibration_n": 79,
+          "calibration_units": 79,
+          "reason": "2015/11/16 及之后，占用侧候选阈值最多覆盖 38 个车位·日（其中 3 个出错），证据不足以达到目标"
+        }
+      },
+      "recalibration_message": "重新检验尚未通过的空闲侧未通过：空闲侧候选阈值最多覆盖 42 个车位·日（其中 3 个出错），证据不足以达到目标，该侧继续送人工。继续复核该侧送人工的快照，结论覆盖至少 2 个日期、该侧零错误时约 125 个车位·日后可再次重新校准。重新检验被撤销的占用侧未通过：2015/11/16 及之后，占用侧候选阈值最多覆盖 38 个车位·日（其中 3 个出错），证据不足以达到目标，该侧继续送人工。继续复核 2015/11/16 及之后送人工的快照，结论覆盖至少 2 个日期、该侧零错误时约 61 个车位·日后可再次重新校准。",
+      "mobilenet_monitor_units": {
+        "before": 8,
+        "after_dinov2_revocation": 8
+      },
+      "evidence_from_by_side": {
+        "free": null,
+        "busy": "20151116"
+      },
       "restored_page_t_busy": null,
       "drift_evidence_from": "20151116",
       "status_before": "摄像头 C6：已人工确认且已分析 116 条（占用 77 / 空闲 39）。影子对比（模型 0.5 阈值 vs 人工，116 条）：有车报空闲 3 条，空位报占用 0 条。在校准数据上通过检验（116 个车位·日，3 个日期）：空闲侧未通过；≥ 0.85 自动判占用。抽检：约 10% 车位·日按哈希随机抽中，其中本应自动判定的快照改送人工并标为「抽检」。占用侧抽中 9 个车位·日（已核对 0），出",
@@ -91,7 +118,7 @@
     }
   },
   "ok": true,
-  "browser": "155.0.8059.84",
+  "browser": "155.0.8059.85",
   "page_errors": [],
   "external_requests": []
 }

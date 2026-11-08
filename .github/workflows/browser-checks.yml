@@ -1,18 +1,50 @@
 name: Browser checks
 # Real-browser regression checks, including the ones that run the in-page models.
 # They run here rather than on a developer machine; each check is its own job.
+# A manual run with image_urls runs only the probe job: your own files through the page's real analysis path.
 on:
   workflow_dispatch:
+    inputs:
+      image_urls:
+        description: 'Probe only: image or short video URLs, separated by spaces, commas or new lines (at most 20). Leave empty to run all checks.'
+        required: false
+        default: ''
+        type: string
+      detector:
+        description: 'Probe: detector for 视频与图片分析'
+        required: false
+        default: dfine
+        type: choice
+        options: [dfine, ssdlite]
+      rule:
+        description: 'Probe: scene rule (access and lift use placeholder camera, zone and time)'
+        required: false
+        default: objects
+        type: choice
+        options: [objects, access, lift]
+      parking:
+        description: 'Probe: also run each image through 测试自己的车位图片 (default model DINOv2)'
+        required: false
+        default: true
+        type: boolean
+      viewport:
+        description: 'Probe: viewport'
+        required: false
+        default: desktop
+        type: choice
+        options: [desktop, mobile]
   push:
     branches: ['feat/**']
     paths: ['web/**', 'scripts/**', 'data/**', 'docs/validation/**', 'tests/fixtures/**', 'package.json', '.github/workflows/browser-checks.yml']
 permissions:
   contents: read
 concurrency:
-  group: browser-checks-${{ github.ref }}
+  # Probe runs get their own group, so they neither cancel nor get cancelled by the checks on the same branch.
+  group: browser-checks-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && inputs.image_urls != '' && format('probe-{0}', github.run_id) || 'checks' }}
   cancel-in-progress: true
 jobs:
   list:
+    if: github.event_name != 'workflow_dispatch' || inputs.image_urls == ''
     runs-on: ubuntu-latest
     outputs:
       checks: ${{ steps.list.outputs.checks }}
@@ -24,10 +56,6 @@ jobs:
     needs: list
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    # parking-transfer-check pins bit-level encoder parity to the published macOS WebGL run. On this
-    # runner the MobileNet calibrated score differs by 1.55e-6 (limit 1e-6) on the commit before the
-    # redesign as well (docs/VALIDATION.md); it stays visible as a failed job but does not fail the run.
-    continue-on-error: ${{ matrix.check == 'parking-transfer-check.cjs' }}
     strategy:
       fail-fast: false
       matrix:
@@ -57,3 +85,40 @@ jobs:
           path: artifacts/
           if-no-files-found: ignore
           retention-days: 7
+  probe:
+    if: github.event_name == 'workflow_dispatch' && inputs.image_urls != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      ESTATEGUARD_URL: http://127.0.0.1:8766
+      # Inputs reach the script only as environment variables, never as shell text.
+      PROBE_URLS: ${{ inputs.image_urls }}
+      PROBE_DETECTOR: ${{ inputs.detector }}
+      PROBE_RULE: ${{ inputs.rule }}
+      PROBE_PARKING: ${{ inputs.parking }}
+      PROBE_VIEWPORT: ${{ inputs.viewport }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package.json') }}
+      - run: npx playwright install --with-deps chromium
+      - name: Serve web/
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory web > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS -o /dev/null "$ESTATEGUARD_URL/" && exit 0; sleep 1; done; exit 1
+      - run: node scripts/probe-images.cjs
+      - if: always()
+        run: cat artifacts/probe/summary.md >> "$GITHUB_STEP_SUMMARY" || true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: probe-${{ github.run_id }}
+          path: artifacts/probe/
+          if-no-files-found: ignore
+          retention-days: 14

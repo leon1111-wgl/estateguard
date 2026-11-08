@@ -132,3 +132,60 @@ export function auditMonitor(events,{alpha_free,alpha_busy,delta=AUDIT.delta,rul
  }
  return out;
 }
+// Re-calibration after a revocation (protocol appendix 7 / 7.3). Mirrors scripts/transfer_learning.py.
+const DAY=/^\d{8}$/;
+export const laterDate=(a,b)=>!a?b??null:!b?a:a>b?a:b;
+/** Sides that 重新校准 re-selects. Once a side is revoked, a side that is still live keeps its threshold, evidence and
+ * spot-check monitor (as in scripts/replay_parking_drift.py): only revoked sides and sides that never passed are
+ * re-tested (a never-certified side's region always went to people). Without a revocation, both sides. */
+export function recalibrationSides(revoked,routing){
+ if(!['free','busy'].some(s=>revoked?.[s]!=null))return ['free','busy'];
+ return ['free','busy'].filter(s=>revoked?.[s]!=null||routing?.[`t_${s}`]==null);
+}
+/** Re-selects only the listed sides. Side s uses the human conclusions dated on or after its own evidence date (null:
+ * all), needs at least 2 dates among them, and takes t_s from the usual Learn-then-Test selection on that set, so the
+ * other side is never re-tested. items: [{id,score,label,unit,date}]. evidence: ids whose score lies in that side's
+ * candidate range (free <= the largest grid value, busy >= 1 minus it); only those can change that side's threshold. */
+export function reselectSides(items,sides,{from={},alpha_free=.01,alpha_busy=.02,delta=.05,grid=FREE_GRID}={}){
+ const edge=Math.max(...grid),busyEdge=Math.round((1-edge)*1e6)/1e6,out={};
+ for(const side of sides){
+  if(side!=='free'&&side!=='busy')throw new Error(`未知分流侧 ${side}`);
+  const f=from[side]??null,use=items.filter(x=>f===null||x.date>=f),dates=new Set(use.map(x=>x.date)).size;
+  const routing=dates>=2?selectRouting(use.map(x=>x.score),use.map(x=>x.label),{alpha_free,alpha_busy,delta,grid,units:use.map(x=>x.unit)}):null;
+  const inRange=side==='free'?x=>x.score<=edge:x=>x.score>=busyEdge;
+  out[side]={threshold:routing?routing[`t_${side}`]:null,from:f,dates,calibration_n:use.length,calibration_units:new Set(use.map(x=>x.unit)).size,
+   per_test_level:delta/(2*grid.length),evidence:use.filter(inRange).map(x=>x.id),tests:routing?routing.tests.filter(t=>t.side===side):[]};
+ }
+ return out;
+}
+/** Per-side evidence dates of one exported camera drift record. Current files carry evidence_from_by_side; older files
+ * have one camera-level evidence_from, so each side takes the date of its own latest revocation in the history and only
+ * a record without history applies the camera date to both sides. */
+export function driftSideDates(log){
+ if(!log||typeof log!=='object'||Array.isArray(log)||!Array.isArray(log.history))throw new Error('抽检撤销日期或历史格式无效');
+ const out={free:null,busy:null},by=log.evidence_from_by_side;
+ if(by!==undefined){
+  if(!by||typeof by!=='object'||Array.isArray(by))throw new Error('抽检撤销日期或历史格式无效');
+  for(const s of ['free','busy']){const v=by[s]??null;if(v!==null&&(typeof v!=='string'||!DAY.test(v)))throw new Error('抽检撤销日期或历史格式无效');out[s]=v;}
+  if(!out.free&&!out.busy)throw new Error('抽检撤销日期或历史格式无效');
+  return out;
+ }
+ if(typeof log.evidence_from!=='string'||!DAY.test(log.evidence_from))throw new Error('抽检撤销日期或历史格式无效');
+ for(const h of log.history){const d=typeof h?.source_time==='string'?h.source_time.slice(0,8):'';if(['free','busy'].includes(h?.side)&&DAY.test(d))out[h.side]=laterDate(out[h.side],d);}
+ if(!out.free&&!out.busy)out.free=out.busy=log.evidence_from;
+ return out;
+}
+/** Evidence behind one side's current threshold: its spot-check monitor skips these conclusions and every snapshot
+ * dated before `from`, so a threshold is only monitored on data it was not certified with. */
+export function sideRecord(r,at,reselected=false){return {from:r.from,evidence:new Set(r.evidence),dates:r.dates,calibration_n:r.calibration_n,calibration_units:r.calibration_units,at,reselected};}
+/** Applies reselectSides results for revoked sides to an on-site record {routing,revoked,sides,attempts}. A pass
+ * re-enables that side with fresh evidence (its spot-check count restarts); a fail keeps it revoked and records the
+ * attempt. Sides missing from result are carried over unchanged, including their monitor. */
+export function applyRecalibration(prev,result,at){
+ const next={...prev,routing:{...prev.routing},revoked:{...prev.revoked},sides:{...prev.sides},attempts:{free:null,busy:null,...prev.attempts}};
+ for(const [s,r] of Object.entries(result)){
+  if(r.threshold!==null){next.routing[`t_${s}`]=r.threshold;next.revoked[s]=null;next.sides[s]=sideRecord(r,at,true);next.attempts[s]=null;}
+  else next.attempts[s]={at,from:r.from,dates:r.dates,calibration_n:r.calibration_n,calibration_units:r.calibration_units};
+ }
+ return next;
+}
