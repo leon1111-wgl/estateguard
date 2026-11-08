@@ -1,6 +1,7 @@
 import {trackDetections,makeCandidates,VISION_RULE_SETTINGS} from './vision-rules.mjs';
 import {createModelAssetLoader,registerModelRoute} from './model-assets.mjs';
 import {loadDfineDetector} from './detector-dfine.mjs';
+import {wasmSimdSupported,ORT_UNSUPPORTED,effectiveType,unsupportedHint} from './capabilities.mjs';
 import {parseRecordingTime,confirmContext,isContextConfirmed,validateContext,reusableScene,restoreScene} from './media-context.mjs';
 const $=id=>document.getElementById(id);
 const inferenceSettings=Object.freeze({sample_interval_seconds:1,max_frames:20,...VISION_RULE_SETTINGS});
@@ -8,11 +9,17 @@ const inferenceSettings=Object.freeze({sample_interval_seconds:1,max_frames:20,.
 const DETECTORS=Object.freeze({
  ssdlite:{name:'COCO-SSD 2.2.3 / SSDLite MobileNet V2',short:'COCO-SSD · SSDLite MobileNet V2',scoreHelp:'只保留达到下限的检测结果；重叠框按固定规则合并。',runtime:'TensorFlow.js 4.22.0',settings:Object.freeze({max_detections:50,nms_iou_threshold:.5,postprocess:'coco-ssd-2.2.3-fixed-nms-v1'})},
  dfine:{name:'D-FINE-N（本项目由官方权重导出的 ONNX）',short:'D-FINE-N · ONNX Runtime Web',scoreHelp:'只保留达到下限的检测结果；几乎重合（IoU ≥ 0.9）的重复框只留分数最高的一个，其余重叠框不合并。',runtime:'ONNX Runtime Web 1.30.0',settings:Object.freeze({max_detections:50,nms_iou_threshold:null,duplicate_iou_threshold:.9,postprocess:'dfine-topk-dedupe090-v1',input_size:640})}});
+// D-FINE-N needs WebAssembly SIMD; without it the option is disabled before any download and SSDLite (TF.js) stays.
+const ortSupported=wasmSimdSupported();
+if(!ortSupported){const option=$('vision-detector').querySelector('option[value="dfine"]');option.disabled=true;option.textContent='D-FINE-N（此浏览器无法运行）';}
 const defaultScores={ssdlite:.5,dfine:.5},backendLabels={};let detectorEvaluation=null,detectorTouched=false;
-const detectorKey=()=>DETECTORS[$('vision-detector').value]?$('vision-detector').value:'ssdlite';
+const detectorKey=()=>DETECTORS[$('vision-detector').value]&&($('vision-detector').value!=='dfine'||ortSupported)?$('vision-detector').value:'ssdlite';
 const names={person:'人员',bicycle:'自行车',car:'小汽车',motorcycle:'摩托车',bus:'公交 / 大巴',truck:'卡车',chair:'椅子',couch:'沙发',bed:'床',suitcase:'行李箱','dining table':'餐桌',refrigerator:'冰箱',backpack:'背包',handbag:'手提包',bottle:'瓶子',cat:'猫',dog:'狗',tv:'电视'};
 const models={},modelPromises={},loadStats={};let modelController=null,modelLoadStats=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0;
 let mediaRevision=0,geometry=null,contextConfirmation=null,savedScene=null,savedSceneRevision=0,contextHint='';
+// Frames are at most 960 px wide (unchanged) and, new, at most 1920 px tall: an extreme portrait image would otherwise
+// exceed the canvas area some phones allow. Ordinary photos and 9:16 screenshots are not affected.
+const MAX_FRAME_HEIGHT=1920;
 const canvas=$('analysis-canvas'),ctx=canvas.getContext('2d'),frame=document.createElement('canvas'),frameCtx=frame.getContext('2d');
 const notice=(text,error=false)=>{$('vision-message').textContent=text;$('vision-message').classList.toggle('error',error);};
 $('vision-start').value='';
@@ -115,13 +122,15 @@ function paint(boxes=lastBoxes){if(!frameSnapshot)return;ctx.putImageData(frameS
  ctx.font=`${Math.max(12,Math.round(canvas.width/60))}px sans-serif`;
  for(const d of boxes){const [x,y,w,h]=d.bbox.map((v,i)=>v*(i%2===0?canvas.width:canvas.height));ctx.strokeStyle='#28ca9c';ctx.strokeRect(x,y,w,h);const label=`${names[d.class]||d.class} ${Math.round(d.score*100)}%`;const width=ctx.measureText(label).width+10;ctx.fillStyle='#136b53';ctx.fillRect(x,Math.max(0,y-23),width,23);ctx.fillStyle='#fff';ctx.fillText(label,x+5,Math.max(16,y-7));}
 }
-function snapshot(media,video,target,targetCtx){const width=video?media.videoWidth:media.naturalWidth,height=video?media.videoHeight:media.naturalHeight;if(!width||!height)throw new Error('无法读取素材尺寸');const scale=Math.min(1,960/width);target.width=Math.round(width*scale);target.height=Math.round(height*scale);targetCtx.drawImage(media,0,0,target.width,target.height);return targetCtx.getImageData(0,0,target.width,target.height);}
+function snapshot(media,video,target,targetCtx){const width=video?media.videoWidth:media.naturalWidth,height=video?media.videoHeight:media.naturalHeight;if(!width||!height)throw new Error('无法读取素材尺寸');const scale=Math.min(1,960/width,MAX_FRAME_HEIGHT/height);target.width=Math.round(width*scale);target.height=Math.round(height*scale);targetCtx.drawImage(media,0,0,target.width,target.height);return targetCtx.getImageData(0,0,target.width,target.height);}
 function describeFrame(){if(!sourceFile)return;const timing=isVideo?` · ${source.duration.toFixed(1)} 秒 · 检测画面：${snapshotTime.toFixed(1)} 秒（下方播放器可独立播放）`:'';$('analysis-file-info').textContent=`${sourceFile.name} · ${(sourceFile.size/1024/1024).toFixed(2)} MB${timing}`;canvas.setAttribute('aria-label',isVideo?`模型检测框与关注区域，固定采样画面位于视频 ${snapshotTime.toFixed(1)} 秒`:'模型检测框与关注区域');}
 function capture(){frameSnapshot=snapshot(source,isVideo,frame,frameCtx);canvas.width=frame.width;canvas.height=frame.height;snapshotTime=isVideo?source.currentTime:0;lastBoxes=[];paint();describeFrame();}
 function seek(time){return new Promise((resolve,reject)=>{if(Math.abs(source.currentTime-time)<.001&&source.readyState>=2){resolve();return;}const timer=setTimeout(()=>{cleanup();reject(new Error('视频解码超时，请使用可播放的 MP4 / WebM。'));},10000);const cleanup=()=>{clearTimeout(timer);source.removeEventListener('seeked',ok);source.removeEventListener('error',bad);};const ok=()=>{cleanup();resolve();};const bad=()=>{cleanup();reject(new Error('浏览器无法解码此视频'));};source.addEventListener('seeked',ok,{once:true});source.addEventListener('error',bad,{once:true});source.currentTime=time;});}
 function releaseSource(media,url){if(media?.tagName==='VIDEO'){media.pause();media.removeAttribute('src');media.load();}if(url)URL.revokeObjectURL(url);}
 async function openFile(file,ticket=++sourceGeneration){if(busy){notice('分析进行中，请先停止，再更换素材。',true);return false;}if(!file||ticket!==sourceGeneration)return false;let nextSource=null,nextURL=null;setMediaLoading(true);
- try{if(file.size>100*1024*1024)throw new Error('素材超过 100 MB，请先截取短片段。');if(!['image/jpeg','image/png','image/webp','video/mp4','video/webm'].includes(file.type))throw new Error('请选择 JPEG / PNG / WebP 图片或 MP4 / WebM 视频。');
+ try{if(file.size>100*1024*1024)throw new Error('素材超过 100 MB，请先截取短片段。');const type=await effectiveType(file);if(ticket!==sourceGeneration)return false;
+ if(!['image/jpeg','image/png','image/webp','video/mp4','video/webm'].includes(type))throw new Error(unsupportedHint(type,file.name)||'请选择 JPEG / PNG / WebP 图片或 MP4 / WebM 视频。');
+ if(!file.type)file=new File([file],file.name,{type,lastModified:file.lastModified});
  notice(`正在打开 ${file.name}…`);nextURL=URL.createObjectURL(file);const nextIsVideo=file.type.startsWith('video/');
  if(nextIsVideo){nextSource=document.createElement('video');nextSource.preload='auto';nextSource.muted=true;nextSource.playsInline=true;
   await new Promise((resolve,reject)=>{const cleanup=()=>{clearTimeout(timer);nextSource.removeEventListener('loadeddata',ok);nextSource.removeEventListener('error',bad);};const ok=()=>{cleanup();resolve();};const bad=()=>{cleanup();reject(new Error('浏览器无法读取此视频编码'));};const timer=setTimeout(()=>{cleanup();reject(new Error('视频读取超时，请使用可播放的 MP4 / WebM。'));},10000);nextSource.addEventListener('loadeddata',ok);nextSource.addEventListener('error',bad);nextSource.src=nextURL;nextSource.load();});
@@ -136,7 +145,9 @@ async function openFile(file,ticket=++sourceGeneration){if(busy){notice('分析�
  commitContext(nextGeometry);
  frame.width=prepared.width;frame.height=prepared.height;frameCtx.putImageData(preparedFrame,0,0);canvas.width=prepared.width;canvas.height=prepared.height;
  const preview=$('source-video');preview.pause();preview.hidden=!isVideo;if(isVideo){preview.src=sourceURL;preview.load();}else{preview.removeAttribute('src');preview.load();}
- paint([]);describeFrame();$('analysis-empty').hidden=true;$('analysis-stage').hidden=false;setMediaLoading(false);notice('素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。');return true;
+ paint([]);describeFrame();$('analysis-empty').hidden=true;$('analysis-stage').hidden=false;setMediaLoading(false);
+ const ratio=Math.max(nextGeometry.width,nextGeometry.height)/Math.min(nextGeometry.width,nextGeometry.height);
+ notice(`素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。${ratio>3?`画面长宽比约 ${ratio.toFixed(1)}:1，检测器会把画面缩放成方形输入（D-FINE-N 为 640×640），细长画面里的物体会变形，可能漏检。`:''}`);return true;
  }catch(error){releaseSource(nextSource,nextURL);if(ticket===sourceGeneration){setMediaLoading(false);notice(`${error.message}${sourceFile?(report?' 当前仍保留此前素材、设置与已完成报告。':' 当前仍保留此前素材与设置。'):''}`,true);}return false;}}
 $('analysis-file').addEventListener('change',e=>{const file=e.target.files[0];e.target.value='';openFile(file);});
 $('sample-image').addEventListener('click',async()=>{const ticket=++sourceGeneration;setMediaLoading(true);try{const r=await fetch('samples/bus.jpg');if(!r.ok)throw new Error('示例图片加载失败');const file=new File([await r.blob()],'公开示例-校车.jpg',{type:'image/jpeg'});if(ticket!==sourceGeneration)return;if(await openFile(file,ticket))notice('公开示例：Raysonho，CC0，2011。具体拍摄时间未知，可直接做通用物体检测；规则演示需自行填写测试时间，不是小区违规证据。');}catch(e){if(ticket===sourceGeneration){setMediaLoading(false);notice(e.message,true);}}});
@@ -209,11 +220,13 @@ function describeDetector(){
  const key=detectorKey(),spec=DETECTORS[key],e=detectorEvaluation?.models?.[key],ready=!!models[key];
  $('model-name').textContent=spec.short;$('model-status').textContent=ready?'模型已就绪':'模型尚未加载';$('model-dot').classList.toggle('ready',ready);$('model-backend').textContent=ready?backendLabels[key]:'浏览器端运行';$('vision-score-help').textContent=spec.scoreHelp;
  const otherKey=key==='dfine'?'ssdlite':'dfine',lift=e&&$('vision-rule').value==='lift'?liftPrecision(deployedOp(detectorEvaluation,key)):null,other=detectorEvaluation?.models?.[otherKey];
- $('vision-detector-help').textContent=lift&&other?`客梯大件 6 类在 COCO 上的精确率 ${pct(lift.precision)}%（${key==='dfine'?'SSDLite':'D-FINE-N'} ${pct(liftPrecision(deployedOp(detectorEvaluation,otherKey)).precision)}%），每 100 个检出约 ${Math.round((1-lift.precision)*100)} 个是误检；需逐条人工核对，可调高分数下限。`:e?`COCO 通用照片：AP\u00a0${pct(e.test.coco.AP)}（物业相关 12 类\u00a0${pct(e.test.coco.relevant_mean_ap)}）；参考机约 ${Math.round(e.latency.total_ms.p95)}\u00a0ms/张。建议下限 ${e.operating_threshold}${detectorEvaluation.default_decision?.default===key?'，当前默认':''}。不代表小区监控效果。`:'两种模型都识别 COCO 80 类物体；评测记录加载后显示公开数据上的对比。';
+ const capability=ortSupported?'':`${ORT_UNSUPPORTED} 已改用 SSDLite（TensorFlow.js），检出会比 D-FINE-N 少。`;
+ $('vision-detector-help').textContent=capability+(lift&&other?`客梯大件 6 类在 COCO 上的精确率 ${pct(lift.precision)}%（${key==='dfine'?'SSDLite':'D-FINE-N'} ${pct(liftPrecision(deployedOp(detectorEvaluation,otherKey)).precision)}%），每 100 个检出约 ${Math.round((1-lift.precision)*100)} 个是误检；需逐条人工核对，可调高分数下限。`:e?`COCO 通用照片：AP\u00a0${pct(e.test.coco.AP)}（物业相关 12 类\u00a0${pct(e.test.coco.relevant_mean_ap)}）；参考机约 ${Math.round(e.latency.total_ms.p95)}\u00a0ms/张。建议下限 ${e.operating_threshold}${detectorEvaluation.default_decision?.default===key?'，当前默认':''}。不代表小区监控效果。`:'两种模型都识别 COCO 80 类物体；评测记录加载后显示公开数据上的对比。');
 }
 // ?detector=ssdlite|dfine pins a detector for shared links and regression checks.
 const requestedDetector=new URLSearchParams(location.search).get('detector');let scoreEdited=false;
-if(DETECTORS[requestedDetector]){$('vision-detector').value=requestedDetector;$('vision-detector').dataset.previous=requestedDetector;detectorTouched=true;describeDetector();}
+if(DETECTORS[requestedDetector]&&(requestedDetector!=='dfine'||ortSupported)){$('vision-detector').value=requestedDetector;$('vision-detector').dataset.previous=requestedDetector;detectorTouched=true;describeDetector();}
+else if(requestedDetector==='dfine'){$('vision-detector').value='ssdlite';$('vision-detector').dataset.previous='ssdlite';detectorTouched=true;describeDetector();notice(`链接指定了 D-FINE-N，但${ORT_UNSUPPORTED.replace(/^此/,'这个')}已改用 SSDLite。`,true);}
 $('vision-score').addEventListener('input',()=>{scoreEdited=true;});
 $('vision-detector').addEventListener('change',()=>{
  detectorTouched=true;const previous=$('vision-detector').dataset.previous||'ssdlite',key=detectorKey();$('vision-detector').dataset.previous=key;$('model-loading').hidden=true;
@@ -223,7 +236,7 @@ $('vision-detector').addEventListener('change',()=>{
 fetch(new URL('./data/detector/evaluation.json',import.meta.url),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(e=>{
  if(!e)return;detectorEvaluation=e;defaultScores.dfine=e.models?.dfine?.operating_threshold??.5;
  // Apply the published default only before the user has chosen a detector or produced a report.
- if(!detectorTouched&&!busy&&!report&&e.default_decision?.default==='dfine'&&Number($('vision-score').value)===defaultScores.ssdlite){$('vision-detector').value='dfine';$('vision-detector').dataset.previous='dfine';$('vision-score').value=String(defaultScores.dfine);}
+ if(ortSupported&&!detectorTouched&&!busy&&!report&&e.default_decision?.default==='dfine'&&Number($('vision-score').value)===defaultScores.ssdlite){$('vision-detector').value='dfine';$('vision-detector').dataset.previous='dfine';$('vision-score').value=String(defaultScores.dfine);}
  else if(detectorKey()==='dfine'&&!scoreEdited&&!busy&&!report&&Number($('vision-score').value)===defaultScores.ssdlite)$('vision-score').value=String(defaultScores.dfine);
  describeDetector();renderDetectorEvaluation();
 }).catch(()=>{}).finally(()=>{if(!detectorEvaluation){$('vision-detector-help').textContent='评测记录未能加载，暂按 SSDLite 运行；可刷新重试，或手动选择检测模型。';const box=$('detector-evaluation-content');if(box)box.innerHTML='<p class="subtle">检测器评测记录未能加载，可刷新重试。</p>';}});

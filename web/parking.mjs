@@ -3,7 +3,11 @@ import {readParkingHandover} from './parking-handover.mjs';
 import {buildParkingAudit,filterParkingAudit,exportParkingAudit} from './parking-audit.mjs';
 import {validateHead,predictHead,routeScore,adaptHead,standardize,minimumEvidence,AUDIT,isAudited,auditMonitor,recalibrationSides,reselectSides,driftSideDates,laterDate,sideRecord,applyRecalibration} from './parking-transfer.mjs';
 import {ENCODERS,loadEncoder,decodeImage} from './parking-encoders.mjs';
+import {wasmSimdSupported,effectiveType,unsupportedHint} from './capabilities.mjs';
 const $=id=>document.getElementById(id);
+// DINOv2 runs on ONNX Runtime Web (WebAssembly SIMD only); without it the option is disabled and MobileNetV2 is the default.
+const ortSupported=wasmSimdSupported();
+if(!ortSupported){const option=$('parking-model-choice').querySelector('option[value="dinov2"]');option.disabled=true;option.textContent='DINOv2-small 线性探针（此浏览器无法运行）';}
 const text=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const labels={free:'空闲',busy:'占用',uncertain:'模型不确定',pending:'未分析'};
 const humanLabels={free:'已确认空闲',busy:'已确认占用',uncertain:'需补证据',pending:'待人工复核'};
@@ -63,7 +67,7 @@ async function loadTransfer(){
   transferEvaluation=report;
   try{auditReplay=await json(new URL('audit-replay.json',transferBase));}catch{auditReplay=null;}
   try{const lock=await (await fetch(new URL('./assets.lock.json',import.meta.url),{cache:'no-store'})).json();for(const key of ['mobilenet','dinov2'])encoderBytes[key]=lock.files.filter(f=>ENCODERS[key].assets(f.path)||key==='dinov2'&&f.path.startsWith('vendor/onnxruntime-web/ort')&&f.path.endsWith('.mjs')).reduce((s,f)=>s+f.bytes,0);}catch{}
-  if(!modelChosenByUser&&heads[report.default_model?.encoder]){current=report.default_model.encoder;$('parking-model-choice').value=current;predictions=sets[current];}
+  if(!modelChosenByUser&&heads[report.default_model?.encoder]){current=report.default_model.encoder==='dinov2'&&!ortSupported?'mobilenet':report.default_model.encoder;$('parking-model-choice').value=current;predictions=sets[current];}
  }catch(e){for(const key of ['mobilenet','dinov2'])delete heads[key];current='mlp32';predictions=sets.mlp32;$('parking-model-choice').value='mlp32';notice(`迁移模型记录加载失败，已保留 MLP32 基线：${e.message}`,true);}
  for(const option of $('parking-model-choice').options)option.disabled=option.value!=='mlp32'&&!heads[option.value];
 }
@@ -169,6 +173,7 @@ function renderDetail(){
  retry.addEventListener('click',()=>{if(selected!==r.id)return;evidenceAttempts.set(r.id,String(Date.now()));imageURL.searchParams.set('retry',evidenceAttempts.get(r.id));retry.disabled=true;imageStatus.classList.remove('error');imageStatus.textContent='正在重新读取复核原图…';image.src=imageURL.href;});
  const d=drafts.get(r.id)||reviews[r.id]||{decision:'pending',note:''};$('parking-decision').value=d.decision;$('parking-note').value=d.note;
 }
+async function imageSize(url){const image=new Image();image.src=url;let timer;try{await Promise.race([image.decode(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('图片读取超时，请重试')),15000);})]);return [image.naturalWidth,image.naturalHeight];}finally{clearTimeout(timer);image.src='';}}
 async function pixels(url){const image=new Image();image.src=url;let timer;try{await Promise.race([image.decode(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('图片读取超时，请重试')),15000);})]);}catch(error){image.src='';throw error;}finally{clearTimeout(timer);}if(image.naturalWidth*image.naturalHeight>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');const c=document.createElement('canvas');c.width=image.naturalWidth;c.height=image.naturalHeight;if(c.width*c.height>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0);const source=ctx.getImageData(0,0,c.width,c.height).data;const out=new Uint8ClampedArray(4096);for(let y=0;y<32;y++)for(let x=0;x<32;x++){const sx=Math.floor((x+.5)*c.width/32),sy=Math.floor((y+.5)*c.height/32),i=(sy*c.width+sx)*4;out.set(source.subarray(i,i+4),(y*32+x)*4);}return out;}
 function updateAnalysisControls(){
  for(const id of ['parking-run','parking-upload','parking-model-choice'])$(id).disabled=running||!!analysisPromise||uploadPending;
@@ -322,7 +327,9 @@ $('parking-upload').addEventListener('change',async e=>{
  const file=e.target.files[0];e.target.value='';if(!file)return;
  // One parking inference job at a time. A failed/cancelled attempt never owns the committed preview.
  if(uploadPending||running||analysisPromise){uploadNotice('已有车位分析正在运行，请先停止或等待完成，再选择图片。',true);return;}
- if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>10*1024*1024){uploadNotice(`请选择不超过 10 MB 的 JPEG、PNG 或 WebP 单车位裁剪图。${uploadURL?'上次成功结果已保留。':''}`,true);return;}
+ const type=await effectiveType(file);
+ if(!['image/jpeg','image/png','image/webp'].includes(type)||file.size>10*1024*1024){uploadNotice(`${file.size<=10*1024*1024&&unsupportedHint(type,file.name)||'请选择不超过 10 MB 的 JPEG、PNG 或 WebP 单车位裁剪图。'}${uploadURL?'上次成功结果已保留。':''}`,true);return;}
+ if(uploadPending||running||analysisPromise){uploadNotice('已有车位分析正在运行，请先停止或等待完成，再选择图片。',true);return;}
  const job={controller:new AbortController(),key:null};uploadJob=job;uploadPending=true;stopPlayback();updateAnalysisControls();
  const retained=()=>uploadURL?'下方保留上次成功结果。':'';
  const check=()=>{if(job.controller.signal.aborted||uploadJob!==job)throw job.controller.signal.reason||new DOMException('任务已取消','AbortError');};
@@ -330,6 +337,9 @@ $('parking-upload').addEventListener('change',async e=>{
  uploadNotice(`正在分析「${file.name}」…${retained()}`);
  try{
   await waitForUploadCore(job.controller.signal);check();const key=current;job.key=key;url=URL.createObjectURL(file);let html;
+  stage='image';const [width,height]=await imageSize(url);check();
+  // The models were trained and scored on ~150 px single-slot crops; a large image is most likely a whole scene.
+  const scene=Math.max(width,height)>600?`<p class="subtle">图片为 ${width}×${height} 像素。模型在约 150×150 的单车位裁剪图上训练与评测；如果画面里不止一个车位，这个分数没有意义，整幅画面可在<a href="#analyze">视频与图片分析</a>中检测车辆。</p>`:'';
   if(key==='mlp32'){
    stage='image';const data=await pixels(url);check();stage='inference';const score=predictPatch(data,model);
    html=`<p>${labels[classifyScore(score)]} · 占用分数 ${(score*100).toFixed(2)}% · MLP32</p>`;
@@ -341,7 +351,7 @@ $('parking-upload').addEventListener('change',async e=>{
    html=`<p>${calibrated>=.5?'倾向占用':'倾向空闲'} · 校准后占用概率 ${(calibrated*100).toFixed(2)}%（未校准 ${(score*100).toFixed(2)}%）· ${text(ENCODERS[key].label)}</p><p class="subtle">新画面没有现场风险校准，按规则应送人工复核。</p>`;
   }
   check();const previous=uploadURL;
-  $('parking-upload-result').innerHTML=`<img src="${url}" alt="本地单车位裁剪图"><strong>${text(file.name)}</strong>${html}<p class="subtle">新场景结果未经验证，没有数据集标签可对照。不是违规判断。</p>`;
+  $('parking-upload-result').innerHTML=`<img src="${url}" alt="本地单车位裁剪图"><strong>${text(file.name)}</strong>${html}${scene}<p class="subtle">新场景结果未经验证，没有数据集标签可对照。不是违规判断。</p>`;
   uploadURL=url;url=null;if(previous)URL.revokeObjectURL(previous);
   uploadNotice(`已完成「${file.name}」的分析。`);
  }catch(error){
@@ -560,6 +570,7 @@ function updateModelPanel(){
  const uncertainOption=$('parking-filter').querySelector('option[value="model_uncertain"]');if(uncertainOption)uncertainOption.textContent=transfer()?'模型送人工复核或未分析':'模型不确定或未分析';
  const size=encoderBytes[current]&&!encoders[current]?`首次分析需从本站下载约 ${mib(encoderBytes[current])} MiB 公共模型资源，之后复用缓存。`:'';
  $('parking-model-help').textContent=transfer()?`${ENCODERS[current].label}：${ENCODERS[current].detail}。${e?.cnr_ext?`CNR-EXT 保留测试平衡正确率 ${pct(e.cnr_ext.transfer.balanced_accuracy)}，`:'CNR-EXT 保留测试待评测；'}B 开发比较 ${pct(e?.cnrpark_b?.transfer?.balanced_accuracy)}。${size}`:'MLP32：原 32×32 像素特征小模型，保留为基线；0.35–0.65 标为不确定。不支持现场校准与自适应。';
+ if(!ortSupported)$('parking-model-help').textContent+=' DINOv2 需要 WebAssembly SIMD，此浏览器无法运行，已默认使用 MobileNetV2 迁移头。';
  const auditOption=$('parking-filter').querySelector('option[value="audit"]');if(auditOption){auditOption.hidden=!transfer();if(!transfer()&&$('parking-filter').value==='audit')$('parking-filter').value='all';}
  panel.hidden=!transfer();if(!transfer()||!camera)return;
  const ad=adaptations[current][camera],route=onsiteRouting[current][camera],all=cameraReviews(camera),{items:fresh}=calibrationPlan(camera),target=riskTarget(),need=minimumEvidence(target.alpha_free,.05/(2*15));

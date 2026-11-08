@@ -1,7 +1,7 @@
 /** Frozen image encoders for parking patches. Resources come from the verified asset lock;
  * user images never leave the page. The offline feature extractor imports this same module. */
 import {createModelAssetLoader,registerModelRoute} from './model-assets.mjs';
-import {ORT_FILES,fetchManifest,combinedProgress,createSession} from './ort-runtime.mjs';
+import {ORT_FILES,fetchManifest,combinedProgress,createSession,assertOrtSupported} from './ort-runtime.mjs';
 import {dinoInput,dinoPool,DINO_SIZE} from './parking-transfer.mjs';
 const root=new URL('./',import.meta.url);
 export const ENCODERS={
@@ -21,6 +21,7 @@ function bitmapPixels(bitmap){const canvas=document.createElement('canvas');canv
 /** Loads one encoder. onProgress receives the shared loader summary (bytes, cache reuse). */
 export async function loadEncoder(key,{signal,onProgress,numThreads}={}){
  const spec=ENCODERS[key];if(!spec)throw new Error('未知编码器');
+ if(key==='dinov2')assertOrtSupported();
  const started=performance.now(),manifest=await fetchManifest(root,signal),progress=combinedProgress(onProgress);
  // The shared ONNX runtime is loaded by ort-runtime.mjs; this loader holds only this encoder's own files.
  const files=manifest.files.filter(file=>spec.assets(file.path)&&!ORT_FILES.includes(file.path)&&!(file.path==='vendor/tf.min.js'&&globalThis.tf));

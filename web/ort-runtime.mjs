@@ -2,11 +2,14 @@
  * ONNX model (parking encoders, detectors). Threads need cross-origin isolation, which GitHub Pages
  * cannot provide, so the default is one thread. */
 import {createModelAssetLoader} from './model-assets.mjs';
+import {wasmSimdSupported,ORT_UNSUPPORTED,CapabilityError} from './capabilities.mjs';
 export const ORT_FILES=['vendor/onnxruntime-web/ort.wasm.min.mjs','vendor/onnxruntime-web/ort-wasm-simd-threaded.mjs','vendor/onnxruntime-web/ort-wasm-simd-threaded.wasm'];
 let runtime=null,shared=null;
 export const ortLoaded=()=>!!runtime;
 const moduleURL=bytes=>URL.createObjectURL(new Blob([bytes],{type:'text/javascript'}));
 const cancelled=signal=>signal?.reason||new DOMException('已取消加载','AbortError');
+/** Throws before any download when this browser cannot start the bundled SIMD-only WebAssembly runtime. */
+export function assertOrtSupported(){if(!wasmSimdSupported())throw new CapabilityError(ORT_UNSUPPORTED);}
 /** Fetches the manifest with the caller's signal plus a 30 s ceiling. */
 export async function fetchManifest(baseURL,signal,timeoutMs=30000){
  const controller=new AbortController(),forward=()=>controller.abort(cancelled(signal));signal?.addEventListener('abort',forward,{once:true});
@@ -19,6 +22,7 @@ export async function fetchManifest(baseURL,signal,timeoutMs=30000){
  * download is aborted only when every waiting caller has cancelled. */
 export function loadOrt({manifest,baseURL,signal,onProgress,numThreads}){
  if(runtime)return Promise.resolve(runtime);
+ try{assertOrtSupported();}catch(error){return Promise.reject(error);}
  if(signal?.aborted)return Promise.reject(cancelled(signal));
  if(!shared){
   const controller=new AbortController(),state={controller,waiters:new Set(),listeners:new Set()};shared=state;
