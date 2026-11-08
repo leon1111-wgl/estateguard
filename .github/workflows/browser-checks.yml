@@ -24,10 +24,10 @@ jobs:
     needs: list
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    # parking-transfer-check pins bit-level encoder parity to the published macOS WebGL run. On this
+    # parking-parity-check pins bit-level encoder parity to the published macOS WebGL run. On this
     # runner the MobileNet calibrated score differs by 1.55e-6 (limit 1e-6) on the commit before the
     # redesign as well (docs/VALIDATION.md); it stays visible as a failed job but does not fail the run.
-    continue-on-error: ${{ matrix.check == 'parking-transfer-check.cjs' }}
+    continue-on-error: ${{ matrix.check == 'parking-parity-check.cjs' }}
     strategy:
       fail-fast: false
       matrix:

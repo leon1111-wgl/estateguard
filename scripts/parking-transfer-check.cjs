@@ -1,5 +1,5 @@
-/** Real-browser acceptance for frozen-encoder occupancy models: feature/score parity with the offline
- * pipeline, default model, risk routing, on-site adaptation, spot checks and revocation, CNR-EXT snapshots and layout.
+/** Real-browser acceptance for frozen-encoder occupancy models (parity with the offline pipeline is checked in
+ * parking-parity-check.cjs): default model, risk routing, on-site adaptation, spot checks and revocation, CNR-EXT snapshots and layout.
  * Run with ESTATEGUARD_URL, PLAYWRIGHT_MODULE and CHROME_PATH when needed. Writes artifacts/parking-transfer-validation.json.
  * Dataset labels stand in for a reviewer's decisions here only to drive the UI; the page never reads them for adaptation.
  */
@@ -7,7 +7,6 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const fs=require('node:fs'),path=require('node:path'),zlib=require('node:zlib'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'..'),out=path.join(root,'artifacts');fs.mkdirSync(out,{recursive:true});
 const base=(process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766').replace(/\/$/,''),origin=new URL(base).origin;
-const fixtures=JSON.parse(fs.readFileSync(path.join(root,'tests/fixtures/parking-transfer-parity.json')));
 const bRef=Object.fromEntries(['mobilenet','dinov2'].map(k=>[k,new Map(JSON.parse(fs.readFileSync(path.join(root,`web/data/parking-transfer/b-predictions-${k}.json`))).map(r=>[r.id,r]))]));
 const extCsv=path.join(root,'docs/validation/parking-ext-predictions.csv.gz'),extRef=new Map();
 if(fs.existsSync(extCsv)){const [head,...lines]=zlib.gunzipSync(fs.readFileSync(extCsv)).toString().trim().split('\n'),keys=head.split(',');for(const line of lines){const v=line.split(',');extRef.set(v[0],Object.fromEntries(keys.map((k,i)=>[k,v[i]])));}}
@@ -21,23 +20,8 @@ const step=(name,value)=>{report.steps[name]=value;console.log(name,JSON.stringi
   page.on('request',r=>{if(r.url().startsWith('http')&&new URL(r.url()).origin!==origin)external.push(r.url());});
   report.browser=await browser.version();
 
-  // 1. Encoder parity on fixture patches from B and CNR-EXT, through the same module the page uses.
-  await page.goto(base+'/');
-  const parity=await page.evaluate(async({fixtures,base})=>{
-   const enc=await import(base+'/parking-encoders.mjs'),tr=await import(base+'/parking-transfer.mjs'),out={};
-   for(const key of ['mobilenet','dinov2']){
-    const head=await (await fetch(`${base}/${enc.ENCODERS[key].head}`)).json(),encoder=await enc.loadEncoder(key),fx=fixtures[key];let feature=0,score=0,n=0;const ms=[];
-    for(const s of [...fx.samples.map(x=>({...x,url:`${base}/data/parking/images/${x.id}.jpg`})),...(fx.ext_samples||[]).map(x=>({...x,url:`${base}/data/parking-ext/images/${x.id}.jpg`}))]){
-     const bitmap=await enc.decodeImage(s.url),t=performance.now(),z=await encoder.embed(bitmap);ms.push(performance.now()-t);bitmap.close();
-     for(let i=0;i<z.length;i++)feature=Math.max(feature,Math.abs(z[i]-s.features[i]));
-     score=Math.max(score,Math.abs(tr.predictHead(z,head).calibrated-s.calibrated));n++;
-    }
-    out[key]={samples:n,max_feature_diff:feature,max_calibrated_diff:score,backend:encoder.backend,median_embed_ms:ms.sort((a,b)=>a-b)[Math.floor(ms.length/2)],load_ms:encoder.stats.load_ms};encoder.dispose();
-   }
-   return out;
-  },{fixtures,base});
-  for(const [k,v] of Object.entries(parity)){assert.ok(v.max_feature_diff<=1e-4,`${k} feature diff ${v.max_feature_diff}`);assert.ok(v.max_calibrated_diff<=1e-6,`${k} score diff ${v.max_calibrated_diff}`);}
-  step('encoder_parity',parity);
+  // 1. Encoder parity runs in parking-parity-check.cjs: its bit-level limit is pinned to the published macOS run and
+  // differs on Linux runners, so it is kept apart and cannot stop the flow checks below from running.
 
   // 2. Default model and an unverified camera: everything is routed to a person.
   await page.goto(base+'/#parking');await page.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===53);
