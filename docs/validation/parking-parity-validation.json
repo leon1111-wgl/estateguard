@@ -1,0 +1,51 @@
+{
+  "limits": {
+    "feature": 0.0001,
+    "calibrated": {
+      "dinov2": 0.000001,
+      "mobilenet": 0.00001
+    }
+  },
+  "checked_at": "2026-11-08T07:50:10.860Z",
+  "base": "http://127.0.0.1:8766",
+  "steps": {
+    "encoder_parity": {
+      "mobilenet": {
+        "samples": 16,
+        "max_feature_diff": 7.82310962677002e-7,
+        "max_calibrated_diff": 0.0000015541358928672366,
+        "backend": "webgl",
+        "median_embed_ms": 751,
+        "load_ms": 406.6999999999971
+      },
+      "dinov2": {
+        "samples": 16,
+        "max_feature_diff": 0,
+        "max_calibrated_diff": 5.551115123125783e-16,
+        "backend": "WASM · 1 线程",
+        "median_embed_ms": 81.60000000000582,
+        "load_ms": 838.4000000000015
+      }
+    }
+  },
+  "ok": true,
+  "browser": "151.0.7922.34",
+  "measured": {
+    "mobilenet": {
+      "samples": 16,
+      "max_feature_diff": 7.82310962677002e-7,
+      "max_calibrated_diff": 0.0000015541358928672366,
+      "backend": "webgl",
+      "median_embed_ms": 751,
+      "load_ms": 406.6999999999971
+    },
+    "dinov2": {
+      "samples": 16,
+      "max_feature_diff": 0,
+      "max_calibrated_diff": 5.551115123125783e-16,
+      "backend": "WASM · 1 线程",
+      "median_embed_ms": 81.60000000000582,
+      "load_ms": 838.4000000000015
+    }
+  }
+}

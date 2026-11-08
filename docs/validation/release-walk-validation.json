@@ -1,0 +1,182 @@
+{
+  "checked_at": "2026-11-08T07:50:34.962Z",
+  "base": "http://127.0.0.1:8766",
+  "steps": {
+    "overview": {
+      "h1": "EstateGuard",
+      "stack": "D-FINE-N · DINOv2 · ONNX Runtime Web",
+      "visible": true
+    },
+    "main_task": {
+      "message": "分析完成：1 帧、3 条匿名轨迹、0 个待核实候选。",
+      "model": "D-FINE-N · ONNX Runtime Web",
+      "backend": "WASM · 1 线程 · 加载 755 ms",
+      "rows": [
+        "0.0 strack-1公交 / 大巴96.5%0.141, 0.303, 0.824, 0.632",
+        "0.0 strack-2停车标志79.9%0.595, 0.547, 0.028, 0.089",
+        "0.0 strack-3公交 / 大巴63.9%0.835, 0.320, 0.165, 0.376"
+      ],
+      "detections": [
+        "bus 0.965",
+        "stop sign 0.799",
+        "bus 0.639"
+      ],
+      "mean_inference_ms": 527.7000000000116,
+      "backend_report": "WASM · 1 线程"
+    },
+    "parking_snapshot": {
+      "message": "当前快照分析完成（2015/07/08 08:05 · DINOv2-small 线性探针）：53 / 53 个车位，2706 ms（含图片读取，约 51 ms/个）；编码器加载 250 ms。本相机尚未完成风险校准，所有车位送人工复核；模型倾向与概率可作参考。",
+      "model": "dinov2",
+      "metrics": [
+        "53当前快照车位",
+        "0自动判空闲",
+        "0自动判占用",
+        "53 / 0需人工复核 / 未分析"
+      ]
+    },
+    "layout": {
+      "1440-dark-home": {
+        "scroll": 1440,
+        "inner": 1440,
+        "background": "rgb(18, 19, 16)"
+      },
+      "1440-dark-analyze": {
+        "scroll": 1440,
+        "inner": 1440,
+        "background": "rgb(18, 19, 16)"
+      },
+      "1440-dark-workspace": {
+        "scroll": 1440,
+        "inner": 1440,
+        "background": "rgb(18, 19, 16)"
+      },
+      "1440-dark-parking": {
+        "scroll": 1440,
+        "inner": 1440,
+        "background": "rgb(18, 19, 16)"
+      },
+      "1440-dark-policy": {
+        "scroll": 1440,
+        "inner": 1440,
+        "background": "rgb(18, 19, 16)"
+      },
+      "1440-dark-results": {
+        "scroll": 1440,
+        "inner": 1440,
+        "background": "rgb(18, 19, 16)"
+      },
+      "1440-dark-story": {
+        "scroll": 1440,
+        "inner": 1440,
+        "background": "rgb(18, 19, 16)"
+      },
+      "375-light-home": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(242, 241, 236)"
+      },
+      "375-light-analyze": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(242, 241, 236)"
+      },
+      "375-light-workspace": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(242, 241, 236)"
+      },
+      "375-light-parking": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(242, 241, 236)"
+      },
+      "375-light-policy": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(242, 241, 236)"
+      },
+      "375-light-results": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(242, 241, 236)"
+      },
+      "375-light-story": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(242, 241, 236)"
+      },
+      "375-dark-home": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(18, 19, 16)"
+      },
+      "375-dark-analyze": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(18, 19, 16)"
+      },
+      "375-dark-workspace": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(18, 19, 16)"
+      },
+      "375-dark-parking": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(18, 19, 16)"
+      },
+      "375-dark-policy": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(18, 19, 16)"
+      },
+      "375-dark-results": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(18, 19, 16)"
+      },
+      "375-dark-story": {
+        "scroll": 375,
+        "inner": 375,
+        "background": "rgb(18, 19, 16)"
+      }
+    }
+  },
+  "screens": [
+    "1440-light-home.png",
+    "main-task-annotated.png",
+    "1440-light-analyze.png",
+    "1440-light-workspace.png",
+    "1440-light-parking.png",
+    "1440-light-policy.png",
+    "1440-light-results.png",
+    "1440-light-story.png",
+    "1440-light-analyze-after.png",
+    "1440-dark-home.png",
+    "1440-dark-analyze.png",
+    "1440-dark-workspace.png",
+    "1440-dark-parking.png",
+    "1440-dark-policy.png",
+    "1440-dark-results.png",
+    "1440-dark-story.png",
+    "375-light-home.png",
+    "375-light-analyze.png",
+    "375-light-workspace.png",
+    "375-light-parking.png",
+    "375-light-policy.png",
+    "375-light-results.png",
+    "375-light-story.png",
+    "375-dark-home.png",
+    "375-dark-analyze.png",
+    "375-dark-workspace.png",
+    "375-dark-parking.png",
+    "375-dark-policy.png",
+    "375-dark-results.png",
+    "375-dark-story.png"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "151.0.7922.34",
+  "ok": true
+}

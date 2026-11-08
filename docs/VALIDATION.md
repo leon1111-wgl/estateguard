@@ -1,5 +1,39 @@
 # 验证记录 · 2026-10-15
 
+## 2026-11-08 · 0.4.0 另一停车场与访客自己的文件
+
+从 `c793f0c`（main）开新分支 `feat/drift-probe-2026-11`。PKLot 漂移轮（2026-10-20/21，本地未推送）原样保存在 `backup/local-pklot-drift-2026-10-21`，合并为 `241e6e2`；它的数字测于当时的代码，本次没有重新下载或打分。改动与范围见 [CHANGELOG](../CHANGELOG.md)。
+
+本机只运行不加载模型的检查：
+
+```bash
+node --test tests/*.test.mjs                                   # 168 项通过
+python3 -m unittest discover -s tests -p 'test_*.py'           # 24 项通过
+python3 -m unittest discover -s tests/training -p 'test_*.py'  # 28 项通过（含 test_drift_rules、test_recalibration）
+python3 scripts/verify_assets.py && python3 scripts/verify_parking.py && python3 scripts/verify_parking_transfer.py && python3 scripts/verify_detector_eval.py
+```
+
+所有含推理的检查都在 GitHub Actions 的 Browser checks 中运行（每个 `scripts/*-check.cjs` 一个作业）：
+
+- `241e6e2`（只合并 PKLot 轮）：运行 42457982558。35 / 36 个作业通过，失败的是允许失败的 `parking-transfer-check`。它停在第 1 步的已知 MobileNetV2 一致性差异（1.55e-6，上限 1e-6），因此附录 7.3 的页面检查当时并没有运行。
+- `3c0326f`（一致性拆成 `parking-parity-check`）：运行 42458324180。`parking-transfer-check` 第一次在 Linux 上完整通过，包括按侧撤销、撤销后另一模型的抽检保持 8 个车位·日、重新校准两侧未通过时保留撤销记录，以及 `evidence_from_by_side`。`parking-parity-check` 仍为同一个已知差异。
+- `26753c3`（访客文件改动与新检查）：运行 42459458621。`capability-fallback-check` 在“无 SIMD 时车位页默认 MobileNetV2”一步失败：页面加载迁移模型后会重设全部选项，DINOv2 又可选了。在 `b146a9a` 修复后，运行 42459910739 中该检查通过。
+- Fable 只读审查（对象 `26753c3`）：
+  - P0：上面的 DINOv2 选项问题；CHANGELOG 引用的本节当时还不存在。
+  - P1：探针会把上一张的拒绝提示当成下一张的回答；一致性作业因为一直红而失去意义；用 DINOv2 保存的交接文件在无 SIMD 浏览器上会走进死路；探针超时后没有任何输出。
+  - 以上在 `bd91f4e` 全部修复（见 CHANGELOG），没有做第二轮审查。
+- **`bd91f4e`（发布候选）：运行 42460351016，39 / 39 个作业全部通过，不再有允许失败的作业。**证据已存入本目录：
+  - [release-walk-validation.json](validation/release-walk-validation.json)：Chrome 151 无头。1440 px 下 D-FINE-N（WASM 单线程）在公开校车照片上检出 bus 0.965、stop sign 0.799、bus 0.639，平均推理 528 ms（CI 运行器，不是参考机）。DINOv2 分析 53 / 53 个车位，全部送人工。7 个视图 × 1440 / 375 px × 浅色 / 深色共 30 张截图（截图在 CI 产物中，没有提交）；控制台错误、页面错误和跨站请求均为 0；375 px 下没有横向滚动。
+  - [capability-fallback-validation.json](validation/capability-fallback-validation.json)：11 / 11 通过，模拟无 SIMD 时没有请求任何 ONNX 文件。
+  - [parking-parity-validation.json](validation/parking-parity-validation.json)：DINOv2 特征差 0、分数差 5.6e-16；MobileNetV2 特征差 7.8e-7、分数差 1.55e-6（上限 1e-5）。
+  - [parking-transfer-ci-validation.json](validation/parking-transfer-ci-validation.json)：Linux 上的完整流程，包含附录 7.3 的各步。原有的 `parking-transfer-validation.json` 仍是发布时的 macOS 记录，未改动。
+- 探针第二次运行 42460359030（[probe-trial-summary.json](validation/probe-trial-summary.json)）：非图片、校车照片、COCO 客厅照片、非图片、COCO 猫图交替提交。两次被拒绝之后，下一张照片都正常分析，确认上一张的提示不再被误读。
+- PR 的 verify 作业（Ubuntu）：在 `a6fb132` 通过（运行 42460688335），包括 Python 单元测试、资源与评测校验、合成班次与基准重算无差异。此前 `test_fixture_is_current` 在 Ubuntu 上因浮点末位不同失败，现在浮点比较的相对容差为 1e-12，其余逐项精确。
+
+探针试运行 42458804758：校车照片与 COCO 猫图得到真实 D-FINE-N 检测，CNRPark 车位图得到 DINOv2 车位结果，README 被页面按原因拒绝，404 被记录；页面错误、控制台错误与跨站请求均为 0。
+
+没有覆盖：真实手机、旧版 Safari 与真正不支持 SIMD 的浏览器（在 Chrome 中通过让 `WebAssembly.validate` 拒绝 SIMD 探测模块来模拟）。
+
 ## 2026-10-31 · 故障回归先确认错误实际发生
 
 从已发布 `449dce2` 继续，仅修改浏览器检查脚本。没有修改产品页面、模型、权重、数据、阈值或 CI 的允许失败配置；主目录独立研究未动。

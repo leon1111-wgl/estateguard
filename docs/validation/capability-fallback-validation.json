@@ -1,0 +1,110 @@
+{
+  "checked_at": "2026-11-08T07:51:04.946Z",
+  "base": "http://127.0.0.1:8766",
+  "checks": [
+    {
+      "name": "without SIMD the analysis page keeps SSDLite, disables D-FINE-N and says why",
+      "passed": true,
+      "evidence": {
+        "detector": "ssdlite",
+        "dfine_disabled": true,
+        "help": "此浏览器不支持 WebAssembly SIMD（或已关闭 WebAssembly，例如 iOS 锁定模式），无法运行 ONNX Runtime Web 上的 D-FINE-N 与 DINOv2。 已改用 SSDLite（TensorFlow.js），检出会比 D-FINE-N 少。COCO 通用照片：AP 25.4（物业相关 12 类 29.3）；参考机约 38 ms/张。建议下限 0.5。不代表小区监控效果。"
+      }
+    },
+    {
+      "name": "without SIMD the visitor photo is still analysed for real with SSDLite",
+      "passed": true,
+      "evidence": {
+        "message": "分析完成：1 帧、1 条匿名轨迹、0 个待核实候选。",
+        "model": "COCO-SSD 2.2.3 / SSDLite MobileNet V2",
+        "top": {
+          "class": "bus",
+          "score": 0.9917388558387756,
+          "bbox": [
+            0.13031747937202454,
+            0.29493576288223267,
+            0.8505373895168304,
+            0.645323634147644
+          ]
+        }
+      }
+    },
+    {
+      "name": "a ?detector=dfine link on such a browser falls back with a visible message",
+      "passed": true,
+      "evidence": {
+        "message": "链接指定了 D-FINE-N，但这个浏览器不支持 WebAssembly SIMD（或已关闭 WebAssembly，例如 iOS 锁定模式），无法运行 ONNX Runtime Web 上的 D-FINE-N 与 DINOv2。已改用 SSDLite。",
+        "detector": "ssdlite"
+      }
+    },
+    {
+      "name": "without SIMD the parking page defaults to MobileNetV2 and still answers a visitor crop",
+      "passed": true,
+      "evidence": {
+        "dinov2_disabled": true,
+        "help": "MobileNetV2 迁移头：复用检测器的 COCO 预训练骨干 · TensorFlow.js。CNR-EXT 保留测试平衡正确率 94.3%，B 开发比较 80.2%。首次分析需从本站下载约 19.1 MiB 公共模型资源，之后复用缓存。 DINOv2 需要 WebAssembly SIMD，此浏览器无法运行，已默认使用 MobileNetV2 迁移头。",
+        "result": "my-slot.jpg倾向空闲 · 校准后占用概率 16.55%（未校准 22.42%）· MobileNetV2 迁移头新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。"
+      }
+    },
+    {
+      "name": "a review file saved with DINOv2 opens with MobileNetV2 here and says so",
+      "passed": true,
+      "evidence": {
+        "message": "已恢复人工复核 0 条。已返回摄像头 B · 2015/07/08 08:05 · 车位 1。交接文件使用 DINOv2，此浏览器不支持 WebAssembly SIMD，已改用 MobileNetV2 迁移头；人工结论不受影响，请重新分析。未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。",
+        "model": "mobilenet"
+      }
+    },
+    {
+      "name": "no ONNX Runtime or ONNX model file was requested without SIMD",
+      "passed": true,
+      "evidence": {
+        "onnx_requests": []
+      }
+    },
+    {
+      "name": "a JPEG whose picker gave no MIME type is recognised from its bytes",
+      "passed": true,
+      "evidence": {
+        "message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。",
+        "media_type": "image/jpeg"
+      }
+    },
+    {
+      "name": "a HEIC photo gets a specific reason on both upload paths",
+      "passed": true,
+      "evidence": {
+        "analysis": "这是 HEIC/HEIF 照片（iPhone 默认格式），多数浏览器无法解码。请在相册中导出为 JPEG，或在 iPhone「设置 › 相机 › 格式」选择「兼容性最佳」后重拍。 当前仍保留此前素材、设置与已完成报告。",
+        "parking": "这是 HEIC/HEIF 照片（iPhone 默认格式），多数浏览器无法解码。请在相册中导出为 JPEG，或在 iPhone「设置 › 相机 › 格式」选择「兼容性最佳」后重拍。"
+      }
+    },
+    {
+      "name": "a whole-scene photo in the single-slot test gets a note that the score does not apply",
+      "passed": true,
+      "evidence": {
+        "result": "whole-lot.jpg图片为 1280×960 像素。模型在约 150×150 的单车位裁剪图上训练与评测；如果画面里不止一个车位，这个分数没有意义，整幅画面可在视频与图片分析中检测车辆。占用 · 占用分数 100.00% · MLP32新场景结果未经验证，没有数据集标签可对照。不是违规判断。"
+      }
+    },
+    {
+      "name": "an extreme panorama is analysed with an aspect-ratio warning",
+      "passed": true,
+      "evidence": {
+        "message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。画面长宽比约 6.0:1，检测器会把画面缩放成方形输入（D-FINE-N 为 640×640），细长画面里的物体会变形，可能漏检。"
+      }
+    },
+    {
+      "name": "a very tall image is capped at 1920 px frame height",
+      "passed": true,
+      "evidence": {
+        "canvas": [
+          96,
+          1920
+        ]
+      }
+    }
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "onnx_requests": [],
+  "browser": "151.0.7922.34",
+  "ok": true
+}

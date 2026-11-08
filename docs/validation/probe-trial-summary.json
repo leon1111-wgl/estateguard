@@ -1,0 +1,383 @@
+{
+  "started_at": "2026-11-08T07:50:06.722Z",
+  "scope": "Probe of the deployed page code on the URLs given. Each result is what a visitor would see for that file; it is not an accuracy measurement.",
+  "settings": {
+    "detector": "dfine",
+    "rule": "objects",
+    "parking": true,
+    "viewport": "1440x1000"
+  },
+  "items": [
+    {
+      "index": 1,
+      "url": "https://raw.githubusercontent.com/leon1111-wgl/estateguard/main/README.md",
+      "download": {
+        "final_url": "https://raw.githubusercontent.com/leon1111-wgl/estateguard/main/README.md",
+        "bytes": 18607,
+        "sha256": "c3a41ce950f9d0c892890e0305966ceb32744e3ec11b90f21c547364a381a3d5",
+        "content_type": "text/plain; charset=utf-8",
+        "ms": 164
+      },
+      "file": {
+        "name": "README.md",
+        "mime_given_to_page": "(none)"
+      },
+      "analysis": {
+        "open_message": "请选择 JPEG / PNG / WebP 图片或 MP4 / WebM 视频。",
+        "outcome": "refused"
+      },
+      "parking": {
+        "model": "dinov2",
+        "status": "请选择不超过 10 MB 的 JPEG、PNG 或 WebP 单车位裁剪图。",
+        "result": null
+      }
+    },
+    {
+      "index": 2,
+      "url": "https://raw.githubusercontent.com/leon1111-wgl/estateguard/main/web/samples/bus.jpg",
+      "download": {
+        "final_url": "https://raw.githubusercontent.com/leon1111-wgl/estateguard/main/web/samples/bus.jpg",
+        "bytes": 223152,
+        "sha256": "34ff1128eb83891e0ae38c6323022af6a4dc6a035d150c106201088b093499bd",
+        "content_type": "image/jpeg",
+        "ms": 79
+      },
+      "file": {
+        "name": "bus.jpg",
+        "mime_given_to_page": "image/jpeg"
+      },
+      "analysis": {
+        "open_message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。",
+        "message": "分析完成：1 帧、3 条匿名轨迹、0 个待核实候选。",
+        "outcome": "completed",
+        "model": "D-FINE-N · ONNX Runtime Web",
+        "backend": "WASM · 1 线程 · 加载 1059 ms",
+        "detector_help": "COCO 通用照片：AP 42.0（物业相关 12 类 44.5）；参考机约 252 ms/张。建议下限 0.6，当前默认。不代表小区监控效果。",
+        "frames": 1,
+        "mean_inference_ms": 664.2999999999956,
+        "media": {
+          "name": "bus.jpg",
+          "type": "image/jpeg",
+          "bytes": 223152,
+          "width": 960,
+          "height": 640
+        },
+        "candidates": 0,
+        "detections": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "bus",
+                "score": 0.9653,
+                "bbox": [
+                  0.1414,
+                  0.3027,
+                  0.8237,
+                  0.6321
+                ]
+              },
+              {
+                "class": "stop sign",
+                "score": 0.7992,
+                "bbox": [
+                  0.5951,
+                  0.5471,
+                  0.0284,
+                  0.0887
+                ]
+              },
+              {
+                "class": "bus",
+                "score": 0.6387,
+                "bbox": [
+                  0.8352,
+                  0.3202,
+                  0.1648,
+                  0.3761
+                ]
+              }
+            ]
+          }
+        ],
+        "candidate_explanation": "没有生成候选不等于安全。通用检测模式只输出物体；其他规则可能因区域、类别、时长或漏检而没有结果。"
+      },
+      "parking": {
+        "model": "dinov2",
+        "status": "已完成「bus.jpg」的分析。",
+        "result": "bus.jpg图片为 960×640 像素。模型在约 150×150 的单车位裁剪图上训练与评测；如果画面里不止一个车位，这个分数没有意义，整幅画面可在视频与图片分析中检测车辆。倾向占用 · 校准后占用概率 99.97%（未校准 99.94%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。"
+      }
+    },
+    {
+      "index": 3,
+      "url": "http://images.cocodataset.org/val2017/000000000139.jpg",
+      "download": {
+        "final_url": "http://images.cocodataset.org/val2017/000000000139.jpg",
+        "bytes": 161811,
+        "sha256": "ffe0f0cec3b2e27aab1967229cdf0a0d7751dcdd5800322f0b8ac0dffb3b8a8d",
+        "content_type": "image/jpeg",
+        "ms": 305
+      },
+      "file": {
+        "name": "000000000139.jpg",
+        "mime_given_to_page": "image/jpeg"
+      },
+      "analysis": {
+        "open_message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。",
+        "message": "分析完成：1 帧、10 条匿名轨迹、0 个待核实候选。",
+        "outcome": "completed",
+        "model": "D-FINE-N · ONNX Runtime Web",
+        "backend": "WASM · 1 线程 · 加载 1059 ms",
+        "detector_help": "COCO 通用照片：AP 42.0（物业相关 12 类 44.5）；参考机约 252 ms/张。建议下限 0.6，当前默认。不代表小区监控效果。",
+        "frames": 1,
+        "mean_inference_ms": 389.5,
+        "media": {
+          "name": "000000000139.jpg",
+          "type": "image/jpeg",
+          "bytes": 161811,
+          "width": 640,
+          "height": 426
+        },
+        "candidates": 0,
+        "detections": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "tv",
+                "score": 0.9333,
+                "bbox": [
+                  0.009,
+                  0.3919,
+                  0.2332,
+                  0.226
+                ]
+              },
+              {
+                "class": "chair",
+                "score": 0.9033,
+                "bbox": [
+                  0.4564,
+                  0.512,
+                  0.0969,
+                  0.2431
+                ]
+              },
+              {
+                "class": "chair",
+                "score": 0.8123,
+                "bbox": [
+                  0.5678,
+                  0.5119,
+                  0.0841,
+                  0.2318
+                ]
+              },
+              {
+                "class": "chair",
+                "score": 0.7757,
+                "bbox": [
+                  0.6301,
+                  0.5096,
+                  0.0594,
+                  0.2177
+                ]
+              },
+              {
+                "class": "person",
+                "score": 0.7709,
+                "bbox": [
+                  0.6482,
+                  0.3693,
+                  0.0794,
+                  0.3274
+                ]
+              },
+              {
+                "class": "refrigerator",
+                "score": 0.7587,
+                "bbox": [
+                  0.6943,
+                  0.3953,
+                  0.1053,
+                  0.2982
+                ]
+              },
+              {
+                "class": "clock",
+                "score": 0.7414,
+                "bbox": [
+                  0.7008,
+                  0.2827,
+                  0.0202,
+                  0.0516
+                ]
+              },
+              {
+                "class": "tv",
+                "score": 0.7393,
+                "bbox": [
+                  0.871,
+                  0.489,
+                  0.1287,
+                  0.1942
+                ]
+              },
+              {
+                "class": "potted plant",
+                "score": 0.7244,
+                "bbox": [
+                  0.3538,
+                  0.4042,
+                  0.0666,
+                  0.096
+                ]
+              },
+              {
+                "class": "vase",
+                "score": 0.6331,
+                "bbox": [
+                  0.2604,
+                  0.5471,
+                  0.0315,
+                  0.0815
+                ]
+              }
+            ]
+          }
+        ],
+        "candidate_explanation": "没有生成候选不等于安全。通用检测模式只输出物体；其他规则可能因区域、类别、时长或漏检而没有结果。"
+      },
+      "parking": {
+        "model": "dinov2",
+        "status": "已完成「000000000139.jpg」的分析。",
+        "result": "000000000139.jpg图片为 640×426 像素。模型在约 150×150 的单车位裁剪图上训练与评测；如果画面里不止一个车位，这个分数没有意义，整幅画面可在视频与图片分析中检测车辆。倾向空闲 · 校准后占用概率 10.09%（未校准 11.94%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。"
+      }
+    },
+    {
+      "index": 4,
+      "url": "https://raw.githubusercontent.com/leon1111-wgl/estateguard/main/README.md",
+      "download": {
+        "final_url": "https://raw.githubusercontent.com/leon1111-wgl/estateguard/main/README.md",
+        "bytes": 18607,
+        "sha256": "c3a41ce950f9d0c892890e0305966ceb32744e3ec11b90f21c547364a381a3d5",
+        "content_type": "text/plain; charset=utf-8",
+        "ms": 13
+      },
+      "file": {
+        "name": "README.md",
+        "mime_given_to_page": "(none)"
+      },
+      "analysis": {
+        "open_message": "请选择 JPEG / PNG / WebP 图片或 MP4 / WebM 视频。 当前仍保留此前素材、设置与已完成报告。",
+        "outcome": "refused"
+      },
+      "parking": {
+        "model": "dinov2",
+        "status": "请选择不超过 10 MB 的 JPEG、PNG 或 WebP 单车位裁剪图。上次成功结果已保留。",
+        "result": null
+      }
+    },
+    {
+      "index": 5,
+      "url": "http://images.cocodataset.org/val2017/000000039769.jpg",
+      "download": {
+        "final_url": "http://images.cocodataset.org/val2017/000000039769.jpg",
+        "bytes": 173131,
+        "sha256": "dea9e7ef97386345f7cff32f9055da4982da5471c48d575146c796ab4563b04e",
+        "content_type": "image/jpeg",
+        "ms": 60
+      },
+      "file": {
+        "name": "000000039769.jpg",
+        "mime_given_to_page": "image/jpeg"
+      },
+      "analysis": {
+        "open_message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。",
+        "message": "分析完成：1 帧、5 条匿名轨迹、0 个待核实候选。",
+        "outcome": "completed",
+        "model": "D-FINE-N · ONNX Runtime Web",
+        "backend": "WASM · 1 线程 · 加载 1059 ms",
+        "detector_help": "COCO 通用照片：AP 42.0（物业相关 12 类 44.5）；参考机约 252 ms/张。建议下限 0.6，当前默认。不代表小区监控效果。",
+        "frames": 1,
+        "mean_inference_ms": 420,
+        "media": {
+          "name": "000000039769.jpg",
+          "type": "image/jpeg",
+          "bytes": 173131,
+          "width": 640,
+          "height": 480
+        },
+        "candidates": 0,
+        "detections": [
+          {
+            "time": 0,
+            "detections": [
+              {
+                "class": "cat",
+                "score": 0.9594,
+                "bbox": [
+                  0.019,
+                  0.1143,
+                  0.475,
+                  0.866
+                ]
+              },
+              {
+                "class": "cat",
+                "score": 0.9331,
+                "bbox": [
+                  0.5316,
+                  0.0532,
+                  0.468,
+                  0.7212
+                ]
+              },
+              {
+                "class": "remote",
+                "score": 0.9219,
+                "bbox": [
+                  0.0628,
+                  0.1518,
+                  0.212,
+                  0.0942
+                ]
+              },
+              {
+                "class": "couch",
+                "score": 0.8375,
+                "bbox": [
+                  0.003,
+                  0.0038,
+                  0.9965,
+                  0.9852
+                ]
+              },
+              {
+                "class": "remote",
+                "score": 0.8049,
+                "bbox": [
+                  0.5223,
+                  0.1607,
+                  0.0583,
+                  0.2312
+                ]
+              }
+            ]
+          }
+        ],
+        "candidate_explanation": "没有生成候选不等于安全。通用检测模式只输出物体；其他规则可能因区域、类别、时长或漏检而没有结果。"
+      },
+      "parking": {
+        "model": "dinov2",
+        "status": "已完成「000000039769.jpg」的分析。",
+        "result": "000000039769.jpg图片为 640×480 像素。模型在约 150×150 的单车位裁剪图上训练与评测；如果画面里不止一个车位，这个分数没有意义，整幅画面可在视频与图片分析中检测车辆。倾向空闲 · 校准后占用概率 32.55%（未校准 33.95%）· DINOv2-small 线性探针新画面没有现场风险校准，按规则应送人工复核。新场景结果未经验证，没有数据集标签可对照。不是违规判断。"
+      }
+    }
+  ],
+  "page_errors": [],
+  "console_errors": [],
+  "external_requests": [],
+  "browser": "151.0.7922.34",
+  "finished_at": "2026-11-08T07:50:14.523Z"
+}
