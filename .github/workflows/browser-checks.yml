@@ -56,10 +56,6 @@ jobs:
     needs: list
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    # parking-parity-check pins bit-level encoder parity to the published macOS WebGL run. On this
-    # runner the MobileNet calibrated score differs by 1.55e-6 (limit 1e-6) on the commit before the
-    # redesign as well (docs/VALIDATION.md); it stays visible as a failed job but does not fail the run.
-    continue-on-error: ${{ matrix.check == 'parking-parity-check.cjs' }}
     strategy:
       fail-fast: false
       matrix:
@@ -92,7 +88,7 @@ jobs:
   probe:
     if: github.event_name == 'workflow_dispatch' && inputs.image_urls != ''
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 90
     env:
       ESTATEGUARD_URL: http://127.0.0.1:8766
       # Inputs reach the script only as environment variables, never as shell text.

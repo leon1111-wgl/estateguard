@@ -28,6 +28,7 @@ test('the picker type wins; a missing type falls back to the bytes',async()=>{
  assert.equal(await effectiveType(new File([jpeg],'a.png',{type:'image/png'})),'image/png');
  assert.equal(await effectiveType(new File([box('heic')],'IMG_0001.HEIC')),'image/heic');
  assert.equal(await effectiveType(new File(['hello'],'notes.txt')),'');
+ assert.equal(await effectiveType(new File([jpeg],'a.jpg',{type:'image/jpg'})),'image/jpeg');
  assert.equal(await effectiveType(new File([jpeg],'photo.bin',{type:'application/octet-stream'})),'image/jpeg');
  assert.equal(await effectiveType(new File(['hello'],'x.bin',{type:'application/octet-stream'})),'');
 });
@@ -36,6 +37,7 @@ test('unsupported photo formats get a specific reason, other types the generic m
  assert.match(unsupportedHint('image/heic'),/HEIC/);
  assert.match(unsupportedHint('','IMG_1234.heif'),/HEIC/);
  assert.match(unsupportedHint('image/avif'),/AVIF/);
+ assert.match(unsupportedHint('video/quicktime','IMG_0003.MOV'),/MOV/);
  assert.equal(unsupportedHint('image/gif','a.gif'),null);
  assert.equal(unsupportedHint('',''),null);
 });

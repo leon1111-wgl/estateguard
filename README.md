@@ -139,7 +139,7 @@ python3 scripts/audit_annotations.py data/annotations-example.json
 
 浏览器检查为可选开发依赖：安装 Playwright 及 Chromium 后运行 `node scripts/browser-check.cjs`、`node scripts/model-check.cjs`、`node scripts/parking-check.cjs`、`node scripts/parking-transfer-check.cjs`、`node scripts/detector-check.cjs`。已有 Chrome 可通过 `CHROME_PATH` 指定；运行前启动本地服务。详见[验证记录](docs/VALIDATION.md)。
 
-涉及模型推理的浏览器检查只在 GitHub Actions 的 Browser checks 工作流中运行（推送 `feat/**` 分支或手动触发），每个 `scripts/*-check.cjs` 一个作业。其中 `release-walk-check` 走完整个访客流程（全部分页、1440 / 375 px、浅色 / 深色，默认 D-FINE-N 与 DINOv2 真实运行），`capability-fallback-check` 模拟不支持 WebAssembly SIMD 的浏览器。`parking-parity-check` 是唯一允许失败的作业：它把编码器分数一致性固定在 macOS 发布运行上，Linux 运行器上有已登记的 1.55e-6 差异。
+涉及模型推理的浏览器检查只在 GitHub Actions 的 Browser checks 工作流中运行（推送 `feat/**` 分支或手动触发），每个 `scripts/*-check.cjs` 一个作业。其中 `release-walk-check` 走完整个访客流程（全部分页、1440 / 375 px、浅色 / 深色，默认 D-FINE-N 与 DINOv2 真实运行），`capability-fallback-check` 模拟不支持 WebAssembly SIMD 的浏览器。`parking-parity-check` 按模型核对编码器与离线流程的一致性（DINOv2 分数 ≤ 1e-6，在 Linux 上逐位一致；MobileNetV2 走 WebGL，分数 ≤ 1e-5，Linux 实测 1.55e-6）。没有允许失败的作业。
 
 **用自己的图片探测**：手动运行 Browser checks，并在 `image_urls` 填入图片或短视频地址（空格、逗号或换行分隔，最多 20 个）。这时只运行 `probe` 作业，它把每个文件交给页面真实的「视频与图片分析」（可选也交给「测试自己的车位图片」），产物 `probe-<run id>` 包含每个文件的检测 JSON、带框截图和 `summary.md`。
 

@@ -31,6 +31,7 @@ export function sniffType(bytes){
 /** The type the page should treat a file as: the picker's MIME type, or the sniffed one when the picker gave none or
  * only the generic application/octet-stream (some pickers and download managers do). */
 export async function effectiveType(file){
+ if(file.type==='image/jpg'||file.type==='image/pjpeg')return 'image/jpeg';
  if(file.type&&file.type!=='application/octet-stream')return file.type;
  try{return sniffType(new Uint8Array(await file.slice(0,16).arrayBuffer()));}catch{return '';}
 }
@@ -38,5 +39,6 @@ export async function effectiveType(file){
 export function unsupportedHint(type,name=''){
  if(/^image\/hei[cf]/.test(type)||/\.(heic|heif)$/i.test(name))return '这是 HEIC/HEIF 照片（iPhone 默认格式），多数浏览器无法解码。请在相册中导出为 JPEG，或在 iPhone「设置 › 相机 › 格式」选择「兼容性最佳」后重拍。';
  if(/^image\/avif$/.test(type)||/\.avif$/i.test(name))return '暂不接受 AVIF，请转换为 JPEG、PNG 或 WebP。';
+ if(type==='video/quicktime'||/\.mov$/i.test(name))return '这是 MOV 视频（iPhone 默认格式）。请导出或转换为 MP4（H.264）后再试；单个片段最多分析 20 秒。';
  return null;
 }

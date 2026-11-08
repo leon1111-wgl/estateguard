@@ -48,6 +48,16 @@ const noSimd=()=>{const probe=[0,97,115,109,1,0,0,0,1,5,1,96,0,1,123,3,2,1,0,10,
    ev.result=await p.locator('#parking-upload-result').textContent();assert.match(ev.result,/MobileNetV2/);assert.doesNotMatch(ev.result,/图片为 \d+×\d+ 像素/,'a 150 px crop gets no scene note');
    await p.locator('.parking-upload-panel').screenshot({path:path.join(out,'capability-no-simd-parking.png')});
   });
+  await test('a review file saved with DINOv2 opens with MobileNetV2 here and says so',async ev=>{
+   const [d]=await Promise.all([p.waitForEvent('download'),p.locator('#parking-export').click()]);const doc=JSON.parse(fs.readFileSync(await d.path(),'utf8'));
+   const sha=JSON.parse(fs.readFileSync(path.join(root,'web/data/parking-transfer/evaluation.json'),'utf8')).models.dinov2.model_sha256;
+   doc.view={...doc.view,model_key:'dinov2',model_sha256:sha};if(doc.prediction_model)doc.prediction_model={...doc.prediction_model,key:'dinov2',model_sha256:sha};
+   await p.evaluate(()=>{document.querySelector('#parking-message').textContent='';});
+   await p.locator('#parking-import').setInputFiles({name:'dinov2-handover.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(doc))});
+   await p.waitForFunction(()=>/已恢复|恢复失败/.test(document.querySelector('#parking-message').textContent));
+   ev.message=await p.locator('#parking-message').textContent();ev.model=await p.locator('#parking-model-choice').inputValue();
+   assert.match(ev.message,/交接文件使用 DINOv2，此浏览器不支持 WebAssembly SIMD/);assert.equal(ev.model,'mobilenet');
+  });
   await test('no ONNX Runtime or ONNX model file was requested without SIMD',async ev=>{ev.onnx_requests=report.onnx_requests;assert.deepEqual(report.onnx_requests,[]);});
   await p.close();
 

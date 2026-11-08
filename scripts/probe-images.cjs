@@ -16,7 +16,7 @@ const detector=['dfine','ssdlite'].includes(process.env.PROBE_DETECTOR)?process.
 const rule=['objects','access','lift'].includes(process.env.PROBE_RULE)?process.env.PROBE_RULE:'objects';
 const parking=!/^(false|0|no)$/i.test(process.env.PROBE_PARKING||'true');
 const mobile=process.env.PROBE_VIEWPORT==='mobile';
-const MAX_BYTES=100*1024*1024,MAX_URLS=20;
+const MAX_BYTES=100*1024*1024,MAX_URLS=20,ITEM_TIMEOUT=240000;
 const summary={started_at:new Date().toISOString(),scope:'Probe of the deployed page code on the URLs given. Each result is what a visitor would see for that file; it is not an accuracy measurement.',settings:{detector,rule,parking,viewport:mobile?'375x812':'1440x1000'},items:[],page_errors:[],console_errors:[],external_requests:[]};
 const pad=i=>String(i+1).padStart(2,'0');
 const mimeFor=(header,name)=>{const t=(header||'').split(';')[0].trim().toLowerCase();if(/^(image|video)\//.test(t))return t;const ext=(name.match(/\.([a-z0-9]+)$/i)||[])[1]?.toLowerCase();return {jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',mp4:'video/mp4',webm:'video/webm',heic:'image/heic',gif:'image/gif',avif:'image/avif'}[ext]||'';};
@@ -28,6 +28,13 @@ async function download(url){
  const bytes=Buffer.concat(chunks.map(c=>Buffer.from(c)));
  let name=decodeURIComponent(new URL(response.url||url).pathname.split('/').pop()||'download')||'download';name=name.replace(/[^\w.\-()一-鿿]/g,'_').slice(-80)||'download';
  return {bytes,name,content_type:response.headers.get('content-type')||'',final_url:response.url,ms:Date.now()-started};
+}
+// Written after every item, so a job that hits its time limit still leaves what was probed so far.
+function writeSummary(){
+  fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify(summary,null,2));
+ const cell=s=>String(s??'').replace(/\|/g,'\\|').replace(/\n/g,' ').slice(0,220);
+ const rows=summary.items.map(x=>{const top=x.analysis?.detections?.[0]?.detections.slice(0,5).map(d=>`${d.class} ${d.score.toFixed(2)}`).join(', ');return `| ${x.index} | ${cell(x.url)} | ${cell(x.download_error||`${x.download.bytes} B · ${x.file.mime_given_to_page}`)} | ${cell(x.probe_error?`probe error: ${x.probe_error}`:x.analysis?.outcome?`${x.analysis.outcome}: ${x.analysis.message||x.analysis.open_message}`:'')} | ${cell(top||'')} | ${cell(x.parking?(x.parking.result||x.parking.status):'')} |`;});
+ fs.writeFileSync(path.join(out,'summary.md'),[`# EstateGuard probe · ${summary.started_at}`,'',summary.scope,'',`Detector ${detector} · rule ${rule} · parking ${parking} · viewport ${summary.settings.viewport} · ${summary.browser}`,'','| # | URL | File | 视频与图片分析 | Top detections | 车位图片测试 |','| --- | --- | --- | --- | --- | --- |',...rows,'',`Page errors: ${summary.page_errors.length} · console errors: ${summary.console_errors.length} · cross-origin requests: ${summary.external_requests.length}`,''].join('\n'));
 }
 (async()=>{
  if(!urls.length){console.error('PROBE_URLS is empty');process.exit(2);}
@@ -43,12 +50,16 @@ async function download(url){
  try{
   for(const [i,url] of urls.slice(0,MAX_URLS).entries()){
    const item={index:i+1,url};summary.items.push(item);console.log(`[${pad(i)}] ${url}`);
+   try{
    let file;
    try{file=await download(url);}catch(e){item.download_error=String(e.message||e);console.log('  download failed:',item.download_error);continue;}
    item.download={final_url:file.final_url,bytes:file.bytes.length,sha256:crypto.createHash('sha256').update(file.bytes).digest('hex'),content_type:file.content_type,ms:file.ms};
    const mimeType=mimeFor(file.content_type,file.name);item.file={name:file.name,mime_given_to_page:mimeType||'(none)'};
    // 视频与图片分析
    const a=item.analysis={};
+   // Clear the previous item's message so its refusal or completion cannot be read as this file's answer.
+   const clearMessage=()=>page.evaluate(()=>{const m=document.querySelector('#vision-message');m.textContent='';m.classList.remove('error');});
+   await clearMessage();
    await page.locator('#analysis-file').setInputFiles({name:file.name,mimeType,buffer:file.bytes});
    await page.waitForFunction(()=>{const m=document.querySelector('#vision-message');return m.textContent.startsWith('素材已就绪')||m.classList.contains('error');});
    a.open_message=await page.locator('#vision-message').textContent();
@@ -56,8 +67,8 @@ async function download(url){
    else{
     await page.locator('#vision-rule').selectOption(rule);
     if(rule!=='objects'){await page.locator('#vision-camera').fill('探针');await page.locator('#vision-zone').fill('探针区域');await page.locator('#vision-start').fill('2026-11-08T08:00');await page.locator('#vision-context-confirmed').check();a.context='probe placeholders: camera 探针, zone 探针区域, 2026-11-08 08:00, whole frame';}
-    await page.locator('#run-analysis').click();
-    await page.waitForFunction(()=>/^(分析完成|分析失败|分析已停止|模型加载已取消)/.test(document.querySelector('#vision-message').textContent),{},{timeout:600000});
+    await clearMessage();await page.locator('#run-analysis').click();
+    await page.waitForFunction(()=>/^(分析完成|分析失败|分析已停止|模型加载已取消)/.test(document.querySelector('#vision-message').textContent),{},{timeout:ITEM_TIMEOUT});
     a.message=await page.locator('#vision-message').textContent();a.outcome=a.message.startsWith('分析完成')?'completed':'failed';
     a.model=await page.locator('#model-name').textContent();a.backend=await page.locator('#model-backend').textContent();
     a.detector_help=await page.locator('#vision-detector-help').textContent();
@@ -80,19 +91,18 @@ async function download(url){
     // Clear the status first so two identical messages in a row are still seen as a new answer.
     await parkingPage.evaluate(()=>{document.getElementById('parking-upload-status').textContent='';});
     await parkingPage.locator('#parking-upload').setInputFiles({name:file.name,mimeType,buffer:file.bytes});
-    await parkingPage.waitForFunction(()=>{const s=document.getElementById('parking-upload-status').textContent;return s!==''&&!s.startsWith('正在')&&!document.getElementById('parking-upload').disabled;},{},{timeout:600000});
+    await parkingPage.waitForFunction(()=>{const s=document.getElementById('parking-upload-status').textContent;return s!==''&&!s.startsWith('正在')&&!document.getElementById('parking-upload').disabled;},{},{timeout:ITEM_TIMEOUT});
     pk.status=await parkingPage.locator('#parking-upload-status').textContent();
     pk.result=(await parkingPage.locator('#parking-upload-result').textContent()).includes(file.name)?await parkingPage.locator('#parking-upload-result').textContent():null;
     await parkingPage.locator('.parking-upload-panel').screenshot({path:path.join(out,`${pad(i)}-parking.png`)});
     console.log(`  parking: ${pk.status}`);
    }
+   }catch(e){item.probe_error=String(e.message||e);console.log('  probe error:',item.probe_error);await page.goto(`${base}/?detector=${detector}#analyze`).catch(()=>{});}
+   finally{writeSummary();}
   }
  }finally{
   await browser.close();summary.finished_at=new Date().toISOString();
-  fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify(summary,null,2));
-  const cell=s=>String(s??'').replace(/\|/g,'\\|').replace(/\n/g,' ').slice(0,220);
-  const rows=summary.items.map(x=>{const top=x.analysis?.detections?.[0]?.detections.slice(0,5).map(d=>`${d.class} ${d.score.toFixed(2)}`).join(', ');return `| ${x.index} | ${cell(x.url)} | ${cell(x.download_error||`${x.download.bytes} B · ${x.file.mime_given_to_page}`)} | ${cell(x.analysis?.outcome?`${x.analysis.outcome}: ${x.analysis.message||x.analysis.open_message}`:'')} | ${cell(top||'')} | ${cell(x.parking?(x.parking.result||x.parking.status):'')} |`;});
-  fs.writeFileSync(path.join(out,'summary.md'),[`# EstateGuard probe · ${summary.started_at}`,'',summary.scope,'',`Detector ${detector} · rule ${rule} · parking ${parking} · viewport ${summary.settings.viewport} · ${summary.browser}`,'','| # | URL | File | 视频与图片分析 | Top detections | 车位图片测试 |','| --- | --- | --- | --- | --- | --- |',...rows,'',`Page errors: ${summary.page_errors.length} · console errors: ${summary.console_errors.length} · cross-origin requests: ${summary.external_requests.length}`,''].join('\n'));
+  writeSummary();
  }
  console.log(`probe finished: ${summary.items.length} item(s); page errors ${summary.page_errors.length}; external requests ${summary.external_requests.length}`);
 })().catch(e=>{console.error(e);process.exit(1);});

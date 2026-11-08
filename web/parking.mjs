@@ -298,7 +298,9 @@ importer.addEventListener('change',async e=>{
   for(const key of Object.keys(reviews))delete reviews[key];Object.assign(reviews,next);drafts.clear();
   for(const key of Object.keys(driftLog))delete driftLog[key];Object.assign(driftLog,nextDrift);
   if(handover){
-   const {view,session}=handover;modelChosenByUser=true;current=view.model_key;predictions=sets[current];$('parking-model-choice').value=current;
+   const {view,session}=handover;modelChosenByUser=true;current=view.model_key;
+   // A file saved with DINOv2 on another browser opens with MobileNetV2 here; reviews do not depend on the model.
+   if(current==='dinov2'&&!ortSupported){current='mobilenet';handover.notes.push('交接文件使用 DINOv2，此浏览器不支持 WebAssembly SIMD，已改用 MobileNetV2 迁移头；人工结论不受影响，请重新分析。');}predictions=sets[current];$('parking-model-choice').value=current;
    $('parking-session').value=session;frames=allFrames.filter(f=>f.session===session);frameIndex=frames.findIndex(f=>f.id===view.frame_id);
    $('parking-frame').max=String(Math.max(0,frames.length-1));selected=view.sample_id;$('parking-filter').value=view.filter;$('parking-show-truth').checked=view.show_truth;
   }
