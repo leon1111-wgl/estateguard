@@ -1,7 +1,7 @@
 """Re-calibration after a spot-check revocation (protocol appendix 7 / 7.3): the page helpers, their Python mirror and
 the appendix 7 replay must re-select only the revoked side, from that side's own revocation date.
 Regenerate the shared JS/Python fixture with: python tests/training/test_recalibration.py --write"""
-import csv,gzip,hashlib,io,json,sys,unittest
+import csv,gzip,hashlib,io,json,math,sys,unittest
 from pathlib import Path
 import numpy as np
 ROOT=Path(__file__).resolve().parents[2]
@@ -50,7 +50,25 @@ def build_fixture():
 
 class RecalibrationTests(unittest.TestCase):
     def test_fixture_is_current(self):
-        self.assertEqual(json.loads(FIXTURE.read_text()),json.loads(json.dumps(build_fixture())))
+        # Structure, counts, ids, dates and booleans must match exactly. Floats may differ in the last bits between
+        # platforms (the fixture was written on macOS; CI runs Ubuntu), so they are compared to 1e-12 relative.
+        def same(a,b,path='$'):
+            if isinstance(a,float) or isinstance(b,float):
+                self.assertFalse(isinstance(a,bool) or isinstance(b,bool),path)
+                self.assertTrue(math.isclose(a,b,rel_tol=1e-12,abs_tol=1e-15),f'{path}: {a!r} != {b!r}');return
+            self.assertIs(type(a),type(b),path)
+            if isinstance(a,dict):
+                self.assertEqual(list(a),list(b),path)
+                for k in a:same(a[k],b[k],f'{path}.{k}')
+            elif isinstance(a,list):
+                self.assertEqual(len(a),len(b),path)
+                for i,(x,y) in enumerate(zip(a,b)):same(x,y,f'{path}[{i}]')
+            else:self.assertEqual(a,b,path)
+        same(json.loads(FIXTURE.read_text()),json.loads(json.dumps(build_fixture())))
+        # The tolerance is not a loophole: a changed count or threshold still fails.
+        broken=json.loads(json.dumps(build_fixture()))
+        broken['source']=str(broken.get('source'))+'x' if 'source' in broken else 'x'
+        with self.assertRaises(AssertionError):same(json.loads(FIXTURE.read_text()),broken)
 
     def test_only_listed_sides_and_own_dates(self):
         items=ext_items();target=dict(alpha_free=.1,alpha_busy=.2)
