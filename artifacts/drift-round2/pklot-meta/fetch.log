@@ -1,0 +1,28 @@
+HEAD 4898276304 "574da3cd-123f5c3d0" Tue, 31 May 2016 14:46:37 GMT
+0.00 / 4.90 GB, 0.00 MB/s
+0.20 / 4.90 GB, 3.74 MB/s
+0.40 / 4.90 GB, 3.76 MB/s
+0.60 / 4.90 GB, 3.00 MB/s
+0.80 / 4.90 GB, 2.80 MB/s
+1.00 / 4.90 GB, 2.68 MB/s
+1.20 / 4.90 GB, 2.67 MB/s
+1.40 / 4.90 GB, 2.72 MB/s
+1.60 / 4.90 GB, 2.80 MB/s
+1.80 / 4.90 GB, 2.90 MB/s
+2.00 / 4.90 GB, 2.94 MB/s
+2.20 / 4.90 GB, 2.75 MB/s
+2.40 / 4.90 GB, 2.75 MB/s
+2.60 / 4.90 GB, 2.81 MB/s
+2.80 / 4.90 GB, 2.84 MB/s
+3.00 / 4.90 GB, 2.81 MB/s
+3.20 / 4.90 GB, 2.81 MB/s
+3.40 / 4.90 GB, 2.87 MB/s
+3.60 / 4.90 GB, 2.92 MB/s
+3.80 / 4.90 GB, 2.98 MB/s
+4.00 / 4.90 GB, 3.04 MB/s
+4.20 / 4.90 GB, 3.03 MB/s
+4.40 / 4.90 GB, 3.04 MB/s
+4.60 / 4.90 GB, 3.09 MB/s
+4.80 / 4.90 GB, 3.12 MB/s
+read 4898276304 bytes, sha256 e89bbc1dc735298c478688d50c7a682fb3b0076a87b6634923132709f2d2fa9b
+{"url": "https://www.inf.ufpr.br/vri/databases/PKLot.tar.gz", "bytes": 4898276304, "sha256": "e89bbc1dc735298c478688d50c7a682fb3b0076a87b6634923132709f2d2fa9b", "etag": "\"574da3cd-123f5c3d0\"", "last_modified": "Tue, 31 May 2016 14:46:37 GMT", "fetched_at": "2026-10-20T18:05:22+0800", "counts": {"segmented": 695851, "xml": 12416, "full_image": 12417, "non_file": 590}, "lots_seen": {"segmented/PUC": 424223, "segmented/UFPR05": 165785, "segmented/UFPR04": 105843, "xml/UFPR04": 3791, "xml/PUCPR": 4473, "xml/UFPR05": 4152}, "snapshot_source": "xml", "other_member_count": 3, "duplicate_patch_keys": 78, "snapshots_with_xml": {"PUC": 4473, "UFPR04": 3791, "UFPR05": 4152}, "snapshots_with_patches_but_no_xml": 92, "xml_snapshots_without_patches": 0, "kept_snapshots": {"PUC": 797, "UFPR04": 666, "UFPR05": 723}, "kept_patches": {"PUC": 74529, "UFPR04": 18597, "UFPR05": 28841}, "kept_patch_slots_excluded_as_duplicates": 16, "multi_weather_snapshots": 0}

@@ -1,0 +1,17 @@
+worker 7: 1/1573
+worker 6: 1/1573
+worker 1: 1/1573
+worker 0: 1/1573
+worker 5: 1/1573
+worker 4: 1/1573
+worker 2: 1/1573
+worker 3: 1/1573
+worker 1: 1001/1573
+worker 2: 1001/1573
+worker 5: 1001/1573
+worker 6: 1001/1573
+worker 0: 1001/1573
+worker 7: 1001/1573
+worker 4: 1001/1573
+worker 3: 1001/1573
+{"out":"/Users/wangmuchen/Desktop/github/estateguard/artifacts/parking-transfer/cnrpark-dinov2","encoder":"dinov2","count":12584,"features_sha256":"e5fda631be8cbb0030944d8c3f3ad6576920770571913d2267d3099a98563d41","per_patch_ms_median":112,"backend":"WASM · 1 线程","wall_seconds":186.626}

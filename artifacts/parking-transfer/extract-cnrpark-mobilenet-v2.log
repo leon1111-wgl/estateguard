@@ -1,0 +1,14 @@
+worker 0: 1/12584
+worker 0: 1001/12584
+worker 0: 2001/12584
+worker 0: 3001/12584
+worker 0: 4001/12584
+worker 0: 5001/12584
+worker 0: 6001/12584
+worker 0: 7001/12584
+worker 0: 8001/12584
+worker 0: 9001/12584
+worker 0: 10001/12584
+worker 0: 11001/12584
+worker 0: 12001/12584
+{"out":"/Users/wangmuchen/Desktop/github/estateguard/artifacts/parking-transfer/cnrpark-mobilenet-v2","encoder":"mobilenet","count":12584,"features_sha256":"021af642b603cf86bd56d7b1d3237fd952794494984693c1d806009da41e6039","per_patch_ms_median":35,"backend":"webgl","wall_seconds":473.715}
