@@ -2,6 +2,7 @@
 Mirrors web/parking-transfer.mjs; both must stay numerically aligned (see tests).
 """
 import math
+import re
 import numpy as np
 
 FREE_GRID=[.005,.01,.02,.03,.05,.075,.1,.15,.2,.25,.3,.35,.4,.45,.5]
@@ -184,4 +185,59 @@ def audit_monitor(events,alpha_free,alpha_busy,delta=AUDIT['delta'],rule=AUDIT['
         out[side]=dict(alpha=alpha,units=len(units),error_units=len(bad),pending=pending,
             statistic=None if alpha is None else audit_evidence(len(bad),len(units),alpha,delta,rule)[0],
             limit=None if alpha is None else math.log(2/delta) if rule=='sprt' else alpha,revoked=revoked)
+    return out
+
+
+# Re-calibration after a revocation (protocol appendix 7 / 7.3). Mirrors web/parking-transfer.mjs.
+def later_date(a,b):
+    if not a:return b or None
+    if not b:return a
+    return max(a,b)
+
+
+def recalibration_sides(revoked,routing=None):
+    """Sides that recalibration re-selects. Once a side is revoked, a live side is kept and only revoked sides and sides
+    that never passed are re-tested; without a revocation, both sides."""
+    revoked=revoked or {};routing=routing or {}
+    if not any(revoked.get(s) is not None for s in ('free','busy')):return ['free','busy']
+    return [s for s in ('free','busy') if revoked.get(s) is not None or routing.get(f't_{s}') is None]
+
+
+def reselect_sides(items,sides,evidence_from=None,alpha_free=ALPHA_FREE,alpha_busy=ALPHA_BUSY,delta=DELTA,grid=FREE_GRID):
+    """Re-selects only the listed sides. Side s uses the human conclusions dated on or after its own evidence date (None:
+    all), needs at least 2 dates among them, and takes t_s from select_routing on that set; the other side is never
+    re-tested. items: dicts with id, score, label, unit, date. evidence: ids whose score lies in that side's candidate
+    range (free <= the largest grid value, busy >= 1 minus it)."""
+    edge=max(grid);busy_edge=round(1-edge,6);out={}
+    for side in sides:
+        if side not in ('free','busy'):raise ValueError(f'unknown side {side}')
+        f=(evidence_from or {}).get(side);use=[x for x in items if f is None or x['date']>=f];dates=len({x['date'] for x in use})
+        r=select_routing([x['score'] for x in use],[x['label'] for x in use],alpha_free=alpha_free,alpha_busy=alpha_busy,delta=delta,grid=grid,units=[x['unit'] for x in use]) if dates>=2 else None
+        in_range=(lambda x:x['score']<=edge) if side=='free' else (lambda x:x['score']>=busy_edge)
+        out[side]=dict(threshold=r[f't_{side}'] if r else None,from_date=f,dates=dates,calibration_n=len(use),calibration_units=len({x['unit'] for x in use}),
+            per_test_level=delta/(2*len(grid)),evidence=[x['id'] for x in use if in_range(x)],tests=[t for t in r['tests'] if t['side']==side] if r else [])
+    return out
+
+
+def drift_side_dates(log):
+    """Per-side evidence dates of one exported camera drift record. Older files carry one camera-level evidence_from:
+    each side then takes its own latest revocation date from the history, and only a record without history applies
+    the camera date to both sides."""
+    day=re.compile(r'^\d{8}$');bad=ValueError('invalid drift record')
+    if not isinstance(log,dict) or not isinstance(log.get('history'),list):raise bad
+    out=dict(free=None,busy=None)
+    if 'evidence_from_by_side' in log:
+        by=log['evidence_from_by_side']
+        if not isinstance(by,dict):raise bad
+        for s in out:
+            v=by.get(s)
+            if v is not None and not (isinstance(v,str) and day.match(v)):raise bad
+            out[s]=v
+        if not out['free'] and not out['busy']:raise bad
+        return out
+    if not (isinstance(log.get('evidence_from'),str) and day.match(log['evidence_from'])):raise bad
+    for h in log['history']:
+        d=h.get('source_time','')[:8] if isinstance(h,dict) and isinstance(h.get('source_time'),str) else ''
+        if isinstance(h,dict) and h.get('side') in out and day.match(d):out[h['side']]=later_date(out[h['side']],d)
+    if not out['free'] and not out['busy']:out['free']=out['busy']=log['evidence_from']
     return out
