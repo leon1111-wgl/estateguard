@@ -42,3 +42,6 @@ export function unsupportedHint(type,name=''){
  if(type==='video/quicktime'||/\.mov$/i.test(name))return '这是 MOV 视频（iPhone 默认格式）。请导出或转换为 MP4（H.264）后再试；单个片段最多分析 20 秒。';
  return null;
 }
+/** A warning for frames more than 3:1 long: the detectors resize to a square input, so objects in elongated frames are
+ * squashed and may be missed. Empty for ordinary frames. It stays on screen after the analysis, not only when the file opens. */
+export function aspectNote(width,height){const long=Math.max(width,height),short=Math.min(width,height);if(!(short>0))return '';const ratio=long/short;return ratio>3?`画面长宽比约 ${ratio.toFixed(1)}:1，检测器会把画面缩放成方形输入（D-FINE-N 为 640×640），细长画面里的物体会变形，可能漏检。`:'';}

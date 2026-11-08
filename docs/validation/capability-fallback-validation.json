@@ -1,5 +1,5 @@
 {
-  "checked_at": "2026-11-08T07:51:04.946Z",
+  "checked_at": "2026-11-08T12:01:49.878Z",
   "base": "http://127.0.0.1:8766",
   "checks": [
     {
@@ -88,7 +88,16 @@
       "name": "an extreme panorama is analysed with an aspect-ratio warning",
       "passed": true,
       "evidence": {
-        "message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。画面长宽比约 6.0:1，检测器会把画面缩放成方形输入（D-FINE-N 为 640×640），细长画面里的物体会变形，可能漏检。"
+        "message": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。画面长宽比约 6.0:1，检测器会把画面缩放成方形输入（D-FINE-N 为 640×640），细长画面里的物体会变形，可能漏检。",
+        "after": "分析完成：1 帧、0 条匿名轨迹、0 个待核实候选。画面长宽比约 6.0:1，检测器会把画面缩放成方形输入（D-FINE-N 为 640×640），细长画面里的物体会变形，可能漏检。"
+      }
+    },
+    {
+      "name": "the aspect-ratio warning does not carry over to an ordinary photo",
+      "passed": true,
+      "evidence": {
+        "opened": "素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。",
+        "after": "分析完成：1 帧、1 条匿名轨迹、0 个待核实候选。"
       }
     },
     {

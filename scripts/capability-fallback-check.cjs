@@ -84,7 +84,12 @@ const noSimd=()=>{const probe=[0,97,115,109,1,0,0,0,1,5,1,96,0,1,123,3,2,1,0,10,
    await q.goto(base+'/?detector=ssdlite#analyze');
    await q.locator('#analysis-file').setInputFiles({name:'panorama.jpg',mimeType:'image/jpeg',buffer:await drawn(3600,600)});await opened(q);
    ev.message=await message(q);assert.match(ev.message,/长宽比约 6\.0:1/);
-   await analysed(q);assert.match(await message(q),/^分析完成/);
+   await analysed(q);ev.after=await message(q);assert.match(ev.after,/^分析完成/);assert.match(ev.after,/长宽比约 6\.0:1/);
+  });
+  await test('the aspect-ratio warning does not carry over to an ordinary photo',async ev=>{
+   await q.locator('#analysis-file').setInputFiles({name:'bus.jpg',mimeType:'image/jpeg',buffer:bus});await opened(q);
+   ev.opened=await message(q);assert.doesNotMatch(ev.opened,/长宽比/);
+   await analysed(q);ev.after=await message(q);assert.match(ev.after,/^分析完成/);assert.doesNotMatch(ev.after,/长宽比/);
   });
   await test('a very tall image is capped at 1920 px frame height',async ev=>{
    await q.locator('#analysis-file').setInputFiles({name:'tall.jpg',mimeType:'image/jpeg',buffer:await drawn(400,8000)});await opened(q);
