@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {sniffType,effectiveType,unsupportedHint,wasmSimdSupported} from '../web/capabilities.mjs';
+import {sniffType,effectiveType,unsupportedHint,wasmSimdSupported,aspectNote} from '../web/capabilities.mjs';
 
 const bytes=(...parts)=>{const out=[];for(const p of parts)typeof p==='string'?out.push(...[...p].map(c=>c.charCodeAt(0))):out.push(...p);while(out.length<16)out.push(0);return new Uint8Array(out);};
 const box=brand=>bytes([0,0,0,24],'ftyp',brand);
@@ -54,4 +54,13 @@ test('the SIMD probe is a valid SIMD module and the check fails closed',()=>{
  assert.equal(WebAssembly.validate(probe),true);
  const broken=probe.slice();broken[25]=1;broken[26]=1;broken[27]=1;broken[28]=1;
  assert.equal(WebAssembly.validate(broken),false);
+});
+test('frames more than 3:1 long get a square-input warning, in either orientation',()=>{
+ assert.match(aspectNote(3600,600),/^画面长宽比约 6\.0:1，/);
+ assert.match(aspectNote(400,8000),/长宽比约 20\.0:1/);
+ assert.equal(aspectNote(1920,1080),'');
+ assert.equal(aspectNote(3000,1000),'');
+ assert.match(aspectNote(3001,1000),/3\.0:1/);
+ assert.equal(aspectNote(0,600),'');
+ assert.equal(aspectNote(NaN,600),'');
 });

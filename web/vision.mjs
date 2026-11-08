@@ -1,7 +1,7 @@
 import {trackDetections,makeCandidates,VISION_RULE_SETTINGS} from './vision-rules.mjs';
 import {createModelAssetLoader,registerModelRoute} from './model-assets.mjs';
 import {loadDfineDetector} from './detector-dfine.mjs';
-import {wasmSimdSupported,ORT_UNSUPPORTED,effectiveType,unsupportedHint} from './capabilities.mjs';
+import {wasmSimdSupported,ORT_UNSUPPORTED,effectiveType,unsupportedHint,aspectNote} from './capabilities.mjs';
 import {COCO_NAMES_ZH} from './coco-names.mjs';
 import {parseRecordingTime,confirmContext,isContextConfirmed,validateContext,reusableScene,restoreScene} from './media-context.mjs';
 const $=id=>document.getElementById(id);
@@ -16,7 +16,7 @@ if(!ortSupported){const option=$('vision-detector').querySelector('option[value=
 const defaultScores={ssdlite:.5,dfine:.5},backendLabels={};let detectorEvaluation=null,detectorTouched=false;
 const detectorKey=()=>DETECTORS[$('vision-detector').value]&&($('vision-detector').value!=='dfine'||ortSupported)?$('vision-detector').value:'ssdlite';
 const names=COCO_NAMES_ZH;
-const models={},modelPromises={},loadStats={};let modelController=null,modelLoadStats=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0;
+const models={},modelPromises={},loadStats={};let modelController=null,modelLoadStats=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0,aspectWarning='';
 let mediaRevision=0,geometry=null,contextConfirmation=null,savedScene=null,savedSceneRevision=0,contextHint='';
 // Frames are at most 960 px wide (unchanged) and, new, at most 1920 px tall: an extreme portrait image would otherwise
 // exceed the canvas area some phones allow. Ordinary photos and 9:16 screenshots are not affected.
@@ -147,8 +147,8 @@ async function openFile(file,ticket=++sourceGeneration){if(busy){notice('分析�
  frame.width=prepared.width;frame.height=prepared.height;frameCtx.putImageData(preparedFrame,0,0);canvas.width=prepared.width;canvas.height=prepared.height;
  const preview=$('source-video');preview.pause();preview.hidden=!isVideo;if(isVideo){preview.src=sourceURL;preview.load();}else{preview.removeAttribute('src');preview.load();}
  paint([]);describeFrame();$('analysis-empty').hidden=true;$('analysis-stage').hidden=false;setMediaLoading(false);
- const ratio=Math.max(nextGeometry.width,nextGeometry.height)/Math.min(nextGeometry.width,nextGeometry.height);
- notice(`素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。${ratio>3?`画面长宽比约 ${ratio.toFixed(1)}:1，检测器会把画面缩放成方形输入（D-FINE-N 为 640×640），细长画面里的物体会变形，可能漏检。`:''}`);return true;
+ aspectWarning=aspectNote(nextGeometry.width,nextGeometry.height);
+ notice(`素材已就绪。通用物体检测可直接开始；生成候选前请填写时间并核对本素材现场设置。${aspectWarning}`);return true;
  }catch(error){releaseSource(nextSource,nextURL);if(ticket===sourceGeneration){setMediaLoading(false);notice(`${error.message}${sourceFile?(report?' 当前仍保留此前素材、设置与已完成报告。':' 当前仍保留此前素材与设置。'):''}`,true);}return false;}}
 $('analysis-file').addEventListener('change',e=>{const file=e.target.files[0];e.target.value='';openFile(file);});
 $('sample-image').addEventListener('click',async()=>{const ticket=++sourceGeneration;setMediaLoading(true);try{const r=await fetch('samples/bus.jpg');if(!r.ok)throw new Error('示例图片加载失败');const file=new File([await r.blob()],'公开示例-校车.jpg',{type:'image/jpeg'});if(ticket!==sourceGeneration)return;if(await openFile(file,ticket))notice('公开示例：Raysonho，CC0，2011。具体拍摄时间未知，可直接做通用物体检测；规则演示需自行填写测试时间，不是小区违规证据。');}catch(e){if(ticket===sourceGeneration){setMediaLoading(false);notice(e.message,true);}}});
@@ -188,7 +188,7 @@ $('analysis-form').addEventListener('submit',async event=>{event.preventDefault(
  for(let i=0;i<times.length;i++){if(stopped)break;attemptedTime=times[i];phase='frame_decode';notice(`正在推理 ${i+1} / ${times.length} 帧 · ${times[i].toFixed(1)} 秒`);if(isVideo){source.pause();await seek(times[i]);}capture();phase='inference';const t=performance.now();const predictions=await detector.detect(frame,params.max_detections,params.minimum_score);const elapsed=performance.now()-t;
  const detections=predictions.map(p=>({class:p.class,score:p.score,bbox:[Math.max(0,p.bbox[0]/frame.width),Math.max(0,p.bbox[1]/frame.height),p.bbox[2]/frame.width,p.bbox[3]/frame.height]}));frames.push({time:times[i],detections});durations.push(elapsed);lastBoxes=detections;completedPreview={snapshot:frameSnapshot,time:snapshotTime,boxes:detections};paint();await new Promise(resolve=>requestAnimationFrame(resolve));}
  attemptedTime=null;phase='tracking';tracks=trackDetections(frames);phase='rules';candidates=stopped?[]:makeCandidates(tracks,params);
- publishReport(stopped?'stopped':'completed');notice(stopped?'分析已停止。可导出已完成帧，未完成任务不生成候选。':`分析完成：${frames.length} 帧、${report.tracks.length} 条匿名轨迹、${report.candidates.length} 个待核实候选。`);
+ publishReport(stopped?'stopped':'completed');notice((stopped?'分析已停止。可导出已完成帧，未完成任务不生成候选。':`分析完成：${frames.length} 帧、${report.tracks.length} 条匿名轨迹、${report.candidates.length} 个待核实候选。`)+aspectWarning);
  }catch(error){
   if(frames.length){
    const failure={stage:phase,message:String(error.message||error),sample_time_seconds:attemptedTime};candidates=[];
