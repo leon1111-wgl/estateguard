@@ -117,6 +117,10 @@ const step=(name,value)=>{report.steps[name]=value;console.log(name,JSON.stringi
   const file6=path.join(out,'parking-transfer-audit-import.json');fs.writeFileSync(file6,JSON.stringify(doc));await page.locator('#parking-import').setInputFiles(file6);
   await page.waitForFunction(()=>/人工复核已恢复/.test(document.querySelector('#parking-review-message').textContent));
   await page.locator('#parking-risk-target').selectOption('0.05');await page.locator('#parking-calibrate').click();assert.match(await page.locator('#parking-model-message').textContent(),/通过检验.*抽检/);
+  // MobileNetV2 is calibrated on the same conclusions; a DINOv2 revocation must leave its live busy side alone (appendix 7.3).
+  await page.locator('#parking-model-choice').selectOption('mobilenet');for(let f=0;f<3;f++){await gotoFrame(f);await run();}
+  await page.locator('#parking-calibrate').click();const mnBefore=(await exportData()).onsite.mobilenet.C6.routing;assert.notEqual(mnBefore.t_busy,null,'MobileNetV2 busy side should pass on C6');
+  await page.locator('#parking-model-choice').selectOption('dinov2');
   let d6=await exportData(),r6=d6.onsite.dinov2.C6.routing;assert.notEqual(r6.t_busy,null,'C6 busy side should pass on the reviewed slot-days');
   const sideOf=r=>r6.t_free!=null&&r.calibrated_occupied_score<=r6.t_free?'free':r6.t_busy!=null&&r.calibrated_occupied_score>=r6.t_busy?'busy':null,cmp=(a,b)=>a<b?-1:a>b?1:0;
   const events=[...c6.values()].filter(r=>audited.has(r.id)&&sideOf(r)).sort((a,b)=>cmp(a.source_time,b.source_time)||cmp(a.slot,b.slot)),busyChecks=events.filter(r=>sideOf(r)==='busy');
@@ -155,7 +159,18 @@ const step=(name,value)=>{report.steps[name]=value;console.log(name,JSON.stringi
   }
   d6=await exportData();r6=d6.onsite.dinov2.C6.routing;const rev=r6.audit.revoked.busy;
   assert.equal(rev.error_units,6);assert.equal(rev.units,6);assert.equal(r6.audit.busy.units,6);assert.equal(r6.audit.busy.checked,busyChecks.length);assert.equal(r6.audit.busy.revoked_at,rev.source_time);assert.equal(rev.sample_id,busyChecks[5].id);assert.deepEqual(rev.checked.map(c=>c.id),busyChecks.map(r=>r.id));assert.equal(rev.checked.filter(c=>c.wrong===true).length,6);
-  const drift=d6.drift.C6;assert.equal(drift.evidence_from,busyChecks[5].source_time.slice(0,8));assert.equal(drift.history.length,1);assert.equal(drift.history[0].model,'dinov2');assert.equal(drift.history[0].side,'busy');assert.equal(drift.history[0].threshold,r6.t_busy);
+  // The revocation date is per side (appendix 7.3); the camera-level date stays for older pages.
+  const drift=d6.drift.C6,revDate=busyChecks[5].source_time.slice(0,8);assert.equal(drift.evidence_from,revDate);assert.deepEqual(drift.evidence_from_by_side,{free:null,busy:revDate});
+  assert.equal(drift.history.length,1);assert.equal(drift.history[0].model,'dinov2');assert.equal(drift.history[0].side,'busy');assert.equal(drift.history[0].threshold,r6.t_busy);
+  // MobileNetV2's busy side was certified before and never revoked: its monitor keeps every earlier spot check, which
+  // stays blind and routed to a person (the camera-level date used to turn earlier checks into automatic decisions).
+  const mn6=d6.onsite.mobilenet.C6.routing;assert.equal(mn6.t_busy,mnBefore.t_busy);assert.equal(mn6.audit.revoked.busy,null);
+  assert.deepEqual(mn6.audit.sample_ids,mnBefore.audit.sample_ids);assert.equal(mn6.audit.busy.units,mnBefore.audit.busy.units);
+  const mnEarly=mnBefore.audit.sample_ids.filter(id=>c6.get(id).source_time.slice(0,8)<revDate);assert.ok(mnEarly.length>0,'MobileNetV2 needs a spot check dated before the revocation');
+  await page.locator('#parking-model-choice').selectOption('mobilenet');await gotoFrame(c6dates.indexOf(c6.get(mnEarly[0]).source_time.slice(0,8)));await page.locator('#parking-filter').selectOption('audit');
+  const mnTiles=await page.locator('.parking-tile').evaluateAll(t=>t.map(x=>[x.dataset.sampleId,x.querySelector('.badge').textContent]));
+  assert.deepEqual(mnTiles.map(x=>x[0]).sort(),mnEarly.filter(id=>sameDay(c6.get(id),c6.get(mnEarly[0]))).sort());assert.ok(mnTiles.every(x=>x[1]==='抽检'));
+  await page.locator('#parking-filter').selectOption('all');await page.locator('#parking-model-choice').selectOption('dinov2');
   assert.ok(c6rows(d6).every(r=>r.review_state!=='busy'),'a revoked side no longer auto-decides');
   const revokedStatus=await page.locator('#parking-onsite-status').textContent();assert.match(revokedStatus,/≥ 0\.85 自动判占用（已被抽检撤销，改送人工）/);assert.match(revokedStatus,/占用侧由 .* 的抽检触发撤销：抽中 6 个车位·日中 6 个出错/);
   // After revocation those slots are ordinary review items, not spot checks; the detail panel says why for every slot.
@@ -163,15 +178,30 @@ const step=(name,value)=>{report.steps[name]=value;console.log(name,JSON.stringi
   await openCheck(busyChecks[0],'all');assert.match(await page.locator('#parking-detail').textContent(),/占用侧阈值已被抽检撤销 · 送人工/);
   const low=[...c6.values()].find(r=>r.source_time.slice(0,8)===busyChecks[0].source_time.slice(0,8)&&r.calibrated_occupied_score<r6.t_busy);
   if(low){await openCheck(low,'all');assert.match(await page.locator('#parking-detail').textContent(),/阈值已被抽检撤销 · 全部送人工/);}
+  // 重新校准 re-tests the revoked busy side from the revocation date on, and the free side that never passed (its region
+  // always went to people). Two dates of slot·days are too few here, so both fail and busy stays revoked: the record,
+  // its spot checks and the status line keep the revocation.
+  await page.locator('#parking-calibrate').click();const recalMessage=await page.locator('#parking-model-message').textContent();
+  assert.match(recalMessage,/重新检验尚未通过的空闲侧未通过：空闲侧候选阈值最多覆盖 \d+ 个车位·日（其中 \d+ 个出错），证据不足以达到目标，该侧继续送人工。/);
+  assert.match(recalMessage,/重新检验被撤销的占用侧未通过：2015\/11\/16 及之后，占用侧候选阈值最多覆盖 \d+ 个车位·日（其中 \d+ 个出错），证据不足以达到目标，该侧继续送人工。继续复核 2015\/11\/16 及之后送人工的快照，结论覆盖至少 2 个日期、该侧零错误时约 61 个车位·日后可再次重新校准。/);
+  const failed=(await exportData()).onsite.dinov2.C6.routing;assert.equal(failed.t_busy,r6.t_busy);assert.equal(failed.audit.revoked.busy.sample_id,rev.sample_id);assert.equal(failed.audit.busy.revoked_at,rev.source_time);
+  assert.equal(failed.recalibration.busy.from,revDate);assert.match(failed.recalibration.busy.reason,/证据不足以达到目标/);assert.equal(failed.recalibration.free.from,null);assert.equal(failed.t_free,null);
+  assert.deepEqual(failed.sides.busy.sample_ids,r6.sides.busy.sample_ids);assert.deepEqual(failed.sample_ids,r6.sample_ids);assert.ok(c6rows(await exportData()).every(r=>r.review_state!=='busy'));
+  const failedStatus=await page.locator('#parking-onsite-status').textContent();
+  assert.match(failedStatus,/占用侧由 .* 的抽检触发撤销：抽中 6 个车位·日中 6 个出错，证据值 64\.00 ≥ 40；最近一次重新校准未通过：2015\/11\/16 及之后，占用侧候选阈值最多覆盖 \d+ 个车位·日（其中 \d+ 个出错），证据不足以达到目标，该侧继续送人工/);
+  assert.match(failedStatus,/空闲侧未通过（最近一次重新校准：空闲侧候选阈值最多覆盖 \d+ 个车位·日（其中 \d+ 个出错），证据不足以达到目标）/);
+  // This model's revocation is already on the status line, so the drift note only states the per-side restriction.
+  assert.match(failedStatus,/本相机曾有阈值被抽检撤销，任一模型校准时占用侧只用 2015\/11\/16 及之后的人工结论（当前 79 条），空闲侧不受限制（\d+ 条）。/);
   // A second reviewer corrects all six conclusions: the revocation is sticky and stale evidence cannot bring it back.
   for(let i=0;i<6;i++)await saveAudit(busyChecks[i],'busy','验收脚本：更正抽检结论','all');
   assert.ok((await exportData()).onsite.dinov2.C6.routing.audit.revoked.busy,'correcting checks does not restore the threshold');
   await page.locator('#parking-risk-target').selectOption('0.02');await page.locator('#parking-risk-target').selectOption('0.05');
   await page.locator('#parking-calibrate').click();const after=await exportData(),recal=after.onsite.dinov2.C6.routing;
-  assert.equal(recal.t_busy,null);assert.equal(after.drift.C6.evidence_from,rev.source_time.slice(0,8));assert.equal(after.drift.C6.history.length,1);
-  const staleStatus=await page.locator('#parking-onsite-status').textContent();assert.match(staleStatus,/曾有阈值被抽检撤销（最近：DINOv2-small 线性探针的占用侧 ≥ 0\.85，.*抽中 6 个车位·日中 6 个出错），任一模型的校准都只用 .* 及之后的人工结论/);
-  // The restriction is about the camera, not one model.
-  await page.locator('#parking-model-choice').selectOption('mobilenet');assert.match(await page.locator('#parking-onsite-status').textContent(),/任一模型的校准都只用/);
+  assert.equal(recal.t_busy,null);assert.equal(after.drift.C6.evidence_from,rev.source_time.slice(0,8));assert.deepEqual(after.drift.C6.evidence_from_by_side,{free:null,busy:revDate});assert.equal(after.drift.C6.history.length,1);
+  assert.equal(recal.sides.busy.from,revDate);assert.equal(recal.sides.free.from,null);
+  const staleStatus=await page.locator('#parking-onsite-status').textContent();assert.match(staleStatus,/曾有阈值被抽检撤销（最近：DINOv2-small 线性探针的占用侧 ≥ 0\.85，.*抽中 6 个车位·日中 6 个出错），任一模型校准时占用侧只用 .* 及之后的人工结论（当前 \d+ 条），空闲侧不受限制（\d+ 条）/);
+  // The restriction is about the camera's side, not one model.
+  await page.locator('#parking-model-choice').selectOption('mobilenet');assert.match(await page.locator('#parking-onsite-status').textContent(),/任一模型校准时占用侧只用/);
   // The spot-check filter is reset when a model without spot checks is chosen.
   await page.locator('#parking-model-choice').selectOption('dinov2');await page.locator('#parking-filter').selectOption('audit');await page.locator('#parking-model-choice').selectOption('mlp32');
   assert.equal(await page.locator('#parking-filter').inputValue(),'all');assert.equal(await page.locator('#parking-filter option[value="audit"]').evaluate(o=>o.hidden),true);await page.locator('#parking-model-choice').selectOption('dinov2');
@@ -184,13 +214,20 @@ const step=(name,value)=>{report.steps[name]=value;console.log(name,JSON.stringi
   const next=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});next.setDefaultTimeout(180000);next.on('pageerror',e=>errors.push(e.message));next.on('dialog',d=>d.accept());
   await next.goto(base+'/#parking');await next.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===53);await next.locator('#parking-session').selectOption('C6-ext');await next.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===44);
   for(let f=0;f<3;f++){await next.locator('#parking-frame').fill(String(f));await next.locator('#parking-frame').dispatchEvent('input');await run(next);}
+  const nextExport=async(target=next)=>{const [d]=await Promise.all([target.waitForEvent('download'),target.locator('#parking-export').click()]);return JSON.parse(fs.readFileSync(await d.path(),'utf8'));};
   await next.locator('#parking-import').setInputFiles(handover);await next.waitForFunction(()=>/人工复核已恢复/.test(document.querySelector('#parking-review-message').textContent));
   assert.match(await next.locator('#parking-review-message').textContent(),/已读入 1 个摄像头的抽检撤销记录/);
   await next.locator('#parking-risk-target').selectOption('0.05');await next.locator('#parking-calibrate').click();
-  const [nd]=await Promise.all([next.waitForEvent('download'),next.locator('#parking-export').click()]);const nextDoc=JSON.parse(fs.readFileSync(await nd.path(),'utf8'));
-  assert.equal(nextDoc.onsite.dinov2.C6.routing.t_busy,null,'restored stale evidence must not re-certify the revoked threshold');assert.equal(nextDoc.drift.C6.evidence_from,rev.source_time.slice(0,8));assert.equal(nextDoc.drift.C6.history[0].sample_id,rev.sample_id);
+  const nextDoc=await nextExport();
+  assert.equal(nextDoc.onsite.dinov2.C6.routing.t_busy,null,'restored stale evidence must not re-certify the revoked threshold');assert.equal(nextDoc.drift.C6.evidence_from,rev.source_time.slice(0,8));assert.deepEqual(nextDoc.drift.C6.evidence_from_by_side,{free:null,busy:revDate});assert.equal(nextDoc.drift.C6.history[0].sample_id,rev.sample_id);
   assert.match(await next.locator('#parking-onsite-status').textContent(),/曾有阈值被抽检撤销/);await next.close();
-  step('audit_revocation',{camera:'C6',reviewed_for_calibration:Object.keys(doc.reviews).length,t_busy:r6.t_busy,spot_checks:events.length,busy_checks:busyChecks.length,frame_done_message:frameDone,revoked_after:{...rev,checked:rev.checked.length},recalibrated_t_busy:recal.t_busy,restored_page_t_busy:nextDoc.onsite.dinov2.C6.routing.t_busy,drift_evidence_from:after.drift.C6.evidence_from,status_before:before.slice(0,200),phone_scroll_width:auditWidth});
+  // A file from before appendix 7.3 has only the camera-level date; each side is recovered from its own revocations.
+  const legacy=JSON.parse(fs.readFileSync(handover,'utf8'));delete legacy.drift.C6.evidence_from_by_side;const legacyFile=path.join(out,'parking-transfer-audit-handover-legacy.json');fs.writeFileSync(legacyFile,JSON.stringify(legacy));
+  const old=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});old.setDefaultTimeout(180000);old.on('pageerror',e=>errors.push(e.message));old.on('dialog',d=>d.accept());
+  await old.goto(base+'/#parking');await old.waitForFunction(()=>document.querySelectorAll('.parking-tile').length===53);
+  await old.locator('#parking-import').setInputFiles(legacyFile);await old.waitForFunction(()=>/已读入 1 个摄像头的抽检撤销记录/.test(document.querySelector('#parking-review-message').textContent));
+  const legacyDrift=(await nextExport(old)).drift.C6;assert.deepEqual(legacyDrift.evidence_from_by_side,{free:null,busy:revDate});assert.equal(legacyDrift.evidence_from,revDate);await old.close();
+  step('audit_revocation',{camera:'C6',reviewed_for_calibration:Object.keys(doc.reviews).length,t_busy:r6.t_busy,spot_checks:events.length,busy_checks:busyChecks.length,frame_done_message:frameDone,revoked_after:{...rev,checked:rev.checked.length},recalibrated_t_busy:recal.t_busy,failed_recalibration:failed.recalibration,recalibration_message:recalMessage,mobilenet_monitor_units:{before:mnBefore.audit.busy.units,after_dinov2_revocation:mn6.audit.busy.units},evidence_from_by_side:after.drift.C6.evidence_from_by_side,restored_page_t_busy:nextDoc.onsite.dinov2.C6.routing.t_busy,drift_evidence_from:after.drift.C6.evidence_from,status_before:before.slice(0,200),phone_scroll_width:auditWidth});
 
   // 6. Single-patch upload uses the selected encoder and says a new camera is unverified.
   await page.locator('#parking-upload').setInputFiles(path.join(root,'web/data/parking-ext/images',fs.readdirSync(path.join(root,'web/data/parking-ext/images'))[0]));

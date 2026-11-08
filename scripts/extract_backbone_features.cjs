@@ -28,7 +28,7 @@ async function setup(browser,external){
  const context=await browser.newContext(),page=await context.newPage();
  page.on('request',r=>{const u=r.url();if(u.startsWith('http')&&new URL(u).origin!==new URL(base).origin)external.push(u);});
  await page.route(`${base}/__extract.html`,route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><meta charset="utf-8"><title>extract</title>'}));
- await page.route(`${base}/__patches/**`,route=>{const rel=decodeURIComponent(new URL(route.request().url()).pathname.replace('/__patches/',''));const target=path.resolve(imagesDir,rel);if(!target.startsWith(imagesDir+path.sep))return route.abort();route.fulfill({status:200,contentType:'image/jpeg',body:fs.readFileSync(target)});});
+ await page.route(`${base}/__patches/**`,route=>{const rel=decodeURIComponent(new URL(route.request().url()).pathname.replace('/__patches/',''));const target=path.resolve(imagesDir,rel);if(!target.startsWith(imagesDir+path.sep))return route.abort();route.fulfill({status:200,contentType:target.endsWith('.png')?'image/png':'image/jpeg',body:fs.readFileSync(target)});});
  await page.goto(base+'/__extract.html');
  const env=await page.evaluate(async({base,encoder})=>{
   const mod=await import(base+'/parking-encoders.mjs');

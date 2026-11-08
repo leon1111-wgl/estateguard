@@ -736,3 +736,34 @@ python3 scripts/verify_assets.py
 - [设计师实际桌面与手机报告](validation/analysis-parameters-ui-validation.json)：1440 / 390px，闲置输入禁用且不 required、用途说明可读，空停留草稿仍可完成默认 D-FINE-N 推理与通道送审，切回停车正确聚焦错误输入；字段位置和 CSS 未变，无页面溢出/错误。截图保存在本地 `artifacts/rule-inputs-20261020-designer-after-*` 并已审查。
 
 限制：本次只修复输入与任务流；未改变 D-FINE-N/SSDLite 权重、分数下限、区域、采样、跟踪或候选算法。公开照片和合成运动不能证明小区违规识别质量；闲置草稿不是跨标签页持久化配置。
+
+## 2026-10-21 · 撤销后的重新校准按侧进行
+
+```bash
+node --test tests/*.test.mjs
+python3 -m unittest discover -s tests -p 'test_*.py'
+python3 -m unittest discover -s tests/training -p 'test_*.py'
+python3 tests/training/test_recalibration.py --write   # 只在需要重新生成共用夹具时
+python3 scripts/verify_assets.py && python3 scripts/verify_parking_transfer.py
+node scripts/parking-transfer-check.cjs && node scripts/parking-check.cjs && node scripts/parking-review-check.cjs && node scripts/parking-error-audit-check.cjs && node scripts/parking-critic-check.cjs && node scripts/parking-handover-check.cjs
+```
+
+- **JS**：140 项全部通过。新增 4 项与 Python 共用 `tests/fixtures/parking-transfer-recal.json`（EXT C7 DINOv2 分数，6 个日期共 1,104 条），逐项比较 5 个场景的按侧重选结果，包括阈值、计数、证据集合哈希与 Clopper–Pearson 上界。另有 4 项检查：
+  - 每侧证据日期与“至少 2 个日期”；
+  - 新旧格式撤销记录的按侧日期；
+  - 损坏记录被拒绝；
+  - 撤销后的记录更新：通过时只换被撤销侧，未通过时保持撤销，另一侧对象不变。
+- **Python**：24 项通过；训练测试新增 6 项，共 28 项通过。新增的 6 项包括：
+  - 夹具与镜像实现一致；
+  - 双侧合成场景中，`replay_parking_drift.py` 的占用侧与不重新校准时完全相同，空闲侧在 `reselect_sides` 首次通过的日期以同一阈值重新启用；
+  - 10% 抽检时，截取回放交给 `select_routing` 的 670 条结论，与独立重建的复核区间、抽中单位和撤销后快照逐条相同，重新启用的日期与阈值也与 `reselect_sides` 一致；
+  - 合成偏差例：生效一侧若被重检，会放行实际 14.3% 车位·日出错的阈值。
+- **校验脚本**：`verify_assets.py`（26 项）、`verify_parking_transfer.py`（144,965 个 EXT 分数与抽检回放重算）通过。
+- **真实浏览器**（[报告](validation/parking-transfer-validation.json)）：C6 上 DINOv2 与 MobileNetV2 都通过占用侧，之后在 2015-11-16 撤销 DINOv2 占用侧。
+  - MobileNetV2 的抽检监控仍为 8 个车位·日，样本不变。早于撤销日期的抽检仍显示「抽检」、仍为盲审；修改前会被改成自动判定。
+  - DINOv2 重新校准检验从未通过的空闲侧与被撤销的占用侧，两侧都未通过：空闲侧候选最多覆盖 42 个车位·日，3 个出错；占用侧 11-16 及之后最多覆盖 38 个，3 个出错，零错误时约需 61 个。占用侧保持撤销；导出的撤销记录、`recalibration` 与状态行都保留。
+  - 导出 `evidence_from_by_side` 为 {free: null, busy: 20151116}，`evidence_from` 仍为 20151116。
+  - 新格式交接文件恢复后，旧证据仍不能重新通过。删去 `evidence_from_by_side` 的旧格式文件在新页面恢复后，同样推出 {free: null, busy: 20151116}。
+  - 390px 无横向滚动，页面错误与外部请求为 0。
+- **原有车位检查**：`parking-check`、`parking-review-check` 9/9、`parking-error-audit-check` 8/8、`parking-critic-check` 6/6、`parking-handover-check` 14/14 通过；损坏撤销记录仍整体拒绝，不推进已有限制。
+- **未验证**：页面子集撤销后只剩 2 个日期，无法在浏览器中走到“重新通过”，该路径只由单元测试与回放一致性测试覆盖。没有撤销时重检生效一侧的偏差未处理（附录 7.3）。

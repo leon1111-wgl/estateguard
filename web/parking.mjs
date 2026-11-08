@@ -1,7 +1,7 @@
 import {predictPatch,classifyScore,frameSummary,parkingReviewSummary,parkingReviewStatus,filterParkingRows,nextParkingReviewId,exportParkingReview,importParkingReview,serializeParkingReview,MAX_PARKING_REVIEW_BYTES} from './parking-model.mjs';
 import {readParkingHandover} from './parking-handover.mjs';
 import {buildParkingAudit,filterParkingAudit,exportParkingAudit} from './parking-audit.mjs';
-import {validateHead,predictHead,routeScore,selectRouting,adaptHead,standardize,minimumEvidence,AUDIT,isAudited,auditMonitor} from './parking-transfer.mjs';
+import {validateHead,predictHead,routeScore,adaptHead,standardize,minimumEvidence,AUDIT,isAudited,auditMonitor,recalibrationSides,reselectSides,driftSideDates,laterDate,sideRecord,applyRecalibration} from './parking-transfer.mjs';
 import {ENCODERS,loadEncoder,decodeImage} from './parking-encoders.mjs';
 const $=id=>document.getElementById(id);
 const text=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -17,24 +17,29 @@ const failures={mlp32:new Map(),mobilenet:new Map(),dinov2:new Map()},reviews={}
 // One prediction map per model; transfer models also keep calibrated scores and embeddings for on-site adaptation.
 const sets={mlp32:new Map(),mobilenet:new Map(),dinov2:new Map()},calibratedSets={mobilenet:new Map(),dinov2:new Map()},embeddings={mobilenet:new Map(),dinov2:new Map()};
 const heads={},encoders={},encoderPromises={},encoderControllers={},adaptations={mobilenet:{},dinov2:{}},onsiteRouting={mobilenet:{},dinov2:{}},driftLog={};
-// driftLog[camera] = {evidence_from, history}: a revocation says this camera's scene changed, so it restricts every
-// model's recalibration and survives recalibration, target changes, adaptation, clearing and restoring review files
-// (restores merge the file's records in). Only reloading the page forgets it, so it is exported with every review file.
+// driftLog[camera] = {evidence_from, evidence_from_by_side:{free,busy}, history}: a revoked side says this camera's
+// scene changed for that side, so every model's calibration of that side only uses conclusions from its latest
+// revocation date on (protocol appendix 7.3); the other side is not restricted. evidence_from (the later of the two)
+// keeps older pages restricting both sides. The log survives recalibration, target changes, adaptation, clearing and
+// restoring review files (restores merge the file's records in). Only reloading the page forgets it, so it is exported.
 let current='mlp32',predictions=sets.mlp32,transferEvaluation=null,auditReplay=null,modelChosenByUser=false;
 const transfer=()=>current!=='mlp32';
 const labelOf=state=>(transfer()?routedLabels:labels)[state];
 // A side revoked by spot checks stops auto-deciding; the certified thresholds stay on record for the export.
 function routingFor(camera,key=current){const o=onsiteRouting[key]?.[camera];if(!o)return null;const r=o.routing;return o.revoked?.free||o.revoked?.busy?{...r,t_free:o.revoked.free?null:r.t_free,t_busy:o.revoked.busy?null:r.t_busy}:r;}
 const certified=routing=>!!routing&&(routing.t_free!=null||routing.t_busy!=null);
-const routingNote=camera=>certified(routingFor(camera))?`按本相机通过检验的阈值自动分流，其余送人工；约 ${AUDIT.fraction*100}% 车位·日随机抽检，抽检证据显示超标会自动撤销该侧阈值。`:certified(onsiteRouting[current]?.[camera]?.routing)?'本相机阈值已被抽检撤销，所有车位送人工复核；重新校准只用撤销日期及之后的人工结论。':routingFor(camera)?'本相机校准证据不足，所有车位仍送人工复核；模型倾向与概率可作参考。':'本相机尚未完成风险校准，所有车位送人工复核；模型倾向与概率可作参考。';
+const routingNote=camera=>certified(routingFor(camera))?`按本相机通过检验的阈值自动分流，其余送人工；约 ${AUDIT.fraction*100}% 车位·日随机抽检，抽检证据显示超标会自动撤销该侧阈值。`:certified(onsiteRouting[current]?.[camera]?.routing)?'本相机阈值已被抽检撤销，所有车位送人工复核；重新校准只重选被撤销的一侧，并只用该侧撤销日期及之后的人工结论。':routingFor(camera)?'本相机校准证据不足，所有车位仍送人工复核；模型倾向与概率可作参考。':'本相机尚未完成风险校准，所有车位送人工复核；模型倾向与概率可作参考。';
 // Spot checks (protocol appendix 5): a hashed ~10% of camera·slot·date units lose their automatic decision and go
-// to a person. Calibration and adaptation evidence never counts; neither do snapshots before a revocation date.
+// to a person. Each side is monitored only on data it was not certified with: its own calibration evidence and
+// snapshots dated before that side's evidence date never count. A revocation of one side (or of the other model)
+// does not shorten a live side's monitor.
 // Spot checks are blind: the model probability stays hidden until a person saves an explicit conclusion.
 const blindCheck=id=>transfer()&&calibratedSets[current].has(id)&&!!auditSide(id)&&parkingReviewStatus(reviews[id])!=='confirmed';
 function auditSide(id,key=current){
  const r=samples.get(id),o=r&&onsiteRouting[key]?.[r.camera],cal=calibratedSets[key]?.get(id);if(!o||cal===undefined)return null;
  const side=routeScore(cal,routingFor(r.camera,key));
- if(side==='review'||o.idSet.has(id)||adaptations[key][r.camera]?.used.has(id)||driftLog[r.camera]&&r.date<driftLog[r.camera].evidence_from)return null;
+ if(side==='review'||adaptations[key][r.camera]?.used.has(id))return null;
+ const s=o.sides[side];if(s.evidence.has(id)||s.from&&r.date<s.from)return null;
  return isAudited(unitOf(id))?side:null;
 }
 // Transfer models auto-decide only with thresholds certified on this camera; otherwise every slot goes to a person.
@@ -229,7 +234,7 @@ for(const id of ['parking-note','parking-decision'])$(id).addEventListener('inpu
 const context=()=>({model_sha256:evaluation.model_sha256,sample_ids:[...samples.keys()]});
 const handoverContext=()=>({frames:allFrames,current_model:current,models:{mlp32:evaluation.model_sha256,...Object.fromEntries(['mobilenet','dinov2'].filter(key=>heads[key]).map(key=>[key,transferEvaluation.models[key].model_sha256]))}});
 function savedView(){if(!frames[frameIndex])throw new Error('公开快照尚未加载完成，请稍后再导出');return {version:1,frame_id:frames[frameIndex].id,sample_id:selected,model_key:current,model_sha256:handoverContext().models[current],filter:$('parking-filter').value,show_truth:$('parking-show-truth').checked};}
-function reviewDocument(nextReviews=reviews){const out=exportParkingReview(context(),nextReviews);out.dataset=manifest.dataset;out.source_frame=frames[frameIndex]?.id;out.view=savedView();out.frame_summary=frameSummary(currentRows(),predictions,stateOf);out.datasets={cnrpark:manifest.dataset,cnr_ext:extManifest?.dataset||null};out.prediction_model={key:current,name:current==='mlp32'?'MLP32':ENCODERS[current].label,model_sha256:current==='mlp32'?evaluation.model_sha256:transferEvaluation.models[current].model_sha256};out.onsite=Object.fromEntries(['mobilenet','dinov2'].map(key=>[key,Object.fromEntries([...new Set([...Object.keys(adaptations[key]),...Object.keys(onsiteRouting[key])])].map(camera=>{const a=adaptations[key][camera],o=onsiteRouting[key][camera];return [camera,{adaptation:a?{labels:a.n,occupied:a.busy,lam:a.lam,lr:a.lr,steps:a.steps,sample_ids:[...a.used],at:a.at}:null,routing:o?{...o.routing,tests:undefined,sample_ids:o.ids,at:o.at,audit:auditExport(camera,key)}:null}];}))]));out.drift=structuredClone(driftLog);out.predictions_by_model={mlp32:[...sets.mlp32].map(([id,score])=>({id,score})),...Object.fromEntries(['mobilenet','dinov2'].map(key=>[key,[...sets[key]].map(([id,score])=>({id,score,calibrated:calibratedSets[key].get(id),adapted:!!adaptations[key][samples.get(id).camera]}))]))};out.review_summary=parkingReviewSummary(currentRows(),nextReviews);out.unanalysed_sample_ids=currentRows().filter(r=>!predictions.has(r.id)).map(r=>r.id);out.samples=[...predictions].map(([id,score])=>{const r=samples.get(id);return {id,dataset:r.base===extBase?'cnr_ext':'cnrpark',camera:r.camera,slot:r.slot,source_time:`${r.date} ${r.time}`,source_timezone:manifest.dataset.timezone,split:r.split,image:r.image,source_sha256:r.source_sha256,predicted_occupied_score:score,...(transfer()?{calibrated_occupied_score:calibratedSets[current].get(id),audit:!!auditSide(id)}:{}),prediction:Number(score>=.5),review_state:stateOf(id,score),dataset_label:r.label};});out.failures_by_model=Object.fromEntries(Object.entries(failures).map(([key,items])=>[key,[...items].map(([id,error])=>({id,error}))]));out.failures=out.failures_by_model[current];out.evidence_failures=[...evidenceFailures].map(([id,error])=>({id,image:samples.get(id).image,error}));out.scope='停车位占用分类；真实历史快照；非连续视频，不判断违停或停留时长。';return out;}
+function reviewDocument(nextReviews=reviews){const out=exportParkingReview(context(),nextReviews);out.dataset=manifest.dataset;out.source_frame=frames[frameIndex]?.id;out.view=savedView();out.frame_summary=frameSummary(currentRows(),predictions,stateOf);out.datasets={cnrpark:manifest.dataset,cnr_ext:extManifest?.dataset||null};out.prediction_model={key:current,name:current==='mlp32'?'MLP32':ENCODERS[current].label,model_sha256:current==='mlp32'?evaluation.model_sha256:transferEvaluation.models[current].model_sha256};out.onsite=Object.fromEntries(['mobilenet','dinov2'].map(key=>[key,Object.fromEntries([...new Set([...Object.keys(adaptations[key]),...Object.keys(onsiteRouting[key])])].map(camera=>{const a=adaptations[key][camera],o=onsiteRouting[key][camera];return [camera,{adaptation:a?{labels:a.n,occupied:a.busy,lam:a.lam,lr:a.lr,steps:a.steps,sample_ids:[...a.used],at:a.at}:null,routing:o?{...o.routing,tests:undefined,sample_ids:o.ids,at:o.at,sides:Object.fromEntries(['free','busy'].map(s=>{const x=o.sides[s];return [s,{from:x.from,dates:x.dates,calibration_n:x.calibration_n,calibration_units:x.calibration_units,at:x.at,reselected:x.reselected,sample_ids:[...x.evidence]}];})),recalibration:o.attempts,audit:auditExport(camera,key)}:null}];}))]));out.drift=structuredClone(driftLog);out.predictions_by_model={mlp32:[...sets.mlp32].map(([id,score])=>({id,score})),...Object.fromEntries(['mobilenet','dinov2'].map(key=>[key,[...sets[key]].map(([id,score])=>({id,score,calibrated:calibratedSets[key].get(id),adapted:!!adaptations[key][samples.get(id).camera]}))]))};out.review_summary=parkingReviewSummary(currentRows(),nextReviews);out.unanalysed_sample_ids=currentRows().filter(r=>!predictions.has(r.id)).map(r=>r.id);out.samples=[...predictions].map(([id,score])=>{const r=samples.get(id);return {id,dataset:r.base===extBase?'cnr_ext':'cnrpark',camera:r.camera,slot:r.slot,source_time:`${r.date} ${r.time}`,source_timezone:manifest.dataset.timezone,split:r.split,image:r.image,source_sha256:r.source_sha256,predicted_occupied_score:score,...(transfer()?{calibrated_occupied_score:calibratedSets[current].get(id),audit:!!auditSide(id)}:{}),prediction:Number(score>=.5),review_state:stateOf(id,score),dataset_label:r.label};});out.failures_by_model=Object.fromEntries(Object.entries(failures).map(([key,items])=>[key,[...items].map(([id,error])=>({id,error}))]));out.failures=out.failures_by_model[current];out.evidence_failures=[...evidenceFailures].map(([id,error])=>({id,image:samples.get(id).image,error}));out.scope='停车位占用分类；真实历史快照；非连续视频，不判断违停或停留时长。';return out;}
 function saveReview(advance){
  if(!selected||running)return;
  // A rejected save must also hold the current snapshot for corrections.
@@ -295,7 +300,7 @@ importer.addEventListener('change',async e=>{
   changed=false;updateModelBar();render();
   const f=frames[frameIndex],r=samples.get(selected),position=handover?`已返回摄像头 ${f.camera} · ${walltime(f)}${r?` · 车位 ${r.slot}`:''}。`:'旧版文件没有交接位置，保留当前相机和快照；记录可能位于其他快照。';
   const message=`已恢复人工复核 ${Object.keys(next).length} 条。${position}`;
-  reviewNotice(`人工复核已恢复 ${Object.keys(next).length} 条。${position}${handover?.notes.join('')||''}${cleared?'原有现场自适应与阈值已清除，需按恢复后的结论重新设置。':''}${restored?`已读入 ${restored} 个摄像头的抽检撤销记录，重新校准仍只用撤销日期及之后的人工结论。`:''}`);
+  reviewNotice(`人工复核已恢复 ${Object.keys(next).length} 条。${position}${handover?.notes.join('')||''}${cleared?'原有现场自适应与阈值已清除，需按恢复后的结论重新设置。':''}${restored?`已读入 ${restored} 个摄像头的抽检撤销记录，被撤销的一侧校准时仍只用该侧撤销日期及之后的人工结论。`:''}`);
   notice(`${message}${handover?.notes.join('')||''}未采用文件中的模型分数。可点击“分析当前快照”重新分析；现场自适应和阈值需重新设置。`);
   revealSelectedTile();
  }catch(e){if(ticket===importSequence)notice(`恢复失败：${e.message}`,true);}
@@ -454,7 +459,14 @@ function auditReplayHtml(e,tbl,p1,p2){
 }
 // On-site calibration and few-shot adaptation use human-confirmed decisions only, per camera and model.
 // Evidence is counted per camera·slot·date (protocol appendix 3): repeated snapshots of one parked car are not independent.
-function calibrationItems(camera,key=current){const from=driftLog[camera]?.evidence_from||null;return {from,items:cameraReviews(camera,key,adaptations[key][camera]?.used).filter(([id])=>!from||samples.get(id).date>=from)};}
+// After a revocation 重新校准 re-selects only the revoked sides (protocol appendix 7 / 7.3), each from its own evidence
+// date: a live side keeps its threshold, evidence and monitor, since its own region has had only spot checks since.
+const sideDates=camera=>driftLog[camera]?.evidence_from_by_side||{free:null,busy:null};
+function calibrationPlan(camera,key=current){
+ const o=onsiteRouting[key]?.[camera],sides=recalibrationSides(o?.revoked,o?.routing),from=sideDates(camera);
+ const items=cameraReviews(camera,key,adaptations[key][camera]?.used).map(([id,label])=>({id,label,score:calibratedSets[key].get(id),unit:unitOf(id),date:samples.get(id).date})).filter(x=>sides.some(s=>!from[s]||x.date>=from[s]));
+ return {sides,from,items};
+}
 function cameraReviews(camera,key=current,exclude=new Set()){const out=[];for(const [id,r] of Object.entries(reviews)){const sample=samples.get(id);if(!sample||sample.camera!==camera||!['free','busy'].includes(r.decision)||exclude.has(id)||!embeddings[key]?.has(id))continue;out.push([id,r.decision==='busy'?1:0]);}return out;}
 const unitOf=id=>{const r=samples.get(id);return `${r.camera}|${r.slot}|${r.date}`;};
 const riskTarget=()=>{const alpha=Number($('parking-risk-target').value);return {alpha_free:alpha,alpha_busy:Math.min(.2,alpha*2)};};
@@ -483,9 +495,10 @@ function checkAudit(camera){
    // Keep the spot checks behind the decision: after revocation that side has no live events to export.
    const checked=a.events.filter(x=>x.side===side).map(x=>({id:x.id,wrong:x.wrong}));
    const record={sample_id:e.id,source_time:`${e.date} ${e.time}`,units:hit.units,error_units:hit.error_units,statistic:hit.statistic,limit:a.monitor[side].limit,at:new Date().toISOString(),checked};
-   o.revoked={...o.revoked,[side]:record};const log=driftLog[camera]||(driftLog[camera]={evidence_from:e.date,history:[]});
-   if(log.evidence_from<e.date)log.evidence_from=e.date;log.history.push({model:key,side,threshold:o.routing[`t_${side}`],alpha:o.routing[`alpha_${side}`],...record});changed=true;
-   lines.push(`${ENCODERS[key].label} · 摄像头 ${camera} 的${side==='free'?'空闲':'占用'}侧阈值已被抽检撤销：抽中 ${hit.units} 个车位·日中 ${hit.error_units} 个出错（未核对的按无错计），证据值 ${evidenceText(hit.statistic)} ≥ ${auditLimit}。该侧全部改送人工；重新校准（任一模型）只用 ${formatDate(e.date)} 及之后的人工结论。`);
+   o.revoked={...o.revoked,[side]:record};const log=driftLog[camera]||(driftLog[camera]={evidence_from:e.date,evidence_from_by_side:{free:null,busy:null},history:[]});
+   log.evidence_from_by_side[side]=laterDate(log.evidence_from_by_side[side],e.date);log.evidence_from=laterDate(log.evidence_from,e.date);
+   log.history.push({model:key,side,threshold:o.routing[`t_${side}`],alpha:o.routing[`alpha_${side}`],...record});changed=true;
+   lines.push(`${ENCODERS[key].label} · 摄像头 ${camera} 的${side==='free'?'空闲':'占用'}侧阈值已被抽检撤销：抽中 ${hit.units} 个车位·日中 ${hit.error_units} 个出错（未核对的按无错计），证据值 ${evidenceText(hit.statistic)} ≥ ${auditLimit}。该侧全部改送人工；重新校准时只重选该侧，任一模型的${sideName(side)}侧都只用 ${formatDate(log.evidence_from_by_side[side])} 及之后的人工结论${o.routing[`t_${otherSide(side)}`]!=null&&!o.revoked?.[otherSide(side)]?`；${sideName(otherSide(side))}侧的阈值与抽检不受影响`:''}。`);
   }
  }
  return lines;
@@ -495,27 +508,37 @@ function auditExport(camera,key){
  return {...AUDIT,unit:'camera|slot|date',hash:'FNV-1a 32 + fmix32 of "salt|camera|slot|date"',p1:'2 × target',limit_log:Math.log(2/AUDIT.delta),...Object.fromEntries(['free','busy'].map(x=>{const rev=o.revoked?.[x];return [x,rev?{alpha:o.routing[`alpha_${x}`],units:rev.units,error_units:rev.error_units,statistic:rev.statistic,limit:rev.limit,revoked_at:rev.source_time,checked:rev.checked.length}:a.monitor[x]];})),revoked:o.revoked,sample_ids:a.events.map(e=>e.id),pending_ids:a.events.filter(e=>e.wrong===null).map(e=>e.id)};
 }
 const sourceTime=t=>`${formatDate(t.slice(0,8))} ${t.slice(9,11)}:${t.slice(11)}`;
-function driftText(camera,fresh){
- const log=driftLog[camera];if(!log)return '';const h=log.history.at(-1);
- return `本相机曾有阈值被抽检撤销（最近：${h?`${ENCODERS[h.model]?.label||h.model}的${h.side==='free'?`空闲侧 ≤ ${h.threshold}`:`占用侧 ≥ ${h.threshold}`}，${sourceTime(h.source_time)} 的抽检触发，抽中 ${h.units} 个车位·日中 ${h.error_units} 个出错`:'记录来自恢复文件'}），任一模型的校准都只用 ${formatDate(log.evidence_from)} 及之后的人工结论（当前 ${fresh} 条）。`;
+const sideName=s=>s==='free'?'空闲':'占用',otherSide=s=>s==='free'?'busy':'free';
+// Per-side restriction with the conclusions each side could use now (this model, excluding adaptation evidence).
+function floorText(camera,key=current){
+ const by=sideDates(camera),limited=['free','busy'].filter(s=>by[s]),dates=cameraReviews(camera,key,adaptations[key][camera]?.used).map(([id])=>samples.get(id).date);
+ const count=s=>dates.filter(d=>!by[s]||d>=by[s]).length;
+ return limited.map(s=>`${sideName(s)}侧只用 ${formatDate(by[s])} 及之后的人工结论（当前 ${count(s)} 条）`).join('，')+(limited.length===1?`，${sideName(otherSide(limited[0]))}侧不受限制（${count(otherSide(limited[0]))} 条）`:'');
+}
+function driftText(camera){
+ const log=driftLog[camera];if(!log)return '';const h=log.history.at(-1),rule=floorText(camera);
+ // The current model's own revocation line already gives these details.
+ if(h&&h.model===current&&onsiteRouting[current]?.[camera]?.revoked?.[h.side]?.sample_id===h.sample_id)return `本相机曾有阈值被抽检撤销，任一模型校准时${rule}。`;
+ return `本相机曾有阈值被抽检撤销（最近：${h?`${ENCODERS[h.model]?.label||h.model}的${h.side==='free'?`空闲侧 ≤ ${h.threshold}`:`占用侧 ≥ ${h.threshold}`}，${sourceTime(h.source_time)} 的抽检触发，抽中 ${h.units} 个车位·日中 ${h.error_units} 个出错`:'记录来自恢复文件'}），任一模型校准时${rule}。`;
 }
 function auditText(o,a){
  const side=s=>{
   if(o.routing[`t_${s}`]==null)return '';const label=s==='free'?'空闲':'占用',rev=o.revoked?.[s];
-  if(rev)return `${label}侧由 ${sourceTime(rev.source_time)} 的抽检触发撤销：抽中 ${rev.units} 个车位·日中 ${rev.error_units} 个出错，证据值 ${evidenceText(rev.statistic)} ≥ ${auditLimit}`;
+  if(rev){const t=o.attempts?.[s];return `${label}侧由 ${sourceTime(rev.source_time)} 的抽检触发撤销：抽中 ${rev.units} 个车位·日中 ${rev.error_units} 个出错，证据值 ${evidenceText(rev.statistic)} ≥ ${auditLimit}${t?`；最近一次重新校准未通过：${t.reason}，该侧继续送人工`:''}`;}
   const m=a.monitor[s],evs=a.events.filter(e=>e.side===s),done=new Set(evs.map(e=>e.unit)).size-new Set(evs.filter(e=>e.wrong===null).map(e=>e.unit)).size,alpha=o.routing[`alpha_${s}`];
   return `${label}侧抽中 ${m.units} 个车位·日（已核对 ${done}），出错 ${m.error_units}，待核对 ${m.pending} 张；证据值 ${evidenceText(m.statistic)}，每个出错车位·日 ×2、无错（含未核对）×${((1-2*alpha)/(1-alpha)).toFixed(2)}，达到 ${auditLimit} 自动撤销`;
  };
  const replay=auditReplay?.summary?.find(g=>g.model===current&&g.alpha===.05&&g.fraction===AUDIT.fraction&&g.rule===AUDIT.rule);
  return `抽检：约 ${AUDIT.fraction*100}% 车位·日按哈希随机抽中，其中本应自动判定的快照改送人工并标为「抽检」。${[side('free'),side('busy')].filter(Boolean).join('；')}。${replay?`离线回放（EXT，5% 目标、${AUDIT.fraction*100}% 抽检）中 ${replay.over} 个超标的阈值只撤销了 ${replay.over_revoked} 个，残余自动判空闲仍有 ${pct(replay.free_pooled?.unit_error_rate)} 车位·日出错；抽检不能单独保证自动判定可靠。`:''}`;
 }
-// Restored drift records only restrict calibration, so a file can add them but never remove the page's own.
+// Restored drift records only restrict calibration, so a file can add them but never remove the page's own. Dates
+// merge per side (latest wins); files from before appendix 7.3 are converted by driftSideDates.
 function mergeDrift(src,target){
  if(!src||typeof src!=='object'||Array.isArray(src))return 0;const cameras=new Set([...samples.values()].map(r=>r.camera));let n=0;
  for(const [camera,log] of Object.entries(src)){
   if(!cameras.has(camera))continue;
-  if(!log||typeof log.evidence_from!=='string'||!/^\d{8}$/.test(log.evidence_from)||!Array.isArray(log.history))throw new Error('抽检撤销日期或历史格式无效');
-  const cur=target[camera]||(target[camera]={evidence_from:log.evidence_from,history:[]});if(cur.evidence_from<log.evidence_from)cur.evidence_from=log.evidence_from;
+  const by=driftSideDates(log),cur=target[camera]||(target[camera]={evidence_from:null,evidence_from_by_side:{free:null,busy:null},history:[]});
+  for(const s of ['free','busy'])cur.evidence_from_by_side[s]=laterDate(cur.evidence_from_by_side[s],by[s]);cur.evidence_from=laterDate(cur.evidence_from,laterDate(by.free,by.busy));
   for(const h of log.history.slice(0,1000)){
    if(!h||!['free','busy'].includes(h.side)||!['mobilenet','dinov2'].includes(h.model))continue;
    if(typeof h.source_time!=='string'||!/^\d{8} \d{4}$/.test(h.source_time))throw new Error('抽检撤销采样时间格式无效');
@@ -528,7 +551,7 @@ function mergeDrift(src,target){
 }
 function rescoreCamera(camera,key=current){for(const id of embeddings[key].keys())if(samples.get(id)?.camera===camera)scoreSample(id,key);}
 // Any change to the evidence behind an adaptation or a threshold voids it for every model.
-function invalidateOnsite(camera,id){let voided=false;for(const key of ['mobilenet','dinov2']){const a=adaptations[key][camera],o=onsiteRouting[key][camera];if(a?.used.has(id)){delete adaptations[key][camera];delete onsiteRouting[key][camera];rescoreCamera(camera,key);voided=true;}else if(o?.ids.includes(id)){delete onsiteRouting[key][camera];voided=true;}}if(voided)modelNotice(`已修改用于自适应或校准的人工结论，摄像头 ${camera} 的相关现场设置已作废，请重新设置。`);return voided;}
+function invalidateOnsite(camera,id){let voided=false;for(const key of ['mobilenet','dinov2']){const a=adaptations[key][camera],o=onsiteRouting[key][camera];if(a?.used.has(id)){delete adaptations[key][camera];delete onsiteRouting[key][camera];rescoreCamera(camera,key);voided=true;}else if(o?.idSet.has(id)){delete onsiteRouting[key][camera];voided=true;}}if(voided)modelNotice(`已修改用于自适应或校准的人工结论，摄像头 ${camera} 的相关现场设置已作废，请重新设置。`);return voided;}
 function clearOnsite(){let any=false;for(const key of ['mobilenet','dinov2']){for(const camera of Object.keys(adaptations[key])){delete adaptations[key][camera];rescoreCamera(camera,key);any=true;}if(Object.keys(onsiteRouting[key]).length)any=true;onsiteRouting[key]={};}if(any)modelNotice('已清除全部现场自适应与阈值。');return any;}
 function updateModelPanel(){
  const panel=$('parking-onsite');if(!panel||!model)return;
@@ -539,27 +562,42 @@ function updateModelPanel(){
  $('parking-model-help').textContent=transfer()?`${ENCODERS[current].label}：${ENCODERS[current].detail}。${e?.cnr_ext?`CNR-EXT 保留测试平衡正确率 ${pct(e.cnr_ext.transfer.balanced_accuracy)}，`:'CNR-EXT 保留测试待评测；'}B 开发比较 ${pct(e?.cnrpark_b?.transfer?.balanced_accuracy)}。${size}`:'MLP32：原 32×32 像素特征小模型，保留为基线；0.35–0.65 标为不确定。不支持现场校准与自适应。';
  const auditOption=$('parking-filter').querySelector('option[value="audit"]');if(auditOption){auditOption.hidden=!transfer();if(!transfer()&&$('parking-filter').value==='audit')$('parking-filter').value='all';}
  panel.hidden=!transfer();if(!transfer()||!camera)return;
- const ad=adaptations[current][camera],route=onsiteRouting[current][camera],all=cameraReviews(camera),{from,items:fresh}=calibrationItems(camera),target=riskTarget(),need=minimumEvidence(target.alpha_free,.05/(2*15));
- const busyCount=all.filter(x=>x[1]).length,dates=new Set(fresh.map(([id])=>samples.get(id).date)).size,units=new Set(fresh.map(([id])=>unitOf(id))).size;
+ const ad=adaptations[current][camera],route=onsiteRouting[current][camera],all=cameraReviews(camera),{items:fresh}=calibrationPlan(camera),target=riskTarget(),need=minimumEvidence(target.alpha_free,.05/(2*15));
+ const busyCount=all.filter(x=>x[1]).length,dates=new Set(fresh.map(x=>x.date)).size,units=new Set(fresh.map(x=>x.unit)).size;
  let status=`摄像头 ${camera}：已人工确认且已分析 ${all.length} 条（占用 ${busyCount} / 空闲 ${all.length-busyCount}）。`;
- const shadow=ad?fresh:all;if(shadow.length){let ff=0,fo=0;for(const [id,y] of shadow){const p=calibratedSets[current].get(id);if(y&&p<.5)ff++;if(!y&&p>=.5)fo++;}status+=`影子对比（模型 0.5 阈值 vs 人工${ad?`，不含自适应用过的 ${ad.n} 条`:''}，${shadow.length} 条）：有车报空闲 ${ff} 条，空位报占用 ${fo} 条。`;}
+ const shadow=ad?fresh.map(x=>[x.id,x.label]):all;if(shadow.length){let ff=0,fo=0;for(const [id,y] of shadow){const p=calibratedSets[current].get(id);if(y&&p<.5)ff++;if(!y&&p>=.5)fo++;}status+=`影子对比（模型 0.5 阈值 vs 人工${ad?`，不含自适应用过的 ${ad.n} 条`:''}，${shadow.length} 条）：有车报空闲 ${ff} 条，空位报占用 ${fo} 条。`;}
  if(ad)status+=`已用其中 ${ad.n} 条做自适应；校准只用之后新确认的 ${fresh.length} 条。`;
- if(route){const r=route.routing;const rule=x=>{const t=r[`t_${x}`];if(t==null)return x==='free'?'空闲侧未通过':'占用侧未通过';const text=x==='free'?`校准概率 ≤ ${t} 自动判空闲`:`≥ ${t} 自动判占用`;return route.revoked?.[x]?`${text}（已被抽检撤销，改送人工）`:text;};status+=certified(r)?`在校准数据上通过检验（${r.calibration_units} 个车位·日，${route.dates} 个日期）：${rule('free')}；${rule('busy')}。${auditText(route,auditStatus(camera))}`:`最近一次检验：${route.reason}，仍全部送人工。`;status+=driftText(camera,fresh.length);}
- else{status+=driftText(camera,fresh.length);status+=`尚未校准，全部送人工。检验以“车位·日”计数，需覆盖至少 2 个日期；要通过错报空闲 ≤ ${target.alpha_free*100}%，至少需要约 ${need} 个无错的车位·日（当前可用 ${units} 个、${dates} 个日期）。`;}
+ if(route){const r=route.routing;const rule=x=>{const t=r[`t_${x}`];if(t==null)return `${sideName(x)}侧未通过${route.attempts?.[x]?`（最近一次重新校准：${route.attempts[x].reason}）`:''}`;const text=x==='free'?`校准概率 ≤ ${t} 自动判空闲`:`≥ ${t} 自动判占用`;const y=route.sides[x],again=y.reselected?`（${y.from?`${formatDate(y.from)} 及之后 `:''}${y.calibration_units} 个车位·日、${y.dates} 个日期重新校准）`:'';return route.revoked?.[x]?`${text}（已被抽检撤销，改送人工）`:text+again;};status+=certified(r)?`${['free','busy'].some(x=>route.sides[x].reselected)?'首次校准':'在校准数据上通过检验'}（${r.calibration_units} 个车位·日，${route.dates} 个日期）：${rule('free')}；${rule('busy')}。${auditText(route,auditStatus(camera))}`:`最近一次检验：${route.reason}，仍全部送人工。`;status+=driftText(camera);}
+ else{status+=driftText(camera);status+=`尚未校准，全部送人工。检验以“车位·日”计数，需覆盖至少 2 个日期；要通过错报空闲 ≤ ${target.alpha_free*100}%，至少需要约 ${need} 个无错的车位·日（当前可用 ${units} 个、${dates} 个日期）。`;}
  if(!all.length)status+='保存本摄像头的空闲/占用结论（需填写说明）后，可校准或自适应。';
  $('parking-onsite-status').textContent=status;
  $('parking-calibrate').disabled=running||!fresh.length;$('parking-adapt').disabled=running||!all.length;$('parking-adapt-reset').disabled=running||!ad&&!route;
 }
 $('parking-model-choice').addEventListener('change',()=>{if(running||analysisPromise||uploadPending){$('parking-model-choice').value=current;return;}modelChosenByUser=true;current=$('parking-model-choice').value;predictions=sets[current];updateModelBar();modelNotice('');render();const n=currentRows().filter(r=>predictions.has(r.id)).length;notice(`已切换到 ${current==='mlp32'?'MLP32 基线':ENCODERS[current].label}。${n?`当前快照已有 ${n} 个该模型的结果。`:'请点击“分析当前快照”运行该模型。'}各模型结果分别保留，人工结论不受影响。`);});
 $('parking-risk-target').addEventListener('change',()=>{const had=['mobilenet','dinov2'].some(key=>Object.values(onsiteRouting[key]).some(o=>certified(o.routing)));for(const key of ['mobilenet','dinov2'])onsiteRouting[key]={};modelNotice(had?'风险目标已改变，所有模型已通过的阈值作废，请重新校准。':'');render();});
+// With a revoked side only that side is re-tested (protocol appendix 7.3); otherwise both sides are selected afresh,
+// each from its own evidence date. The record keeps per-side evidence so each side's monitor skips its own evidence.
+const withIds=o=>{const ids=[...new Set([...o.sides.free.evidence,...o.sides.busy.evidence])];return {...o,ids,idSet:new Set(ids)};};
+const ruleText=(s,t)=>s==='free'?`≤ ${t} 自动判空闲`:`≥ ${t} 自动判占用`;
 $('parking-calibrate').addEventListener('click',()=>{try{
- const camera=frames[frameIndex].camera,{from,items}=calibrationItems(camera);if(!items.length)throw new Error(from?`本相机阈值曾被抽检撤销，需要 ${formatDate(from)} 及之后快照的人工确认结论才能重新校准。`:'当前摄像头还没有可用于校准的人工确认结论。');
- const dates=new Set(items.map(([id])=>samples.get(id).date)).size,target=riskTarget();
- let routing;let reason='';
- if(dates<2){routing={t_free:null,t_busy:null,...target,calibration_n:items.length,calibration_units:new Set(items.map(([id])=>unitOf(id))).size,unit:'camera-slot-date'};reason=`人工结论只来自 ${dates} 个日期${from?`（撤销后只用 ${formatDate(from)} 及之后）`:''}，单日数据不能代表其他时段`;}
- else{routing=selectRouting(items.map(([id])=>calibratedSets[current].get(id)),items.map(x=>x[1]),{...target,units:items.map(([id])=>unitOf(id))});reason=`${routing.calibration_units} 个车位·日的证据不足以通过目标`;}
- const ids=items.map(x=>x[0]);onsiteRouting[current][camera]={routing,ids,idSet:new Set(ids),dates,reason,at:new Date().toISOString(),revoked:{free:null,busy:null}};changed=true;render();
- modelNotice(certified(routing)?`已用 ${items.length} 条人工结论（${routing.calibration_units} 个车位·日，${dates} 个日期）在校准数据上通过检验；本相机按阈值自动判定，其余送人工。这不保证以后的画面：约 ${AUDIT.fraction*100}% 车位·日会随机改为「抽检」送人工，抽检证据显示超标时自动撤销该侧阈值。`:`已检验 ${items.length} 条人工结论：${reason}，继续全部送人工。`);
+ const camera=frames[frameIndex].camera,prev=onsiteRouting[current][camera],{sides,from,items}=calibrationPlan(camera),limited=sides.filter(s=>from[s]);
+ if(!items.length)throw new Error(limited.length?`本相机阈值曾被抽检撤销，${limited.map(s=>`${sideName(s)}侧需要 ${formatDate(from[s])} 及之后`).join('、')}快照的人工确认结论才能重新校准。`:'当前摄像头还没有可用于校准的人工确认结论。');
+ const target=riskTarget(),at=new Date().toISOString(),result=reselectSides(items,sides,{from,...target});
+ const reason=s=>{const r=result[s];return r.dates<2?`人工结论只来自 ${r.dates} 个日期${from[s]?`（撤销后只用 ${formatDate(from[s])} 及之后）`:''}，单日数据不能代表其他时段`:from[s]?`${formatDate(from[s])} 及之后的 ${r.calibration_units} 个车位·日证据不足以达到目标`:`${r.calibration_units} 个车位·日的证据不足以达到目标`;};
+ if(prev&&['free','busy'].some(s=>prev.revoked?.[s])){
+  // Name what the side's own candidates could cover: the target is tested on those slot·days, not on all conclusions.
+  const sideReason=s=>{const r=result[s];if(r.dates<2)return reason(s);const best=r.tests.reduce((b,t)=>t.accepted>b.accepted?t:b,{accepted:0,errors:0});return `${r.from?`${formatDate(r.from)} 及之后，`:''}${sideName(s)}侧候选阈值最多覆盖 ${best.accepted} 个车位·日（其中 ${best.errors} 个出错），证据不足以达到目标`;};
+  const next=applyRecalibration(prev,result,at);for(const s of sides)if(next.attempts[s])next.attempts[s].reason=sideReason(s);
+  onsiteRouting[current][camera]=withIds(next);changed=true;render();
+  const kept=['free','busy'].filter(s=>!sides.includes(s)),what=s=>`${prev.revoked?.[s]?'被撤销':'尚未通过'}的${sideName(s)}侧`;
+  modelNotice(sides.map(s=>{const r=result[s];return r.threshold!==null?`已用 ${r.from?`${formatDate(r.from)} 及之后的 `:''}${r.calibration_n} 条人工结论（${r.calibration_units} 个车位·日，${r.dates} 个日期）重新检验${what(s)}并通过：${ruleText(s,r.threshold)}，该侧抽检重新计数。`:`重新检验${what(s)}未通过：${sideReason(s)}，该侧继续送人工。继续复核${r.from?` ${formatDate(r.from)} 及之后`:'该侧'}送人工的快照，结论覆盖至少 2 个日期、该侧零错误时约 ${minimumEvidence(target[`alpha_${s}`],.05/(2*15))} 个车位·日后可再次重新校准。`;}).join('')+kept.map(s=>`${sideName(s)}侧阈值、校准证据与抽检计数不变。`).join(''));
+  return;
+ }
+ const dates=new Set(items.map(x=>x.date)).size,units=new Set(items.map(x=>x.unit)).size;
+ const routing={t_free:result.free.threshold,t_busy:result.busy.threshold,...target,delta:.05,per_test_level:result.free.per_test_level,calibration_n:items.length,calibration_units:units,unit:'camera-slot-date'};
+ const fails=['free','busy'].filter(s=>result[s].threshold===null),texts=fails.map(reason),failed=new Set(texts).size<=1?texts[0]||'':fails.map((s,i)=>`${sideName(s)}侧：${texts[i]}`).join('；');
+ onsiteRouting[current][camera]=withIds({routing,sides:{free:sideRecord(result.free,at),busy:sideRecord(result.busy,at)},attempts:{free:null,busy:null},dates,reason:failed,at,revoked:{free:null,busy:null}});changed=true;render();
+ modelNotice(certified(routing)?`已用 ${items.length} 条人工结论（${units} 个车位·日，${dates} 个日期）在校准数据上通过检验；本相机按阈值自动判定，其余送人工。这不保证以后的画面：约 ${AUDIT.fraction*100}% 车位·日会随机改为「抽检」送人工，抽检证据显示超标时自动撤销该侧阈值。`:`已检验 ${items.length} 条人工结论：${failed}，继续全部送人工。`);
 }catch(e){modelNotice(e.message,true);}});
 $('parking-adapt').addEventListener('click',()=>{try{
  const camera=frames[frameIndex].camera,items=cameraReviews(camera);if(!items.length)throw new Error('当前摄像头还没有已分析且人工确认的车位。');
@@ -567,6 +605,6 @@ $('parking-adapt').addEventListener('click',()=>{try{
  adaptations[current][camera]={...result,used:new Set(items.map(x=>x[0])),at:new Date().toISOString()};delete onsiteRouting[current][camera];rescoreCamera(camera);changed=true;render();
  modelNotice(`已用摄像头 ${camera} 的 ${result.n} 条人工结论（占用 ${result.busy} / 空闲 ${result.n-result.busy}）在本机自适应分类头，并重新计算本相机已分析车位。${result.busy===0||result.busy===result.n?'样本只含一种结论，偏差风险高。':''}原阈值已作废；请用之后新确认的结论重新校准。`);
 }catch(e){modelNotice(e.message,true);}});
-$('parking-adapt-reset').addEventListener('click',()=>{const camera=frames[frameIndex]?.camera;if(!camera)return;delete adaptations[current][camera];delete onsiteRouting[current][camera];rescoreCamera(camera);render();const log=driftLog[camera];modelNotice(`已清除摄像头 ${camera} 的现场自适应与校准，恢复源模型，全部送人工。${log?`抽检撤销记录保留，重新校准仍只用 ${formatDate(log.evidence_from)} 及之后的人工结论。`:''}`);});
+$('parking-adapt-reset').addEventListener('click',()=>{const camera=frames[frameIndex]?.camera;if(!camera)return;delete adaptations[current][camera];delete onsiteRouting[current][camera];rescoreCamera(camera);render();const log=driftLog[camera];modelNotice(`已清除摄像头 ${camera} 的现场自适应与校准，恢复源模型，全部送人工。${log?`抽检撤销记录保留，校准时${floorText(camera)}。`:''}`);});
 async function enter(){try{if(location.hash==='#parking')await loadData();else {stopPlayback();if(location.hash==='#results')await loadCore();}}catch(e){notice(e.message,true);$('parking-model-status').textContent='加载失败，可重试';$('parking-evaluation-content').textContent=`训练记录加载失败：${e.message}`;}}
 window.addEventListener('hashchange',enter);enter();
