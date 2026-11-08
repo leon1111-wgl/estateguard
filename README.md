@@ -1,9 +1,11 @@
 # EstateGuard · 社区智能巡检
 
+By [Leon Wang](https://leon1111-wgl.github.io/)
+
 **把监控线索变成能复核、能解释、能交接的物业事件。**
 Community inspection with in-browser vision: camera cues become property events a person can review, explain and hand over.
 
-[在线体验（中文版）](https://leon1111-wgl.github.io/estateguard/) · [代码](https://github.com/leon1111-wgl/estateguard) · [公开数据与训练](docs/PARKING_DATA.md) · [项目案例](docs/CASE_STUDY.md) · [模型卡](docs/MODEL_CARD.md) · [数据与接口](docs/DATA_CONTRACT.md) · [研究来源](docs/RESEARCH.md)
+[在线体验（中文版）](https://leon1111-wgl.github.io/estateguard/) · [代码](https://github.com/leon1111-wgl/estateguard) · [公开数据与训练](docs/PARKING_DATA.md) · [项目案例](docs/CASE_STUDY.md) · [模型卡](docs/MODEL_CARD.md) · [数据与接口](docs/DATA_CONTRACT.md) · [研究来源](docs/RESEARCH.md) · [前沿评估](docs/FRONTIER_REVIEW.md) · [更新记录](CHANGELOG.md)
 
 在浏览器本地运行，无后端、无素材上传 · 模拟早班为合成数据 · 尚未在真实小区验证准确率。
 
@@ -21,7 +23,7 @@ EstateGuard 将轻量视觉推理、场景规则、事件合并与人工复核�
 
 | 环节 | 可运行能力 |
 | --- | --- |
-| 公开数据车位巡检 | CNRPark 真实历史快照与 CNR-EXT 保留测试快照；三种占用模型可切换：DINOv2-small 线性探针（默认）、复用检测骨干的 MobileNetV2 迁移头、7,745 参数 MLP32 基线；逐时刻回放、全测试错例、人工结论恢复 |
+| 公开数据车位巡检 | CNRPark 真实历史快照与 CNR-EXT 保留测试快照，另一停车场 PKLot 的保留测试结果（白天，DINOv2 平衡正确率 98.95%）；三种占用模型可切换：DINOv2-small 线性探针（默认）、复用检测骨干的 MobileNetV2 迁移头、7,745 参数 MLP32 基线；逐时刻回放、全测试错例、人工结论恢复 |
 | 风险控制与现场适配 | 温度校准后的三态分流（自动判空闲 / 自动判占用 / 送人工），阈值须用本摄像头跨天人工结论按“车位·日”检验；人工结论驱动的 L2-SP 少样本自适应，全部在浏览器本地计算 |
 | 本地视觉推理 | 本站自托管两种检测器：默认 D-FINE-N（2024 实时检测 Transformer，ONNX Runtime Web），可切换回 SSDLite MobileNet V2；识别 COCO 80 类物体，显示检测框和分数。COCO val2017 测试半 AP 42.0 对 25.4 |
 | 图片与短视频 | JPEG/PNG/WebP、MP4/WebM；每秒采样一帧，单次最多 20 秒，可选片段起点 |
@@ -136,6 +138,14 @@ python3 scripts/audit_annotations.py data/annotations-example.json
 标注审计退出码：`0` 无发现，`1` 存在需检查的问题，`2` 文件或输入结构错误。分歧不会自动投票改成“真值”。
 
 浏览器检查为可选开发依赖：安装 Playwright 及 Chromium 后运行 `node scripts/browser-check.cjs`、`node scripts/model-check.cjs`、`node scripts/parking-check.cjs`、`node scripts/parking-transfer-check.cjs`、`node scripts/detector-check.cjs`。已有 Chrome 可通过 `CHROME_PATH` 指定；运行前启动本地服务。详见[验证记录](docs/VALIDATION.md)。
+
+涉及模型推理的浏览器检查只在 GitHub Actions 的 Browser checks 工作流中运行（推送 `feat/**` 分支或手动触发），每个 `scripts/*-check.cjs` 一个作业。其中 `release-walk-check` 走完整个访客流程（全部分页、1440 / 375 px、浅色 / 深色，默认 D-FINE-N 与 DINOv2 真实运行），`capability-fallback-check` 模拟不支持 WebAssembly SIMD 的浏览器。`parking-parity-check` 是唯一允许失败的作业：它把编码器分数一致性固定在 macOS 发布运行上，Linux 运行器上有已登记的 1.55e-6 差异。
+
+**用自己的图片探测**：手动运行 Browser checks，并在 `image_urls` 填入图片或短视频地址（空格、逗号或换行分隔，最多 20 个）。这时只运行 `probe` 作业，它把每个文件交给页面真实的「视频与图片分析」（可选也交给「测试自己的车位图片」），产物 `probe-<run id>` 包含每个文件的检测 JSON、带框截图和 `summary.md`。
+
+```bash
+gh workflow run browser-checks.yml -R leon1111-wgl/estateguard --ref main -f image_urls="https://example.org/a.jpg https://example.org/b.png" -f detector=dfine -f parking=true
+```
 
 ## 效果如何理解
 

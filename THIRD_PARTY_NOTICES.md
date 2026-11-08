@@ -37,3 +37,7 @@ CNR-EXT 来自 Amato、Carrara、Falchi、Gennaro、Meghini、Vairo，*Deep lear
 ## COCO val2017 评测（2026-10-19）
 
 检测器对比使用 COCO val2017 的 5,000 张图片与 `instances_val2017.json`（标注 CC BY 4.0，[cocodataset.org](https://cocodataset.org/#termsofuse)）。图片按各自 Flickr 许可只在本地评测，评测后删除，不随仓库发布；仓库只发布汇总指标与逐类结果（`web/data/detector/evaluation.json`）。
+
+## PKLot 保留测试（2026-10-20）
+
+PKLot 来自 Almeida、Oliveira、Silva Jr、Britto Jr、Koerich，*PKLot – A robust dataset for parking lot classification*，Expert Systems with Applications 42(11) (2015) 4937–4949，[官方页](https://web.inf.ufpr.br/vri/databases/parking-lot-database/)，按 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 使用。仓库只发布由它派生的逐车位分数与评测结果（`docs/validation/pklot-predictions.csv.gz`、`pklot-evaluation.json`、`pklot-drift-replay.json`）；没有发布任何图片。改动：每半小时保留一张快照，车位图双线性缩放到 150×150，排除缺少标签与重复的车位图，详见 [协议附录 7–7.2](docs/validation/parking-transfer-protocol.md)。

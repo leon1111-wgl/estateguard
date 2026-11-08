@@ -2,6 +2,7 @@ import {trackDetections,makeCandidates,VISION_RULE_SETTINGS} from './vision-rule
 import {createModelAssetLoader,registerModelRoute} from './model-assets.mjs';
 import {loadDfineDetector} from './detector-dfine.mjs';
 import {wasmSimdSupported,ORT_UNSUPPORTED,effectiveType,unsupportedHint} from './capabilities.mjs';
+import {COCO_NAMES_ZH} from './coco-names.mjs';
 import {parseRecordingTime,confirmContext,isContextConfirmed,validateContext,reusableScene,restoreScene} from './media-context.mjs';
 const $=id=>document.getElementById(id);
 const inferenceSettings=Object.freeze({sample_interval_seconds:1,max_frames:20,...VISION_RULE_SETTINGS});
@@ -14,7 +15,7 @@ const ortSupported=wasmSimdSupported();
 if(!ortSupported){const option=$('vision-detector').querySelector('option[value="dfine"]');option.disabled=true;option.textContent='D-FINE-N（此浏览器无法运行）';}
 const defaultScores={ssdlite:.5,dfine:.5},backendLabels={};let detectorEvaluation=null,detectorTouched=false;
 const detectorKey=()=>DETECTORS[$('vision-detector').value]&&($('vision-detector').value!=='dfine'||ortSupported)?$('vision-detector').value:'ssdlite';
-const names={person:'人员',bicycle:'自行车',car:'小汽车',motorcycle:'摩托车',bus:'公交 / 大巴',truck:'卡车',chair:'椅子',couch:'沙发',bed:'床',suitcase:'行李箱','dining table':'餐桌',refrigerator:'冰箱',backpack:'背包',handbag:'手提包',bottle:'瓶子',cat:'猫',dog:'狗',tv:'电视'};
+const names=COCO_NAMES_ZH;
 const models={},modelPromises={},loadStats={};let modelController=null,modelLoadStats=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0;
 let mediaRevision=0,geometry=null,contextConfirmation=null,savedScene=null,savedSceneRevision=0,contextHint='';
 // Frames are at most 960 px wide (unchanged) and, new, at most 1920 px tall: an extreme portrait image would otherwise
@@ -130,7 +131,7 @@ function releaseSource(media,url){if(media?.tagName==='VIDEO'){media.pause();med
 async function openFile(file,ticket=++sourceGeneration){if(busy){notice('分析进行中，请先停止，再更换素材。',true);return false;}if(!file||ticket!==sourceGeneration)return false;let nextSource=null,nextURL=null;setMediaLoading(true);
  try{if(file.size>100*1024*1024)throw new Error('素材超过 100 MB，请先截取短片段。');const type=await effectiveType(file);if(ticket!==sourceGeneration)return false;
  if(!['image/jpeg','image/png','image/webp','video/mp4','video/webm'].includes(type))throw new Error(unsupportedHint(type,file.name)||'请选择 JPEG / PNG / WebP 图片或 MP4 / WebM 视频。');
- if(!file.type)file=new File([file],file.name,{type,lastModified:file.lastModified});
+ if(file.type!==type)file=new File([file],file.name,{type,lastModified:file.lastModified});
  notice(`正在打开 ${file.name}…`);nextURL=URL.createObjectURL(file);const nextIsVideo=file.type.startsWith('video/');
  if(nextIsVideo){nextSource=document.createElement('video');nextSource.preload='auto';nextSource.muted=true;nextSource.playsInline=true;
   await new Promise((resolve,reject)=>{const cleanup=()=>{clearTimeout(timer);nextSource.removeEventListener('loadeddata',ok);nextSource.removeEventListener('error',bad);};const ok=()=>{cleanup();resolve();};const bad=()=>{cleanup();reject(new Error('浏览器无法读取此视频编码'));};const timer=setTimeout(()=>{cleanup();reject(new Error('视频读取超时，请使用可播放的 MP4 / WebM。'));},10000);nextSource.addEventListener('loadeddata',ok);nextSource.addEventListener('error',bad);nextSource.src=nextURL;nextSource.load();});

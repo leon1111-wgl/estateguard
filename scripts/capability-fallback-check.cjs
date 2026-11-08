@@ -12,7 +12,7 @@ const heic=Buffer.concat([Buffer.from([0,0,0,24]),Buffer.from('ftypheic'),Buffer
 const report={checked_at:new Date().toISOString(),base,checks:[],page_errors:[],external_requests:[],onnx_requests:[]};
 const test=async(name,fn)=>{const evidence={};try{await fn(evidence);report.checks.push({name,passed:true,evidence});console.log('PASS: '+name);}catch(e){report.checks.push({name,passed:false,error:e.message,evidence});console.error('FAIL: '+name+': '+e.message);}};
 // Only the SIMD probe is rejected, so every other WebAssembly use behaves as in that browser.
-const noSimd=()=>{const validate=WebAssembly.validate;WebAssembly.validate=function(bytes){const b=bytes instanceof Uint8Array?bytes:new Uint8Array(bytes.buffer||bytes);if(b.length===31&&b[25]===253&&b[27]===253)return false;return validate.apply(this,arguments);};};
+const noSimd=()=>{const probe=[0,97,115,109,1,0,0,0,1,5,1,96,0,1,123,3,2,1,0,10,10,1,8,0,65,0,253,15,253,98,11],validate=WebAssembly.validate;WebAssembly.validate=function(bytes){const b=bytes instanceof Uint8Array?bytes:new Uint8Array(bytes.buffer||bytes);if(b.length===probe.length&&probe.every((x,i)=>b[i]===x))return false;return validate.apply(this,arguments);};};
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});report.browser=await browser.version();
  const open=async(simd)=>{const p=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});p.setDefaultTimeout(120000);p.on('dialog',d=>d.accept());

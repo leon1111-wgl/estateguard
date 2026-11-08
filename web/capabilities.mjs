@@ -28,9 +28,10 @@ export function sniffType(bytes){
  for(const [type,match] of SIGNATURES)if(match(b))return type;
  return '';
 }
-/** The type the page should treat a file as: the picker's MIME type, or the sniffed one when that is missing. */
+/** The type the page should treat a file as: the picker's MIME type, or the sniffed one when the picker gave none or
+ * only the generic application/octet-stream (some pickers and download managers do). */
 export async function effectiveType(file){
- if(file.type)return file.type;
+ if(file.type&&file.type!=='application/octet-stream')return file.type;
  try{return sniffType(new Uint8Array(await file.slice(0,16).arrayBuffer()));}catch{return '';}
 }
 /** A specific reason for common unsupported photo formats; null when the generic message is enough. */

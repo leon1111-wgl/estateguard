@@ -173,8 +173,8 @@ function renderDetail(){
  retry.addEventListener('click',()=>{if(selected!==r.id)return;evidenceAttempts.set(r.id,String(Date.now()));imageURL.searchParams.set('retry',evidenceAttempts.get(r.id));retry.disabled=true;imageStatus.classList.remove('error');imageStatus.textContent='正在重新读取复核原图…';image.src=imageURL.href;});
  const d=drafts.get(r.id)||reviews[r.id]||{decision:'pending',note:''};$('parking-decision').value=d.decision;$('parking-note').value=d.note;
 }
-async function imageSize(url){const image=new Image();image.src=url;let timer;try{await Promise.race([image.decode(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('图片读取超时，请重试')),15000);})]);return [image.naturalWidth,image.naturalHeight];}finally{clearTimeout(timer);image.src='';}}
-async function pixels(url){const image=new Image();image.src=url;let timer;try{await Promise.race([image.decode(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('图片读取超时，请重试')),15000);})]);}catch(error){image.src='';throw error;}finally{clearTimeout(timer);}if(image.naturalWidth*image.naturalHeight>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');const c=document.createElement('canvas');c.width=image.naturalWidth;c.height=image.naturalHeight;if(c.width*c.height>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0);const source=ctx.getImageData(0,0,c.width,c.height).data;const out=new Uint8ClampedArray(4096);for(let y=0;y<32;y++)for(let x=0;x<32;x++){const sx=Math.floor((x+.5)*c.width/32),sy=Math.floor((y+.5)*c.height/32),i=(sy*c.width+sx)*4;out.set(source.subarray(i,i+4),(y*32+x)*4);}return out;}
+const sceneNote=({width,height})=>Math.max(width,height)>600?`<p class="subtle">图片为 ${width}×${height} 像素。模型在约 150×150 的单车位裁剪图上训练与评测；如果画面里不止一个车位，这个分数没有意义，整幅画面可在<a href="#analyze">视频与图片分析</a>中检测车辆。</p>`:'';
+async function pixels(url,size={}){const image=new Image();image.src=url;let timer;try{await Promise.race([image.decode(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('图片读取超时，请重试')),15000);})]);}catch(error){image.src='';throw error;}finally{clearTimeout(timer);}if(image.naturalWidth*image.naturalHeight>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');size.width=image.naturalWidth;size.height=image.naturalHeight;const c=document.createElement('canvas');c.width=image.naturalWidth;c.height=image.naturalHeight;if(c.width*c.height>40000000)throw new Error('图片分辨率过大，请先裁剪单个车位');const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0);const source=ctx.getImageData(0,0,c.width,c.height).data;const out=new Uint8ClampedArray(4096);for(let y=0;y<32;y++)for(let x=0;x<32;x++){const sx=Math.floor((x+.5)*c.width/32),sy=Math.floor((y+.5)*c.height/32),i=(sy*c.width+sx)*4;out.set(source.subarray(i,i+4),(y*32+x)*4);}return out;}
 function updateAnalysisControls(){
  for(const id of ['parking-run','parking-upload','parking-model-choice'])$(id).disabled=running||!!analysisPromise||uploadPending;
  $('parking-play').disabled=uploadPending;
@@ -337,21 +337,21 @@ $('parking-upload').addEventListener('change',async e=>{
  uploadNotice(`正在分析「${file.name}」…${retained()}`);
  try{
   await waitForUploadCore(job.controller.signal);check();const key=current;job.key=key;url=URL.createObjectURL(file);let html;
-  stage='image';const [width,height]=await imageSize(url);check();
-  // The models were trained and scored on ~150 px single-slot crops; a large image is most likely a whole scene.
-  const scene=Math.max(width,height)>600?`<p class="subtle">图片为 ${width}×${height} 像素。模型在约 150×150 的单车位裁剪图上训练与评测；如果画面里不止一个车位，这个分数没有意义，整幅画面可在<a href="#analyze">视频与图片分析</a>中检测车辆。</p>`:'';
+  // Sizes come from the decode each path already does. The models were trained and scored on ~150 px single-slot
+  // crops, so a large image is most likely a whole scene and gets a note before its score.
+  const size={};
   if(key==='mlp32'){
-   stage='image';const data=await pixels(url);check();stage='inference';const score=predictPatch(data,model);
+   stage='image';const data=await pixels(url,size);check();stage='inference';const score=predictPatch(data,model);
    html=`<p>${labels[classifyScore(score)]} · 占用分数 ${(score*100).toFixed(2)}% · MLP32</p>`;
   }else{
    stage='model';const encoder=await ensureEncoder(key,{onProgress:line=>{if(uploadJob===job&&!job.controller.signal.aborted)uploadNotice(`${line}。可取消。${retained()}`);}});check();
-   stage='image';uploadNotice(`正在读取「${file.name}」…${retained()}`);const bitmap=await decodeImage(url,{signal:job.controller.signal});let z;
+   stage='image';uploadNotice(`正在读取「${file.name}」…${retained()}`);const bitmap=await decodeImage(url,{signal:job.controller.signal});size.width=bitmap.width;size.height=bitmap.height;let z;
    try{check();stage='inference';uploadNotice(`正在计算「${file.name}」…${retained()}`);z=await encoder.embed(bitmap);check();}finally{bitmap.close();}
    const {score,calibrated}=predictHead(z,heads[key]);
    html=`<p>${calibrated>=.5?'倾向占用':'倾向空闲'} · 校准后占用概率 ${(calibrated*100).toFixed(2)}%（未校准 ${(score*100).toFixed(2)}%）· ${text(ENCODERS[key].label)}</p><p class="subtle">新画面没有现场风险校准，按规则应送人工复核。</p>`;
   }
   check();const previous=uploadURL;
-  $('parking-upload-result').innerHTML=`<img src="${url}" alt="本地单车位裁剪图"><strong>${text(file.name)}</strong>${html}${scene}<p class="subtle">新场景结果未经验证，没有数据集标签可对照。不是违规判断。</p>`;
+  $('parking-upload-result').innerHTML=`<img src="${url}" alt="本地单车位裁剪图"><strong>${text(file.name)}</strong>${sceneNote(size)}${html}<p class="subtle">新场景结果未经验证，没有数据集标签可对照。不是违规判断。</p>`;
   uploadURL=url;url=null;if(previous)URL.revokeObjectURL(previous);
   uploadNotice(`已完成「${file.name}」的分析。`);
  }catch(error){
