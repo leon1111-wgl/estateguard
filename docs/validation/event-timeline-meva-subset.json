@@ -1,0 +1,386 @@
+{
+ "written": "2026-11-09",
+ "source": {
+  "annotations": "gitlab.kitware.com/meva/meva-data-repo @ 421841a75577b697c314e952e585aecbb1b99e17, annotation/DIVA-phase-2/MEVA/kitware (evaluation-level)",
+  "videos": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13",
+  "licence": "CC BY 4.0 (mevadata.org; repository LICENSE)"
+ },
+ "salt": "estateguard-event-timeline-2026-11",
+ "annotated_clips": 769,
+ "split": {
+  "rule": "cameras ordered by sha256(salt:camera); the first third are dev, the rest test",
+  "dev_cameras": [
+   "G299",
+   "G300",
+   "G336",
+   "G424",
+   "G474",
+   "G479",
+   "G505",
+   "G506",
+   "G509"
+  ],
+  "test_cameras": [
+   "G301",
+   "G326",
+   "G328",
+   "G329",
+   "G330",
+   "G331",
+   "G339",
+   "G340",
+   "G341",
+   "G419",
+   "G420",
+   "G421",
+   "G423",
+   "G436",
+   "G475",
+   "G476",
+   "G508",
+   "G638",
+   "G639"
+  ]
+ },
+ "order": "clips ordered by sha256(salt:clip name), at most 2 per camera",
+ "dev_candidates": [
+  {
+   "name": "2018-03-11.11-40-04.11-45-04.school.G300",
+   "site": "school",
+   "camera": "G300",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-40-04.11-45-04.school.G300.r13.avi",
+   "bytes": 141571496
+  },
+  {
+   "name": "2018-03-12.11-10-02.11-15-02.school.G336",
+   "site": "school",
+   "camera": "G336",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-12/11/2018-03-12.11-10-02.11-15-02.school.G336.r13.avi",
+   "bytes": 157821516
+  },
+  {
+   "name": "2018-03-07.17-05-01.17-10-01.bus.G505",
+   "site": "bus",
+   "camera": "G505",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/17/2018-03-07.17-05-01.17-10-01.bus.G505.r13.avi",
+   "bytes": 139777468
+  },
+  {
+   "name": "2018-03-09.10-15-00.10-20-00.school.G300",
+   "site": "school",
+   "camera": "G300",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-09/10/2018-03-09.10-15-00.10-20-00.school.G300.r13.avi",
+   "bytes": 131207948
+  },
+  {
+   "name": "2018-03-15.15-30-01.15-35-01.bus.G506",
+   "site": "bus",
+   "camera": "G506",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.15-30-01.15-35-01.bus.G506.r13.avi",
+   "bytes": 168742974
+  },
+  {
+   "name": "2018-03-07.17-25-06.17-30-06.school.G424",
+   "site": "school",
+   "camera": "G424",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/17/2018-03-07.17-25-06.17-30-06.school.G424.r13.avi",
+   "bytes": 118298982
+  },
+  {
+   "name": "2018-03-13.16-20-03.16-25-03.school.G424",
+   "site": "school",
+   "camera": "G424",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-13/16/2018-03-13.16-20-03.16-25-03.school.G424.r13.avi",
+   "bytes": 219860078
+  },
+  {
+   "name": "2018-03-11.11-40-00.11-45-00.school.G336",
+   "site": "school",
+   "camera": "G336",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-40-00.11-45-00.school.G336.r13.avi",
+   "bytes": 156657504
+  },
+  {
+   "name": "2018-03-07.17-05-00.17-10-00.bus.G509",
+   "site": "bus",
+   "camera": "G509",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/17/2018-03-07.17-05-00.17-10-00.bus.G509.r13.avi",
+   "bytes": 205037650
+  },
+  {
+   "name": "2018-03-11.11-20-00.11-25-00.school.G299",
+   "site": "school",
+   "camera": "G299",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-20-00.11-25-00.school.G299.r13.avi",
+   "bytes": 156966208
+  },
+  {
+   "name": "2018-03-15.15-45-01.15-50-01.bus.G506",
+   "site": "bus",
+   "camera": "G506",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/15/2018-03-15.15-45-01.15-50-01.bus.G506.r13.avi",
+   "bytes": 156761018
+  },
+  {
+   "name": "2018-03-09.10-10-01.10-15-01.bus.G505",
+   "site": "bus",
+   "camera": "G505",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-09/10/2018-03-09.10-10-01.10-15-01.bus.G505.r13.avi",
+   "bytes": 193264050
+  },
+  {
+   "name": "2018-03-13.17-05-00.17-10-00.school.G299",
+   "site": "school",
+   "camera": "G299",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-13/17/2018-03-13.17-05-00.17-10-00.school.G299.r13.avi",
+   "bytes": 140720802
+  },
+  {
+   "name": "2018-03-11.16-35-00.16-40-00.bus.G509",
+   "site": "bus",
+   "camera": "G509",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/16/2018-03-11.16-35-00.16-40-00.bus.G509.r13.avi",
+   "bytes": 201429264
+  },
+  {
+   "name": "2018-03-11.16-35-00.16-40-00.hospital.G479",
+   "site": "hospital",
+   "camera": "G479",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/16/2018-03-11.16-35-00.16-40-00.hospital.G479.r13.avi",
+   "bytes": 1991690
+  },
+  {
+   "name": "2018-03-11.16-30-00.16-35-00.hospital.G479",
+   "site": "hospital",
+   "camera": "G479",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/16/2018-03-11.16-30-00.16-35-00.hospital.G479.r13.avi",
+   "bytes": 2049446
+  }
+ ],
+ "test_candidates": [
+  {
+   "name": "2018-03-11.11-30-00.11-35-00.school.G423",
+   "site": "school",
+   "camera": "G423",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-30-00.11-35-00.school.G423.r13.avi",
+   "bytes": 80742106
+  },
+  {
+   "name": "2018-03-09.10-25-00.10-30-00.school.G421",
+   "site": "school",
+   "camera": "G421",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-09/10/2018-03-09.10-25-00.10-30-00.school.G421.r13.avi",
+   "bytes": 109498108
+  },
+  {
+   "name": "2018-03-11.11-40-08.11-45-08.hospital.G436",
+   "site": "hospital",
+   "camera": "G436",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-40-08.11-45-08.hospital.G436.r13.avi",
+   "bytes": 138774218
+  },
+  {
+   "name": "2018-03-12.10-45-00.10-50-00.hospital.G301",
+   "site": "hospital",
+   "camera": "G301",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-12/10/2018-03-12.10-45-00.10-50-00.hospital.G301.r13.avi",
+   "bytes": 118750984
+  },
+  {
+   "name": "2018-03-11.11-45-01.11-50-01.school.G638",
+   "site": "school",
+   "camera": "G638",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-45-01.11-50-01.school.G638.r13.avi",
+   "bytes": 193181410
+  },
+  {
+   "name": "2018-03-09.10-10-00.10-15-00.school.G421",
+   "site": "school",
+   "camera": "G421",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-09/10/2018-03-09.10-10-00.10-15-00.school.G421.r13.avi",
+   "bytes": 115097936
+  },
+  {
+   "name": "2018-03-07.11-10-01.11-15-01.admin.G329",
+   "site": "admin",
+   "camera": "G329",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/11/2018-03-07.11-10-01.11-15-01.admin.G329.r13.avi",
+   "bytes": 148149212
+  },
+  {
+   "name": "2018-03-09.10-25-01.10-30-01.school.G420",
+   "site": "school",
+   "camera": "G420",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-09/10/2018-03-09.10-25-01.10-30-01.school.G420.r13.avi",
+   "bytes": 59620028
+  },
+  {
+   "name": "2018-03-15.14-55-00.15-00-00.school.G639",
+   "site": "school",
+   "camera": "G639",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/14/2018-03-15.14-55-00.15-00-00.school.G639.r13.avi",
+   "bytes": null
+  },
+  {
+   "name": "2018-03-11.11-20-00.11-25-00.school.G328",
+   "site": "school",
+   "camera": "G328",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-20-00.11-25-00.school.G328.r13.avi",
+   "bytes": 112627400
+  },
+  {
+   "name": "2018-03-07.11-05-00.11-10-00.bus.G508",
+   "site": "bus",
+   "camera": "G508",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/11/2018-03-07.11-05-00.11-10-00.bus.G508.r13.avi",
+   "bytes": 108781640
+  },
+  {
+   "name": "2018-03-05.14-10-00.14-15-00.school.G330",
+   "site": "school",
+   "camera": "G330",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-05/14/2018-03-05.14-10-00.14-15-00.school.G330.r13.avi",
+   "bytes": 146083598
+  },
+  {
+   "name": "2018-03-11.16-45-00.16-50-00.school.G330",
+   "site": "school",
+   "camera": "G330",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/16/2018-03-11.16-45-00.16-50-00.school.G330.r13.avi",
+   "bytes": 150012378
+  },
+  {
+   "name": "2018-03-11.14-15-08.14-20-08.bus.G340",
+   "site": "bus",
+   "camera": "G340",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/14/2018-03-11.14-15-08.14-20-08.bus.G340.r13.avi",
+   "bytes": 137185794
+  },
+  {
+   "name": "2018-03-07.11-05-04.11-10-04.hospital.G341",
+   "site": "hospital",
+   "camera": "G341",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/11/2018-03-07.11-05-04.11-10-04.hospital.G341.r13.avi",
+   "bytes": 205553942
+  },
+  {
+   "name": "2018-03-07.16-50-01.16-55-01.school.G423",
+   "site": "school",
+   "camera": "G423",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/16/2018-03-07.16-50-01.16-55-01.school.G423.r13.avi",
+   "bytes": 95711948
+  },
+  {
+   "name": "2018-03-15.14-50-04.14-55-04.bus.G340",
+   "site": "bus",
+   "camera": "G340",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-15/14/2018-03-15.14-50-04.14-55-04.bus.G340.r13.avi",
+   "bytes": 139340000
+  },
+  {
+   "name": "2018-03-12.11-00-00.11-05-00.hospital.G436",
+   "site": "hospital",
+   "camera": "G436",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-12/11/2018-03-12.11-00-00.11-05-00.hospital.G436.r13.avi",
+   "bytes": 155554852
+  },
+  {
+   "name": "2018-03-07.17-30-01.17-35-01.school.G419",
+   "site": "school",
+   "camera": "G419",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/17/2018-03-07.17-30-01.17-35-01.school.G419.r13.avi",
+   "bytes": 73878000
+  },
+  {
+   "name": "2018-03-11.11-30-00.11-35-00.admin.G329",
+   "site": "admin",
+   "camera": "G329",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-30-00.11-35-00.admin.G329.r13.avi",
+   "bytes": 132665208
+  },
+  {
+   "name": "2018-03-11.16-20-00.16-25-00.bus.G331",
+   "site": "bus",
+   "camera": "G331",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/16/2018-03-11.16-20-00.16-25-00.bus.G331.r13.avi",
+   "bytes": 87225020
+  },
+  {
+   "name": "2018-03-13.15-50-01.15-55-01.school.G419",
+   "site": "school",
+   "camera": "G419",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-13/15/2018-03-13.15-50-01.15-55-01.school.G419.r13.avi",
+   "bytes": 91862558
+  },
+  {
+   "name": "2018-03-11.14-15-01.14-20-01.school.G639",
+   "site": "school",
+   "camera": "G639",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/14/2018-03-11.14-15-01.14-20-01.school.G639.r13.avi",
+   "bytes": 159780858
+  },
+  {
+   "name": "2018-03-11.11-30-01.11-35-01.school.G638",
+   "site": "school",
+   "camera": "G638",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/11/2018-03-11.11-30-01.11-35-01.school.G638.r13.avi",
+   "bytes": 199976594
+  },
+  {
+   "name": "2018-03-07.17-35-06.17-40-06.school.G339",
+   "site": "school",
+   "camera": "G339",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/17/2018-03-07.17-35-06.17-40-06.school.G339.r13.avi",
+   "bytes": 92092110
+  },
+  {
+   "name": "2018-03-07.11-05-00.11-10-00.admin.G326",
+   "site": "admin",
+   "camera": "G326",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/11/2018-03-07.11-05-00.11-10-00.admin.G326.r13.avi",
+   "bytes": 109926980
+  },
+  {
+   "name": "2018-03-07.10-55-07.11-00-07.school.G339",
+   "site": "school",
+   "camera": "G339",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/10/2018-03-07.10-55-07.11-00-07.school.G339.r13.avi",
+   "bytes": null
+  },
+  {
+   "name": "2018-03-11.16-35-01.16-40-01.school.G328",
+   "site": "school",
+   "camera": "G328",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/16/2018-03-11.16-35-01.16-40-01.school.G328.r13.avi",
+   "bytes": 123254504
+  },
+  {
+   "name": "2018-03-11.17-20-01.17-25-01.school.G420",
+   "site": "school",
+   "camera": "G420",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/17/2018-03-11.17-20-01.17-25-01.school.G420.r13.avi",
+   "bytes": 76968348
+  },
+  {
+   "name": "2018-03-07.17-20-07.17-25-07.hospital.G301",
+   "site": "hospital",
+   "camera": "G301",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-07/17/2018-03-07.17-20-07.17-25-07.hospital.G301.r13.avi",
+   "bytes": 101492668
+  },
+  {
+   "name": "2018-03-05.13-20-01.13-25-01.bus.G331",
+   "site": "bus",
+   "camera": "G331",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-05/13/2018-03-05.13-20-01.13-25-01.bus.G331.r13.avi",
+   "bytes": 67181226
+  },
+  {
+   "name": "2018-03-11.16-20-08.16-25-08.hospital.G341",
+   "site": "hospital",
+   "camera": "G341",
+   "video": "https://mevadata-public-01.s3.amazonaws.com/drops-123-r13/2018-03-11/16/2018-03-11.16-20-08.16-25-08.hospital.G341.r13.avi",
+   "bytes": 132829414
+  }
+ ]
+}
