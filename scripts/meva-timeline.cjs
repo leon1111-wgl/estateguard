@@ -12,6 +12,7 @@ const args=Object.fromEntries(process.argv.slice(2).reduce((p,v,i,all)=>i%2?p:[.
 const clips=JSON.parse(fs.readFileSync(args.clips,'utf8')),out=path.resolve(args.out),workers=Math.max(1,Number(args.workers||4));
 fs.mkdirSync(out,{recursive:true});
 const INTERVAL=1,MAX_FRAMES=300,FLOOR=.25;
+const LANE=args.lane||null,LANE_FLOOR=Number(args['lane-floor']||.05);
 const run=(cmd,a)=>execFileSync(cmd,a,{encoding:'utf8',maxBuffer:1<<26});
 async function download(url,file){
  const r=await fetch(url);if(!r.ok)throw new Error(`HTTP ${r.status} for ${url}`);
@@ -25,6 +26,14 @@ async function setup(browser,external){
  await page.route(`${base}/__eval.html`,route=>route.fulfill({status:200,contentType:'text/html',body:'<!doctype html><meta charset="utf-8"><title>eval</title>'}));
  await page.route(`${base}/__frames/**`,route=>{const name=path.basename(new URL(route.request().url()).pathname);route.fulfill({status:200,contentType:'image/png',body:fs.readFileSync(path.join(page.frameDir,name))});});
  await page.goto(base+'/__eval.html');
+ // --lane <candidate> (0.6.0, docs/validation/open-vocab-protocol.md appendix 4): the open-vocabulary lane instead of
+ // D-FINE-N on the same frames, at the frozen lane threshold; weights from the local mirror of the pinned files.
+ if(LANE)return {context,page,backend:await page.evaluate(async({base,lane,floor})=>{
+  const ov=await import(base+'/open-vocab.mjs'),model=await ov.loadOpenVocab(lane,{remoteHost:base+'/__hf/'}),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
+  window.detectFrame=async url=>{const bitmap=await createImageBitmap(await (await fetch(url)).blob());canvas.width=bitmap.width;canvas.height=bitmap.height;ctx.drawImage(bitmap,0,0);bitmap.close();
+   const t=performance.now(),p=await model.detect(canvas,{floor,maxDetections:50});
+   return {ms:performance.now()-t,detections:p.map(d=>({class:d.class,score:Math.round(d.score*1e6)/1e6,bbox:[d.bbox[0]/canvas.width,d.bbox[1]/canvas.height,d.bbox[2]/canvas.width,d.bbox[3]/canvas.height].map(v=>Math.round(Math.max(0,v)*1e5)/1e5)}))};};
+  return `open-vocab ${lane} · wasm 1 thread`;},{base,lane:LANE,floor:LANE_FLOOR})};
  const backend=await page.evaluate(async({base,floor})=>{
   const {loadDfineDetector}=await import(base+'/detector-dfine.mjs');
   const detector=await loadDfineDetector({numThreads:1}),canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
@@ -55,7 +64,7 @@ async function setup(browser,external){
     await Promise.all(pages.map(async p=>{p.page.frameDir=frames;while(next<files.length){const i=next++;results[i]=await p.page.evaluate(u=>window.detectFrame(u),`${base}/__frames/${files[i]}`);}}));
     const t3=Date.now(),ms=results.map(r=>r.ms).sort((a,b)=>a-b);
     const record={clip:clip.name,video:{url:clip.video,bytes:dl.bytes,sha256:dl.sha256,codec:s.codec_name,width:s.width,height:s.height,fps,duration_seconds:duration},
-     sampling:{interval_seconds:INTERVAL,step_frames:step,analysed_width:w,analysed_height:h,detection_floor:FLOOR,max_detections:50},
+     sampling:{interval_seconds:INTERVAL,step_frames:step,analysed_width:w,analysed_height:h,detection_floor:LANE?LANE_FLOOR:FLOOR,max_detections:50,...(LANE?{detector:`open-vocab ${LANE}`}:{})},
      frames:results.map((r,k)=>({frame:k*step,time:k*step/fps,detections:r.detections})),
      timing_seconds:{download:(t1-t0)/1000,extract:(t2-t1)/1000,detect:(t3-t2)/1000,detect_ms_p50:ms[Math.floor(ms.length/2)],detect_ms_p95:ms[Math.floor(ms.length*.95)]}};
     fs.writeFileSync(path.join(out,`${clip.name}.json`),JSON.stringify(record));

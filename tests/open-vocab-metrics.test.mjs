@@ -63,3 +63,13 @@ test('lane boxes feed the corridor and lift rules, labelled and at lower evidenc
  assert.equal(coco[0].quality,.4);assert.equal(coco[0].source,undefined);
  assert.ok(!OPEN_VOCAB_RULE_CLASSES.access.includes('fire_extinguisher')&&!OPEN_VOCAB_RULE_CLASSES.lift.includes('trash_can'));
 });
+import {mergeFrames,LEFT_OBJECT_CLASSES} from '../scripts/open-vocab-meva.mjs';
+test('MEVA re-score merge: only frozen left-object classes at or above the threshold join, as carried objects',()=>{
+ const dfine={clip:'c',frames:[{frame:0,time:0,detections:[{class:'person',score:.9,bbox:[0,0,.1,.1]}]},{frame:30,time:1,detections:[]}]};
+ const lane={clip:'c',frames:[{frame:0,time:0,detections:[{class:'box',score:.32,bbox:[.5,.5,.1,.1]},{class:'box',score:.1,bbox:[.1,.5,.1,.1]},{class:'ladder',score:.9,bbox:[.2,.2,.1,.1]},{class:'crate',score:.5,bbox:[.3,.3,.1,.1]}]},{frame:30,time:1,detections:[]}]};
+ const {record,added}=mergeFrames(dfine,lane,{candidate:'B-q8',threshold:.3,classes:['box','ladder']});
+ assert.equal(added,1);const extra=record.frames[0].detections.filter(d=>d.lane_class);
+ assert.deepEqual(extra.map(d=>[d.class,d.score,d.lane_class]),[['suitcase',.4,'box']]);
+ assert.equal(record.frames[0].detections[0].class,'person');assert.ok(!LEFT_OBJECT_CLASSES.includes('ladder'));
+ assert.throws(()=>mergeFrames(dfine,{clip:'c',frames:[lane.frames[0]]},{threshold:.3,classes:['box']}));
+});
