@@ -1,0 +1,68 @@
+name: Open-vocabulary lane evaluation
+# docs/validation/open-vocab-protocol.md. Weights, LVIS images and labels exist only on the runner; artifacts hold
+# timings, detections, counts and metrics. Trigger: push to ovd-run/latency|dev|test|meva, or dispatch after merge.
+on:
+  push:
+    branches: ['ovd-run/**']
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'latency (stage 1, label-free), dev (selects configuration), test (frozen, once), meva (object-left re-score)'
+        required: true
+        default: latency
+        type: choice
+        options: [latency, dev, test, meva]
+permissions:
+  contents: read
+concurrency:
+  group: ovd-eval-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      stage: ${{ steps.plan.outputs.stage }}
+    steps:
+      - id: plan
+        env:
+          INPUT_STAGE: ${{ inputs.stage }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          stage="${INPUT_STAGE:-${REF_NAME#ovd-run/}}"
+          case "$stage" in latency|dev|test|meva) ;; *) echo "unknown stage $stage"; exit 1;; esac
+          echo "stage=$stage" >> "$GITHUB_OUTPUT"
+  latency:
+    needs: plan
+    if: needs.plan.outputs.stage == 'latency'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        candidate: [A-q8, A-q4, B-q8, C-q8, C-q4]
+    env:
+      ESTATEGUARD_URL: http://127.0.0.1:8766
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package.json') }}
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/open-vocab-mirror.mjs ${{ matrix.candidate }}
+      - name: Serve web/
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory web > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS -o /dev/null "$ESTATEGUARD_URL/" && exit 0; sleep 1; done; exit 1
+      - run: node scripts/open-vocab-latency.cjs ${{ matrix.candidate }}
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ovd-latency-${{ matrix.candidate }}
+          path: artifacts/open-vocab/
+          if-no-files-found: ignore
+          retention-days: 30
