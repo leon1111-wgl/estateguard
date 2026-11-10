@@ -22,8 +22,8 @@ export const TIMELINE_SETTINGS=Object.freeze({
  sample_interval_seconds:1,   // fixed sampling rate (1 frame per second), same as the existing analysis
  max_frames:300,              // at most 5 minutes per run
  detection_floor:.25,         // detections at or above this may extend an existing track (second, low-score stage)
- minimum_score:.5,            // new tracks need this; fixed before scoring, re-chosen on MEVA dev only (protocol)
- dwell_seconds:3,             // stationary time before a stop / left object is confirmed (protocol)
+ minimum_score:.4,            // new tracks need this; chosen on MEVA dev (run 42725109355), then frozen (protocol)
+ dwell_seconds:2,             // stationary time before a stop / left object is confirmed; chosen on MEVA dev, frozen
  max_gap_seconds:2,           // a track survives this long without a matching detection
  iou_gate:.1,                 // association by IoU with the constant-velocity prediction ...
  distance_gate:1.5,           // ... or, below the IoU gate, by centre distance up to 1.5 box sizes

@@ -58,3 +58,8 @@ test('diagnostics: person recall by height and ID switches per actor',()=>{
  assert.equal(d.person_recall_by_height_px[3].boxes,3);assert.equal(d.person_recall_by_height_px[3].found,3);
  assert.equal(d.id_switches.person.id_switches,1);assert.equal(d.id_switches.person.mean_distinct_tracks_per_actor,2);
 });
+test('the page default is the configuration chosen on MEVA dev (frozen before the test run)',()=>{
+ const dev=JSON.parse(readFileSync(new URL('../docs/validation/event-timeline-dev-report.json',import.meta.url),'utf8'));
+ assert.equal(dev.split,'dev');assert.equal(dev.run_id,'42725109355');
+ assert.deepEqual(dev.chosen.config,{minimum_score:TIMELINE_SETTINGS.minimum_score,dwell_seconds:TIMELINE_SETTINGS.dwell_seconds});
+});
