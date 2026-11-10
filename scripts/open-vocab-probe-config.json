@@ -1,0 +1,25 @@
+{
+ "shipped": true,
+ "probe_only": true,
+ "candidate": "B-q8",
+ "threshold": 0.15,
+ "classes": [
+  "cart",
+  "handcart",
+  "shopping_cart",
+  "box",
+  "carton",
+  "crate",
+  "trash_can",
+  "barrel",
+  "ladder",
+  "fire_extinguisher",
+  "cone"
+ ],
+ "latency": {
+  "p50_ms": 14844,
+  "p95_ms": 14955
+ },
+ "evidence_line": "探针与检查模式：这一配置（Grounding DINO tiny，阈值 0.15，全部 11 类）没有通过 LVIS 开发半的预先固定精度门槛，网页不提供。只用于在 Actions 里检查隐藏代码仍可运行、让维护者用自己的图片查看输出。",
+ "why": "Hidden lane, forced only by scripts/open-vocab-check.cjs and the probe (route override); the public page never reads this file. Threshold 0.15 = the dev option with the most pooled TP (appendix 4), not a shipped setting."
+}

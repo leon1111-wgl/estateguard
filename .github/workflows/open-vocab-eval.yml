@@ -1,0 +1,236 @@
+name: Open-vocabulary lane evaluation
+# docs/validation/open-vocab-protocol.md. Weights, LVIS images and labels exist only on the runner; artifacts hold
+# timings, detections, counts and metrics. Trigger: push to ovd-run/latency|dev|test|meva, or dispatch after merge.
+on:
+  push:
+    branches: ['ovd-run/**']
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'latency (stage 1, label-free), dev (selects configuration), test (frozen, once), meva (object-left re-score)'
+        required: true
+        default: latency
+        type: choice
+        options: [latency, dev, test, meva]
+permissions:
+  contents: read
+concurrency:
+  group: ovd-eval-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      stage: ${{ steps.plan.outputs.stage }}
+      matrix: ${{ steps.plan.outputs.matrix }}
+      meva: ${{ steps.plan.outputs.meva }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: plan
+        env:
+          INPUT_STAGE: ${{ inputs.stage }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          stage="${INPUT_STAGE:-${REF_NAME#ovd-run/}}"
+          stage="${stage%%-*}"  # ovd-run/latency-<label> runs the latency stage on its own ref
+          case "$stage" in latency|dev|test|meva) ;; *) echo "unknown stage $stage"; exit 1;; esac
+          echo "stage=$stage" >> "$GITHUB_OUTPUT"
+          # dev: every candidate within the stage-1 budget; test: only the frozen configuration. 4 shards each.
+          node -e '
+            const fs=require("fs"),stage=process.argv[1];let ids=[];
+            if(stage==="dev"){const l=JSON.parse(fs.readFileSync("docs/validation/open-vocab-latency.json"));ids=Object.entries(l.candidates).filter(([,c])=>c.within_budget).map(([id])=>id);}
+            if(stage==="test")ids=[JSON.parse(fs.readFileSync("web/data/open-vocab/config.json")).candidate];
+            if(stage==="meva")ids=[];
+            const m=ids.flatMap(candidate=>[0,1,2,3].map(shard=>({candidate,shard})));
+            // meva: the same 16 test clips as 0.5.0 (first 16 test candidates of at least 20 MB), 8 shards.
+            if(stage==="meva"){const sub=JSON.parse(fs.readFileSync("docs/validation/event-timeline-meva-subset.json")),clips=sub.test_candidates.filter(c=>c.bytes&&c.bytes>=20e6).slice(0,16);
+              const cand=JSON.parse(fs.readFileSync("web/data/open-vocab/config.json")).candidate;
+              fs.appendFileSync(process.env.GITHUB_OUTPUT,`meva=${JSON.stringify(Array.from({length:8},(_,i)=>({shard:i,candidate:cand,clips:clips.filter((_,j)=>j%8===i).map(c=>({name:c.name,video:c.video}))})))}\n`);}
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,`matrix=${JSON.stringify(m.length?m:[{candidate:"none",shard:0}])}\n`);console.log(JSON.stringify(m));' "$stage"
+  latency:
+    needs: plan
+    if: needs.plan.outputs.stage == 'latency'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        # All stage-1 configurations (protocol table and appendix 3); recorded runs 42764887346 and 42766235517.
+        candidate: [A-q8, A-q4, B-q8, C-q8, C-q4, A3-q8, C3-q8]
+    env:
+      ESTATEGUARD_URL: http://127.0.0.1:8766
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package.json') }}
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/open-vocab-mirror.mjs ${{ matrix.candidate }}
+      - name: Serve web/
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory web > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS -o /dev/null "$ESTATEGUARD_URL/" && exit 0; sleep 1; done; exit 1
+      - run: node scripts/open-vocab-latency.cjs ${{ matrix.candidate }}
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ovd-latency-${{ matrix.candidate }}
+          path: artifacts/open-vocab/
+          if-no-files-found: ignore
+          retention-days: 30
+  subset:
+    needs: plan
+    if: needs.plan.outputs.stage == 'dev' || needs.plan.outputs.stage == 'test'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - run: python3 scripts/lvis_subset.py --split ${{ needs.plan.outputs.stage }} --out artifacts/open-vocab
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ovd-subset-${{ needs.plan.outputs.stage }}
+          path: artifacts/open-vocab/
+          retention-days: 30
+  detect:
+    needs: [plan, subset]
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    env:
+      ESTATEGUARD_URL: http://127.0.0.1:8766
+    steps:
+      - if: matrix.candidate == 'none'
+        run: echo "no candidate passed the stage-1 budget"; exit 1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package.json') }}
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/open-vocab-mirror.mjs ${{ matrix.candidate }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: ovd-subset-${{ needs.plan.outputs.stage }}
+          path: subset/
+      - name: Serve web/
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory web > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS -o /dev/null "$ESTATEGUARD_URL/" && exit 0; sleep 1; done; exit 1
+      - run: node scripts/open-vocab-lvis.cjs --candidate ${{ matrix.candidate }} --subset subset/subset-${{ needs.plan.outputs.stage }}.json --shard ${{ matrix.shard }} --shards 4 --workers 4
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ovd-det-${{ matrix.candidate }}-${{ needs.plan.outputs.stage }}-${{ matrix.shard }}
+          path: artifacts/open-vocab/detections-*.json
+          if-no-files-found: ignore
+          retention-days: 30
+  score:
+    needs: [plan, detect]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ovd-*
+          path: in/
+      - run: |
+          stage=${{ needs.plan.outputs.stage }}
+          mkdir -p artifacts/open-vocab
+          if [ "$stage" = dev ]; then extra="--latency docs/validation/open-vocab-latency.json"; else extra="--config web/data/open-vocab/config.json"; fi
+          node scripts/open-vocab-score.mjs --stage "$stage" --subset in/ovd-subset-$stage/subset-$stage.json --detections in --out artifacts/open-vocab/report-$stage.json $extra
+          cp in/ovd-subset-$stage/subset-$stage-summary.json artifacts/open-vocab/
+          cat artifacts/open-vocab/report-$stage.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ovd-report-${{ needs.plan.outputs.stage }}
+          path: artifacts/open-vocab/
+          retention-days: 90
+  meva-lane:
+    needs: plan
+    if: needs.plan.outputs.stage == 'meva'
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.meva) }}
+    env:
+      ESTATEGUARD_URL: http://127.0.0.1:8766
+      CLIPS: ${{ toJSON(matrix.clips) }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package.json') }}
+      - run: npx playwright install --with-deps chromium
+      - run: command -v ffmpeg || (sudo apt-get update -q && sudo apt-get install -y -q ffmpeg)
+      - run: node scripts/open-vocab-mirror.mjs ${{ matrix.candidate }}
+      - name: Serve web/
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory web > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS -o /dev/null "$ESTATEGUARD_URL/" && exit 0; sleep 1; done; exit 1
+      - run: printf '%s' "$CLIPS" > /tmp/clips.json
+      - run: node scripts/meva-timeline.cjs --clips /tmp/clips.json --out artifacts/ovd-meva-lane --workers 4 --lane ${{ matrix.candidate }} --lane-floor $(jq -r .threshold web/data/open-vocab/config.json)
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ovd-meva-lane-${{ matrix.shard }}
+          path: artifacts/ovd-meva-lane/
+          if-no-files-found: ignore
+          retention-days: 30
+  meva-score:
+    needs: [plan, meva-lane]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ovd-meva-lane-*
+          path: in/lane
+          merge-multiple: true
+      # The 0.5.0 test detections (run 42725830941 at a4f1132, the only test run), unchanged.
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: timeline-detections-test-*
+          path: in/dfine
+          merge-multiple: true
+          run-id: 42725830941
+          github-token: ${{ github.token }}
+      - run: node scripts/open-vocab-meva.mjs --dfine in/dfine --lane in/lane --config web/data/open-vocab/config.json --out artifacts/ovd-meva
+      - if: always()
+        run: cat artifacts/ovd-meva/score/summary-*.md >> "$GITHUB_STEP_SUMMARY" || true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ovd-meva-report
+          path: artifacts/ovd-meva/
+          if-no-files-found: ignore
+          retention-days: 90
