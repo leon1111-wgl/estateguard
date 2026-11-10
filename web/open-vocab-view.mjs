@@ -1,7 +1,7 @@
 /** The "开放词汇慢车道" panel under a still-image analysis. The lane runs only after the visitor clicks and confirms the
  * download; it is offered only when the pre-registered evaluation passed (web/data/open-vocab/config.json "shipped")
  * and the browser can run it. Boxes are labelled 开放词汇检测 · 未核实 everywhere they appear. */
-import {loadOpenVocab,OPEN_VOCAB_CANDIDATES,OPEN_VOCAB_NAMES_ZH,OPEN_VOCAB_LABEL,OPEN_VOCAB_RUNTIME_BYTES} from './open-vocab.mjs';
+import {loadOpenVocab,OPEN_VOCAB_CANDIDATES,OPEN_VOCAB_NAMES_ZH,OPEN_VOCAB_LABEL,runtimeBytes,runtimeTotal} from './open-vocab.mjs';
 import {wasmSimdSupported} from './capabilities.mjs';
 const $=id=>document.getElementById(id);
 const mb=bytes=>(bytes/1e6).toFixed(0);
@@ -42,7 +42,7 @@ export function createOpenVocabView({getContext,onResult}){
    const started=performance.now(),raw=await lane.detect(frame,{floor:config.threshold,maxDetections:50}),ms=performance.now()-started;
    if(getContext().report?.analysis_id!==ticket)return;// the visitor started a new analysis meanwhile
    const detections=shippedDetections(raw,config,frame.width,frame.height);
-   const result={label:OPEN_VOCAB_LABEL,model:lane.candidate.model,repo:lane.candidate.repo,revision:lane.candidate.revision,dtype:lane.candidate.dtype,runtime:'transformers.js 4.3.2 · ONNX Runtime Web WASM 单线程',threshold:config.threshold,classes:config.classes,postprocess:lane.postprocess,inference_ms:ms,detections};
+   const result={label:OPEN_VOCAB_LABEL,model:lane.candidate.model,repo:lane.candidate.repo,revision:lane.candidate.revision,dtype:lane.candidate.dtype,runtime:`${lane.runtime} · WASM 单线程`,threshold:config.threshold,classes:config.classes,postprocess:lane.postprocess,inference_ms:ms,detections};
    rows(detections);
    const added=onResult(result);
    message(detections.length?`找到 ${detections.length} 个开放词汇检测（未核实）${added?`，其中 ${added} 个按当前规则生成候选`:''}。框在画面上以虚线标出。`:'慢车道没有找到这些物品。没有结果不等于安全：模型会漏检，尤其是远处、遮挡或光线差的物品。');
@@ -53,7 +53,7 @@ export function createOpenVocabView({getContext,onResult}){
   }finally{controller=null;busyUI(false);}
  }
  $('ovd-start').addEventListener('click',()=>{if(running)return;if(lane){run();return;}const c=OPEN_VOCAB_CANDIDATES[config.candidate];
-  $('ovd-confirm-text').textContent=`首次使用需要下载约 ${mb(c.bytes+OPEN_VOCAB_RUNTIME_BYTES)} MB：模型 ${mb(c.bytes)} MB（${c.repo}，Hugging Face，固定版本），运行库 ${mb(OPEN_VOCAB_RUNTIME_BYTES)} MB（jsDelivr，使用前核对 SHA-256）。之后保存在浏览器缓存中。移动网络下请谨慎。`;
+  $('ovd-confirm-text').textContent=`首次使用需要下载约 ${mb(runtimeTotal(c))} MB：模型 ${mb(c.bytes)} MB（${c.repo}，Hugging Face，固定版本），运行库 ${mb(runtimeBytes(c.runtime))} MB（jsDelivr，使用前核对 SHA-256）。之后保存在浏览器缓存中。移动网络下请谨慎。`;
   $('ovd-confirm').hidden=false;$('ovd-load').focus();});
  $('ovd-load').addEventListener('click',run);
  $('ovd-dismiss').addEventListener('click',()=>{$('ovd-confirm').hidden=true;$('ovd-start').focus();});

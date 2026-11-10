@@ -31,6 +31,7 @@ jobs:
           REF_NAME: ${{ github.ref_name }}
         run: |
           stage="${INPUT_STAGE:-${REF_NAME#ovd-run/}}"
+          stage="${stage%%-*}"  # ovd-run/latency-<label> runs the latency stage on its own ref
           case "$stage" in latency|dev|test|meva) ;; *) echo "unknown stage $stage"; exit 1;; esac
           echo "stage=$stage" >> "$GITHUB_OUTPUT"
           # dev: every candidate within the stage-1 budget; test: only the frozen configuration. 4 shards each.
@@ -48,7 +49,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        candidate: [A-q8, A-q4, B-q8, C-q8, C-q4]
+        # Run 42764887346 timed A-q8, A-q4, B-q8, C-q8 and C-q4 (4.3.2 runtime); appendix 3 adds these two.
+        candidate: [A3-q8, C3-q8]
     env:
       ESTATEGUARD_URL: http://127.0.0.1:8766
     steps:

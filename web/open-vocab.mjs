@@ -4,12 +4,22 @@
 // transformers.js and its ONNX Runtime Web build come from jsDelivr at pinned versions and are checked against these
 // SHA-256 digests before use (a mismatch stops the lane). Weights come from Hugging Face at pinned commits. Nothing is
 // fetched until the visitor starts the lane.
-export const OPEN_VOCAB_RUNTIME=Object.freeze({
- library:Object.freeze({url:'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.3.2/dist/transformers.min.js',bytes:587917,sha256:'8b5a3171f8876bab2b1820a7d65eb87628e3d30bb5ea85b9dd398e76eb34decb'}),
- glue:Object.freeze({url:'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.0-dev.20260914-8d85527a0/dist/ort-wasm-simd-threaded.asyncify.mjs',bytes:53057,sha256:'0966b6105cd936744498aa60df7a22cbd47af3374dbc64a9ab561c08a71e3611'}),
- wasm:Object.freeze({url:'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.0-dev.20260914-8d85527a0/dist/ort-wasm-simd-threaded.asyncify.wasm',bytes:26861777,sha256:'49871f5a4409519797e127440868a6d1923339d9185907f301a5b2a1d90af082'}),
+const CDN='https://cdn.jsdelivr.net/npm/';
+export const OPEN_VOCAB_RUNTIMES=Object.freeze({
+ '4.3.2':Object.freeze({label:'transformers.js 4.3.2 · ONNX Runtime Web 1.31.0-dev.20260914-8d85527a0',
+  library:Object.freeze({url:CDN+'@huggingface/transformers@4.3.2/dist/transformers.min.js',bytes:587917,sha256:'8b5a3171f8876bab2b1820a7d65eb87628e3d30bb5ea85b9dd398e76eb34decb'}),
+  glue:Object.freeze({url:CDN+'onnxruntime-web@1.31.0-dev.20260914-8d85527a0/dist/ort-wasm-simd-threaded.asyncify.mjs',bytes:53057,sha256:'0966b6105cd936744498aa60df7a22cbd47af3374dbc64a9ab561c08a71e3611'}),
+  wasm:Object.freeze({url:CDN+'onnxruntime-web@1.31.0-dev.20260914-8d85527a0/dist/ort-wasm-simd-threaded.asyncify.wasm',bytes:26861777,sha256:'49871f5a4409519797e127440868a6d1923339d9185907f301a5b2a1d90af082'})}),
+ // Appendix 3: the OWL exports cannot start on the 4.3.2 runtime (no Cast kernel for /class_head/Cast), so the same
+ // files are also timed on the previous major release, which bundles ONNX Runtime Web 1.22.0-dev (JSEP build).
+ '3.8.1':Object.freeze({label:'transformers.js 3.8.1 · ONNX Runtime Web 1.22.0-dev.20250409-89f8206ba4',
+  library:Object.freeze({url:CDN+'@huggingface/transformers@3.8.1/dist/transformers.min.js',bytes:888173,sha256:'aa5002b70e789798da263f5f99c62bd3e8fcd0c119258a493c40c180648365fa'}),
+  glue:Object.freeze({url:CDN+'@huggingface/transformers@3.8.1/dist/ort-wasm-simd-threaded.jsep.mjs',bytes:44484,sha256:'08fb86ec433c78bfb032c5d84a68b8e8e5a8d81268fa39e24314179a5767a5b9'}),
+  wasm:Object.freeze({url:CDN+'@huggingface/transformers@3.8.1/dist/ort-wasm-simd-threaded.jsep.wasm',bytes:21596019,sha256:'c46655e8a94afc45338d4cb2b840475f88e5012d524509916e505079c00bfa39'})}),
 });
-export const OPEN_VOCAB_RUNTIME_BYTES=Object.values(OPEN_VOCAB_RUNTIME).reduce((a,f)=>a+f.bytes,0);
+/** Bytes a first use downloads for this candidate: runtime files plus the model file. */
+export const runtimeTotal=candidate=>candidate.bytes+runtimeBytes(candidate.runtime);
+export const runtimeBytes=key=>['library','glue','wasm'].reduce((a,k)=>a+OPEN_VOCAB_RUNTIMES[key][k].bytes,0);
 const hex=buffer=>Array.from(new Uint8Array(buffer),b=>b.toString(16).padStart(2,'0')).join('');
 async function verifiedBytes(file,{signal,onBytes}){
  const response=await fetch(file.url,{signal,credentials:'omit'});if(!response.ok)throw new Error(`运行库下载失败（HTTP ${response.status}）`);
@@ -28,11 +38,13 @@ export const OPEN_VOCAB_LABEL='开放词汇检测 · 未核实';
 
 // Candidates from the protocol (stage 1). Revisions are full commit ids; bytes are the ONNX file sizes from the HF API.
 export const OPEN_VOCAB_CANDIDATES=Object.freeze({
- 'A-q8':{family:'owl',model:'OWLv2 B/16 ensemble',repo:'Xenova/owlv2-base-patch16-ensemble',revision:'3e255bc9bf304b3358a8c1945c0a9514eefe7f10',dtype:'q8',file:'onnx/model_quantized.onnx',bytes:155312754},
- 'A-q4':{family:'owl',model:'OWLv2 B/16 ensemble',repo:'Xenova/owlv2-base-patch16-ensemble',revision:'3e255bc9bf304b3358a8c1945c0a9514eefe7f10',dtype:'q4',file:'onnx/model_q4.onnx',bytes:193982426},
- 'B-q8':{family:'gdino',model:'Grounding DINO tiny',repo:'onnx-community/grounding-dino-tiny-ONNX',revision:'ff690b0a8050566c290287545bd059350f3e9096',dtype:'q8',file:'onnx/model_quantized.onnx',bytes:203824675},
- 'C-q8':{family:'owl',model:'OWL-ViT B/32',repo:'Xenova/owlvit-base-patch32',revision:'b75f4e52949639c3bb0b96546ea4149482f6e7ef',dtype:'q8',file:'onnx/model_quantized.onnx',bytes:155431700},
- 'C-q4':{family:'owl',model:'OWL-ViT B/32',repo:'Xenova/owlvit-base-patch32',revision:'b75f4e52949639c3bb0b96546ea4149482f6e7ef',dtype:'q4',file:'onnx/model_q4.onnx',bytes:191730057},
+ 'A-q8':{runtime:'4.3.2',family:'owl',model:'OWLv2 B/16 ensemble',repo:'Xenova/owlv2-base-patch16-ensemble',revision:'3e255bc9bf304b3358a8c1945c0a9514eefe7f10',dtype:'q8',file:'onnx/model_quantized.onnx',bytes:155312754},
+ 'A-q4':{runtime:'4.3.2',family:'owl',model:'OWLv2 B/16 ensemble',repo:'Xenova/owlv2-base-patch16-ensemble',revision:'3e255bc9bf304b3358a8c1945c0a9514eefe7f10',dtype:'q4',file:'onnx/model_q4.onnx',bytes:193982426},
+ 'B-q8':{runtime:'4.3.2',family:'gdino',model:'Grounding DINO tiny',repo:'onnx-community/grounding-dino-tiny-ONNX',revision:'ff690b0a8050566c290287545bd059350f3e9096',dtype:'q8',file:'onnx/model_quantized.onnx',bytes:203824675},
+ 'C-q8':{runtime:'4.3.2',family:'owl',model:'OWL-ViT B/32',repo:'Xenova/owlvit-base-patch32',revision:'b75f4e52949639c3bb0b96546ea4149482f6e7ef',dtype:'q8',file:'onnx/model_quantized.onnx',bytes:155431700},
+ 'C-q4':{runtime:'4.3.2',family:'owl',model:'OWL-ViT B/32',repo:'Xenova/owlvit-base-patch32',revision:'b75f4e52949639c3bb0b96546ea4149482f6e7ef',dtype:'q4',file:'onnx/model_q4.onnx',bytes:191730057},
+ 'A3-q8':{runtime:'3.8.1',family:'owl',model:'OWLv2 B/16 ensemble',repo:'Xenova/owlv2-base-patch16-ensemble',revision:'3e255bc9bf304b3358a8c1945c0a9514eefe7f10',dtype:'q8',file:'onnx/model_quantized.onnx',bytes:155312754},
+ 'C3-q8':{runtime:'3.8.1',family:'owl',model:'OWL-ViT B/32',repo:'Xenova/owlvit-base-patch32',revision:'b75f4e52949639c3bb0b96546ea4149482f6e7ef',dtype:'q8',file:'onnx/model_quantized.onnx',bytes:155431700},
 });
 export const OPEN_VOCAB_POSTPROCESS=Object.freeze({id:'ovd-nms050-dedupe090-v1',class_nms_iou:.5,cross_class_dedupe_iou:.9});
 
@@ -71,11 +83,11 @@ export function decodeGroundingDino(logits,boxes,spans,W,H,floor){
 }
 export const GDINO_TEXT=OPEN_VOCAB_PROMPTS.map(p=>p.toLowerCase()+'.').join(' ');
 
-let library=null;
-async function transformers({signal,onBytes}){
- if(!library){
-  const done={};const report=key=>n=>{done[key]=n;onBytes(Object.values(done).reduce((x,y)=>x+y,0));};
-  const [lib,glue,wasm]=await Promise.all(['library','glue','wasm'].map(key=>verifiedBytes(OPEN_VOCAB_RUNTIME[key],{signal,onBytes:report(key)})));
+const libraries={};
+async function transformers(key,{signal,onBytes}){
+ if(!libraries[key]){
+  const runtime=OPEN_VOCAB_RUNTIMES[key],done={};const report=part=>n=>{done[part]=n;onBytes(Object.values(done).reduce((x,y)=>x+y,0));};
+  const [lib,glue,wasm]=await Promise.all(['library','glue','wasm'].map(part=>verifiedBytes(runtime[part],{signal,onBytes:report(part)})));
   const moduleURL=buffer=>URL.createObjectURL(new Blob([buffer],{type:'text/javascript'}));
   const loaded=await import(moduleURL(lib));
   const {env}=loaded;
@@ -83,16 +95,16 @@ async function transformers({signal,onBytes}){
   env.remotePathTemplate='{model}/resolve/{revision}/';
   env.backends.onnx.wasm.wasmPaths={mjs:moduleURL(glue)};env.backends.onnx.wasm.wasmBinary=wasm;
   env.backends.onnx.wasm.numThreads=1;env.backends.onnx.wasm.proxy=false;
-  library=loaded;
+  libraries[key]=loaded;
  }
- return library;
+ return libraries[key];
 }
 /** `remoteHost` is for the Actions evaluation only (a local mirror of the same pinned files); the page never sets it. */
 export async function loadOpenVocab(id,{onProgress=()=>{},signal=null,remoteHost='https://huggingface.co/'}={}){
  const candidate=OPEN_VOCAB_CANDIDATES[id];if(!candidate)throw new Error(`未知的开放词汇模型：${id}`);
  const files={};let runtimeBytes=0;
- const report=()=>{const all=Object.values(files);onProgress({loaded:runtimeBytes+all.reduce((x,f)=>x+f.loaded,0),total:OPEN_VOCAB_RUNTIME_BYTES+candidate.bytes});};
- const lib=await transformers({signal,onBytes:n=>{runtimeBytes=n;report();}}),{env,AutoProcessor,AutoModelForZeroShotObjectDetection,RawImage}=lib;
+ const report=()=>{const all=Object.values(files);onProgress({loaded:runtimeBytes+all.reduce((x,f)=>x+f.loaded,0),total:runtimeTotal(candidate)});};
+ const lib=await transformers(candidate.runtime,{signal,onBytes:n=>{runtimeBytes=n;report();}}),{env,AutoProcessor,AutoModelForZeroShotObjectDetection,RawImage}=lib;
  env.remoteHost=remoteHost;const plainFetch=globalThis.fetch.bind(globalThis);env.fetch=(url,options={})=>plainFetch(url,{...options,credentials:'omit',...(signal?{signal}:{})});
  const progress_callback=event=>{if(event.status==='progress'&&event.file){files[event.file]={loaded:event.loaded||0,total:event.total||0};report();}};
  const started=performance.now();
@@ -114,5 +126,5 @@ export async function loadOpenVocab(id,{onProgress=()=>{},signal=null,remoteHost
   if(raw)return {detections:result,outputs,inputs,processor};
   return result;
  }
- return {id,candidate,detect,loadMs,backend:'wasm',threads:1,postprocess:OPEN_VOCAB_POSTPROCESS.id};
+ return {id,candidate,runtime:OPEN_VOCAB_RUNTIMES[candidate.runtime].label,detect,loadMs,backend:'wasm',threads:1,postprocess:OPEN_VOCAB_POSTPROCESS.id};
 }

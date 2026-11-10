@@ -103,3 +103,16 @@ fp32 文件均超过 600 MB，排除；fp16 / q4f16 面向 WebGPU，而本项目
 
 - **运行库来源**：把 transformers.js 的构建文件提交进仓库时，GitHub 推送保护把其中的类名 `Mistral3ForConditionalGeneration`（恰好 32 个字符）误判为 Mistral API 密钥。没有绕过保护，而是改为：transformers.js 4.3.2 的 `transformers.min.js` 与 ONNX Runtime Web 1.31.0-dev.20260914-8d85527a0 的 `ort-wasm-simd-threaded.asyncify.mjs` / `.wasm` 在访客点击后从 jsDelivr 的固定版本地址下载，页面先核对 SHA-256（写在 `web/open-vocab.mjs`），一致才使用，否则停止。三个文件共 27,502,751 字节，与模型文件一起计入点击前提示的下载量。网页和评测用同一段代码。
 - **并列处理**：同一配置在不同阈值下合并 TP 相同时，取合并精确率更高者；之后才比较 P95 延迟与文件大小。
+
+## 附录 3 · 2026-11-10，第 1 阶段追加两个配置（写于这两个配置的任何测量之前，仍未读取任何标注）
+
+第 1 阶段运行 42764887346 中，OWLv2 与 OWL-ViT 的四个文件（A-q8、A-q4、C-q8、C-q4）在 transformers.js 4.3.2 自带的 ONNX Runtime Web 1.31.0-dev WASM 上都无法创建会话：“Could not find an implementation for Cast(13) node with name '/class_head/Cast'”。这是运行库缺少该类型的 Cast 内核，与模型精度无关，按“超出预算”同样处理：淘汰，不计算精度。
+
+为判断这是运行库版本的问题还是模型本身，追加两个配置，**同样的模型文件**换用上一个大版本的运行库：transformers.js 3.8.1（2025-12-02 发布，Apache-2.0），它固定的 ONNX Runtime Web 1.22.0-dev.20250409-89f8206ba4（JSEP 构建，`ort-wasm-simd-threaded.jsep.mjs` / `.wasm` 取自 transformers.js 3.8.1 的发布目录，SHA-256 写在 `web/open-vocab.mjs`）：
+
+| 编号 | 模型 | 文件 | 运行库 |
+| --- | --- | --- | --- |
+| A3-q8 | OWLv2 B/16 ensemble | `onnx/model_quantized.onnx`（155,312,754） | transformers.js 3.8.1 |
+| C3-q8 | OWL-ViT B/32 | `onnx/model_quantized.onnx`（155,431,700） | transformers.js 3.8.1 |
+
+预算、输入、计时方法、提前停止规则都与正文和附录 1 相同；只测 q8（q4 文件更大）。3.8.1 不支持自定义 `fetch`，所以模型下载不能中途取消（运行库下载仍可取消）；若选中它，页面在取消时如实说明。其余选择与上线规则不变：通过第 1 阶段的配置一起进入开发半。
