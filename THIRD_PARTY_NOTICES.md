@@ -41,3 +41,7 @@ CNR-EXT 来自 Amato、Carrara、Falchi、Gennaro、Meghini、Vairo，*Deep lear
 ## PKLot 保留测试（2026-10-20）
 
 PKLot 来自 Almeida、Oliveira、Silva Jr、Britto Jr、Koerich，*PKLot – A robust dataset for parking lot classification*，Expert Systems with Applications 42(11) (2015) 4937–4949，[官方页](https://web.inf.ufpr.br/vri/databases/parking-lot-database/)，按 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 使用。仓库只发布由它派生的逐车位分数与评测结果（`docs/validation/pklot-predictions.csv.gz`、`pklot-evaluation.json`、`pklot-drift-replay.json`）；没有发布任何图片。改动：每半小时保留一张快照，车位图双线性缩放到 150×150，排除缺少标签与重复的车位图，详见 [协议附录 7–7.2](docs/validation/parking-transfer-protocol.md)。
+
+## MEVA 事件时间线评测（2026-11-10）
+
+MEVA（Multiview Extended Video with Activities）由 Kitware Inc. 与 IARPA 发布，[mevadata.org](https://mevadata.org/)，标注仓库 [meva-data-repo](https://gitlab.kitware.com/meva/meva-data-repo)（提交 `421841a7`），按 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 使用。原文署名：“Multiview Extended Video with Activities” (MEVA) dataset by Kitware Inc. and the Intelligence Advanced Research Projects Activity (IARPA)。视频、抽出的帧和标签只在 GitHub Actions 运行器上使用、用完即删；仓库只发布由它派生的计数、指标和本项目规则产生的事件（`docs/validation/event-timeline-*.json`、`web/data/timeline/evaluation.json`）。改动：每秒取 1 帧并双线性缩放到宽 960 像素，由本项目检测器与规则处理；没有发布任何画面。详见 [评测协议](docs/validation/event-timeline-protocol.md)。

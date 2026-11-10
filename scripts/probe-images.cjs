@@ -4,6 +4,9 @@
  * occupancy model). Nothing is mocked; the page's own messages are recorded, including refusals and failures.
  * Inputs (environment): PROBE_URLS (whitespace/comma separated, at most 20), PROBE_DETECTOR dfine|ssdlite,
  * PROBE_RULE objects|access|lift, PROBE_PARKING true|false, PROBE_VIEWPORT desktop|mobile.
+ * PROBE_CLIPS (at most 10 video URLs): each goes through 事件时间线 (whole frame, the page's default score floor and
+ * dwell): CNN-timeline.json (the page's own export), CNN-timeline.png, CNN-detections.json and one keyframe PNG per
+ * event (CNN-event-eXXX.png, at most 12 per clip), opened by clicking the event like a visitor.
  * Writes artifacts/probe/: summary.json, summary.md, NN-detections.json, NN-analysis.png (annotated frame),
  * NN-page.png, NN-parking.png.
  */
@@ -12,12 +15,15 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 const out=path.join(__dirname,'..','artifacts','probe');fs.mkdirSync(out,{recursive:true});
 const base=(process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766').replace(/\/$/,''),origin=new URL(base).origin;
 const urls=(process.env.PROBE_URLS||'').split(/[\s,]+/).map(s=>s.trim()).filter(Boolean);
+const clips=(process.env.PROBE_CLIPS||'').split(/[\s,]+/).map(s=>s.trim()).filter(Boolean);
+const {runTimeline,openKeyframe}=require('./timeline-fixture.cjs');
+const MAX_CLIPS=10,MAX_KEYFRAMES=12,CLIP_TIMEOUT=900000;
 const detector=['dfine','ssdlite'].includes(process.env.PROBE_DETECTOR)?process.env.PROBE_DETECTOR:'dfine';
 const rule=['objects','access','lift'].includes(process.env.PROBE_RULE)?process.env.PROBE_RULE:'objects';
 const parking=!/^(false|0|no)$/i.test(process.env.PROBE_PARKING||'true');
 const mobile=process.env.PROBE_VIEWPORT==='mobile';
 const MAX_BYTES=100*1024*1024,MAX_URLS=20,ITEM_TIMEOUT=240000;
-const summary={started_at:new Date().toISOString(),scope:'Probe of the deployed page code on the URLs given. Each result is what a visitor would see for that file; it is not an accuracy measurement.',settings:{detector,rule,parking,viewport:mobile?'375x812':'1440x1000'},items:[],page_errors:[],console_errors:[],external_requests:[]};
+const summary={started_at:new Date().toISOString(),scope:'Probe of the deployed page code on the URLs given. Each result is what a visitor would see for that file; it is not an accuracy measurement.',settings:{detector,rule,parking,viewport:mobile?'375x812':'1440x1000'},items:[],clips:[],page_errors:[],console_errors:[],external_requests:[]};
 const pad=i=>String(i+1).padStart(2,'0');
 const mimeFor=(header,name)=>{const t=(header||'').split(';')[0].trim().toLowerCase();if(/^(image|video)\//.test(t))return t;const ext=(name.match(/\.([a-z0-9]+)$/i)||[])[1]?.toLowerCase();return {jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',mp4:'video/mp4',webm:'video/webm',heic:'image/heic',gif:'image/gif',avif:'image/avif'}[ext]||'';};
 async function download(url){
@@ -34,10 +40,12 @@ function writeSummary(){
   fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify(summary,null,2));
  const cell=s=>String(s??'').replace(/\|/g,'\\|').replace(/\n/g,' ').slice(0,220);
  const rows=summary.items.map(x=>{const top=x.analysis?.detections?.[0]?.detections.slice(0,5).map(d=>`${d.class} ${d.score.toFixed(2)}`).join(', ');return `| ${x.index} | ${cell(x.url)} | ${cell(x.download_error||`${x.download.bytes} B · ${x.file.mime_given_to_page}`)} | ${cell(x.probe_error?`probe error: ${x.probe_error}`:x.analysis?.outcome?`${x.analysis.outcome}: ${x.analysis.message||x.analysis.open_message}`:'')} | ${cell(top||'')} | ${cell(x.parking?(x.parking.result||x.parking.status):'')} |`;});
- fs.writeFileSync(path.join(out,'summary.md'),[`# EstateGuard probe · ${summary.started_at}`,'',summary.scope,'',`Detector ${detector} · rule ${rule} · parking ${parking} · viewport ${summary.settings.viewport} · ${summary.browser}`,'','| # | URL | File | 视频与图片分析 | Top detections | 车位图片测试 |','| --- | --- | --- | --- | --- | --- |',...rows,'',`Page errors: ${summary.page_errors.length} · console errors: ${summary.console_errors.length} · cross-origin requests: ${summary.external_requests.length}`,''].join('\n'));
+ const clipRows=summary.clips.map(x=>`| C${x.index} | ${cell(x.url)} | ${cell(x.download_error||`${x.download.bytes} B · ${x.file.mime_given_to_page}`)} | ${cell(x.probe_error?`probe error: ${x.probe_error}`:x.message||x.open_message||'')} | ${cell((x.events||[]).map(e=>`${e.id} ${e.rule} ${e.class} ${e.start}–${e.end}s`).join('; ')||'—')} |`);
+ fs.writeFileSync(path.join(out,'summary.md'),[`# EstateGuard probe · ${summary.started_at}`,'',summary.scope,'',`Detector ${detector} · rule ${rule} · parking ${parking} · viewport ${summary.settings.viewport} · ${summary.browser}`,'','| # | URL | File | 视频与图片分析 | Top detections | 车位图片测试 |','| --- | --- | --- | --- | --- | --- |',...rows,'',...(clipRows.length?['## 事件时间线 (clip_urls)','','| # | URL | File | Page message | Events (clip seconds) |','| --- | --- | --- | --- | --- |',...clipRows,'']:[]),`Page errors: ${summary.page_errors.length} · console errors: ${summary.console_errors.length} · cross-origin requests: ${summary.external_requests.length}`,''].join('\n'));
 }
 (async()=>{
- if(!urls.length){console.error('PROBE_URLS is empty');process.exit(2);}
+ if(!urls.length&&!clips.length){console.error('PROBE_URLS and PROBE_CLIPS are empty');process.exit(2);}
+ if(clips.length>MAX_CLIPS)summary.clip_note=`Only the first ${MAX_CLIPS} of ${clips.length} clip URLs were probed.`;
  if(urls.length>MAX_URLS)summary.note=`Only the first ${MAX_URLS} of ${urls.length} URLs were probed.`;
  const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});summary.browser=await browser.version();
  const viewport=mobile?{width:375,height:812}:{width:1440,height:1000};
@@ -48,6 +56,31 @@ function writeSummary(){
  const page=await newPage('#analyze');
  let parkingPage=null;
  try{
+  // 事件时间线 for each clip URL: the visitor path, the page's own export, and every event's keyframe as a PNG.
+  for(const [i,url] of clips.slice(0,MAX_CLIPS).entries()){
+   const item={index:i+1,url},tag=`C${pad(i)}`;summary.clips.push(item);console.log(`[${tag}] ${url}`);
+   try{
+    let file;
+    try{file=await download(url);}catch(e){item.download_error=String(e.message||e);console.log('  download failed:',item.download_error);continue;}
+    item.download={final_url:file.final_url,bytes:file.bytes.length,sha256:crypto.createHash('sha256').update(file.bytes).digest('hex'),content_type:file.content_type,ms:file.ms};
+    const mimeType=mimeFor(file.content_type,file.name);item.file={name:file.name,mime_given_to_page:mimeType||'(none)'};
+    const run=await runTimeline(page,{name:file.name,type:mimeType,buffer:file.bytes},{timeout:CLIP_TIMEOUT});
+    item.open_message=run.opened;item.message=run.message;item.outcome=!run.message?'refused':run.message.startsWith('分析完成')?'completed':/^分析/.test(run.message)?'failed':'refused';
+    item.model=await page.locator('#model-name').textContent();item.backend=await page.locator('#model-backend').textContent();
+    if(await page.locator('#download-detections').isEnabled()){const [d]=await Promise.all([page.waitForEvent('download'),page.locator('#download-detections').click()]);fs.copyFileSync(await d.path(),path.join(out,`${tag}-detections.json`));}
+    if(item.outcome==='completed'){
+     const [d]=await Promise.all([page.waitForEvent('download'),page.locator('#download-timeline').click()]);const tl=JSON.parse(fs.readFileSync(await d.path(),'utf8'));
+     fs.writeFileSync(path.join(out,`${tag}-timeline.json`),JSON.stringify(tl,null,2));
+     item.analysed=tl.analysed;item.settings=tl.settings;item.events=tl.events.map(e=>({id:e.id,rule:e.rule,class:e.class,start:e.start,end:e.end,keyframe_time:e.keyframe_time,score:e.score,condition_seconds:e.condition_seconds}));
+     item.summary_line=await page.locator('#timeline-summary').textContent();
+     await page.locator('#timeline-panel').screenshot({path:path.join(out,`${tag}-timeline.png`)});
+     item.keyframes=[];
+     for(const e of tl.events.slice(0,MAX_KEYFRAMES)){await openKeyframe(page,e.id,{via:'row'});const png=`${tag}-event-${e.id}.png`;await page.locator('#analysis-stage').screenshot({path:path.join(out,png)});item.keyframes.push(png);}
+    }else await page.screenshot({path:path.join(out,`${tag}-page.png`),fullPage:!mobile});
+    console.log(`  ${item.outcome}: ${item.message||item.open_message}`);
+   }catch(e){item.probe_error=String(e.message||e);console.log('  probe error:',item.probe_error);await page.goto(`${base}/?detector=${detector}#analyze`).catch(()=>{});}
+   finally{writeSummary();}
+  }
   for(const [i,url] of urls.slice(0,MAX_URLS).entries()){
    const item={index:i+1,url};summary.items.push(item);console.log(`[${pad(i)}] ${url}`);
    try{
