@@ -1,0 +1,125 @@
+{
+  "checked_at": "2026-11-10T00:43:40.610Z",
+  "base": "http://127.0.0.1:8766",
+  "scope": "Real detectors on a synthetic clip of the CC0 bus photo. Checks the timeline flow, not accuracy.",
+  "checks": [
+    {
+      "name": "choosing the timeline sets its own score floor and dwell and needs no camera or time",
+      "passed": true,
+      "evidence": {
+        "score": "0.4",
+        "dwell": "2",
+        "dwellEnabled": true,
+        "confirmationHidden": true,
+        "status": "事件时间线用素材内的秒数，无需填写来源和时间；三条规则共用当前关注区域，结果只作线索，不送入复核。"
+      }
+    },
+    {
+      "name": "dfine: the bus that drives in and stops is one 车辆停下 segment with its keyframe at the stop",
+      "passed": true,
+      "evidence": {
+        "message": "分析完成：13 帧、4 条匿名轨迹、时间线 1 个待核实事件。",
+        "events": [
+          {
+            "id": "e001",
+            "rule": "vehicle_stop",
+            "label": "车辆停下",
+            "track": "t1",
+            "class": "bus",
+            "start": 2,
+            "end": 5,
+            "keyframe_time": 3,
+            "bbox": [
+              0.5452,
+              0.5114,
+              0.3332,
+              0.3035
+            ],
+            "score": 0.9538,
+            "condition_seconds": 9,
+            "condition_open": true,
+            "duration": 3
+          }
+        ],
+        "detail": "e001 · 车辆停下规则车辆停下关注区域整幅画面事件段2 秒 – 5 秒（3 秒）关键帧3 秒之后持续9 秒，分析结束时仍在匿名轨迹t1 · 公交 / 大巴平均检测分数0.95规则看到的：车辆轨迹先移动、再在区域内静止达到停留阈值。规则看不到的：一直停着的车不算“停下”；远处小车、被遮挡的车和检测框抖动会漏报或误报；镜头晃动或转动时，停着的车也会显得先动后停。",
+        "frame_label": "合成时间线-校车驶入停下.webm · 0.26 MB · 12.3 秒 · 检测画面：3.0 秒（下方播放器可独立播放）"
+      }
+    },
+    {
+      "name": "ssdlite: the bus that drives in and stops is one 车辆停下 segment with its keyframe at the stop",
+      "passed": true,
+      "evidence": {
+        "message": "分析完成：13 帧、1 条匿名轨迹、时间线 1 个待核实事件。",
+        "events": [
+          {
+            "id": "e001",
+            "rule": "vehicle_stop",
+            "label": "车辆停下",
+            "track": "t1",
+            "class": "bus",
+            "start": 2,
+            "end": 5,
+            "keyframe_time": 3,
+            "bbox": [
+              0.5426,
+              0.5038,
+              0.3392,
+              0.3148
+            ],
+            "score": 0.9951,
+            "condition_seconds": 9,
+            "condition_open": true,
+            "duration": 3
+          }
+        ],
+        "detail": "e001 · 车辆停下规则车辆停下关注区域整幅画面事件段2 秒 – 5 秒（3 秒）关键帧3 秒之后持续9 秒，分析结束时仍在匿名轨迹t1 · 公交 / 大巴平均检测分数1.00规则看到的：车辆轨迹先移动、再在区域内静止达到停留阈值。规则看不到的：一直停着的车不算“停下”；远处小车、被遮挡的车和检测框抖动会漏报或误报；镜头晃动或转动时，停着的车也会显得先动后停。",
+        "frame_label": "合成时间线-校车驶入停下.webm · 0.26 MB · 12.3 秒 · 检测画面：3.0 秒（下方播放器可独立播放）"
+      }
+    },
+    {
+      "name": "a photo is refused for the timeline with a reason",
+      "passed": true,
+      "evidence": {
+        "message": "事件时间线需要视频（MP4 / WebM）。单张图片可用通用物体检测。"
+      }
+    },
+    {
+      "name": "a run stopped part way produces no timeline",
+      "passed": true,
+      "evidence": {
+        "message": "分析已停止。可导出已完成帧，未完成任务不生成时间线。"
+      }
+    },
+    {
+      "name": "the parking dwell rule is unchanged: 20-frame cap and its own dwell default",
+      "passed": true,
+      "evidence": {
+        "dwell": "5",
+        "confirmation": true
+      }
+    }
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "external_requests": [],
+  "browser": "151.0.7922.34",
+  "fixture": {
+    "source": "web/samples/bus.jpg",
+    "canvas": [
+      960,
+      540
+    ],
+    "photo_size": [
+      384,
+      256
+    ],
+    "photo_y": 200,
+    "start_x": 20,
+    "end_x": 470,
+    "arrival_seconds": 3,
+    "duration_seconds": 12.4,
+    "bytes": 276107,
+    "sha256": "235949e429fac9b6aa90774a9a15e5ba92b5655aad98b5922fff473e9be87144"
+  },
+  "ok": true
+}
