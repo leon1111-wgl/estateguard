@@ -22,7 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       stage: ${{ steps.plan.outputs.stage }}
+      matrix: ${{ steps.plan.outputs.matrix }}
     steps:
+      - uses: actions/checkout@v6
       - id: plan
         env:
           INPUT_STAGE: ${{ inputs.stage }}
@@ -31,6 +33,13 @@ jobs:
           stage="${INPUT_STAGE:-${REF_NAME#ovd-run/}}"
           case "$stage" in latency|dev|test|meva) ;; *) echo "unknown stage $stage"; exit 1;; esac
           echo "stage=$stage" >> "$GITHUB_OUTPUT"
+          # dev: every candidate within the stage-1 budget; test: only the frozen configuration. 4 shards each.
+          node -e '
+            const fs=require("fs"),stage=process.argv[1];let ids=[];
+            if(stage==="dev"){const l=JSON.parse(fs.readFileSync("docs/validation/open-vocab-latency.json"));ids=Object.entries(l.candidates).filter(([,c])=>c.within_budget).map(([id])=>id);}
+            if(stage==="test")ids=[JSON.parse(fs.readFileSync("web/data/open-vocab/config.json")).candidate];
+            const m=ids.flatMap(candidate=>[0,1,2,3].map(shard=>({candidate,shard})));
+            fs.appendFileSync(process.env.GITHUB_OUTPUT,`matrix=${JSON.stringify(m.length?m:[{candidate:"none",shard:0}])}\n`);console.log(JSON.stringify(m));' "$stage"
   latency:
     needs: plan
     if: needs.plan.outputs.stage == 'latency'
@@ -66,3 +75,81 @@ jobs:
           path: artifacts/open-vocab/
           if-no-files-found: ignore
           retention-days: 30
+  subset:
+    needs: plan
+    if: needs.plan.outputs.stage == 'dev' || needs.plan.outputs.stage == 'test'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - run: python3 scripts/lvis_subset.py --split ${{ needs.plan.outputs.stage }} --out artifacts/open-vocab
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ovd-subset-${{ needs.plan.outputs.stage }}
+          path: artifacts/open-vocab/
+          retention-days: 30
+  detect:
+    needs: [plan, subset]
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    env:
+      ESTATEGUARD_URL: http://127.0.0.1:8766
+    steps:
+      - if: matrix.candidate == 'none'
+        run: echo "no candidate passed the stage-1 budget"; exit 1
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package.json') }}
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/open-vocab-mirror.mjs ${{ matrix.candidate }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: ovd-subset-${{ needs.plan.outputs.stage }}
+          path: subset/
+      - name: Serve web/
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory web > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS -o /dev/null "$ESTATEGUARD_URL/" && exit 0; sleep 1; done; exit 1
+      - run: node scripts/open-vocab-lvis.cjs --candidate ${{ matrix.candidate }} --subset subset/subset-${{ needs.plan.outputs.stage }}.json --shard ${{ matrix.shard }} --shards 4 --workers 4
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ovd-det-${{ matrix.candidate }}-${{ needs.plan.outputs.stage }}-${{ matrix.shard }}
+          path: artifacts/open-vocab/detections-*.json
+          if-no-files-found: ignore
+          retention-days: 30
+  score:
+    needs: [plan, detect]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ovd-*
+          path: in/
+      - run: |
+          stage=${{ needs.plan.outputs.stage }}
+          mkdir -p artifacts/open-vocab
+          if [ "$stage" = dev ]; then extra="--latency docs/validation/open-vocab-latency.json"; else extra="--config web/data/open-vocab/config.json"; fi
+          node scripts/open-vocab-score.mjs --stage "$stage" --subset in/ovd-subset-$stage/subset-$stage.json --detections in --out artifacts/open-vocab/report-$stage.json $extra
+          cp in/ovd-subset-$stage/subset-$stage-summary.json artifacts/open-vocab/
+          cat artifacts/open-vocab/report-$stage.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ovd-report-${{ needs.plan.outputs.stage }}
+          path: artifacts/open-vocab/
+          retention-days: 90
