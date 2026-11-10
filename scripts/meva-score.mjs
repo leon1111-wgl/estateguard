@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {buildTimeline,TIMELINE_SETTINGS,RULE_ORDER} from '../web/event-timeline.mjs';
 import {scoreActivity,wilson} from './actev-score.mjs';
-import {activities,types,geomAt,references,diagnostics,putDownObjects} from './meva-kpf.mjs';
+import {activities,types,geomAt,references,diagnostics,putDownObjects,kpfAudit} from './meva-kpf.mjs';
 import {parseClip,annotationPath,rawURL,MEVA_COMMIT} from './meva-subset.mjs';
 
 export const RULE_TO_ACTIVITY=Object.freeze({vehicle_stop:'vehicle_stops',object_left:'person_puts_down_object',person_appears:'person_enters_scene_through_structure'});
@@ -31,10 +31,12 @@ export async function main(){
  for(const f of files){
   const d=JSON.parse(fs.readFileSync(path.join(dir,f),'utf8')),c=parseClip(d.clip);
   const [actsText,typesText,geomText]=await Promise.all(['activities','types','geom'].map(k=>fetchText(annotationPath(c,k))));
+  const audit={activities:kpfAudit(actsText),types:kpfAudit(typesText)};
+  if(audit.activities.skipped_data||audit.types.skipped_data)throw new Error(`${d.clip}: unreadable KPF data lines ${JSON.stringify(audit)}`);
   const acts=activities(actsText),fps=d.video.fps,interval=d.sampling.interval_seconds;
   const analysed=Math.min(d.video.duration_seconds,d.frames.at(-1).time+interval);
   const refs=Object.fromEntries([...Object.values(RULE_TO_ACTIVITY),...SECONDARY.map(s=>s.activity)].map(a=>[a,references(acts,a,fps,analysed)]));
-  clips.push({name:d.clip,site:c.site,camera:c.camera,d,acts,actorTypes:types(typesText),geom:geomAt(geomText,d.frames.map(x=>x.frame)),refs,analysed,aspect:d.sampling.analysed_width/d.sampling.analysed_height});
+  clips.push({name:d.clip,site:c.site,camera:c.camera,d,acts,actorTypes:types(typesText),geom:geomAt(geomText,d.frames.map(x=>x.frame)),refs,analysed,audit,aspect:d.sampling.analysed_width/d.sampling.analysed_height});
   console.log(d.clip,Object.fromEntries(Object.entries(refs).map(([k,v])=>[k,v.length])));
  }
  const evaluate=settings=>{
@@ -45,7 +47,7 @@ export async function main(){
   return {timelines,rules,secondary};
  };
  const report={protocol:'docs/validation/event-timeline-protocol.md',split,commit:process.env.GITHUB_SHA||null,run_id:process.env.GITHUB_RUN_ID||null,annotations:`meva-data-repo@${MEVA_COMMIT}`,
-  clips:clips.map(c=>({clip:c.name,site:c.site,camera:c.camera,width:c.d.video.width,height:c.d.video.height,fps:c.d.video.fps,analysed_seconds:c.analysed,frames:c.d.frames.length,references:Object.fromEntries(Object.entries(c.refs).map(([k,v])=>[k,v.length]))})),
+  clips:clips.map(c=>({clip:c.name,site:c.site,camera:c.camera,width:c.d.video.width,height:c.d.video.height,fps:c.d.video.fps,analysed_seconds:c.analysed,frames:c.d.frames.length,kpf_audit:c.audit,references:Object.fromEntries(Object.entries(c.refs).map(([k,v])=>[k,v.length]))})),
   analysed_minutes:clips.reduce((a,c)=>a+c.analysed,0)/60};
  let chosen;
  if(split==='dev'){

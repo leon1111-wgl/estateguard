@@ -4,13 +4,17 @@
 /** Each KPF line is a YAML flow mapping in Python-literal style, e.g.
  *  - {'act': {'act2': {'vehicle_stops': 1.0}, 'actors': [...], 'id2': 14, 'timespan': [{'tsr0': [3444, 3590]}]}} */
 export function parseKpf(text){
- const records=[];let skipped=0;
+ const records=[];let skipped=0,skippedData=0;
  for(const raw of text.split('\n')){
   const line=raw.trim();if(!line.startsWith('- {'))continue;
-  try{records.push(JSON.parse(line.slice(2).replace(/'/g,'"').replace(/\bTrue\b/g,'true').replace(/\bFalse\b/g,'false').replace(/\bNone\b/g,'null')));}catch{skipped++;}
+  try{records.push(JSON.parse(line.slice(2).replace(/'/g,'"').replace(/\bTrue\b/g,'true').replace(/\bFalse\b/g,'false').replace(/\bNone\b/g,'null')));}
+  catch{skipped++;if(!/^- \{\s*'?meta'?\s*:/.test(line))skippedData++;}
  }
- return {records,skipped};
+ return {records,skipped,skipped_data:skippedData};
 }
+/** Parse audit for one KPF file: a data line (not a free-text meta line) that cannot be read would silently drop a
+ * reference instance or an actor type, so the scorer refuses to score when skipped_data > 0. */
+export function kpfAudit(text){const {records,skipped,skipped_data}=parseKpf(text);return {records:records.length,skipped,skipped_data};}
 const span=ts=>{const t=ts?.[0]?.tsr0;return Array.isArray(t)&&t.length===2?t.map(Number):null;};
 /** Activity instances: [{activity, id, frames:[f0,f1], actors:[{id, frames}]}]. */
 export function activities(text){

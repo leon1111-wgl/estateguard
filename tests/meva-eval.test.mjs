@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {parseKpf,activities,types,geomAt,references,diagnostics} from '../scripts/meva-kpf.mjs';
+import {parseKpf,activities,types,geomAt,references,diagnostics,kpfAudit} from '../scripts/meva-kpf.mjs';
 import {splitAndOrder,candidates,parseClip,annotationPath,videoURL} from '../scripts/meva-subset.mjs';
 import {chooseConfig,RULE_TO_ACTIVITY,DEV_GRID} from '../scripts/meva-score.mjs';
 import {TIMELINE_SETTINGS} from '../web/event-timeline.mjs';
@@ -21,6 +21,9 @@ test('KPF lines parse; unreadable lines are counted, not guessed',()=>{
  const {records,skipped}=parseKpf(ACT);assert.equal(records.length,3);assert.equal(skipped,1);
  const a=activities(ACT);assert.deepEqual(a.map(x=>x.activity),['vehicle_stops','person_puts_down_object','vehicle_stops']);assert.deepEqual(a[1].actors.map(x=>x.id),[3,4]);
  assert.equal(types(TYPES).get(7),'vehicle');
+ // A free-text meta line may be unreadable; an unreadable data line is counted separately so scoring can refuse it.
+ assert.deepEqual(kpfAudit(ACT),{records:3,skipped:1,skipped_data:0});
+ assert.equal(kpfAudit("- {'act': {'act2': {'vehicle_stops': 1.0}, 'note': 'it's'}}").skipped_data,1);
  const g=geomAt(GEOM,[30,60]);assert.deepEqual([...g.keys()],[30,60]);assert.deepEqual(g.get(30)[0],{actor:3,box:[100,200,140,300]});
 });
 test('references are in seconds with an inclusive last frame, clipped to the analysed range',()=>{

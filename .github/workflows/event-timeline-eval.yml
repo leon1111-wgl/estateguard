@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
     inputs:
       split:
-        description: 'timing (1 dev clip, detection only), dev (selects the configuration) or test (frozen configuration, once)'
+        description: 'timing (1 dev clip, detection only), dev (selects the configuration), test (frozen configuration, once) or audit (KPF parse counts only, no scoring)'
         required: true
         default: timing
         type: choice
-        options: [timing, dev, test]
+        options: [timing, dev, test, audit]
 permissions:
   contents: read
 concurrency:
@@ -31,8 +31,9 @@ jobs:
           REF_NAME: ${{ github.ref_name }}
         run: |
           split="${INPUT_SPLIT:-${REF_NAME#timeline-run/}}"
-          case "$split" in timing|dev|test) ;; *) echo "unknown split $split"; exit 1;; esac
+          case "$split" in timing|dev|test|audit) ;; *) echo "unknown split $split"; exit 1;; esac
           echo "split=$split" >> "$GITHUB_OUTPUT"
+          if [ "$split" = audit ]; then echo 'shards=[]' >> "$GITHUB_OUTPUT"; exit 0; fi
           # Pre-registered order and skip rule: missing video or under 20 MB is skipped; take the first N.
           node -e '
             const s=require("./docs/validation/event-timeline-meva-subset.json"),split=process.argv[1];
@@ -41,8 +42,27 @@ jobs:
             const out=Array.from({length:shards},(_,i)=>({shard:i,clips:clips.filter((_,j)=>j%shards===i).map(c=>({name:c.name,video:c.video}))}));
             require("fs").writeFileSync(process.env.GITHUB_OUTPUT,`shards=${JSON.stringify(out)}\n`,{flag:"a"});
             console.log(JSON.stringify(out,null,1));' "$split"
+  audit:
+    needs: plan
+    if: needs.plan.outputs.split == 'audit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/meva-kpf-audit.mjs --out artifacts/timeline-audit
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: timeline-kpf-audit-${{ github.run_id }}
+          path: artifacts/timeline-audit/
+          if-no-files-found: ignore
+          retention-days: 90
   detect:
     needs: plan
+    if: needs.plan.outputs.split != 'audit'
     runs-on: ubuntu-latest
     timeout-minutes: 75
     strategy:
@@ -79,7 +99,7 @@ jobs:
           retention-days: 30
   score:
     needs: [plan, detect]
-    if: needs.plan.outputs.split != 'timing'
+    if: needs.plan.outputs.split == 'dev' || needs.plan.outputs.split == 'test'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:

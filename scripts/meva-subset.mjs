@@ -19,8 +19,8 @@ export function splitAndOrder(names,{devFraction=1/3}={}){
  const order=xs=>[...xs].sort((a,b)=>hash(a.name)<hash(b.name)?-1:1);
  return {cameras:{dev:[...devCameras].sort(),test:cameras.filter(c=>!devCameras.has(c)).sort()},dev:order(clips.filter(c=>devCameras.has(c.camera))),test:order(clips.filter(c=>!devCameras.has(c.camera)))};
 }
-// Candidate lists are longer than the target so that the harness can apply the pre-registered skip rules
-// (video missing, under 20 MB, under 1280 px wide) and still take the first clips that pass, in this order.
+// Candidate lists are longer than the target so that the plan step can apply the pre-registered skip rule
+// (video missing or under 20 MB) and still take the first clips that pass, in this order.
 export function candidates(ordered,{perCamera=2,count}){
  const seen=new Map(),out=[];
  for(const c of ordered){if((seen.get(c.camera)||0)>=perCamera)continue;seen.set(c.camera,(seen.get(c.camera)||0)+1);out.push(c);if(out.length>=count)break;}
