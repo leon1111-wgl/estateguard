@@ -33,7 +33,7 @@ const ACT2=`- { meta: "2018-03-11.16-45-00.16-50-00.school.G330" }
 - { act: { act2: { person_puts_down_object: 1.0 }, id2: 4, timespan: [{tsr0: [600,690]}], src: truth, actors: [{id1: 1275347941355299595, timespan: [{tsr0: [600,690]}]}, {id1: 1275347941355299596, timespan: [{tsr0: [600,690]}]}]}}
 - { act: { act2: { empty_37: 1.0 }, id2: 1, timespan: [{tsr0: [0,9000]}], src: truth}}`;
 const TYPES2=`- { types: { id1: 1275347941355299595, cset3: { person: 1.0 } } }\n- { types: { id1: 1275347941355299596, cset3: { other: 1.0 } } }`;
-const GEOM2=`- { geom: { id1: 1275347941355299596, id0: 12, ts0: 690, g0: "10 20 30 40", keyframe: true } }`;
+const GEOM2=`- { geom: {id1: 1275347941355299596, id0: 12, ts0: 690, ts1: 23.0, g0: 10 20 30 40, keyframe: true } }`;
 test('the second KPF dialect parses, with long ids kept exact',()=>{
  assert.deepEqual(kpfAudit(ACT2),{records:4,skipped:0,skipped_data:0});
  const a=activities(ACT2).filter(x=>x.activity==='person_puts_down_object');

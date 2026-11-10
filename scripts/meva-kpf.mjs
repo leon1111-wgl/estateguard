@@ -38,9 +38,9 @@ export function types(text){return new Map(parseKpf(text).records.filter(r=>r.ty
 export function geomAt(text,frames){
  const want=new Set(frames),out=new Map();
  for(const raw of text.split('\n')){
-  // Both dialects: 'g0': '1 2 3 4' … 'id1': 7 … 'ts0': 30, or g0: "1 2 3 4" … id1: 7 … ts0: 30, in any key order.
+  // Both dialects: 'g0': '1 2 3 4' … 'id1': 7 … 'ts0': 30, or {id1: 7, ts0: 30, g0: 1 2 3 4} (unquoted), in any key order.
   const ts=/\bts0'?\s*:\s*(\d+)/.exec(raw);if(!ts)continue;const frame=Number(ts[1]);if(!want.has(frame))continue;
-  const g=/\bg0'?\s*:\s*['"](\d+) (\d+) (\d+) (\d+)['"]/.exec(raw),id=/\bid1'?\s*:\s*(\d+)/.exec(raw);if(!g||!id)continue;
+  const g=/\bg0'?\s*:\s*['"]?(\d+) (\d+) (\d+) (\d+)/.exec(raw),id=/\bid1'?\s*:\s*(\d+)/.exec(raw);if(!g||!id)continue;
   if(!out.has(frame))out.set(frame,[]);out.get(frame).push({actor:id[1],box:[1,2,3,4].map(i=>Number(g[i]))});
  }
  return out;
