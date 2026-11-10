@@ -37,11 +37,14 @@ export function renderTimeline(report,{onSelect}={}){
  const span=Math.max(1e-6,t.analysed.end-t.analysed.start),pos=x=>Math.max(0,Math.min(100,(x-t.analysed.start)/span*100));
  const counts=Object.fromEntries(RULE_ORDER.map(r=>[r,t.events.filter(e=>e.rule===r).length]));
  $('timeline-summary').textContent=t.events.length?`${t.events.length} 个待核实事件 · ${RULE_ORDER.map(r=>`${TIMELINE_RULES[r].label} ${counts[r]}`).join(' · ')} · 分析 ${sec(t.analysed.start)}–${sec(t.analysed.end)}，${t.frames_analysed} 帧`:`没有事件（分析 ${sec(t.analysed.start)}–${sec(t.analysed.end)}，${t.frames_analysed} 帧）。没有事件不等于安全：漏检、遮挡、远处小目标都会让时间线空着。`;
+ const warn=$('timeline-warning');warn.hidden=!t.warnings?.includes('camera_motion');
+ warn.textContent=warn.hidden?'':`画面中多数车辆在同一时刻一起移动（${t.camera_motion_times.length} 次，最早 ${sec(t.camera_motion_times[0])}），像是镜头在转动、变焦或晃动。这时停着的车也会显得“先动后停”，这段视频的车辆停下事件不可靠。`;
  $('timeline-start').textContent=sec(t.analysed.start);$('timeline-end').textContent=sec(t.analysed.end);
  $('timeline-lanes').replaceChildren(...RULE_ORDER.map(rule=>{
   // Overlapping events of one rule are packed into rows (greedy, in time order) so none hides another.
   const ends=[],rowOf=new Map();
-  for(const e of t.events.filter(x=>x.rule===rule)){let r=ends.findIndex(end=>end<=e.start);if(r<0){r=ends.length;ends.push(0);}ends[r]=e.end;rowOf.set(e.id,r);}
+  // At most 4 rows; beyond that an event shares the row that frees up first, so a busy clip keeps a compact lane.
+  for(const e of t.events.filter(x=>x.rule===rule)){let r=ends.findIndex(end=>end<=e.start);if(r<0&&ends.length<4){r=ends.length;ends.push(0);}if(r<0)r=ends.indexOf(Math.min(...ends));ends[r]=Math.max(ends[r],e.end);rowOf.set(e.id,r);}
   const rows=Math.max(1,ends.length),track=el('div',{className:'tl-track'});
   track.style.height=`${Math.max(26,rows*14+6)}px`;
   for(const e of t.events.filter(x=>x.rule===rule)){
@@ -69,6 +72,7 @@ export function timelineDocument(report){
   zone:{name:report.params.zone||null,box:t.zone,note:'归一化 [x, y, 宽, 高]；三条规则共用'},
   analysed:{...t.analysed,frames:t.frames_analysed,unit:'素材内的秒数，不是监控时钟'},
   rules:Object.fromEntries(RULE_ORDER.map(r=>[r,{label:TIMELINE_RULES[r].label,sees:TIMELINE_RULES[r].sees,misses:TIMELINE_RULES[r].misses}])),
+  warnings:t.warnings||[],camera_motion_times:t.camera_motion_times||[],
   events:t.events.map(e=>({...e,bbox:e.bbox.map(v=>Math.round(v*1e4)/1e4),score:Math.round(e.score*1e4)/1e4})),
   tracks:t.tracks.map(x=>({id:x.id,class:x.class,first:x.samples[0].time,last:x.samples.at(-1).time,samples:x.samples.length})),
   limits:TIMELINE_LIMITS,scope:TIMELINE_EVENT_SCOPE};

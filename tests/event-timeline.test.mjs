@@ -111,3 +111,13 @@ test('the rules state what they see and what they miss; the limits say that no e
  assert.match(TIMELINE_RULES.object_left.misses,/纸箱/);
  assert.equal(Object.isFrozen(TIMELINE_SETTINGS),true);
 });
+test('a panning camera is flagged on the timeline without changing any event',()=>{
+ // Four parked cars that all shift together twice: the camera moved, not the cars.
+ const pan=t=>t<3?0:t<5?.15:t<8?.15:t<10?.3:.3,moving=t=>(t>=3&&t<5)||(t>=8&&t<10);
+ const f=frames(14,t=>[0,1,2,3].map(k=>det('car',[.05+.2*k+(t>=3&&t<5?.075*(t-2):t>=8&&t<10?.15+.075*(t-7):pan(t)),.5,.1,.06])));
+ const tl=buildTimeline(f,{aspect:16/9});
+ assert.deepEqual(tl.warnings,['camera_motion']);assert.ok(tl.camera_motion_times.length>=2);
+ const still=buildTimeline(frames(14,t=>[det('car',[Math.min(.1+.1*t,.5),.5,.12,.08]),det('car',[.1,.2,.1,.06]),det('car',[.4,.2,.1,.06]),det('car',[.7,.2,.1,.06])]),{aspect:16/9});
+ assert.deepEqual(still.warnings,[]);
+ assert.ok(moving(3));
+});

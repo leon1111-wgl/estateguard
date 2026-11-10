@@ -169,6 +169,19 @@ function personAppears(tracks,ctx){
  return out;
 }
 
+/** Display-only check, added after the MEVA test run and never scored: moments where most tracked vehicles move
+ * together look like a panning, zooming or shaking camera, which makes parked cars look like they "stop". Events are
+ * not changed; the page and the export carry a warning instead. */
+function cameraMotionTimes(tracks,times,s){
+ const vehicles=tracks.filter(t=>TIMELINE_RULES.vehicle_stop.classes.includes(t.class)).map(t=>new Map(t.samples.map(x=>[x.time,x]))),out=[];
+ for(let i=1;i<times.length;i++){
+  const t0=times[i-1],t1=times[i];let both=0,moving=0;
+  for(const m of vehicles){const a=m.get(t0),b=m.get(t1);if(!a||!b)continue;both++;if(shift(a.bbox,b.bbox,s.aspect)/(t1-t0)>=s.moving_fraction*boxSize(b.bbox,s.aspect)-EPS)moving++;}
+  if(both>=3&&moving/both>=.6)out.push(t1);
+ }
+ return out;
+}
+
 /** frames: [{time, detections:[{class, score, bbox:[x,y,w,h] normalised}]}] at a fixed interval.
  * options.zone: [x,y,w,h] normalised (whole frame by default); options.aspect: frame width / height. */
 export function buildTimeline(frames,{zone=[0,0,1,1],aspect=1,settings={},rules=RULE_ORDER}={}){
@@ -180,8 +193,9 @@ export function buildTimeline(frames,{zone=[0,0,1,1],aspect=1,settings={},rules=
  const make={vehicle_stop:vehicleStops,object_left:objectsLeft,person_appears:personAppears};
  const events=rules.flatMap(r=>make[r](tracks,ctx)).sort((a,b)=>a.start-b.start||RULE_ORDER.indexOf(a.rule)-RULE_ORDER.indexOf(b.rule)||(a.track<b.track?-1:a.track>b.track?1:0))
   .map((e,i)=>({id:`e${String(i+1).padStart(3,'0')}`,...e}));
- const {aspect:_,...recorded}=s;
- return {settings:recorded,zone:[...zone],aspect,frames_analysed:sorted.length,first_time:ctx.firstTime,last_time:ctx.lastTime,tracks,events};
+ const {aspect:_,...recorded}=s,motion=cameraMotionTimes(tracks,times,s);
+ return {settings:recorded,zone:[...zone],aspect,frames_analysed:sorted.length,first_time:ctx.firstTime,last_time:ctx.lastTime,tracks,events,
+  camera_motion_times:motion,warnings:motion.length>=2?['camera_motion']:[]};
 }
 
 /** Short, plain statements of what the rules cannot see, shown next to the timeline and written into the export. */
