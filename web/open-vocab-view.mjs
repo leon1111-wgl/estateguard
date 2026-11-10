@@ -48,7 +48,8 @@ export function createOpenVocabView({getContext,onResult}){
    message(detections.length?`找到 ${detections.length} 个开放词汇检测（未核实）${added?`，其中 ${added} 个按当前规则生成候选`:''}。框在画面上以虚线标出。`:'慢车道没有找到这些物品。没有结果不等于安全：模型会漏检，尤其是远处、遮挡或光线差的物品。');
   }catch(error){
    $('ovd-progress').hidden=true;$('ovd-cancel-row').hidden=true;
-   if(error?.name==='AbortError'){lane=null;message('已取消下载。已下载的部分可能留在浏览器缓存中；分析结果不受影响。');}
+   // transformers.js may wrap an aborted fetch in its own error; after the visitor pressed cancel, any failure is a cancel.
+   if(error?.name==='AbortError'||controller?.signal.aborted){lane=null;message('已取消下载。已下载的部分可能留在浏览器缓存中；分析结果不受影响。');}
    else{lane=null;message(`慢车道未能运行：${error.message||error}。上面的 COCO 检测结果不受影响。`,true);}
   }finally{controller=null;busyUI(false);}
  }
