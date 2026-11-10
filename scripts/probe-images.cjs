@@ -22,8 +22,10 @@ const detector=['dfine','ssdlite'].includes(process.env.PROBE_DETECTOR)?process.
 const rule=['objects','access','lift'].includes(process.env.PROBE_RULE)?process.env.PROBE_RULE:'objects';
 const parking=!/^(false|0|no)$/i.test(process.env.PROBE_PARKING||'true');
 const mobile=process.env.PROBE_VIEWPORT==='mobile';
+// 开放词汇慢车道 (0.6.0): after each completed still-image analysis, click the lane like a visitor (first item confirms the download).
+const openVocab=/^(true|1|yes)$/i.test(process.env.PROBE_OPEN_VOCAB||'false');
 const MAX_BYTES=100*1024*1024,MAX_URLS=20,ITEM_TIMEOUT=240000;
-const summary={started_at:new Date().toISOString(),scope:'Probe of the deployed page code on the URLs given. Each result is what a visitor would see for that file; it is not an accuracy measurement.',settings:{detector,rule,parking,viewport:mobile?'375x812':'1440x1000'},items:[],clips:[],page_errors:[],console_errors:[],external_requests:[]};
+const summary={started_at:new Date().toISOString(),scope:'Probe of the deployed page code on the URLs given. Each result is what a visitor would see for that file; it is not an accuracy measurement.',settings:{detector,rule,parking,open_vocab:openVocab,viewport:mobile?'375x812':'1440x1000'},items:[],clips:[],page_errors:[],console_errors:[],external_requests:[]};
 const pad=i=>String(i+1).padStart(2,'0');
 const mimeFor=(header,name)=>{const t=(header||'').split(';')[0].trim().toLowerCase();if(/^(image|video)\//.test(t))return t;const ext=(name.match(/\.([a-z0-9]+)$/i)||[])[1]?.toLowerCase();return {jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',mp4:'video/mp4',webm:'video/webm',heic:'image/heic',gif:'image/gif',avif:'image/avif'}[ext]||'';};
 async function download(url){
@@ -39,9 +41,9 @@ async function download(url){
 function writeSummary(){
   fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify(summary,null,2));
  const cell=s=>String(s??'').replace(/\|/g,'\\|').replace(/\n/g,' ').slice(0,220);
- const rows=summary.items.map(x=>{const top=x.analysis?.detections?.[0]?.detections.slice(0,5).map(d=>`${d.class} ${d.score.toFixed(2)}`).join(', ');return `| ${x.index} | ${cell(x.url)} | ${cell(x.download_error||`${x.download.bytes} B · ${x.file.mime_given_to_page}`)} | ${cell(x.probe_error?`probe error: ${x.probe_error}`:x.analysis?.outcome?`${x.analysis.outcome}: ${x.analysis.message||x.analysis.open_message}`:'')} | ${cell(top||'')} | ${cell(x.parking?(x.parking.result||x.parking.status):'')} |`;});
+ const rows=summary.items.map(x=>{const top=x.analysis?.detections?.[0]?.detections.slice(0,5).map(d=>`${d.class} ${d.score.toFixed(2)}`).join(', ');return `| ${x.index} | ${cell(x.url)} | ${cell(x.download_error||`${x.download.bytes} B · ${x.file.mime_given_to_page}`)} | ${cell(x.probe_error?`probe error: ${x.probe_error}`:x.analysis?.outcome?`${x.analysis.outcome}: ${x.analysis.message||x.analysis.open_message}`:'')} | ${cell(top||'')} | ${cell(x.open_vocab?(x.open_vocab.status||`${x.open_vocab.message} ${x.open_vocab.detections.map(d=>`${d.class} ${d.score.toFixed(2)}`).join(', ')}`):'')} | ${cell(x.parking?(x.parking.result||x.parking.status):'')} |`;});
  const clipRows=summary.clips.map(x=>`| C${x.index} | ${cell(x.url)} | ${cell(x.download_error||`${x.download.bytes} B · ${x.file.mime_given_to_page}`)} | ${cell(x.probe_error?`probe error: ${x.probe_error}`:x.message||x.open_message||'')} | ${cell((x.events||[]).map(e=>`${e.id} ${e.rule} ${e.class} ${e.start}–${e.end}s`).join('; ')||'—')} |`);
- fs.writeFileSync(path.join(out,'summary.md'),[`# EstateGuard probe · ${summary.started_at}`,'',summary.scope,'',`Detector ${detector} · rule ${rule} · parking ${parking} · viewport ${summary.settings.viewport} · ${summary.browser}`,'','| # | URL | File | 视频与图片分析 | Top detections | 车位图片测试 |','| --- | --- | --- | --- | --- | --- |',...rows,'',...(clipRows.length?['## 事件时间线 (clip_urls)','','| # | URL | File | Page message | Events (clip seconds) |','| --- | --- | --- | --- | --- |',...clipRows,'']:[]),`Page errors: ${summary.page_errors.length} · console errors: ${summary.console_errors.length} · cross-origin requests: ${summary.external_requests.length}`,''].join('\n'));
+ fs.writeFileSync(path.join(out,'summary.md'),[`# EstateGuard probe · ${summary.started_at}`,'',summary.scope,'',`Detector ${detector} · rule ${rule} · parking ${parking} · viewport ${summary.settings.viewport} · ${summary.browser}`,'','| # | URL | File | 视频与图片分析 | Top detections | 开放词汇慢车道 | 车位图片测试 |','| --- | --- | --- | --- | --- | --- | --- |',...rows,'',...(clipRows.length?['## 事件时间线 (clip_urls)','','| # | URL | File | Page message | Events (clip seconds) |','| --- | --- | --- | --- | --- |',...clipRows,'']:[]),`Page errors: ${summary.page_errors.length} · console errors: ${summary.console_errors.length} · cross-origin requests: ${summary.external_requests.length}`,''].join('\n'));
 }
 (async()=>{
  if(!urls.length&&!clips.length){console.error('PROBE_URLS and PROBE_CLIPS are empty');process.exit(2);}
@@ -112,6 +114,23 @@ function writeSummary(){
      a.detections=report.frames.map(f=>({time:f.time,detections:f.detections.map(x=>({class:x.class,score:+x.score.toFixed(4),bbox:x.bbox.map(v=>+v.toFixed(4))}))}));
     }
     a.candidate_explanation=await page.locator('#candidate-explanation').textContent();
+    if(openVocab&&a.outcome==='completed'){
+     const ov=item.open_vocab={};
+     if(await page.locator('#ovd-panel').isHidden())ov.status='panel not offered (lane hidden, video, or analysis incomplete)';
+     else if(await page.locator('#ovd-start').isHidden())ov.status=`unavailable: ${await page.locator('#ovd-unavailable').textContent()}`;
+     else{
+      await page.evaluate(()=>{document.querySelector('#ovd-message').textContent='';});const t=Date.now();
+      await page.locator('#ovd-start').click();if(await page.locator('#ovd-confirm').isVisible()){ov.confirmation=await page.locator('#ovd-confirm-text').textContent();await page.locator('#ovd-load').click();}
+      await page.waitForFunction(()=>/^(找到|慢车道没有找到|慢车道未能运行|已取消下载)/.test(document.querySelector('#ovd-message').textContent),{},{timeout:900000});
+      ov.seconds=(Date.now()-t)/1000;ov.message=await page.locator('#ovd-message').textContent();ov.rows=await page.locator('#ovd-rows tr').allTextContents();
+      const [d]=await Promise.all([page.waitForEvent('download'),page.locator('#download-detections').click()]);const r=JSON.parse(fs.readFileSync(await d.path(),'utf8'));
+      fs.writeFileSync(path.join(out,`${pad(i)}-detections.json`),JSON.stringify(r,null,2));
+      ov.detections=(r.open_vocab?.detections||[]).map(x=>({class:x.class,score:+x.score.toFixed(4),bbox:x.bbox.map(v=>+v.toFixed(4))}));ov.lane_candidates=r.candidates.filter(c=>c.source==='open_vocab').length;
+      ov.model=r.open_vocab&&`${r.open_vocab.model} ${r.open_vocab.repo}@${r.open_vocab.revision.slice(0,8)} t=${r.open_vocab.threshold}`;
+      await page.locator('#analysis-stage').screenshot({path:path.join(out,`${pad(i)}-open-vocab.png`)});
+     }
+     console.log(`  open-vocab: ${ov.status||ov.message}`);
+    }
     await page.locator('#analysis-stage').screenshot({path:path.join(out,`${pad(i)}-analysis.png`)});
     await page.screenshot({path:path.join(out,`${pad(i)}-page.png`),fullPage:!mobile});
     console.log(`  ${a.outcome}: ${a.message}`);

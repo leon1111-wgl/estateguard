@@ -45,3 +45,10 @@ PKLot 来自 Almeida、Oliveira、Silva Jr、Britto Jr、Koerich，*PKLot – A 
 ## MEVA 事件时间线评测（2026-11-10）
 
 MEVA（Multiview Extended Video with Activities）由 Kitware Inc. 与 IARPA 发布，[mevadata.org](https://mevadata.org/)，标注仓库 [meva-data-repo](https://gitlab.kitware.com/meva/meva-data-repo)（提交 `421841a7`），按 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 使用。原文署名：“Multiview Extended Video with Activities” (MEVA) dataset by Kitware Inc. and the Intelligence Advanced Research Projects Activity (IARPA)。视频、抽出的帧和标签只在 GitHub Actions 运行器上使用、用完即删；仓库只发布由它派生的计数、指标和本项目规则产生的事件（`docs/validation/event-timeline-*.json`、`web/data/timeline/evaluation.json`）。改动：每秒取 1 帧并双线性缩放到宽 960 像素，由本项目检测器与规则处理；没有发布任何画面。详见 [评测协议](docs/validation/event-timeline-protocol.md)。
+
+## 开放词汇慢车道（0.6.0，2026-11-10）
+
+- **LVIS v1**：Gupta、Dollár、Girshick，*LVIS: A Dataset for Large Vocabulary Instance Segmentation*，CVPR 2019，[lvisdataset.org](https://www.lvisdataset.org/dataset)。标注按 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) 使用（官网原文：“The LVIS annotations along with this website are licensed under a Creative Commons Attribution 4.0 License”）；图片来自 COCO，按 [COCO 使用条款](https://cocodataset.org/#termsofuse) 与各自 Flickr 许可，只在 GitHub Actions 运行器上逐张下载评测、用完即删，不随仓库发布。仓库只发布由它派生的计数与指标（`docs/validation/open-vocab-*.json`、`web/data/open-vocab/`）。改动：只用 11 个类别的框，按 [评测协议](docs/validation/open-vocab-protocol.md) 抽取子集。
+- **模型（不随仓库分发，访客点击后从 Hugging Face 按固定提交下载）**：OWL-ViT（`google/owlvit-base-patch32`）、OWLv2（`google/owlv2-base-patch16-ensemble`）与 Grounding DINO（`IDEA-Research/grounding-dino-tiny`）均为 Apache-2.0；浏览器用的 ONNX 导出来自 `Xenova/owlvit-base-patch32`、`Xenova/owlv2-base-patch16-ensemble` 与 `onnx-community/grounding-dino-tiny-ONNX`，沿用上游许可。实际上线的是哪一个、在哪个提交，见 `web/data/open-vocab/config.json`。
+- **运行库（不随仓库分发，点击后从 jsDelivr 固定版本下载并核对 SHA-256）**：transformers.js 4.3.2（Apache-2.0，Hugging Face）；ONNX Runtime Web 1.31.0-dev.20260914-8d85527a0（MIT，Microsoft）。
+- **检查用图片**：`tests/fixtures/open-vocab/shopping-carts-pd.jpg`，Wikimedia Commons “Shopping cart shepherd for Target jeh.jpg”，作者 Jim.henderson（2008），公有领域；只用于浏览器检查，未改动。

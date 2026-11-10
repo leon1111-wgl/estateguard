@@ -49,3 +49,17 @@ test('Grounding DINO prompt splits into the 11 classes; OWL decoding maps to pix
  const out=decodeOwl(logits,boxes,200,100,.5);
  assert.equal(out.length,1);assert.equal(out[0].class,OPEN_VOCAB_CLASSES[3]);assert.deepEqual(out[0].bbox.map(v=>+v.toFixed(3)),[80,30,40,40]);
 });
+import {makeCandidates,OPEN_VOCAB_RULE_CLASSES} from '../web/vision-rules.mjs';
+test('lane boxes feed the corridor and lift rules, labelled and at lower evidence quality; COCO paths unchanged',()=>{
+ const base={roi:[0,0,1,1],camera:'C1',zone:'Z1',started_at:'2026-11-10T08:00:00Z',media_name:'a.jpg',is_video:false};
+ const lane=(cls,bbox)=>({id:`ovd-${cls}`,class:cls,source:'open_vocab',samples:[{time:0,bbox,score:.4}]});
+ const access=makeCandidates([lane('carton',[.1,.1,.1,.1]),lane('fire_extinguisher',[.1,.1,.1,.1])],{...base,rule:'access'});
+ assert.equal(access.length,1);assert.equal(access[0].category,'blocked_access');assert.equal(access[0].quality,.3);assert.equal(access[0].source,'open_vocab');assert.match(access[0].summary,/^开放词汇检测 · 未核实/);assert.match(access[0].id,/^vision-ovd-/);
+ const lift=makeCandidates([lane('trash_can',[0,0,.5,.5]),lane('cart',[0,0,.1,.1]),lane('cart',[0,0,.3,.3])],{...base,rule:'lift'});
+ assert.deepEqual(lift.map(c=>c.category),['bulky_load']);
+ // A lane box never takes the COCO path even if a class name collides, and COCO tracks keep quality 0.4.
+ assert.equal(makeCandidates([{...lane('car',[.1,.1,.1,.1])}],{...base,rule:'access'}).length,0);
+ const coco=makeCandidates([{id:'t1',class:'car',samples:[{time:0,bbox:[.1,.1,.1,.1],score:.9}]}],{...base,rule:'access'});
+ assert.equal(coco[0].quality,.4);assert.equal(coco[0].source,undefined);
+ assert.ok(!OPEN_VOCAB_RULE_CLASSES.access.includes('fire_extinguisher')&&!OPEN_VOCAB_RULE_CLASSES.lift.includes('trash_can'));
+});

@@ -1,0 +1,7 @@
+{
+ "shipped": false,
+ "candidate": null,
+ "threshold": null,
+ "classes": [],
+ "status": "stage 1 (latency) in progress; the lane stays hidden until the pre-registered LVIS test decides (docs/validation/open-vocab-protocol.md)"
+}

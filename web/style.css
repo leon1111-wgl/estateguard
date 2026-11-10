@@ -769,3 +769,11 @@ footer a { color: var(--muted); text-decoration: underline; text-decoration-colo
   #vision-results .tl-table { min-width: 520px; }
   #vision-results .tl-panel .table-wrap::before { content: "左右滑动查看完整事件列表"; }
 }
+
+/* 开放词汇慢车道（0.6.0） */
+.ovd-panel { margin: 18px 0 20px; padding-top: 16px; border-top: 1px solid var(--line); }
+.ovd-panel .tl-head .button { flex: 0 0 auto; }
+.ovd-confirm { margin: 12px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.ovd-confirm p { margin: 0 0 10px; }
+.ovd-progress { display: flex; align-items: center; gap: 12px; margin: 12px 0 0; }
+@media (max-width: 560px) { .ovd-panel .tl-head { flex-direction: column; } .ovd-progress progress { flex: 1 1 auto; width: auto; } }

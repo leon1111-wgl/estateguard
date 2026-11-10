@@ -6,6 +6,8 @@ import {COCO_NAMES_ZH} from './coco-names.mjs';
 import {parseRecordingTime,confirmContext,isContextConfirmed,validateContext,reusableScene,restoreScene} from './media-context.mjs';
 import {buildTimeline,TIMELINE_SETTINGS} from './event-timeline.mjs';
 import {renderTimeline,clearTimeline,timelineDocument,TIMELINE_EVENT_SCOPE} from './timeline-view.mjs';
+import {createOpenVocabView} from './open-vocab-view.mjs';
+import {OPEN_VOCAB_NAMES_ZH,OPEN_VOCAB_LABEL} from './open-vocab.mjs';
 const $=id=>document.getElementById(id);
 const inferenceSettings=Object.freeze({sample_interval_seconds:1,max_frames:20,...VISION_RULE_SETTINGS});
 // Both detectors return COCO-SSD-shaped boxes, so tracking and rules are shared; settings are recorded per run.
@@ -19,6 +21,7 @@ const defaultScores={ssdlite:.5,dfine:.5},backendLabels={};let detectorEvaluatio
 const detectorKey=()=>DETECTORS[$('vision-detector').value]&&($('vision-detector').value!=='dfine'||ortSupported)?$('vision-detector').value:'ssdlite';
 const names=COCO_NAMES_ZH;
 const models={},modelPromises={},loadStats={};let modelController=null,modelLoadStats=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0,aspectWarning='';
+let openVocab=null;// the 开放词汇慢车道 panel, created once the result helpers below exist
 let keyframeTicket=0,mediaRevision=0,geometry=null,contextConfirmation=null,savedScene=null,savedSceneRevision=0,contextHint='',highlight=null,dwellEdited=false;
 const RULES=['objects','access','lift','parking','direction','timeline'],NO_CONTEXT_RULES=['objects','timeline'];
 // The timeline's score floor and dwell are the values chosen on MEVA dev; other rules keep their own defaults.
@@ -79,7 +82,7 @@ async function getModel(key=detectorKey()){
   finally{clearTimeout(manifestTimer);route?.release();modelController=null;$('stop-analysis').textContent='停止分析';}
  })().catch(error=>{modelPromises[key]=null;throw error;});return modelPromises[key];
 }
-function invalidate(){report=null;highlight=null;keyframeTicket++;$('send-candidates').disabled=true;$('vision-results').hidden=true;clearTimeline();}
+function invalidate(){report=null;highlight=null;keyframeTicket++;$('send-candidates').disabled=true;$('vision-results').hidden=true;clearTimeline();openVocab?.reset();}
 const contextFields=new Set(['vision-rule','vision-camera','vision-zone','vision-start','vision-offset','vision-direction','roi-x','roi-y','roi-w','roi-h']);
 function inputError(field,message){return Object.assign(new Error(message),{field});}
 function numberField(id,min,max){const value=Number($(id).value);if(!$(id).value.trim()||!Number.isFinite(value)||value<min||value>max)throw inputError(id,`请检查数值范围：${min} 至 ${max===Infinity?'素材结束前':max}。`);return value;}
@@ -116,6 +119,7 @@ function syncControls(){
  $('analysis-file').disabled=busy;$('sample-image').disabled=busy;
  $('send-candidates').disabled=busy||loading||!report?.candidates.length;
  $('download-detections').disabled=busy||loading||!report;
+ openVocab?.setDisabled(busy||loading);
 }
 function setMediaLoading(value){loading=value;syncControls();}
 function commitContext(nextGeometry){
@@ -128,6 +132,8 @@ function paint(boxes=lastBoxes){if(!frameSnapshot)return;ctx.putImageData(frameS
  ctx.lineWidth=2;ctx.strokeStyle='#4d8cff';ctx.setLineDash([7,4]);ctx.strokeRect(region[0]*canvas.width,region[1]*canvas.height,region[2]*canvas.width,region[3]*canvas.height);ctx.setLineDash([]);
  ctx.font=`${Math.max(12,Math.round(canvas.width/60))}px sans-serif`;
  for(const d of boxes){const [x,y,w,h]=d.bbox.map((v,i)=>v*(i%2===0?canvas.width:canvas.height));ctx.strokeStyle='#28ca9c';ctx.strokeRect(x,y,w,h);const label=`${names[d.class]||d.class} ${Math.round(d.score*100)}%`;const width=ctx.measureText(label).width+10;ctx.fillStyle='#136b53';ctx.fillRect(x,Math.max(0,y-23),width,23);ctx.fillStyle='#fff';ctx.fillText(label,x+5,Math.max(16,y-7));}
+ // Open-vocabulary lane boxes: dashed amber, every label says 开放词汇检测 · 未核实.
+ if(report?.open_vocab&&!isVideo)for(const d of report.open_vocab.detections){const [x,y,w,h]=d.bbox.map((v,i)=>v*(i%2===0?canvas.width:canvas.height));ctx.strokeStyle='#e0a100';ctx.setLineDash([6,4]);ctx.strokeRect(x,y,w,h);ctx.setLineDash([]);const label=`${OPEN_VOCAB_LABEL} · ${OPEN_VOCAB_NAMES_ZH[d.class]||d.class} ${Math.round(d.score*100)}%`;const width=ctx.measureText(label).width+10;ctx.fillStyle='#6b4e00';ctx.fillRect(x,Math.min(canvas.height-23,y+h),width,23);ctx.fillStyle='#fff';ctx.fillText(label,x+5,Math.min(canvas.height-7,y+h+16));}
  // The selected timeline event: its track's box at the keyframe, drawn last and thicker, with rule and duration.
  if(highlight){const [x,y,w,h]=highlight.bbox.map((v,i)=>v*(i%2===0?canvas.width:canvas.height));ctx.lineWidth=4;ctx.strokeStyle='#e39b1d';ctx.strokeRect(x-2,y-2,w+4,h+4);ctx.lineWidth=2;const width=ctx.measureText(highlight.label).width+12,top=Math.min(canvas.height-25,y+h+4);ctx.fillStyle='#e39b1d';ctx.fillRect(x-2,top,width,25);ctx.fillStyle='#1c1d1a';ctx.fillText(highlight.label,x+4,top+17);}
 }
@@ -215,14 +221,27 @@ $('analysis-form').addEventListener('submit',async event=>{event.preventDefault(
   else notice(`分析失败：${error.message} 尚无已完成采样帧，没有可导出的结果。可重新分析。`,true);
  }finally{setBusy(false);}
 });
+// Lane result: kept on the report (exported with it), drawn on the stage, and fed to the corridor / lift rules as
+// separate candidates. Returns how many candidates it added.
+function applyOpenVocab(result){
+ if(!report)return 0;report.open_vocab=result;let added=0;
+ report.candidates=report.candidates.filter(c=>c.source!=='open_vocab');
+ if(report.complete&&['access','lift'].includes(report.params.rule)){
+  const tracks=result.detections.map((d,i)=>({id:`ovd-${i+1}`,class:d.class,source:'open_vocab',samples:[{time:0,bbox:d.bbox,score:d.score}]}));
+  const extra=makeCandidates(tracks,report.params);report.candidates.push(...extra);added=extra.length;
+ }
+ renderResults();paint();syncControls();return added;
+}
+openVocab=createOpenVocabView({getContext:()=>({report,frame}),onResult:applyOpenVocab});
 function renderResults(){
  $('vision-results').hidden=false;$('send-candidates').disabled=!report.candidates.length;
  const trackingFailed=report.failure?.stage==='tracking'||!!report.failure?.tracking_error;
  const metrics=[['采样帧',report.metrics.frame_count],['匿名轨迹',trackingFailed?'未完成':report.tracks.length],report.timeline?['时间线事件',report.timeline.events.length]:['规则候选',report.candidates.length],['平均推理',report.metrics.mean_inference_ms===null?'—':`${Math.round(report.metrics.mean_inference_ms)} ms`]];
  $('vision-summary').replaceChildren(...metrics.map(([label,value])=>{const div=document.createElement('div'),strong=document.createElement('strong');strong.textContent=value;div.append(strong,document.createTextNode(label));return div;}));
- $('candidate-explanation').textContent=!report.complete?`${report.outcome==='failed'?'分析中途失败':'分析已停止'}，仅保留 ${report.metrics.frame_count} / ${report.metrics.planned_frame_count} 个采样帧，未生成规则候选。可导出已完成帧或重新分析。`:report.timeline?TIMELINE_EVENT_SCOPE:report.candidates.length?'候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。检测报告保留完整框与参数。':'没有生成候选不等于安全。通用检测模式只输出物体；其他规则可能因区域、类别、时长或漏检而没有结果。';
+ $('candidate-explanation').textContent=!report.complete?`${report.outcome==='failed'?'分析中途失败':'分析已停止'}，仅保留 ${report.metrics.frame_count} / ${report.metrics.planned_frame_count} 个采样帧，未生成规则候选。可导出已完成帧或重新分析。`:report.timeline?TIMELINE_EVENT_SCOPE:report.candidates.length?`候选来自物体检测和示例规则，证据质量保守设为 0.4，送入队列后必须人工核实。${report.candidates.some(c=>c.source==='open_vocab')?'其中来自开放词汇慢车道的候选标为“开放词汇检测 · 未核实”，证据质量 0.3。':''}检测报告保留完整框与参数。`:'没有生成候选不等于安全。通用检测模式只输出物体；其他规则可能因区域、类别、时长或漏检而没有结果。';
  const rows=[];for(const track of report.tracks)for(const sample of track.samples){const tr=document.createElement('tr');for(const value of [`${sample.time.toFixed(1)} s`,track.id,names[track.class]||track.class,`${(sample.score*100).toFixed(1)}%`,sample.bbox.map(x=>x.toFixed(3)).join(', ')]){const td=document.createElement('td');td.textContent=value;tr.append(td);}rows.push(tr);}if(!rows.length){const tr=document.createElement('tr'),td=document.createElement('td');td.colSpan=5;td.textContent=trackingFailed?'轨迹整理失败，已完成帧与原始检测框仍可导出。':'当前阈值下未检测到支持的物体。可检查画面清晰度、距离和模型类别范围。';tr.append(td);rows.push(tr);}$('detection-rows').replaceChildren(...rows.slice(0,300));
  if(report.timeline)renderTimeline(report,{onSelect:showEvent});
+ openVocab.render(report,{isVideo});
 }
 // Clicking a timeline segment: decode the analysed frame at the keyframe again, draw its detections and the event's
 // box, and move the visible player there. A newer click wins; the keyframe is marked on the stage when drawn.
@@ -241,7 +260,7 @@ async function showEvent(event){
 }
 $('download-timeline').addEventListener('click',()=>{if(busy||loading||!report?.timeline)return;const url=URL.createObjectURL(new Blob([JSON.stringify(timelineDocument(report),null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='estateguard-timeline.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 $('download-detections').addEventListener('click',()=>{if(busy||loading||!report)return;const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='estateguard-detections.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
-$('send-candidates').addEventListener('click',()=>{if(busy||loading||!report?.candidates.length)return;const detail={batch:{schema_version:1,analysis_id:report.analysis_id,name:`本地模型分析 · ${sourceFile.name}`.slice(0,240),provenance:`真实浏览器推理：${report.model}。来源：${sourceFile.name.slice(0,100)}。规则：${report.params.rule}；采样 1 fps；区域 ${report.params.roi.join(',')}。质量 0.4 是保守工作流标记，不是图像质量模型输出。时间跨度来自稀疏采样，不代表连续停留。`,observations:report.candidates},file:sourceFile,accepted:false};window.dispatchEvent(new CustomEvent('estateguard:candidates',{detail}));if(detail.accepted)notice(detail.reused?'已返回已有复核，原结论、草稿和附件保持不变。':'候选已送入复核，原始素材可在事件详情中查看。');else if(detail.cancelled)notice('已取消送审，原复核记录、草稿和附件保持不变。分析结果仍可导出或再次送审。');else notice(`送审失败，原工作区未替换。${detail.error||'未收到复核结果，请重试。'} 分析结果仍可导出。`,true);});
+$('send-candidates').addEventListener('click',()=>{if(busy||loading||!report?.candidates.length)return;const detail={batch:{schema_version:1,analysis_id:report.analysis_id,name:`本地模型分析 · ${sourceFile.name}`.slice(0,240),provenance:`真实浏览器推理：${report.model}。来源：${sourceFile.name.slice(0,100)}。规则：${report.params.rule}；采样 1 fps；区域 ${report.params.roi.join(',')}。质量 0.4 是保守工作流标记，不是图像质量模型输出。${report.open_vocab?`另含开放词汇慢车道（${report.open_vocab.model}，固定提示词）候选，标为未核实，质量 0.3。`:''}时间跨度来自稀疏采样，不代表连续停留。`,observations:report.candidates},file:sourceFile,accepted:false};window.dispatchEvent(new CustomEvent('estateguard:candidates',{detail}));if(detail.accepted)notice(detail.reused?'已返回已有复核，原结论、草稿和附件保持不变。':'候选已送入复核，原始素材可在事件详情中查看。');else if(detail.cancelled)notice('已取消送审，原复核记录、草稿和附件保持不变。分析结果仍可导出或再次送审。');else notice(`送审失败，原工作区未替换。${detail.error||'未收到复核结果，请重试。'} 分析结果仍可导出。`,true);});
 // Detector choice: label, help text and score default follow the published COCO comparison.
 const pct=value=>value==null?'—':(value*100).toFixed(1);
 const LIFT_CLASSES=['couch','chair','bed','dining table','refrigerator','suitcase'];

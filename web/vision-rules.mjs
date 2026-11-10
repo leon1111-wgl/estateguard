@@ -1,6 +1,10 @@
 /** Deterministic, auditable rules on actual model detections. No learned behavior classifier. */
 const vehicles=new Set(['car','truck','bus','motorcycle']);
 const furniture=new Set(['couch','chair','bed','dining table','refrigerator','suitcase']);
+// Open-vocabulary lane (docs/validation/open-vocab-protocol.md): which of its classes feed which rule. Fire extinguishers
+// and cones are shown only; an extinguisher in a corridor is normal equipment. The page passes only the shipped classes.
+export const OPEN_VOCAB_RULE_CLASSES=Object.freeze({access:Object.freeze(['cart','handcart','shopping_cart','box','carton','crate','trash_can','barrel','ladder']),lift:Object.freeze(['cart','handcart','shopping_cart','box','carton','crate','barrel','ladder'])});
+export const OPEN_VOCAB_EVIDENCE_QUALITY=.3;
 export const VISION_RULE_SETTINGS=Object.freeze({rules_version:'vision-rules-v2-stable-dwell',tracking_max_gap_seconds:1.6,parking_max_center_distance:.06,parking_min_samples:3});
 export function boxIoU(a,b){const w=Math.max(0,Math.min(a[0]+a[2],b[0]+b[2])-Math.max(a[0],b[0]));const h=Math.max(0,Math.min(a[1]+a[3],b[1]+b[3])-Math.max(a[1],b[1]));const intersection=w*h;return intersection/(a[2]*a[3]+b[2]*b[3]-intersection||1);}
 export function trackDetections(frames,maxGap=VISION_RULE_SETTINGS.tracking_max_gap_seconds){
@@ -51,8 +55,11 @@ export function makeCandidates(tracks,config){
   for(const [segmentIndex,samples] of segments.entries()){
    const first=samples[0],last=samples.at(-1),span=last.time-first.time;
    let category=null,why='';
-   if(rule==='access'&&vehicles.has(track.class)){category='blocked_access';why='车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。';}
-   if(rule==='lift'&&furniture.has(track.class)&&samples.some(s=>s.bbox[2]*s.bbox[3]>=.04)){category='bulky_load';why='检测到支持类别的物品，且画面占比达到示例阈值。是否为客梯、是否允许搬运，需人工确认。';}
+   const lane=track.source==='open_vocab';
+   if(rule==='access'&&!lane&&vehicles.has(track.class)){category='blocked_access';why='车辆中心落在用户指定区域。是否为通道、是否阻塞，仍需人工确认。';}
+   if(rule==='lift'&&!lane&&furniture.has(track.class)&&samples.some(s=>s.bbox[2]*s.bbox[3]>=.04)){category='bulky_load';why='检测到支持类别的物品，且画面占比达到示例阈值。是否为客梯、是否允许搬运，需人工确认。';}
+   if(rule==='access'&&lane&&OPEN_VOCAB_RULE_CLASSES.access.includes(track.class)){category='blocked_access';why='开放词汇慢车道检测到的物品中心落在用户指定区域。物品类别与是否阻塞通道都未核实，需人工确认。';}
+   if(rule==='lift'&&lane&&OPEN_VOCAB_RULE_CLASSES.lift.includes(track.class)&&samples.some(s=>s.bbox[2]*s.bbox[3]>=.04)){category='bulky_load';why='开放词汇慢车道检测到的物品画面占比达到示例阈值。物品类别、是否为客梯、是否允许搬运都未核实，需人工确认。';}
    if(parking){category='illegal_parking';why=`采样中车辆在指定区域内有约 ${span.toFixed(1)} 秒的稳定片段，片段内检测中心两两距离不超过归一化画面的 ${VISION_RULE_SETTINGS.parking_max_center_distance}。驶入、驶离及其他停留片段分别处理。`;}
    if(rule==='direction'&&config.is_video&&vehicles.has(track.class)&&samples.length>=3){
     const a=centre(first.bbox),b=centre(last.bbox),vector={right:[1,0],left:[-1,0],down:[0,1],up:[0,-1]}[config.expected_direction];
@@ -60,8 +67,8 @@ export function makeCandidates(tracks,config){
     if((b[0]-a[0])*vector[0]+(b[1]-a[1])*vector[1]<-.12){category='wrong_way';why='匿名轨迹与用户指定方向相反，投影位移超过归一化画面的 0.12。需核对道路标识、镜头运动和关联是否正确。';}
    }
    if(!category)continue;
-   const base=Date.parse(config.started_at);const id=`vision-${track.id}-${candidates.length+1}`;
-   candidates.push({id,camera:config.camera,zone:config.zone,track:track.id,...(parking?{stable_segment_id:`${track.id}-stay-${segmentIndex+1}`} : {}),category,start:new Date(base+first.time*1000).toISOString(),end:new Date(base+Math.max(first.time+.001,last.time)*1000).toISOString(),score:Math.max(...samples.map(s=>s.score)),quality:.4,summary:`模型检测：${track.class}；${samples.length} 个采样帧。${why} ${config.is_video?'时间范围来自稀疏采样，不证明连续停留。':'单图时间窗仅为格式占位，不表示停留时间。'}`,evidence:samples.slice(0,20).map(s=>`${config.media_name} @ ${s.time.toFixed(2)}s`)});
+   const base=Date.parse(config.started_at);const id=`vision-${lane?'ovd-':''}${track.id}-${candidates.length+1}`;
+   candidates.push({id,camera:config.camera,zone:config.zone,track:track.id,...(parking?{stable_segment_id:`${track.id}-stay-${segmentIndex+1}`} : {}),category,start:new Date(base+first.time*1000).toISOString(),end:new Date(base+Math.max(first.time+.001,last.time)*1000).toISOString(),score:Math.max(...samples.map(s=>s.score)),quality:lane?OPEN_VOCAB_EVIDENCE_QUALITY:.4,...(lane?{source:'open_vocab'}:{}),summary:`${lane?'开放词汇检测 · 未核实：':'模型检测：'}${track.class}；${samples.length} 个采样帧。${why} ${config.is_video?'时间范围来自稀疏采样，不证明连续停留。':'单图时间窗仅为格式占位，不表示停留时间。'}`,evidence:samples.slice(0,20).map(s=>`${config.media_name} @ ${s.time.toFixed(2)}s`)});
   }
  }
  return candidates;
