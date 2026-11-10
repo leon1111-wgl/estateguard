@@ -17,14 +17,30 @@ const GEOM=`- {'geom': {'g0': '100 200 140 300', 'id0': 1, 'id1': 3, 'keyframe':
 - {'geom': {'g0': '100 200 140 300', 'id0': 2, 'id1': 3, 'keyframe': True, 'ts0': 31}}
 - {'geom': {'g0': '500 500 700 600', 'id0': 3, 'id1': 7, 'keyframe': True, 'ts0': 60}}`;
 
-test('KPF lines parse; unreadable lines are counted, not guessed',()=>{
- const {records,skipped}=parseKpf(ACT);assert.equal(records.length,3);assert.equal(skipped,1);
- const a=activities(ACT);assert.deepEqual(a.map(x=>x.activity),['vehicle_stops','person_puts_down_object','vehicle_stops']);assert.deepEqual(a[1].actors.map(x=>x.id),[3,4]);
- assert.equal(types(TYPES).get(7),'vehicle');
+test('KPF lines parse; unreadable lines are counted, and data lines separately from free-text meta lines',()=>{
+ const {records,skipped}=parseKpf(ACT);assert.equal(records.length,4);assert.equal(skipped,0);
+ const a=activities(ACT);assert.deepEqual(a.map(x=>x.activity),['vehicle_stops','person_puts_down_object','vehicle_stops']);assert.deepEqual(a[1].actors.map(x=>x.id),['3','4']);
+ assert.equal(types(TYPES).get('7'),'vehicle');
  // A free-text meta line may be unreadable; an unreadable data line is counted separately so scoring can refuse it.
- assert.deepEqual(kpfAudit(ACT),{records:3,skipped:1,skipped_data:0});
+ assert.deepEqual(kpfAudit("- {'meta': 'it's'}"),{records:0,skipped:1,skipped_data:0});
  assert.equal(kpfAudit("- {'act': {'act2': {'vehicle_stops': 1.0}, 'note': 'it's'}}").skipped_data,1);
- const g=geomAt(GEOM,[30,60]);assert.deepEqual([...g.keys()],[30,60]);assert.deepEqual(g.get(30)[0],{actor:3,box:[100,200,140,300]});
+ const g=geomAt(GEOM,[30,60]);assert.deepEqual([...g.keys()],[30,60]);assert.deepEqual(g.get(30)[0],{actor:'3',box:[100,200,140,300]});
+});
+// The second MEVA dialect: bare keys, double-quoted strings, bare words and 19-digit ids (first-run defect: these
+// files were read as empty, so three test clips lost their references; see docs/VALIDATION.md 0.5.0).
+const ACT2=`- { meta: "2018-03-11.16-45-00.16-50-00.school.G330" }
+- { meta: { team: "Kitware" } }
+- { act: { act2: { person_puts_down_object: 1.0 }, id2: 4, timespan: [{tsr0: [600,690]}], src: truth, actors: [{id1: 1275347941355299595, timespan: [{tsr0: [600,690]}]}, {id1: 1275347941355299596, timespan: [{tsr0: [600,690]}]}]}}
+- { act: { act2: { empty_37: 1.0 }, id2: 1, timespan: [{tsr0: [0,9000]}], src: truth}}`;
+const TYPES2=`- { types: { id1: 1275347941355299595, cset3: { person: 1.0 } } }\n- { types: { id1: 1275347941355299596, cset3: { other: 1.0 } } }`;
+const GEOM2=`- { geom: { id1: 1275347941355299596, id0: 12, ts0: 690, g0: "10 20 30 40", keyframe: true } }`;
+test('the second KPF dialect parses, with long ids kept exact',()=>{
+ assert.deepEqual(kpfAudit(ACT2),{records:4,skipped:0,skipped_data:0});
+ const a=activities(ACT2).filter(x=>x.activity==='person_puts_down_object');
+ assert.equal(a.length,1);assert.deepEqual(a[0].frames,[600,690]);assert.deepEqual(a[0].actors.map(x=>x.id),['1275347941355299595','1275347941355299596']);
+ const t=types(TYPES2);assert.equal(t.get('1275347941355299595'),'person');assert.equal(t.get('1275347941355299596'),'other');
+ assert.deepEqual(geomAt(GEOM2,[690]).get(690),[{actor:'1275347941355299596',box:[10,20,30,40]}]);
+ assert.equal(references(activities(ACT2),'person_puts_down_object',30,300)[0].start,20);
 });
 test('references are in seconds with an inclusive last frame, clipped to the analysed range',()=>{
  const r=references(activities(ACT),'vehicle_stops',30,312);

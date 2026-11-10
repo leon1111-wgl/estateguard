@@ -1,13 +1,25 @@
 /** MEVA KPF annotation reading and the label side of the event-timeline evaluation
  * (docs/validation/event-timeline-protocol.md). Pure functions; the score script fetches the files on Actions. */
 
-/** Each KPF line is a YAML flow mapping in Python-literal style, e.g.
- *  - {'act': {'act2': {'vehicle_stops': 1.0}, 'actors': [...], 'id2': 14, 'timespan': [{'tsr0': [3444, 3590]}]}} */
+/** Each KPF line is a YAML flow mapping. MEVA uses two dialects:
+ *  - {'act': {'act2': {'vehicle_stops': 1.0}, 'actors': [...], 'id2': 14, 'timespan': [{'tsr0': [3444, 3590]}]}}
+ *  - { act: { act2: { vehicle_stops: 1.0 }, id2: 1, timespan: [{tsr0: [0,9000]}], src: truth}}
+ * The second has bare keys and words and 19-digit ids, which are kept as strings so they cannot collide. */
+export function kpfToJSON(line){
+ let s=line.trim().replace(/^-\s*/,'');
+ if(/^\{\s*'/.test(s))s=s.replace(/'/g,'"');
+ else{
+  s=s.replace(/([{,]\s*)([A-Za-z_][A-Za-z0-9_]*)\s*:/g,'$1"$2":');
+  s=s.replace(/:\s*([A-Za-z_][A-Za-z0-9_.\-]*)\s*(?=[,}\]])/g,(m,w)=>['True','False','None','true','false','null'].includes(w)?`: ${w}`:`: "${w}"`);
+ }
+ s=s.replace(/\bTrue\b/g,'true').replace(/\bFalse\b/g,'false').replace(/\bNone\b/g,'null');
+ return s.replace(/([:\[,]\s*)(\d{16,})(?=\s*[,\]}])/g,'$1"$2"');
+}
 export function parseKpf(text){
  const records=[];let skipped=0,skippedData=0;
  for(const raw of text.split('\n')){
   const line=raw.trim();if(!line.startsWith('- {'))continue;
-  try{records.push(JSON.parse(line.slice(2).replace(/'/g,'"').replace(/\bTrue\b/g,'true').replace(/\bFalse\b/g,'false').replace(/\bNone\b/g,'null')));}
+  try{records.push(JSON.parse(kpfToJSON(line)));}
   catch{skipped++;if(!/^- \{\s*'?meta'?\s*:/.test(line))skippedData++;}
  }
  return {records,skipped,skipped_data:skippedData};
@@ -18,17 +30,18 @@ export function kpfAudit(text){const {records,skipped,skipped_data}=parseKpf(tex
 const span=ts=>{const t=ts?.[0]?.tsr0;return Array.isArray(t)&&t.length===2?t.map(Number):null;};
 /** Activity instances: [{activity, id, frames:[f0,f1], actors:[{id, frames}]}]. */
 export function activities(text){
- return parseKpf(text).records.filter(r=>r.act).map(({act})=>({activity:Object.keys(act.act2||{})[0],id:act.id2,frames:span(act.timespan),actors:(act.actors||[]).map(a=>({id:a.id1,frames:span(a.timespan)}))})).filter(a=>a.activity&&a.frames);
+ return parseKpf(text).records.filter(r=>r.act).map(({act})=>({activity:Object.keys(act.act2||{})[0],id:act.id2,frames:span(act.timespan),actors:(act.actors||[]).map(a=>({id:String(a.id1),frames:span(a.timespan)}))})).filter(a=>a.activity&&a.frames);
 }
 /** Actor types: Map(actor id → type name). */
-export function types(text){return new Map(parseKpf(text).records.filter(r=>r.types).map(({types:t})=>[t.id1,Object.keys(t.cset3||{})[0]]));}
+export function types(text){return new Map(parseKpf(text).records.filter(r=>r.types).map(({types:t})=>[String(t.id1),Object.keys(t.cset3||{})[0]]));}
 /** Actor boxes at the given frames only (the sampled ones): Map(frame → [{actor, box:[x1,y1,x2,y2]}]). */
 export function geomAt(text,frames){
  const want=new Set(frames),out=new Map();
  for(const raw of text.split('\n')){
-  const m=/'g0': '(\d+) (\d+) (\d+) (\d+)'.*'id1': (\d+).*'ts0': (\d+)/.exec(raw);if(!m)continue;
-  const frame=Number(m[6]);if(!want.has(frame))continue;
-  if(!out.has(frame))out.set(frame,[]);out.get(frame).push({actor:Number(m[5]),box:[1,2,3,4].map(i=>Number(m[i]))});
+  // Both dialects: 'g0': '1 2 3 4' … 'id1': 7 … 'ts0': 30, or g0: "1 2 3 4" … id1: 7 … ts0: 30, in any key order.
+  const ts=/\bts0'?\s*:\s*(\d+)/.exec(raw);if(!ts)continue;const frame=Number(ts[1]);if(!want.has(frame))continue;
+  const g=/\bg0'?\s*:\s*['"](\d+) (\d+) (\d+) (\d+)['"]/.exec(raw),id=/\bid1'?\s*:\s*(\d+)/.exec(raw);if(!g||!id)continue;
+  if(!out.has(frame))out.set(frame,[]);out.get(frame).push({actor:id[1],box:[1,2,3,4].map(i=>Number(g[i]))});
  }
  return out;
 }

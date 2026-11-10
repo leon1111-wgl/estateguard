@@ -1,0 +1,5 @@
+{
+ "note": "Detection runs whose artifacts the corrected re-score reads. The system output is not recomputed.",
+ "dev": {"run_id": "42725109355", "commit": "ddc0a71ca6253ae474f39897111ed9bece5327de"},
+ "test": {"run_id": "42725830941", "commit": "a4f1132250683e1034c11477d409da8902b2709a"}
+}

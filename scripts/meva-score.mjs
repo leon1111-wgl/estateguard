@@ -46,7 +46,8 @@ export async function main(){
   const secondary=SECONDARY.map(({rule,activity})=>{const {det,...rest}=per(rule,activity);return {rule,activity,...rest};});
   return {timelines,rules,secondary};
  };
- const report={protocol:'docs/validation/event-timeline-protocol.md',split,commit:process.env.GITHUB_SHA||null,run_id:process.env.GITHUB_RUN_ID||null,annotations:`meva-data-repo@${MEVA_COMMIT}`,
+ const report={protocol:'docs/validation/event-timeline-protocol.md',split,commit:process.env.GITHUB_SHA||null,run_id:process.env.GITHUB_RUN_ID||null,
+  ...(args['detections-run']?{detections_run_id:args['detections-run'],detections_commit:args['detections-commit'],rescore:'Same detections as that run; only the reading of the annotations changed.'}:{}),annotations:`meva-data-repo@${MEVA_COMMIT}`,
   clips:clips.map(c=>({clip:c.name,site:c.site,camera:c.camera,width:c.d.video.width,height:c.d.video.height,fps:c.d.video.fps,analysed_seconds:c.analysed,frames:c.d.frames.length,kpf_audit:c.audit,references:Object.fromEntries(Object.entries(c.refs).map(([k,v])=>[k,v.length]))})),
   analysed_minutes:clips.reduce((a,c)=>a+c.analysed,0)/60};
  let chosen;

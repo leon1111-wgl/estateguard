@@ -11,9 +11,10 @@ on:
         required: true
         default: timing
         type: choice
-        options: [timing, dev, test, audit]
+        options: [timing, dev, test, audit, rescore]
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: timeline-eval-${{ github.ref }}
   cancel-in-progress: false
@@ -31,9 +32,9 @@ jobs:
           REF_NAME: ${{ github.ref_name }}
         run: |
           split="${INPUT_SPLIT:-${REF_NAME#timeline-run/}}"
-          case "$split" in timing|dev|test|audit) ;; *) echo "unknown split $split"; exit 1;; esac
+          case "$split" in timing|dev|test|audit|rescore) ;; *) echo "unknown split $split"; exit 1;; esac
           echo "split=$split" >> "$GITHUB_OUTPUT"
-          if [ "$split" = audit ]; then echo 'shards=[]' >> "$GITHUB_OUTPUT"; exit 0; fi
+          if [ "$split" = audit ] || [ "$split" = rescore ]; then echo 'shards=[]' >> "$GITHUB_OUTPUT"; exit 0; fi
           # Pre-registered order and skip rule: missing video or under 20 MB is skipped; take the first N.
           node -e '
             const s=require("./docs/validation/event-timeline-meva-subset.json"),split=process.argv[1];
@@ -60,9 +61,53 @@ jobs:
           path: artifacts/timeline-audit/
           if-no-files-found: ignore
           retention-days: 90
+  rescore:
+    # Re-scores the detection artifacts of the dev and test runs listed in docs/validation/event-timeline-runs.json
+    # with the current annotation reader. No video is downloaded and no model runs.
+    needs: plan
+    if: needs.plan.outputs.split == 'rescore'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - id: runs
+        run: |
+          echo "dev=$(jq -r .dev.run_id docs/validation/event-timeline-runs.json)" >> "$GITHUB_OUTPUT"
+          echo "dev_commit=$(jq -r .dev.commit docs/validation/event-timeline-runs.json)" >> "$GITHUB_OUTPUT"
+          echo "test=$(jq -r .test.run_id docs/validation/event-timeline-runs.json)" >> "$GITHUB_OUTPUT"
+          echo "test_commit=$(jq -r .test.commit docs/validation/event-timeline-runs.json)" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: timeline-detections-dev-*
+          path: artifacts/det-dev
+          merge-multiple: true
+          run-id: ${{ steps.runs.outputs.dev }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: timeline-detections-test-*
+          path: artifacts/det-test
+          merge-multiple: true
+          run-id: ${{ steps.runs.outputs.test }}
+          github-token: ${{ github.token }}
+      - run: node scripts/meva-kpf-audit.mjs --out artifacts/timeline-eval
+      - run: node scripts/meva-score.mjs --split dev --detections artifacts/det-dev --out artifacts/timeline-eval --detections-run ${{ steps.runs.outputs.dev }} --detections-commit ${{ steps.runs.outputs.dev_commit }}
+      - run: node scripts/meva-score.mjs --split test --detections artifacts/det-test --out artifacts/timeline-eval --detections-run ${{ steps.runs.outputs.test }} --detections-commit ${{ steps.runs.outputs.test_commit }}
+      - if: always()
+        run: cat artifacts/timeline-eval/summary-*.md >> "$GITHUB_STEP_SUMMARY" || true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: timeline-rescore-${{ github.run_id }}
+          path: artifacts/timeline-eval/
+          if-no-files-found: ignore
+          retention-days: 90
   detect:
     needs: plan
-    if: needs.plan.outputs.split != 'audit'
+    if: needs.plan.outputs.split != 'audit' && needs.plan.outputs.split != 'rescore'
     runs-on: ubuntu-latest
     timeout-minutes: 75
     strategy:
