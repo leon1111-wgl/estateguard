@@ -22,7 +22,7 @@ export function chooseConfig(rows){
 export function systemInstances(timeline,rule){return timeline.events.filter(e=>e.rule===rule).map(e=>({start:e.start,end:e.end,score:e.score,id:e.id,track:e.track,class:e.class}));}
 
 async function fetchText(p){const r=await fetch(rawURL(p));if(!r.ok)throw new Error(`HTTP ${r.status} for ${p}`);return r.text();}
-async function main(){
+export async function main(){
  const args=Object.fromEntries(process.argv.slice(2).reduce((p,v,i,all)=>i%2?p:[...p,[v.replace(/^--/,''),all[i+1]]],[]));
  const split=args.split,dir=path.resolve(args.detections),out=path.resolve(args.out);fs.mkdirSync(out,{recursive:true});
  if(!['dev','test'].includes(split))throw new Error('--split dev|test');
