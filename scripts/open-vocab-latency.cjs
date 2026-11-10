@@ -15,7 +15,10 @@ const BUDGET={p95_ms:20000,init_ms:60000},SIZES=[[1280,720],[1024,768],[720,1280
  await page.goto(base+'/__eval.html');
  const result=await page.evaluate(async({base,id,BUDGET,SIZES,WARMUP,TIMED})=>{
   const ov=await import(base+'/open-vocab.mjs');
-  const t0=performance.now();const lane=await ov.loadOpenVocab(id,{remoteHost:base+'/__hf/'});const init_ms=performance.now()-t0;
+  const t0=performance.now();let lane;
+  // A candidate that cannot start on this runtime is a stage-1 result, recorded rather than thrown.
+  try{lane=await ov.loadOpenVocab(id,{remoteHost:base+'/__hf/'});}catch(error){return {candidate:id,...ov.OPEN_VOCAB_CANDIDATES[id],load_error:String(error.message||error),within_budget:false,budget:BUDGET,user_agent:navigator.userAgent};}
+  const init_ms=performance.now()-t0;
   const rand=seed=>()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};
   async function noiseBlob(w,h,seed){const c=new OffscreenCanvas(w,h),x=c.getContext('2d'),d=x.createImageData(w,h),r=rand(seed);for(let i=0;i<d.data.length;i+=4){d.data[i]=r()*255;d.data[i+1]=r()*255;d.data[i+2]=r()*255;d.data[i+3]=255;}x.putImageData(d,0,0);return c.convertToBlob({type:'image/png'});}
   async function endToEnd(blob){const s=performance.now();const bmp=await createImageBitmap(blob);const c=document.createElement('canvas');c.width=bmp.width;c.height=bmp.height;c.getContext('2d').drawImage(bmp,0,0);const dets=await lane.detect(c,{floor:.05});return {ms:performance.now()-s,boxes:dets.length};}
@@ -38,6 +41,7 @@ const BUDGET={p95_ms:20000,init_ms:60000},SIZES=[[1280,720],[1024,768],[720,1280
  },{base,id,BUDGET,SIZES,WARMUP,TIMED});
  result.page_errors=errors;result.cross_origin_requests=external.length;
  fs.mkdirSync('artifacts/open-vocab',{recursive:true});fs.writeFileSync(path.join('artifacts/open-vocab',`latency-${id}.json`),JSON.stringify(result,null,1));
+ if(result.load_error){console.log(JSON.stringify({candidate:id,load_error:result.load_error}));await browser.close();return;}
  console.log(JSON.stringify({candidate:id,init_ms:Math.round(result.init_ms),p50_ms:Math.round(result.p50_ms),p95_ms:Math.round(result.p95_ms),within_budget:result.within_budget,stopped:result.stopped,errors:errors.length,external:external.length,smoke_ours:result.smoke.ours.slice(0,3),smoke_library:result.smoke.library&&result.smoke.library.slice?result.smoke.library.slice(0,3):result.smoke.library}));
  await browser.close();
 })().catch(e=>{console.error(e);process.exit(1);});

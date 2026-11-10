@@ -20,5 +20,8 @@ for(const f of wanted){
  manifest.files.push({path:f.path,bytes:size,sha256:hash.digest('hex')});
 }
 if(manifest.files.find(f=>f.path===c.file).bytes!==c.bytes)throw new Error(`${c.file} size differs from the protocol`);
+// transformers.js 4.3.2 checks whether tokenizer_config.json exists at revision "main" (it does not pass the pinned
+// revision to that check), then loads every file at the pinned revision. The mirror answers the check with the same bytes.
+const {cpSync}=await import('node:fs');cpSync(join('web/__hf',c.repo,'resolve',c.revision),join('web/__hf',c.repo,'resolve','main'),{recursive:true});
 mkdirSync('artifacts/open-vocab',{recursive:true});writeFileSync(`artifacts/open-vocab/mirror-${id}.json`,JSON.stringify(manifest,null,1));
 console.log(JSON.stringify(manifest.files.map(f=>[f.path,f.bytes])));
