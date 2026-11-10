@@ -1,0 +1,288 @@
+{
+ "protocol": "docs/validation/event-timeline-protocol.md",
+ "dataset": "MEVA KF1, evaluation-level Kitware annotations (CC BY 4.0)",
+ "annotations": "meva-data-repo@421841a75577b697c314e952e585aecbb1b99e17",
+ "scope": "ActEV-style scoring re-implemented in this repository; whole-frame zones; 1 frame per second; first run on the test half, reported as measured.",
+ "dev": {
+  "run_id": "42725109355",
+  "commit": "ddc0a71ca6253ae474f39897111ed9bece5327de",
+  "clips": 8,
+  "minutes": 40,
+  "sites": [
+   "bus",
+   "school"
+  ],
+  "cameras": 5,
+  "config": {
+   "minimum_score": 0.4,
+   "dwell_seconds": 2
+  },
+  "rules": {
+   "vehicle_stop": {
+    "activity": "vehicle_stops",
+    "references": 28,
+    "events": 130,
+    "matched": 18,
+    "pmiss": 0.3571428571428571,
+    "pmiss_wilson_95": [
+     0.20705611972458876,
+     0.5417002241777278
+    ],
+    "tfa": 0.17989555382440348,
+    "unmatched_per_minute": 2.8,
+    "pmiss_at_tfa_0_02": 0.7142857142857143,
+    "pmiss_at_tfa_0_1": 0.4642857142857143,
+    "naudc_0_2": 0.5066375326522056,
+    "temporal_iou_mean": 0.46444461737251697,
+    "temporal_iou_pairs": 18
+   },
+   "object_left": {
+    "activity": "person_puts_down_object",
+    "references": 11,
+    "events": 7,
+    "matched": 0,
+    "pmiss": 1,
+    "pmiss_wilson_95": [
+     0.7411599827511859,
+     1
+    ],
+    "tfa": 0.008793233397537896,
+    "unmatched_per_minute": 0.175,
+    "pmiss_at_tfa_0_02": 1,
+    "pmiss_at_tfa_0_1": 1,
+    "naudc_0_2": 1,
+    "temporal_iou_mean": null,
+    "temporal_iou_pairs": 0
+   },
+   "person_appears": {
+    "activity": "person_enters_scene_through_structure",
+    "references": 5,
+    "events": 211,
+    "matched": 2,
+    "pmiss": 0.6,
+    "pmiss_wilson_95": [
+     0.23071993220883708,
+     0.8823817688407467
+    ],
+    "tfa": 0.18206143040303246,
+    "unmatched_per_minute": 5.225,
+    "pmiss_at_tfa_0_02": 0.8,
+    "pmiss_at_tfa_0_1": 0.6,
+    "naudc_0_2": 0.6536191796324455,
+    "temporal_iou_mean": 0.5946787148594381,
+    "temporal_iou_pairs": 2
+   }
+  },
+  "secondary": [
+   {
+    "rule": "person_appears",
+    "activity": "person_opens_facility_door",
+    "references": 12,
+    "matched": 5,
+    "pmiss": 0.5833333333333333
+   }
+  ],
+  "failure_modes": {
+   "person_recall_by_height_px": [
+    {
+     "min_px": 0,
+     "max_px": 50,
+     "boxes": 508,
+     "found": 89
+    },
+    {
+     "min_px": 50,
+     "max_px": 100,
+     "boxes": 977,
+     "found": 335
+    },
+    {
+     "min_px": 100,
+     "max_px": 200,
+     "boxes": 689,
+     "found": 646
+    },
+    {
+     "min_px": 200,
+     "max_px": null,
+     "boxes": 85,
+     "found": 77
+    }
+   ],
+   "id_switches": {
+    "person": {
+     "actors": 79,
+     "matched_samples": 1205,
+     "id_switches": 248,
+     "mean_distinct_tracks_per_actor": 3,
+     "switches_per_100_matched_samples": 20.58091286307054
+    },
+    "vehicle": {
+     "actors": 135,
+     "matched_samples": 908,
+     "id_switches": 35,
+     "mean_distinct_tracks_per_actor": 1.2222222222222223,
+     "switches_per_100_matched_samples": 3.854625550660793
+    }
+   },
+   "put_down_objects": {
+    "bicycle": {
+     "objects": 1,
+     "with_boxes": 0,
+     "detected": 0
+    },
+    "other": {
+     "objects": 10,
+     "with_boxes": 3,
+     "detected": 0
+    }
+   }
+  },
+  "chosen": {
+   "config": {
+    "minimum_score": 0.4,
+    "dwell_seconds": 2
+   },
+   "mean_naudc": 0.7200855707615504,
+   "rule": "lowest mean nAUDC@0.2 over rules with dev references; ties → higher minimum_score, then longer dwell"
+  }
+ },
+ "test": {
+  "run_id": "42725830941",
+  "commit": "a4f1132250683e1034c11477d409da8902b2709a",
+  "clips": 16,
+  "minutes": 80,
+  "sites": [
+   "admin",
+   "bus",
+   "hospital",
+   "school"
+  ],
+  "cameras": 12,
+  "config": {
+   "minimum_score": 0.4,
+   "dwell_seconds": 2
+  },
+  "rules": {
+   "vehicle_stop": {
+    "activity": "vehicle_stops",
+    "references": 10,
+    "events": 65,
+    "matched": 6,
+    "pmiss": 0.4,
+    "pmiss_wilson_95": [
+     0.16817758120350967,
+     0.6873304525498135
+    ],
+    "tfa": 0.04354053279862505,
+    "unmatched_per_minute": 0.7375,
+    "pmiss_at_tfa_0_02": 0.4,
+    "pmiss_at_tfa_0_1": 0.4,
+    "naudc_0_2": 0.41864374247927627,
+    "temporal_iou_mean": 0.41947604274794803,
+    "temporal_iou_pairs": 6
+   },
+   "object_left": {
+    "activity": "person_puts_down_object",
+    "references": 3,
+    "events": 10,
+    "matched": 0,
+    "pmiss": 1,
+    "pmiss_wilson_95": [
+     0.43849391955098227,
+     1
+    ],
+    "tfa": 0.0064619232907170655,
+    "unmatched_per_minute": 0.125,
+    "pmiss_at_tfa_0_02": 1,
+    "pmiss_at_tfa_0_1": 1,
+    "naudc_0_2": 1,
+    "temporal_iou_mean": null,
+    "temporal_iou_pairs": 0
+   },
+   "person_appears": {
+    "activity": "person_enters_scene_through_structure",
+    "references": 70,
+    "events": 336,
+    "matched": 53,
+    "pmiss": 0.24285714285714288,
+    "pmiss_wilson_95": [
+     0.1575173261192311,
+     0.3549526095268004
+    ],
+    "tfa": 0.12900831459872247,
+    "unmatched_per_minute": 3.5375,
+    "pmiss_at_tfa_0_02": 0.44285714285714284,
+    "pmiss_at_tfa_0_1": 0.2571428571428571,
+    "naudc_0_2": 0.316476831953212,
+    "temporal_iou_mean": 0.5859601876713362,
+    "temporal_iou_pairs": 53
+   }
+  },
+  "secondary": [
+   {
+    "rule": "person_appears",
+    "activity": "person_opens_facility_door",
+    "references": 32,
+    "matched": 15,
+    "pmiss": 0.53125
+   }
+  ],
+  "failure_modes": {
+   "person_recall_by_height_px": [
+    {
+     "min_px": 0,
+     "max_px": 50,
+     "boxes": 1473,
+     "found": 248
+    },
+    {
+     "min_px": 50,
+     "max_px": 100,
+     "boxes": 1112,
+     "found": 804
+    },
+    {
+     "min_px": 100,
+     "max_px": 200,
+     "boxes": 2264,
+     "found": 1689
+    },
+    {
+     "min_px": 200,
+     "max_px": null,
+     "boxes": 224,
+     "found": 200
+    }
+   ],
+   "id_switches": {
+    "person": {
+     "actors": 108,
+     "matched_samples": 3439,
+     "id_switches": 633,
+     "mean_distinct_tracks_per_actor": 4.074074074074074,
+     "switches_per_100_matched_samples": 18.406513521372492
+    },
+    "vehicle": {
+     "actors": 26,
+     "matched_samples": 140,
+     "id_switches": 2,
+     "mean_distinct_tracks_per_actor": 1.0384615384615385,
+     "switches_per_100_matched_samples": 1.4285714285714286
+    }
+   },
+   "put_down_objects": {
+    "bag": {
+     "objects": 1,
+     "with_boxes": 0,
+     "detected": 0
+    },
+    "other": {
+     "objects": 2,
+     "with_boxes": 0,
+     "detected": 0
+    }
+   }
+  }
+ }
+}
