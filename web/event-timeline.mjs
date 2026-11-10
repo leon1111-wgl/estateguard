@@ -7,12 +7,12 @@
 export const TIMELINE_RULES=Object.freeze({
  vehicle_stop:Object.freeze({label:'车辆停下',classes:Object.freeze(['car','truck','bus','motorcycle']),
   sees:'车辆轨迹先移动、再在区域内静止达到停留阈值。',
-  misses:'一直停着的车不算“停下”；远处小车、被遮挡的车和检测框抖动会漏报或误报。'}),
+  misses:'一直停着的车不算“停下”；远处小车、被遮挡的车和检测框抖动会漏报或误报；镜头晃动或转动时，停着的车也会显得先动后停。'}),
  object_left:Object.freeze({label:'物品遗留（代理）',classes:Object.freeze(['backpack','handbag','suitcase']),
   sees:'背包、手提包或行李箱在片段中出现后静止达到停留阈值，期间没有人员框盖住它。',
   misses:'纸箱、快递包裹、推车不在 COCO 80 类里，看不到；不判断物主是谁、是否“丢弃”；片头已在画面中的物品不计。'}),
- person_appears:Object.freeze({label:'人员在门口出现',classes:Object.freeze(['person']),
-  sees:'新的人员轨迹在关注区域内、离画面边缘有距离的位置开始（例如从门里走出）。',
+ person_appears:Object.freeze({label:'人员在区域内出现',classes:Object.freeze(['person']),
+  sees:'新的人员轨迹在关注区域内、离画面边缘有距离的位置开始；把关注区域框在门口时，就是有人从门里走出。',
   misses:'不区分进门和其他原因的新轨迹：遮挡后重新出现、轨迹换号都会多报；远处小人检测不到就漏报。'})
 });
 export const RULE_ORDER=Object.freeze(['vehicle_stop','object_left','person_appears']);

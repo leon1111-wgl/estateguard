@@ -29,7 +29,7 @@ function evidenceLine(){
  if(!evaluationRequested){evaluationRequested=true;fetch(new URL('./data/timeline/evaluation.json',import.meta.url),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(e=>{evaluation=e;evidenceLine();}).catch(()=>{});}
  if(!evaluation?.test){box.textContent='';return;}
  const t=evaluation.test,p=x=>x==null?'—':`${Math.round(x*100)}%`;
- box.textContent=`公开数据上的表现（MEVA 测试半，${t.clips} 段 / ${t.minutes.toFixed(0)} 分钟，按摄像头与开发半分开，首次运行）：`+RULE_ORDER.map(r=>{const x=t.rules[r];return `${TIMELINE_RULES[r].label}漏报 ${p(x.pmiss)}（${x.references} 个标注），每分钟多报 ${x.unmatched_per_minute.toFixed(1)} 个${x.pmiss>=.9?'，在公开测试中几乎全部漏报':''}`;}).join('；')+'。';
+ box.textContent=`公开数据上的表现（MEVA 测试半，${t.clips} 段 / ${t.minutes.toFixed(0)} 分钟，按摄像头与开发半分开，首次运行）：`+RULE_ORDER.map(r=>{const x=t.rules[r];return `${TIMELINE_RULES[r].label}漏报 ${p(x.pmiss)}（${x.references} 个标注），每分钟多报 ${x.unmatched_per_minute.toFixed(1)} 个${x.pmiss===1?`，在公开测试中全部漏报（${x.references} 个标注）`:x.pmiss>=.9?'，在公开测试中几乎全部漏报':''}`;}).join('；')+'。';
 }
 export function renderTimeline(report,{onSelect}={}){
  const t=report.timeline,panel=$('timeline-panel');if(!t||!panel)return;
@@ -39,11 +39,16 @@ export function renderTimeline(report,{onSelect}={}){
  $('timeline-summary').textContent=t.events.length?`${t.events.length} 个待核实事件 · ${RULE_ORDER.map(r=>`${TIMELINE_RULES[r].label} ${counts[r]}`).join(' · ')} · 分析 ${sec(t.analysed.start)}–${sec(t.analysed.end)}，${t.frames_analysed} 帧`:`没有事件（分析 ${sec(t.analysed.start)}–${sec(t.analysed.end)}，${t.frames_analysed} 帧）。没有事件不等于安全：漏检、遮挡、远处小目标都会让时间线空着。`;
  $('timeline-start').textContent=sec(t.analysed.start);$('timeline-end').textContent=sec(t.analysed.end);
  $('timeline-lanes').replaceChildren(...RULE_ORDER.map(rule=>{
-  const track=el('div',{className:'tl-track'});
+  // Overlapping events of one rule are packed into rows (greedy, in time order) so none hides another.
+  const ends=[],rowOf=new Map();
+  for(const e of t.events.filter(x=>x.rule===rule)){let r=ends.findIndex(end=>end<=e.start);if(r<0){r=ends.length;ends.push(0);}ends[r]=e.end;rowOf.set(e.id,r);}
+  const rows=Math.max(1,ends.length),track=el('div',{className:'tl-track'});
+  track.style.height=`${Math.max(26,rows*14+6)}px`;
   for(const e of t.events.filter(x=>x.rule===rule)){
    const b=el('button',{type:'button',className:`tl-seg tl-${rule}`,title:`${e.id} · ${TIMELINE_RULES[rule].label} · ${sec(e.start)}–${sec(e.end)}`});
    b.dataset.event=e.id;b.setAttribute('aria-pressed','false');b.setAttribute('aria-label',`${TIMELINE_RULES[rule].label}，${sec(e.start)} 到 ${sec(e.end)}，查看关键帧`);
-   b.style.left=`${pos(e.start)}%`;b.style.width=`${Math.max(.6,pos(e.end)-pos(e.start))}%`;b.addEventListener('click',()=>select(e,report,onSelect));track.append(b);
+   b.style.left=`${pos(e.start)}%`;b.style.width=`${Math.max(.6,pos(e.end)-pos(e.start))}%`;
+   if(rows>1){b.style.top=`${3+rowOf.get(e.id)*14}px`;b.style.height='11px';b.style.bottom='auto';}b.addEventListener('click',()=>select(e,report,onSelect));track.append(b);
   }
   return el('div',{className:'tl-lane'},el('span',{className:`tl-lane-label tl-key-${rule}`,textContent:`${TIMELINE_RULES[rule].label} · ${counts[rule]}`}),track);
  }));

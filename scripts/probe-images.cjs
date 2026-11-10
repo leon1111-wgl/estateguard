@@ -16,7 +16,7 @@ const out=path.join(__dirname,'..','artifacts','probe');fs.mkdirSync(out,{recurs
 const base=(process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766').replace(/\/$/,''),origin=new URL(base).origin;
 const urls=(process.env.PROBE_URLS||'').split(/[\s,]+/).map(s=>s.trim()).filter(Boolean);
 const clips=(process.env.PROBE_CLIPS||'').split(/[\s,]+/).map(s=>s.trim()).filter(Boolean);
-const {runTimeline,openKeyframe}=require('./timeline-fixture.cjs');
+const {runTimeline,openKeyframe,inputFile}=require('./timeline-fixture.cjs');
 const MAX_CLIPS=10,MAX_KEYFRAMES=12,CLIP_TIMEOUT=900000;
 const detector=['dfine','ssdlite'].includes(process.env.PROBE_DETECTOR)?process.env.PROBE_DETECTOR:'dfine';
 const rule=['objects','access','lift'].includes(process.env.PROBE_RULE)?process.env.PROBE_RULE:'objects';
@@ -93,7 +93,7 @@ function writeSummary(){
    // Clear the previous item's message so its refusal or completion cannot be read as this file's answer.
    const clearMessage=()=>page.evaluate(()=>{const m=document.querySelector('#vision-message');m.textContent='';m.classList.remove('error');});
    await clearMessage();
-   await page.locator('#analysis-file').setInputFiles({name:file.name,mimeType,buffer:file.bytes});
+   await page.locator('#analysis-file').setInputFiles(inputFile({name:file.name,type:mimeType,buffer:file.bytes}));
    await page.waitForFunction(()=>{const m=document.querySelector('#vision-message');return m.textContent.startsWith('素材已就绪')||m.classList.contains('error');});
    a.open_message=await page.locator('#vision-message').textContent();
    if(!a.open_message.startsWith('素材已就绪')){a.outcome='refused';await page.screenshot({path:path.join(out,`${pad(i)}-page.png`),fullPage:!mobile});console.log('  refused:',a.open_message);}
@@ -123,7 +123,7 @@ function writeSummary(){
     pk.model=await parkingPage.locator('#parking-model-choice').inputValue();
     // Clear the status first so two identical messages in a row are still seen as a new answer.
     await parkingPage.evaluate(()=>{document.getElementById('parking-upload-status').textContent='';});
-    await parkingPage.locator('#parking-upload').setInputFiles({name:file.name,mimeType,buffer:file.bytes});
+    await parkingPage.locator('#parking-upload').setInputFiles(inputFile({name:file.name,type:mimeType,buffer:file.bytes}));
     await parkingPage.waitForFunction(()=>{const s=document.getElementById('parking-upload-status').textContent;return s!==''&&!s.startsWith('正在')&&!document.getElementById('parking-upload').disabled;},{},{timeout:ITEM_TIMEOUT});
     pk.status=await parkingPage.locator('#parking-upload-status').textContent();
     pk.result=(await parkingPage.locator('#parking-upload-result').textContent()).includes(file.name)?await parkingPage.locator('#parking-upload-result').textContent():null;

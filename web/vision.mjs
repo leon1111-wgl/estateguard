@@ -19,7 +19,7 @@ const defaultScores={ssdlite:.5,dfine:.5},backendLabels={};let detectorEvaluatio
 const detectorKey=()=>DETECTORS[$('vision-detector').value]&&($('vision-detector').value!=='dfine'||ortSupported)?$('vision-detector').value:'ssdlite';
 const names=COCO_NAMES_ZH;
 const models={},modelPromises={},loadStats={};let modelController=null,modelLoadStats=null,source=null,sourceFile=null,sourceURL=null,isVideo=false,busy=false,loading=false,sourceGeneration=0,stopped=false,report=null,lastBoxes=[],frameSnapshot=null,snapshotTime=0,aspectWarning='';
-let mediaRevision=0,geometry=null,contextConfirmation=null,savedScene=null,savedSceneRevision=0,contextHint='',highlight=null,dwellEdited=false;
+let keyframeTicket=0,mediaRevision=0,geometry=null,contextConfirmation=null,savedScene=null,savedSceneRevision=0,contextHint='',highlight=null,dwellEdited=false;
 const RULES=['objects','access','lift','parking','direction','timeline'],NO_CONTEXT_RULES=['objects','timeline'];
 // The timeline's score floor and dwell are the values chosen on MEVA dev; other rules keep their own defaults.
 const defaultScore=()=>$('vision-rule').value==='timeline'?TIMELINE_SETTINGS.minimum_score:defaultScores[detectorKey()];
@@ -79,7 +79,7 @@ async function getModel(key=detectorKey()){
   finally{clearTimeout(manifestTimer);route?.release();modelController=null;$('stop-analysis').textContent='停止分析';}
  })().catch(error=>{modelPromises[key]=null;throw error;});return modelPromises[key];
 }
-function invalidate(){report=null;highlight=null;$('send-candidates').disabled=true;$('vision-results').hidden=true;clearTimeline();}
+function invalidate(){report=null;highlight=null;keyframeTicket++;$('send-candidates').disabled=true;$('vision-results').hidden=true;clearTimeline();}
 const contextFields=new Set(['vision-rule','vision-camera','vision-zone','vision-start','vision-offset','vision-direction','roi-x','roi-y','roi-w','roi-h']);
 function inputError(field,message){return Object.assign(new Error(message),{field});}
 function numberField(id,min,max){const value=Number($(id).value);if(!$(id).value.trim()||!Number.isFinite(value)||value<min||value>max)throw inputError(id,`请检查数值范围：${min} 至 ${max===Infinity?'素材结束前':max}。`);return value;}
@@ -194,7 +194,7 @@ $('analysis-form').addEventListener('submit',async event=>{event.preventDefault(
  };
  try{detector=await getModel(params.detector);times=isVideo?Array.from({length:Math.min(params.max_frames,Math.ceil((source.duration-offset)/params.sample_interval_seconds))},(_,i)=>offset+i*params.sample_interval_seconds):[0];const detectFloor=params.rule==='timeline'?params.detection_floor:params.minimum_score;
  for(let i=0;i<times.length;i++){if(stopped)break;attemptedTime=times[i];phase='frame_decode';notice(`正在推理 ${i+1} / ${times.length} 帧 · ${times[i].toFixed(1)} 秒`);if(isVideo){source.pause();await seek(times[i]);}capture();phase='inference';const t=performance.now();const predictions=await detector.detect(frame,params.max_detections,detectFloor);const elapsed=performance.now()-t;
- const detections=predictions.map(p=>({class:p.class,score:p.score,bbox:[Math.max(0,p.bbox[0]/frame.width),Math.max(0,p.bbox[1]/frame.height),p.bbox[2]/frame.width,p.bbox[3]/frame.height]}));frames.push({time:times[i],detections});durations.push(elapsed);lastBoxes=detections;completedPreview={snapshot:frameSnapshot,time:snapshotTime,boxes:detections};paint();await new Promise(resolve=>requestAnimationFrame(resolve));}
+ const detections=predictions.map(p=>({class:p.class,score:p.score,bbox:[Math.max(0,p.bbox[0]/frame.width),Math.max(0,p.bbox[1]/frame.height),p.bbox[2]/frame.width,p.bbox[3]/frame.height]}));frames.push({time:times[i],detections});durations.push(elapsed);const shown=params.rule==='timeline'?detections.filter(d=>d.score>=params.minimum_score):detections;lastBoxes=shown;completedPreview={snapshot:frameSnapshot,time:snapshotTime,boxes:shown};paint();await new Promise(resolve=>requestAnimationFrame(resolve));}
  attemptedTime=null;phase='tracking';
  if(params.rule==='timeline'){
   // Partial runs get no timeline, just as they get no candidates: a gap at the end would read as "nothing happened".
@@ -226,7 +226,7 @@ function renderResults(){
 }
 // Clicking a timeline segment: decode the analysed frame at the keyframe again, draw its detections and the event's
 // box, and move the visible player there. A newer click wins; the keyframe is marked on the stage when drawn.
-let keyframeTicket=0;
+
 async function showEvent(event){
  if(busy||loading||!report?.timeline||!isVideo)return;const ticket=++keyframeTicket,current=report;
  $('analysis-stage').removeAttribute('data-keyframe');
@@ -237,7 +237,7 @@ async function showEvent(event){
   highlight={bbox:event.bbox,label:`${event.label} · ${event.start.toFixed(0)}–${event.end.toFixed(0)} 秒`};paint();
   const preview=$('source-video');preview.pause();if(preview.readyState>=1)preview.currentTime=event.keyframe_time;
   $('analysis-stage').dataset.keyframe=event.id;
- }catch(error){if(ticket===keyframeTicket)notice(`无法跳到关键帧：${error.message}`,true);}
+ }catch(error){if(ticket===keyframeTicket&&report===current)notice(`无法跳到关键帧：${error.message}`,true);}
 }
 $('download-timeline').addEventListener('click',()=>{if(busy||loading||!report?.timeline)return;const url=URL.createObjectURL(new Blob([JSON.stringify(timelineDocument(report),null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='estateguard-timeline.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
 $('download-detections').addEventListener('click',()=>{if(busy||loading||!report)return;const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='estateguard-detections.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
@@ -275,9 +275,10 @@ $('vision-detector').addEventListener('change',()=>{
 fetch(new URL('./data/detector/evaluation.json',import.meta.url),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(e=>{
  if(!e)return;detectorEvaluation=e;defaultScores.dfine=e.models?.dfine?.operating_threshold??.5;
  // Apply the published default only before the user has chosen a detector or produced a report.
- if($('vision-rule').value==='timeline'){}
- else if(ortSupported&&!detectorTouched&&!busy&&!report&&e.default_decision?.default==='dfine'&&Number($('vision-score').value)===defaultScores.ssdlite){$('vision-detector').value='dfine';$('vision-detector').dataset.previous='dfine';$('vision-score').value=String(defaultScores.dfine);}
- else if(detectorKey()==='dfine'&&!scoreEdited&&!busy&&!report&&Number($('vision-score').value)===defaultScores.ssdlite)$('vision-score').value=String(defaultScores.dfine);
+ // The event timeline keeps its own score floor (chosen on MEVA dev); the detector default applies to every rule.
+ const timelineRule=$('vision-rule').value==='timeline';
+ if(ortSupported&&!detectorTouched&&!busy&&!report&&e.default_decision?.default==='dfine'&&(timelineRule||Number($('vision-score').value)===defaultScores.ssdlite)){$('vision-detector').value='dfine';$('vision-detector').dataset.previous='dfine';if(!timelineRule)$('vision-score').value=String(defaultScores.dfine);}
+ else if(!timelineRule&&detectorKey()==='dfine'&&!scoreEdited&&!busy&&!report&&Number($('vision-score').value)===defaultScores.ssdlite)$('vision-score').value=String(defaultScores.dfine);
  describeDetector();renderDetectorEvaluation();
 }).catch(()=>{}).finally(()=>{if(!detectorEvaluation){$('vision-detector-help').textContent='评测记录未能加载，暂按 SSDLite 运行；可刷新重试，或手动选择检测模型。';const box=$('detector-evaluation-content');if(box)box.innerHTML='<p class="subtle">检测器评测记录未能加载，可刷新重试。</p>';}});
 function renderDetectorEvaluation(){

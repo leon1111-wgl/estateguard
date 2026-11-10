@@ -16,6 +16,6 @@ test('the test run scored the frozen page configuration on cameras the dev run n
 });
 test('a rule that misses almost everything on the test half says so on the page',async()=>{
  const src=readFileSync(new URL('../web/timeline-view.mjs',import.meta.url),'utf8');
- assert.match(src,/x\.pmiss>=\.9\?'，在公开测试中几乎全部漏报'/);
+ assert.match(src,/x\.pmiss===1\?`，在公开测试中全部漏报（\$\{x\.references\} 个标注）`:x\.pmiss>=\.9\?'，在公开测试中几乎全部漏报'/);
  assert.equal(read('web/data/timeline/evaluation.json').test.rules.object_left.pmiss,1);
 });
