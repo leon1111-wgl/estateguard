@@ -24,8 +24,12 @@ const parking=!/^(false|0|no)$/i.test(process.env.PROBE_PARKING||'true');
 const mobile=process.env.PROBE_VIEWPORT==='mobile';
 // 开放词汇慢车道 (0.6.0): after each completed still-image analysis, click the lane like a visitor (first item confirms the download).
 const openVocab=/^(true|1|yes)$/i.test(process.env.PROBE_OPEN_VOCAB||'false');
+// The lane is hidden on the site (appendix 4); the probe then serves the evaluation configuration in place of the site's
+// config so the maintainer can see the model's output on their own images. The summary says so.
+const laneConfig=JSON.parse(fs.readFileSync(path.join(__dirname,'..','web/data/open-vocab/config.json'),'utf8'));
+const forcedLane=openVocab&&!laneConfig.shipped?fs.readFileSync(path.join(__dirname,'open-vocab-probe-config.json'),'utf8'):null;
 const MAX_BYTES=100*1024*1024,MAX_URLS=20,ITEM_TIMEOUT=240000;
-const summary={started_at:new Date().toISOString(),scope:'Probe of the deployed page code on the URLs given. Each result is what a visitor would see for that file; it is not an accuracy measurement.',settings:{detector,rule,parking,open_vocab:openVocab,viewport:mobile?'375x812':'1440x1000'},items:[],clips:[],page_errors:[],console_errors:[],external_requests:[]};
+const summary={started_at:new Date().toISOString(),scope:'Probe of the deployed page code on the URLs given. Each result is what a visitor would see for that file; it is not an accuracy measurement.',settings:{detector,rule,parking,open_vocab:openVocab?(forcedLane?'forced: lane not shipped; evaluation configuration from scripts/open-vocab-probe-config.json (Grounding DINO tiny q8, t=0.15, 11 classes), which failed the dev precision bar':'shipped configuration'):false,viewport:mobile?'375x812':'1440x1000'},items:[],clips:[],page_errors:[],console_errors:[],external_requests:[]};
 const pad=i=>String(i+1).padStart(2,'0');
 const mimeFor=(header,name)=>{const t=(header||'').split(';')[0].trim().toLowerCase();if(/^(image|video)\//.test(t))return t;const ext=(name.match(/\.([a-z0-9]+)$/i)||[])[1]?.toLowerCase();return {jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',mp4:'video/mp4',webm:'video/webm',heic:'image/heic',gif:'image/gif',avif:'image/avif'}[ext]||'';};
 async function download(url){
@@ -51,7 +55,7 @@ function writeSummary(){
  if(urls.length>MAX_URLS)summary.note=`Only the first ${MAX_URLS} of ${urls.length} URLs were probed.`;
  const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});summary.browser=await browser.version();
  const viewport=mobile?{width:375,height:812}:{width:1440,height:1000};
- const newPage=async hash=>{const p=await browser.newPage({viewport,...(mobile?{isMobile:true,hasTouch:true}:{}),acceptDownloads:true});p.setDefaultTimeout(180000);p.on('dialog',d=>d.accept());
+ const newPage=async hash=>{const p=await browser.newPage({viewport,...(mobile?{isMobile:true,hasTouch:true}:{}),acceptDownloads:true});p.setDefaultTimeout(180000);p.on('dialog',d=>d.accept());if(forcedLane)await p.route('**/data/open-vocab/config.json',r=>r.fulfill({status:200,contentType:'application/json',body:forcedLane}));
   p.on('pageerror',e=>summary.page_errors.push(e.message));p.on('console',m=>{if(m.type()==='error')summary.console_errors.push(m.text());});
   p.on('request',r=>{const u=r.url();if(u.startsWith('http')&&new URL(u).origin!==origin)summary.external_requests.push(u);});
   await p.goto(`${base}/?detector=${detector}${hash}`);return p;};

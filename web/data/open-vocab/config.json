@@ -3,5 +3,21 @@
  "candidate": null,
  "threshold": null,
  "classes": [],
- "status": "stage 1 (latency) in progress; the lane stays hidden until the pre-registered LVIS test decides (docs/validation/open-vocab-protocol.md)"
+ "status": "hidden: no configuration met the pre-registered dev rule (at least 3 classes at pooled precision ≥ 0.70); the test half was not run (docs/validation/open-vocab-protocol.md, appendix 4)",
+ "evaluation": {
+  "stage1_run": 42764887346,
+  "stage1_appendix3_run": 42766235517,
+  "dev_run": 42766367360,
+  "dev_commit": "4c175be",
+  "best_dev_option": {
+   "candidate": "B-q8",
+   "threshold": 0.15,
+   "kept_classes": [
+    "box",
+    "fire_extinguisher"
+   ],
+   "pooled_tp": 44,
+   "pooled_precision": 0.587
+  }
+ }
 }

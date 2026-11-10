@@ -10,6 +10,9 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const root=path.join(__dirname,'..'),out=path.join(root,'artifacts','open-vocab-check');fs.mkdirSync(out,{recursive:true});
 const base=(process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766').replace(/\/$/,''),origin=new URL(base).origin;
 const config=JSON.parse(fs.readFileSync(path.join(root,'web/data/open-vocab/config.json'),'utf8'));
+// While the lane is hidden (appendix 4), the full flow runs with the evaluation configuration served in place of the
+// site's config, so the hidden code stays proven; the hidden state itself is checked first with the real config.
+const forced=config.shipped?null:fs.readFileSync(path.join(root,'scripts/open-vocab-probe-config.json'),'utf8');
 const carts={name:'shopping-carts-pd.jpg',mimeType:'image/jpeg',buffer:fs.readFileSync(path.join(root,'tests/fixtures/open-vocab/shopping-carts-pd.jpg'))};
 const report={checked_at:new Date().toISOString(),base,shipped:!!config.shipped,checks:[],page_errors:[],console_errors:[],lane_requests:[],other_external:[]};
 const test=async(name,fn)=>{const evidence={};try{await fn(evidence);report.checks.push({name,passed:true,evidence});console.log('PASS: '+name);}catch(e){report.checks.push({name,passed:false,error:e.message,evidence});console.error('FAIL: '+name+': '+e.message);}};
@@ -17,7 +20,8 @@ const noSimd=()=>{const probe=[0,97,115,109,1,0,0,0,1,5,1,96,0,1,123,3,2,1,0,10,
 const LANE=/huggingface\.co|hf\.co|xethub|cdn\.jsdelivr\.net/;
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});report.browser=await browser.version();
- const open=async({simd=true,width=1440,height=1000,scheme='light'}={})=>{const context=await browser.newContext({viewport:{width,height},colorScheme:scheme,acceptDownloads:true});const p=await context.newPage();p.setDefaultTimeout(180000);p.on('dialog',d=>d.accept());
+ const open=async({simd=true,width=1440,height=1000,scheme='light',force=!!forced}={})=>{const context=await browser.newContext({viewport:{width,height},colorScheme:scheme,acceptDownloads:true});const p=await context.newPage();
+  if(force)await p.route('**/data/open-vocab/config.json',r=>r.fulfill({status:200,contentType:'application/json',body:forced}));p.setDefaultTimeout(180000);p.on('dialog',d=>d.accept());
   p.on('pageerror',e=>report.page_errors.push(e.message));p.on('console',m=>{if(m.type()==='error')report.console_errors.push(m.text());});
   p.requests=[];p.on('request',r=>{const u=r.url();if(!u.startsWith('http')||new URL(u).origin===origin)return;p.requests.push(u);(LANE.test(u)?report.lane_requests:report.other_external).push(u);});
   if(!simd)await p.addInitScript(noSimd);await p.goto(base+'/#analyze');return p;};
@@ -33,9 +37,11 @@ const LANE=/huggingface\.co|hf\.co|xethub|cdn\.jsdelivr\.net/;
  try{
   if(!config.shipped){
    await test('hidden lane: no panel after a still-image analysis and nothing fetched for it',async ev=>{
-    const p=await open();await analyse(p,'objects');await p.waitForTimeout(500);
+    const p=await open({force:false});await analyse(p,'objects');await p.waitForTimeout(500);
     ev.panel_hidden=await p.locator('#ovd-panel').isHidden();assert.ok(ev.panel_hidden);assert.deepEqual(p.requests.filter(u=>LANE.test(u)),[]);await p.context().close();});
-  }else{
+  }
+  {
+   report.forced_configuration=!!forced;
    await test('no SIMD: the panel says why and offers no button; nothing is fetched',async ev=>{
     const p=await open({simd:false});await analyse(p);
     ev.reason=await p.locator('#ovd-unavailable').textContent();assert.match(ev.reason,/WebAssembly SIMD/);

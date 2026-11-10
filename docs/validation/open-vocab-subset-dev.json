@@ -1,0 +1,247 @@
+{
+ "split": "dev",
+ "salt": "estateguard-ovd-2026-11-10:",
+ "per_class_cap": 40,
+ "sources": {
+  "lvis_v1_val": {
+   "url": "https://dl.fbaipublicfiles.com/LVIS/lvis_v1_val.json.zip",
+   "sha256": "5cae9a3c79aadb667550c2b5dcf7f4d86e059a41ec91ef690225b667e28e9ba5"
+  },
+  "coco_annotations_trainval2017": {
+   "url": "http://images.cocodataset.org/annotations/annotations_trainval2017.zip",
+   "sha256": "113a836d90195ee1f884e704da6304dfaaecff1f023f49b6ca93c4aaae470268",
+   "used_for": "val2017 ids only"
+  }
+ },
+ "images": 644,
+ "per_class_selection": {
+  "cart": {
+   "positive_images": 6,
+   "negative_images": 40
+  },
+  "handcart": {
+   "positive_images": 10,
+   "negative_images": 40
+  },
+  "shopping_cart": {
+   "positive_images": 2,
+   "negative_images": 40
+  },
+  "box": {
+   "positive_images": 40,
+   "negative_images": 40
+  },
+  "carton": {
+   "positive_images": 7,
+   "negative_images": 40
+  },
+  "crate": {
+   "positive_images": 29,
+   "negative_images": 40
+  },
+  "trash_can": {
+   "positive_images": 40,
+   "negative_images": 40
+  },
+  "barrel": {
+   "positive_images": 15,
+   "negative_images": 40
+  },
+  "ladder": {
+   "positive_images": 40,
+   "negative_images": 40
+  },
+  "fire_extinguisher": {
+   "positive_images": 14,
+   "negative_images": 40
+  },
+  "cone": {
+   "positive_images": 40,
+   "negative_images": 40
+  }
+ },
+ "overlap": {
+  "train2017": 485,
+  "val2017_detector_dev_half": 73,
+  "val2017_detector_test_half": 86
+ },
+ "categories": {
+  "cart": {
+   "id": 219,
+   "frequency": "c",
+   "def": "a heavy open wagon usually having two wheels and drawn by an animal",
+   "synonyms": [
+    "cart"
+   ],
+   "image_count": 10,
+   "instance_count": 29
+  },
+  "handcart": {
+   "id": 537,
+   "frequency": "c",
+   "def": "wheeled vehicle that can be pushed by a person",
+   "synonyms": [
+    "handcart",
+    "pushcart",
+    "hand_truck"
+   ],
+   "image_count": 15,
+   "instance_count": 31
+  },
+  "shopping_cart": {
+   "id": 950,
+   "frequency": "c",
+   "def": "a handcart that holds groceries or other goods while shopping",
+   "synonyms": [
+    "shopping_cart"
+   ],
+   "image_count": 8,
+   "instance_count": 17
+  },
+  "box": {
+   "id": 143,
+   "frequency": "f",
+   "def": "a (usually rectangular) container; may have a lid",
+   "synonyms": [
+    "box"
+   ],
+   "image_count": 287,
+   "instance_count": 1389
+  },
+  "carton": {
+   "id": 220,
+   "frequency": "c",
+   "def": "a container made of cardboard for holding food or drink",
+   "synonyms": [
+    "carton"
+   ],
+   "image_count": 18,
+   "instance_count": 36
+  },
+  "crate": {
+   "id": 324,
+   "frequency": "f",
+   "def": "a rugged box (usually made of wood); used for shipping",
+   "synonyms": [
+    "crate"
+   ],
+   "image_count": 50,
+   "instance_count": 403
+  },
+  "trash_can": {
+   "id": 23,
+   "frequency": "f",
+   "def": "a bin that holds rubbish until it is collected",
+   "synonyms": [
+    "trash_can",
+    "garbage_can",
+    "wastebin",
+    "dustbin",
+    "trash_barrel",
+    "trash_bin"
+   ],
+   "image_count": 389,
+   "instance_count": 548
+  },
+  "barrel": {
+   "id": 53,
+   "frequency": "f",
+   "def": "a cylindrical container that holds liquids",
+   "synonyms": [
+    "barrel",
+    "cask"
+   ],
+   "image_count": 20,
+   "instance_count": 51
+  },
+  "ladder": {
+   "id": 621,
+   "frequency": "f",
+   "def": "steps consisting of two parallel members connected by rungs",
+   "synonyms": [
+    "ladder"
+   ],
+   "image_count": 117,
+   "instance_count": 167
+  },
+  "fire_extinguisher": {
+   "id": 442,
+   "frequency": "f",
+   "def": "a manually operated device for extinguishing small fires",
+   "synonyms": [
+    "fire_extinguisher",
+    "extinguisher"
+   ],
+   "image_count": 31,
+   "instance_count": 46
+  },
+  "cone": {
+   "id": 298,
+   "frequency": "f",
+   "def": "a cone-shaped object used to direct traffic",
+   "synonyms": [
+    "cone",
+    "traffic_cone"
+   ],
+   "image_count": 180,
+   "instance_count": 707
+  }
+ },
+ "verified_per_class": {
+  "cart": {
+   "positive_images": 6,
+   "negative_images": 40,
+   "instances": 18
+  },
+  "handcart": {
+   "positive_images": 10,
+   "negative_images": 41,
+   "instances": 21
+  },
+  "shopping_cart": {
+   "positive_images": 2,
+   "negative_images": 43,
+   "instances": 6
+  },
+  "box": {
+   "positive_images": 50,
+   "negative_images": 40,
+   "instances": 248
+  },
+  "carton": {
+   "positive_images": 7,
+   "negative_images": 40,
+   "instances": 11
+  },
+  "crate": {
+   "positive_images": 29,
+   "negative_images": 40,
+   "instances": 224
+  },
+  "trash_can": {
+   "positive_images": 46,
+   "negative_images": 40,
+   "instances": 61
+  },
+  "barrel": {
+   "positive_images": 15,
+   "negative_images": 41,
+   "instances": 44
+  },
+  "ladder": {
+   "positive_images": 40,
+   "negative_images": 40,
+   "instances": 54
+  },
+  "fire_extinguisher": {
+   "positive_images": 14,
+   "negative_images": 40,
+   "instances": 27
+  },
+  "cone": {
+   "positive_images": 45,
+   "negative_images": 46,
+   "instances": 222
+  }
+ }
+}

@@ -132,11 +132,32 @@
    "load_error": "Can't create a session. ERROR_CODE: 9, ERROR_MESSAGE: Could not find an implementation for Cast(13) node with name '/class_head/Cast'",
    "within_budget": false,
    "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+  },
+  "A3-q8": {
+   "run_id": 42766235517,
+   "model": "OWLv2 B/16 ensemble",
+   "repo": "Xenova/owlv2-base-patch16-ensemble",
+   "revision": "3e255bc9bf304b3358a8c1945c0a9514eefe7f10",
+   "file": "onnx/model_quantized.onnx",
+   "bytes": 155312754,
+   "runtime": "3.8.1",
+   "load_error": "model load did not finish within 10 minutes",
+   "within_budget": false,
+   "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
+  },
+  "C3-q8": {
+   "run_id": 42766235517,
+   "model": "OWL-ViT B/32",
+   "repo": "Xenova/owlvit-base-patch32",
+   "revision": "b75f4e52949639c3bb0b96546ea4149482f6e7ef",
+   "file": "onnx/model_quantized.onnx",
+   "bytes": 155431700,
+   "runtime": "3.8.1",
+   "load_error": "model load did not finish within 10 minutes",
+   "within_budget": false,
+   "user_agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.7922.34 Safari/537.36"
   }
  },
- "pending": {
-  "A3-q8": "appendix 3; run 42766235517 in progress (first attempt 42765810465 cancelled after 35 min without output)",
-  "C3-q8": "appendix 3; run 42766235517 in progress (first attempt 42765810465 cancelled after 35 min without output)"
- },
- "harness_note": "Run 42764262274 (first attempt) failed before measuring: the local mirror lacked the revision-\"main\" copy that transformers.js 4.3.2 checks for tokenizer_config.json. Fixed in scripts/open-vocab-mirror.mjs; run 42764887346 is the measurement."
+ "harness_note": "Run 42764262274 (first attempt) failed before measuring: the local mirror lacked the revision-\"main\" copy that transformers.js 4.3.2 checks for tokenizer_config.json; fixed in scripts/open-vocab-mirror.mjs. Appendix 3 configurations: first attempt 42765810465 was cancelled after 35 minutes without output; run 42766235517 (10-minute load limit) is the measurement.",
+ "result": "Only B-q8 (Grounding DINO tiny, q8, transformers.js 4.3.2) is within budget. OWLv2 and OWL-ViT cannot start on the 4.3.2 runtime (no Cast kernel for /class_head/Cast) and did not finish loading within 10 minutes on 3.8.1."
 }

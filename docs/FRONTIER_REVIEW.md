@@ -1,6 +1,6 @@
-# 前沿评估 · 2026-11-08（2026-11-10 补充 0.5.0）
+# 前沿评估 · 2026-11-08（2026-11-10 补充 0.5.0、0.6.0）
 
-本文记录 0.4.0 迭代前对 8 个候选的核查与取舍；0.5.0 的选择与“大公司在生产中怎样用”见文末两节。来源只用论文、官方文档和官方仓库，日期为首次公开日期；只看过摘要或仓库说明的地方会写明。“大公司在生产中怎样用”一节另用了两篇注明出处和日期的媒体报道（海康威视、大华），其中的产品说法都是厂商自述。
+本文记录 0.4.0 迭代前对 8 个候选的核查与取舍；0.5.0、0.6.0 的选择与“大公司在生产中怎样用”见文末几节。来源只用论文、官方文档和官方仓库，日期为首次公开日期；只看过摘要或仓库说明的地方会写明。“大公司在生产中怎样用”一节另用了两篇注明出处和日期的媒体报道（海康威视、大华），其中的产品说法都是厂商自述。
 
 ## 判断标准
 
@@ -15,7 +15,7 @@
 | 1 | RF-DETR | Robinson 等，arXiv:2511.09554（2025-11），ICLR 2026 | 暂不采用；是下一轮检测器的首选候选 |
 | 2 | DEIM / DEIMv2 | Huang 等，arXiv:2412.04234（2024-12，CVPR 2025）；arXiv:2509.20787（2025-09） | 暂不采用 |
 | 3 | YOLO26 | Ultralytics 文档（2025-09/10） | 不采用：AGPL-3.0 |
-| 4 | 开放词表检测（YOLOE、OWLv2、Grounding DINO） | arXiv:2503.07465（2025-03）；arXiv:2306.09683（2023-06，NeurIPS 2023）；arXiv:2303.05499（2023-03） | 不采用：没有可测的标注数据，体量超出预算 |
+| 4 | 开放词表检测（YOLOE、OWLv2、Grounding DINO） | arXiv:2503.07465（2025-03）；arXiv:2306.09683（2023-06，NeurIPS 2023）；arXiv:2303.05499（2023-03） | 0.4.0 不采用；0.6.0 已用 LVIS 按协议评测，未达到上线门槛（见“0.6.0”一节） |
 | 5 | SAM 3 | Meta，arXiv:2511.16719（2025-11） | 不采用 |
 | 6 | DINOv3 作为车位编码器 | Siméoni 等，arXiv:2508.10104（2025-08） | 不采用：没有剩余的保留数据，许可变化 |
 | 7 | ONNX Runtime Web 的 WebGPU 执行提供器 | onnxruntime.ai 文档 | 本轮不上线；改做能力检测与退回 |
@@ -101,6 +101,22 @@
 
 与研究笔记的两处差异：评测级 MEVA 标注里没有 `person_abandons_package` 实例，所以物品遗留规则对 `person_puts_down_object`，并且只称“物品遗留代理”；评测对所有规则用整幅画面作区域，因为 MEVA 摄像头没有独立于标签的门口或禁停区划定。
 
+## 0.6.0 · 开放词汇慢车道（2026-11-10）
+
+第三轮从 0.5.0 测得的缺口出发：COCO 以外的物品（推车、纸箱、周转箱、垃圾桶）完全看不见，物品遗留代理在 MEVA 测试半全部漏报。0.4.0 时不采用开放词表检测的理由是“没有可测的标注数据”，这一轮用 LVIS v1 val（标注 CC BY 4.0，在 lvisdataset.org 核对）补上，并先写协议再测量：[open-vocab-protocol.md](validation/open-vocab-protocol.md)。
+
+| 候选 | 许可 | 结论 | 依据 |
+| --- | --- | --- | --- |
+| Grounding DINO tiny（`onnx-community/grounding-dino-tiny-ONNX`，q8，204 MB） | Apache-2.0 | **评测未通过，不上线** | 单线程 WASM P95 15.0 秒，在 20 秒预算内；但 LVIS 开发半上没有阈值能让 ≥ 3 个类别的合并精确率达到 70%（最好 58.7%，只有箱子和灭火器两类） |
+| OWLv2 B/16 ensemble（`Xenova/…`，q8 / q4） | Apache-2.0 | 不采用 | transformers.js 4.3.2 的 ONNX Runtime Web 缺少 `/class_head/Cast` 所需内核，无法创建会话；换 3.8.1 运行库后 10 分钟内没有加载完成 |
+| OWL-ViT B/32（`Xenova/…`，q8 / q4） | Apache-2.0 | 不采用 | 同上 |
+| LLMDet-tiny、MM-Grounding-DINO tiny | Apache-2.0 | 不纳入 | Hugging Face 上没有维护中的 ONNX 导出 |
+| OmDet-Turbo | Apache-2.0 | 不纳入 | transformers.js 不支持 |
+| YOLOE、YOLO-World | AGPL-3.0、GPL-3.0 | 不采用 | 许可 |
+| Grounding DINO 1.5/1.6、DINO-X | API | 不采用 | 需要密钥 |
+
+页面里的慢车道代码已写好并由浏览器检查覆盖（用评测配置强制运行），但只有在新的协议下通过评测才会出现。下一轮可用的依据：LVIS 测试半至今未被读取；开发半显示的失败模式是子词共享（`carton` = `cart` + `##on`）、整体分数偏低（垃圾桶、桶、锥桶没有 ≥ 0.15 的框）和小目标。
+
 ## 大公司在生产中怎样用（What large companies run in production · 2026-11-10 核对）
 
 下列来源均在 2026-11-10 重新打开核对；只写来源原文说到的内容，产品效果数字都是厂商自述，没有独立审计。
@@ -111,6 +127,8 @@
 | 海康威视 观澜大模型 | [界面新闻，2026-04-20](https://www.jiemian.com/article/14276505.html) | 2023 年发布；在其底座上做安全生产、公共安全等行业垂直模型；“文搜”系列存储产品对亿级视频做自然语言秒级检索；采用“大小模型结合”、边域云融合的架构。 |
 | 大华股份 星汉大模型 2.0 | [中华网，2025-04-03](https://m.tech.china.com/articles/20250403/202504031656983.html) | V 系列提升小目标与小概率事件检测；M 系列做“文搜视频”等跨模态检索，识别翻越护栏等复杂行为；L 系列拆解任务、生成分析报告；在三者之上构建调用工具的行业智能体。 |
 | 阿里云 AnalyticDB for MySQL「IPC 摄像头视频关键事件提取与检索」 | [产品文档](https://help.aliyun.com/zh/analyticdb/analyticdb-for-mysql/video-event-extraction-and-retrieval)；[2026 发布说明](https://help.aliyun.com/en/analyticdb/analyticdb-for-mysql/product-overview/2026)（2026-04 新功能，邀测） | 先用 SSIM 变化检测跳过静止画面，把连续变化切成带起止时间的事件段并过滤闪烁、抖动和短暂遮挡；每段抽关键帧（短边约 480 像素）交视觉大模型写描述，向量入库后用自然语言检索；示例场景是家庭安防。 |
+| NVIDIA TAO 工具包 · Grounding DINO（0.6.0 补充） | [TAO 7.3.0 文档 · Grounding DINO](https://docs.nvidia.com/tao/tao-toolkit/latest/text/cv_finetuning/pytorch/object_detection/grounding_dino.html)（2026-11-10 查阅） | 文档原文称 Grounding DINO 是“an open vocabulary object-detection model included in the TAO”，提供 train、evaluate、inference、export、quantize 五个任务，用客户自己的 ODVG / COCO 数据微调。研究笔记里“商用检查点”一说本次没有在该页核实到，不引用。 |
+| 大华股份 星汉大模型 2.0 · M 系列（0.6.0 补充） | [中华网，2025-04-03](https://m.tech.china.com/articles/20250403/202504031656983.html)（转述 2024 年报） | V 系列称“小目标检测性能与小概率事件精准度大幅提升”；M 系列称可“通过图文提示，无需定制开发即可实现新功能”。均为厂商自述，没有公开数字。 |
 
 **共同做法**：便宜的感知层（检测、跟踪或变化检测）先把长视频切成带起止时间的事件段和关键帧，后面的大模型只看这些段，用来核实、描述或检索。分层的原因是成本：没有人让大模型逐帧看完整段监控。
 
@@ -118,8 +136,12 @@
 - 0.5.0 的事件时间线对应第一层：检测 → 跟踪 → 区域与停留规则 → 带起止时间的事件段和关键帧，并可导出 JSON 交给后续环节。页面上写了一行带来源的说明（NVIDIA VSS）。
 - **不同之处**：没有视觉语言模型核实或描述（在访客浏览器或 Actions CPU 上做不到可验证的质量，见研究笔记 C.4 候选 4）；没有向量检索；规模是一段 5 分钟以内的视频、每秒 1 帧，而不是多路实时流；模型只识别 COCO 80 类。所有数字来自公开的 MEVA 数据，不来自任何小区现场。
 - 与阿里云方案的一个具体区别：它按画面变化抽帧，本项目按固定 1 帧/秒抽帧。固定频率让评测与页面完全一致、可复现，代价是短于 1 秒的动作可能落在两帧之间。
+- **0.6.0 对应哪一层**：用文字提示扩展检测类别（TAO 的 Grounding DINO、大华 M 系列的“图文提示”），放在现有检测之后、只由访客点击触发。**不同之处**：不微调、只用固定提示词；在访客浏览器的单线程 WASM 上运行，而不是 GPU；最重要的是先在公开标注上量逐类精确率——厂商没有公开这类数字，而本项目量出来的结果不够好，所以没有上线。
 
 ## 参考
+
+- Gupta、Dollár、Girshick，*LVIS: A Dataset for Large Vocabulary Instance Segmentation*，CVPR 2019。https://www.lvisdataset.org/ （标注 CC BY 4.0，2026-11-10 核对）
+- NVIDIA TAO Toolkit 7.3.0，*Grounding DINO*。https://docs.nvidia.com/tao/tao-toolkit/latest/text/cv_finetuning/pytorch/object_detection/grounding_dino.html
 
 - Robinson 等，*RF-DETR: Neural Architecture Search for Real-Time Detection Transformers*，arXiv:2511.09554，ICLR 2026。https://arxiv.org/abs/2511.09554 ；仓库 https://github.com/roboflow/rf-detr
 - Huang 等，*DEIM: DETR with Improved Matching for Fast Convergence*，arXiv:2412.04234，CVPR 2025。https://arxiv.org/abs/2412.04234
