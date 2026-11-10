@@ -26,18 +26,20 @@ const LANE=/huggingface\.co|hf\.co|xethub|cdn\.jsdelivr\.net/;
   p.requests=[];p.on('request',r=>{const u=r.url();if(!u.startsWith('http')||new URL(u).origin===origin)return;p.requests.push(u);(LANE.test(u)?report.lane_requests:report.other_external).push(u);});
   if(!simd)await p.addInitScript(noSimd);await p.goto(base+'/#analyze');return p;};
  // Open the cart photo, pick the corridor rule with placeholder context (whole frame), analyse with SSDLite.
- const analyse=async(p,rule='access')=>{
+ const analyse=async(p,rule='access',expectPanel=true)=>{
   await p.locator('#analysis-file').setInputFiles(carts);
   await p.waitForFunction(()=>document.querySelector('#vision-message').textContent.startsWith('素材已就绪'));
   await p.locator('#vision-detector').selectOption('ssdlite');await p.locator('#vision-rule').selectOption(rule);
   if(rule!=='objects'){await p.locator('#vision-camera').fill('检查');await p.locator('#vision-zone').fill('一号通道');await p.locator('#vision-start').fill('2026-11-10T08:00');await p.locator('#vision-context-confirmed').check();}
-  await p.locator('#run-analysis').click();await p.waitForFunction(()=>/^分析完成/.test(document.querySelector('#vision-message').textContent));};
+  await p.locator('#run-analysis').click();await p.waitForFunction(()=>/^分析完成/.test(document.querySelector('#vision-message').textContent));
+  // The panel renders after its config fetch resolves; wait for that instead of reading it immediately.
+  if(expectPanel)await p.locator('#ovd-panel').waitFor({state:'visible'});};
  const exportJSON=async p=>{const [d]=await Promise.all([p.waitForEvent('download'),p.locator('#download-detections').click()]);return JSON.parse(fs.readFileSync(await d.path(),'utf8'));};
  const laneDone=p=>p.waitForFunction(()=>/^(找到|慢车道没有找到|慢车道未能运行|已取消下载)/.test(document.querySelector('#ovd-message').textContent),null,{timeout:900000});
  try{
   if(!config.shipped){
    await test('hidden lane: no panel after a still-image analysis and nothing fetched for it',async ev=>{
-    const p=await open({force:false});await analyse(p,'objects');await p.waitForTimeout(500);
+    const p=await open({force:false});const config=p.waitForResponse(r=>r.url().endsWith('/data/open-vocab/config.json'));await analyse(p,'objects',false);await config;await p.waitForTimeout(300);
     ev.panel_hidden=await p.locator('#ovd-panel').isHidden();assert.ok(ev.panel_hidden);assert.deepEqual(p.requests.filter(u=>LANE.test(u)),[]);await p.context().close();});
   }
   {
@@ -60,7 +62,8 @@ const LANE=/huggingface\.co|hf\.co|xethub|cdn\.jsdelivr\.net/;
    await test('cancel during the download keeps the analysis and says so',async ev=>{
     const p=await open();await p.route(/\.onnx($|\?)/,async r=>{await new Promise(s=>setTimeout(s,15000));await r.continue().catch(()=>{});});
     await analyse(p);await p.locator('#ovd-start').click();await p.locator('#ovd-load').click();
-    await p.waitForFunction(()=>/正在下载/.test(document.querySelector('#ovd-message').textContent));await p.locator('#ovd-cancel').click();await laneDone(p);
+    // Cancel while the model file itself is in flight (held 15 s above), so the env.fetch abort path is exercised.
+    await p.waitForRequest(/\.onnx($|\?)/,{timeout:300000});ev.cancelled_during='model download';await p.locator('#ovd-cancel').click();await laneDone(p);
     ev.message=await p.locator('#ovd-message').textContent();assert.match(ev.message,/^已取消下载/);assert.ok(await p.locator('#vision-results').isVisible());await p.context().close();});
    await test('real run: every box labelled 未核实, corridor rule candidates, export; 1440 and 375, light and dark',async ev=>{
     const p=await open();await analyse(p);const before=(await exportJSON(p)).candidates.length;

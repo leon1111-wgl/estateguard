@@ -55,8 +55,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Run 42764887346 timed A-q8, A-q4, B-q8, C-q8 and C-q4 (4.3.2 runtime); appendix 3 adds these two.
-        candidate: [A3-q8, C3-q8]
+        # All stage-1 configurations (protocol table and appendix 3); recorded runs 42764887346 and 42766235517.
+        candidate: [A-q8, A-q4, B-q8, C-q8, C-q4, A3-q8, C3-q8]
     env:
       ESTATEGUARD_URL: http://127.0.0.1:8766
     steps:

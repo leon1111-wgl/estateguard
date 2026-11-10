@@ -38,7 +38,7 @@ export function createOpenVocabView({getContext,onResult}){
     lane=await loadOpenVocab(config.candidate,{signal:controller.signal,onProgress:({loaded,total})=>{$('ovd-progress').max=total;$('ovd-progress').value=loaded;message(`正在下载慢车道模型与运行库：${mb(loaded)} / ${mb(total)} MB`);}});
     controller=null;$('ovd-progress').hidden=true;$('ovd-cancel-row').hidden=true;
    }
-   message(`正在查找（单线程，Actions 上测得每张约 ${(config.latency.p50_ms/1000).toFixed(0)} 秒）…`);
+   message(config.latency?.p50_ms?`正在查找（单线程，Actions 上测得每张约 ${(config.latency.p50_ms/1000).toFixed(0)} 秒）…`:'正在查找（单线程，可能需要十几秒）…');
    const started=performance.now(),raw=await lane.detect(frame,{floor:config.threshold,maxDetections:50}),ms=performance.now()-started;
    if(getContext().report?.analysis_id!==ticket)return;// the visitor started a new analysis meanwhile
    const detections=shippedDetections(raw,config,frame.width,frame.height);

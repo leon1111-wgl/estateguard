@@ -14,7 +14,7 @@ export function matchImage(record,detections,cls,threshold){
   if(best>=0){used.add(best);out.tp++;}else if(partial)out.ignored++;else out.fp++;}
  return out;
 }
-export function wilson(k,n,z=1.96){if(!n)return [null,null];const p=k/n,d=1+z*z/n,c=p+z*z/(2*n),m=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n));return [(c-m)/d,(c+m)/d];}
+export function wilson(k,n,z=1.96){if(!n)return [null,null];const p=k/n,d=1+z*z/n,c=p+z*z/(2*n),m=z*Math.sqrt(p*(1-p)/n+z*z/(4*n*n));return [Math.max(0,(c-m)/d),Math.min(1,(c+m)/d)];}
 export function classMetrics(records,detectionsById,cls,threshold){
  let tp=0,fp=0,gt=0,negImages=0,fpOnNeg=0,posImages=0;
  for(const r of records){const m=matchImage(r,detectionsById.get(r.id)||[],cls,threshold);tp+=m.tp;fp+=m.fp;gt+=m.gt;if(m.negative&&!m.positive){negImages++;fpOnNeg+=m.fp;}if(m.positive)posImages++;}

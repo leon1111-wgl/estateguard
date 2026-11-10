@@ -34,7 +34,7 @@ on:
         default: true
         type: boolean
       open_vocab:
-        description: 'Probe: after each still-image analysis also run 开放词汇慢车道 (downloads the model from Hugging Face; only if the lane is shipped)'
+        description: 'Probe: after each still-image analysis also run 开放词汇慢车道 (downloads the model from Hugging Face). While the lane is hidden on the site, the probe forces the evaluation configuration in scripts/open-vocab-probe-config.json and says so in the summary'
         required: false
         default: false
         type: boolean

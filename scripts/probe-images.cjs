@@ -120,6 +120,8 @@ function writeSummary(){
     a.candidate_explanation=await page.locator('#candidate-explanation').textContent();
     if(openVocab&&a.outcome==='completed'){
      const ov=item.open_vocab={};
+     // The panel renders after its config fetch; give it time before concluding it is not offered.
+     await page.locator('#ovd-panel').waitFor({state:'visible',timeout:15000}).catch(()=>{});
      if(await page.locator('#ovd-panel').isHidden())ov.status='panel not offered (lane hidden, video, or analysis incomplete)';
      else if(await page.locator('#ovd-start').isHidden())ov.status=`unavailable: ${await page.locator('#ovd-unavailable').textContent()}`;
      else{
