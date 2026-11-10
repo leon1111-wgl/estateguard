@@ -1,12 +1,18 @@
 name: Browser checks
 # Real-browser regression checks, including the ones that run the in-page models.
 # They run here rather than on a developer machine; each check is its own job.
-# A manual run with image_urls runs only the probe job: your own files through the page's real analysis path.
+# A manual run with image_urls and/or clip_urls runs only the probe job: your own files through the page's real
+# analysis path (clip_urls: the event timeline, with its JSON export and one keyframe PNG per event).
 on:
   workflow_dispatch:
     inputs:
       image_urls:
         description: 'Probe only: image or short video URLs, separated by spaces, commas or new lines (at most 20). Leave empty to run all checks.'
+        required: false
+        default: ''
+        type: string
+      clip_urls:
+        description: 'Probe only: MP4 / WebM clip URLs for the event timeline (at most 10, each at most 100 MB; the first 5 minutes are analysed).'
         required: false
         default: ''
         type: string
@@ -40,11 +46,11 @@ permissions:
   contents: read
 concurrency:
   # Probe runs get their own group, so they neither cancel nor get cancelled by the checks on the same branch.
-  group: browser-checks-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && inputs.image_urls != '' && format('probe-{0}', github.run_id) || 'checks' }}
+  group: browser-checks-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' && (inputs.image_urls != '' || inputs.clip_urls != '') && format('probe-{0}', github.run_id) || 'checks' }}
   cancel-in-progress: true
 jobs:
   list:
-    if: github.event_name != 'workflow_dispatch' || inputs.image_urls == ''
+    if: github.event_name != 'workflow_dispatch' || (inputs.image_urls == '' && inputs.clip_urls == '')
     runs-on: ubuntu-latest
     outputs:
       checks: ${{ steps.list.outputs.checks }}
@@ -86,13 +92,14 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
   probe:
-    if: github.event_name == 'workflow_dispatch' && inputs.image_urls != ''
+    if: github.event_name == 'workflow_dispatch' && (inputs.image_urls != '' || inputs.clip_urls != '')
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     env:
       ESTATEGUARD_URL: http://127.0.0.1:8766
       # Inputs reach the script only as environment variables, never as shell text.
       PROBE_URLS: ${{ inputs.image_urls }}
+      PROBE_CLIPS: ${{ inputs.clip_urls }}
       PROBE_DETECTOR: ${{ inputs.detector }}
       PROBE_RULE: ${{ inputs.rule }}
       PROBE_PARKING: ${{ inputs.parking }}

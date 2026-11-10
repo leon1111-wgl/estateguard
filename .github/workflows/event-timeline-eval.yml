@@ -1,0 +1,169 @@
+name: Event timeline evaluation (MEVA)
+# docs/validation/event-timeline-protocol.md. Video, frames and labels exist only on the runner; the artifacts hold
+# detections, counts and metrics. Trigger: push to timeline-run/timing|dev|test, or dispatch after merge.
+on:
+  push:
+    branches: ['timeline-run/**']
+  workflow_dispatch:
+    inputs:
+      split:
+        description: 'timing (1 dev clip, detection only), dev (selects the configuration), test (frozen configuration, once) or audit (KPF parse counts only, no scoring)'
+        required: true
+        default: timing
+        type: choice
+        options: [timing, dev, test, audit, rescore]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: timeline-eval-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      split: ${{ steps.plan.outputs.split }}
+      shards: ${{ steps.plan.outputs.shards }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: plan
+        env:
+          INPUT_SPLIT: ${{ inputs.split }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          split="${INPUT_SPLIT:-${REF_NAME#timeline-run/}}"
+          case "$split" in timing|dev|test|audit|rescore) ;; *) echo "unknown split $split"; exit 1;; esac
+          echo "split=$split" >> "$GITHUB_OUTPUT"
+          if [ "$split" = audit ] || [ "$split" = rescore ]; then echo 'shards=[]' >> "$GITHUB_OUTPUT"; exit 0; fi
+          # Pre-registered order and skip rule: missing video or under 20 MB is skipped; take the first N.
+          node -e '
+            const s=require("./docs/validation/event-timeline-meva-subset.json"),split=process.argv[1];
+            const pool=(split==="test"?s.test_candidates:s.dev_candidates).filter(c=>c.bytes&&c.bytes>=20e6);
+            const n={timing:1,dev:8,test:16}[split],shards={timing:1,dev:4,test:4}[split],clips=pool.slice(0,n);
+            const out=Array.from({length:shards},(_,i)=>({shard:i,clips:clips.filter((_,j)=>j%shards===i).map(c=>({name:c.name,video:c.video}))}));
+            require("fs").writeFileSync(process.env.GITHUB_OUTPUT,`shards=${JSON.stringify(out)}\n`,{flag:"a"});
+            console.log(JSON.stringify(out,null,1));' "$split"
+  audit:
+    needs: plan
+    if: needs.plan.outputs.split == 'audit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node scripts/meva-kpf-audit.mjs --out artifacts/timeline-audit
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: timeline-kpf-audit-${{ github.run_id }}
+          path: artifacts/timeline-audit/
+          if-no-files-found: ignore
+          retention-days: 90
+  rescore:
+    # Re-scores the detection artifacts of the dev and test runs listed in docs/validation/event-timeline-runs.json
+    # with the current annotation reader. No video is downloaded and no model runs.
+    needs: plan
+    if: needs.plan.outputs.split == 'rescore'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - id: runs
+        run: |
+          echo "dev=$(jq -r .dev.run_id docs/validation/event-timeline-runs.json)" >> "$GITHUB_OUTPUT"
+          echo "dev_commit=$(jq -r .dev.commit docs/validation/event-timeline-runs.json)" >> "$GITHUB_OUTPUT"
+          echo "test=$(jq -r .test.run_id docs/validation/event-timeline-runs.json)" >> "$GITHUB_OUTPUT"
+          echo "test_commit=$(jq -r .test.commit docs/validation/event-timeline-runs.json)" >> "$GITHUB_OUTPUT"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: timeline-detections-dev-*
+          path: artifacts/det-dev
+          merge-multiple: true
+          run-id: ${{ steps.runs.outputs.dev }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: timeline-detections-test-*
+          path: artifacts/det-test
+          merge-multiple: true
+          run-id: ${{ steps.runs.outputs.test }}
+          github-token: ${{ github.token }}
+      - run: node scripts/meva-kpf-audit.mjs --out artifacts/timeline-eval
+      - run: node scripts/meva-score.mjs --split dev --detections artifacts/det-dev --out artifacts/timeline-eval --detections-run ${{ steps.runs.outputs.dev }} --detections-commit ${{ steps.runs.outputs.dev_commit }}
+      - run: node scripts/meva-score.mjs --split test --detections artifacts/det-test --out artifacts/timeline-eval --detections-run ${{ steps.runs.outputs.test }} --detections-commit ${{ steps.runs.outputs.test_commit }}
+      - if: always()
+        run: cat artifacts/timeline-eval/summary-*.md >> "$GITHUB_STEP_SUMMARY" || true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: timeline-rescore-${{ github.run_id }}
+          path: artifacts/timeline-eval/
+          if-no-files-found: ignore
+          retention-days: 90
+  detect:
+    needs: plan
+    if: needs.plan.outputs.split != 'audit' && needs.plan.outputs.split != 'rescore'
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJSON(needs.plan.outputs.shards) }}
+    env:
+      ESTATEGUARD_URL: http://127.0.0.1:8766
+      CLIPS: ${{ toJSON(matrix.clips) }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-package-lock --no-audit --no-fund
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ hashFiles('package.json') }}
+      - run: npx playwright install --with-deps chromium
+      - run: command -v ffmpeg || (sudo apt-get update -q && sudo apt-get install -y -q ffmpeg)
+      - name: Serve web/
+        run: |
+          python3 -m http.server 8766 --bind 127.0.0.1 --directory web > /tmp/server.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS -o /dev/null "$ESTATEGUARD_URL/" && exit 0; sleep 1; done; exit 1
+      - run: printf '%s' "$CLIPS" > /tmp/clips.json && nproc && free -g
+      - run: node scripts/meva-timeline.cjs --clips /tmp/clips.json --out artifacts/timeline-detections --workers 4
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: timeline-detections-${{ needs.plan.outputs.split }}-${{ matrix.shard }}
+          path: artifacts/timeline-detections/
+          if-no-files-found: ignore
+          retention-days: 30
+  score:
+    needs: [plan, detect]
+    if: needs.plan.outputs.split == 'dev' || needs.plan.outputs.split == 'test'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: timeline-detections-${{ needs.plan.outputs.split }}-*
+          path: artifacts/timeline-detections
+          merge-multiple: true
+      - run: node scripts/meva-score.mjs --split ${{ needs.plan.outputs.split }} --detections artifacts/timeline-detections --out artifacts/timeline-eval
+      - if: always()
+        run: cat artifacts/timeline-eval/summary-*.md >> "$GITHUB_STEP_SUMMARY" || true
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: timeline-eval-${{ needs.plan.outputs.split }}-${{ github.run_id }}
+          path: artifacts/timeline-eval/
+          if-no-files-found: ignore
+          retention-days: 90

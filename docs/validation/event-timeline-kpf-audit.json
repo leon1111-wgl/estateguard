@@ -1,0 +1,347 @@
+{
+ "checked_at": "2026-11-10T00:35:17.653Z",
+ "commit": "510b83ea3e3fe611d1262b6a852097164049f129",
+ "run_id": "42729382727",
+ "clips": 24,
+ "records": 1565,
+ "skipped_lines": 0,
+ "skipped_data_lines": 0,
+ "rows": [
+  {
+   "split": "dev",
+   "clip": "2018-03-11.11-40-04.11-45-04.school.G300",
+   "activities": {
+    "records": 2,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 1,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "dev",
+   "clip": "2018-03-12.11-10-02.11-15-02.school.G336",
+   "activities": {
+    "records": 31,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 38,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "dev",
+   "clip": "2018-03-07.17-05-01.17-10-01.bus.G505",
+   "activities": {
+    "records": 15,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 17,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "dev",
+   "clip": "2018-03-09.10-15-00.10-20-00.school.G300",
+   "activities": {
+    "records": 8,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 15,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "dev",
+   "clip": "2018-03-15.15-30-01.15-35-01.bus.G506",
+   "activities": {
+    "records": 68,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 120,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "dev",
+   "clip": "2018-03-07.17-25-06.17-30-06.school.G424",
+   "activities": {
+    "records": 135,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 210,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "dev",
+   "clip": "2018-03-13.16-20-03.16-25-03.school.G424",
+   "activities": {
+    "records": 33,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 48,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "dev",
+   "clip": "2018-03-11.11-40-00.11-45-00.school.G336",
+   "activities": {
+    "records": 2,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 1,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-11.11-30-00.11-35-00.school.G423",
+   "activities": {
+    "records": 73,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 76,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-09.10-25-00.10-30-00.school.G421",
+   "activities": {
+    "records": 10,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 11,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-11.11-40-08.11-45-08.hospital.G436",
+   "activities": {
+    "records": 2,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 1,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-12.10-45-00.10-50-00.hospital.G301",
+   "activities": {
+    "records": 6,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 9,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-11.11-45-01.11-50-01.school.G638",
+   "activities": {
+    "records": 20,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 16,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-09.10-10-00.10-15-00.school.G421",
+   "activities": {
+    "records": 34,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 41,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-07.11-10-01.11-15-01.admin.G329",
+   "activities": {
+    "records": 23,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 23,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-09.10-25-01.10-30-01.school.G420",
+   "activities": {
+    "records": 2,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 2,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-11.11-20-00.11-25-00.school.G328",
+   "activities": {
+    "records": 12,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 9,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-07.11-05-00.11-10-00.bus.G508",
+   "activities": {
+    "records": 4,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 4,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-05.14-10-00.14-15-00.school.G330",
+   "activities": {
+    "records": 5,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 6,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-11.16-45-00.16-50-00.school.G330",
+   "activities": {
+    "records": 55,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 66,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-11.14-15-08.14-20-08.bus.G340",
+   "activities": {
+    "records": 5,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 13,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-07.11-05-04.11-10-04.hospital.G341",
+   "activities": {
+    "records": 85,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 95,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-07.16-50-01.16-55-01.school.G423",
+   "activities": {
+    "records": 5,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 5,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  },
+  {
+   "split": "test",
+   "clip": "2018-03-15.14-50-04.14-55-04.bus.G340",
+   "activities": {
+    "records": 39,
+    "skipped": 0,
+    "skipped_data": 0
+   },
+   "types": {
+    "records": 64,
+    "skipped": 0,
+    "skipped_data": 0
+   }
+  }
+ ]
+}

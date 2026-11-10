@@ -21,7 +21,8 @@ export function confirmContext(revision,params,confirmedAt=new Date().toISOStrin
 }
 export function isContextConfirmed(confirmation,revision,params){return !!confirmation&&confirmation.media_revision===revision&&confirmation.signature===signature(revision,params);}
 export function validateContext(params,revision,confirmation){
- if(params.rule==='objects')return;
+ // Object detection and the event timeline use times within the file only and create no review candidates.
+ if(params.rule==='objects'||params.rule==='timeline')return;
  requireMetadata(params);
  if(!isContextConfirmed(confirmation,revision,params))fail('vision-context-confirmed','请核对当前素材的来源、关注区域与采集时间，再勾选确认。');
 }

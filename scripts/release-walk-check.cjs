@@ -1,10 +1,11 @@
 /** Release walk: the whole visitor flow on the site as deployed (web/ served as-is): overview, enter, every console
- * tab, the main analysis with the default D-FINE-N on the public CC0 photo, and a parking snapshot with the default
- * DINOv2, at 1440 px and 375 px in light and dark. Fails on any console error, page error, cross-origin request or
+ * tab, the main analysis with the default D-FINE-N on the public CC0 photo, the event timeline (0.5.0) on a synthetic
+ * clip of that photo, and a parking snapshot with the default DINOv2, at 1440 px and 375 px in light and dark. Fails on any console error, page error, cross-origin request or
  * horizontal page scroll at 375 px. Screenshots and artifacts/release-walk-validation.json are the evidence.
  */
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {makeTimelineClip,runTimeline,openKeyframe}=require('./timeline-fixture.cjs');
 const root=path.join(__dirname,'..'),out=path.join(root,'artifacts','release-walk');fs.mkdirSync(out,{recursive:true});
 const base=(process.env.ESTATEGUARD_URL||'http://127.0.0.1:8766').replace(/\/$/,''),origin=new URL(base).origin;
 const views=['home','analyze','workspace','parking','policy','results','story'];
@@ -40,6 +41,16 @@ const step=(name,value)=>{report.steps[name]=value;console.log(name,JSON.stringi
   await page.locator('#analysis-stage').screenshot({path:path.join(out,'main-task-annotated.png')});report.screens.push('main-task-annotated.png');
   await shoot('1440-light-analyze');
 
+  // 2b. Event timeline on a synthetic clip: a 车辆停下 segment, its keyframe from the segment, the JSON export.
+  const clip=await makeTimelineClip(page);const run=await runTimeline(page,clip);
+  assert.match(run.message,/^分析完成：.*时间线 \d+ 个待核实事件/);
+  const [tlDownload]=await Promise.all([page.waitForEvent('download'),page.locator('#download-timeline').click()]);const timeline=JSON.parse(fs.readFileSync(await tlDownload.path(),'utf8'));
+  fs.writeFileSync(path.join(out,'timeline.json'),JSON.stringify(timeline,null,2));
+  const stop=timeline.events.find(e=>e.rule==='vehicle_stop');assert.ok(stop,'the timeline shows the bus stopping');
+  await openKeyframe(page,stop.id,{via:'segment'});
+  step('timeline',{message:run.message,fixture_sha256:clip.sha256,events:timeline.events.map(e=>`${e.id} ${e.rule} ${e.class} ${e.start}–${e.end}s key ${e.keyframe_time}s`),detail:(await page.locator('#timeline-detail').textContent()).slice(0,200)});
+  await page.locator('#vision-results').screenshot({path:path.join(out,'timeline-1440-light.png')});report.screens.push('timeline-1440-light.png');
+
   // 3. Parking: one public snapshot with the default DINOv2; every slot goes to a person on an unverified camera.
   await show('parking');await page.waitForFunction(()=>document.querySelectorAll('.parking-tile').length>0&&!document.getElementById('parking-run').disabled&&document.getElementById('parking-model-choice').value==='dinov2');
   await page.locator('#parking-run').click();await page.waitForFunction(()=>!document.querySelector('#parking-run').disabled&&/^当前快照分析完成/.test(document.querySelector('#parking-message').textContent));
@@ -56,6 +67,8 @@ const step=(name,value)=>{report.steps[name]=value;console.log(name,JSON.stringi
     await show(view);
     const w=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,inner:innerWidth,background:getComputedStyle(document.body).backgroundColor}));
     widths[`${width}-${scheme}-${view}`]=w;if(width===375)assert.ok(w.scroll<=w.inner,`${view} at 375 px ${scheme}: page scroll width ${w.scroll}`);
+    // The timeline stays usable at every width and theme: its list button opens the keyframe.
+    if(view==='analyze'){await openKeyframe(page,stop.id,{via:'row'});assert.equal(await page.locator('#timeline-panel').isVisible(),true);}
     await shoot(`${width}-${scheme}-${view}`);
    }
   }
