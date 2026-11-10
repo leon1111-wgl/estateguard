@@ -8,8 +8,8 @@ export function summarise(dev,test){
   secondary:r.secondary.map(s=>({rule:s.rule,activity:s.activity,references:s.references,matched:s.operating_point.matched,pmiss:s.operating_point.pmiss})),
   failure_modes:r.failure_modes.aggregate});
  return {protocol:'docs/validation/event-timeline-protocol.md',dataset:'MEVA KF1, evaluation-level Kitware annotations (CC BY 4.0)',annotations:test.annotations,
-  scope:'ActEV-style scoring re-implemented in this repository; whole-frame zones; 1 frame per second; first run on the test half, reported as measured.',
-  dev:{...part(dev),chosen:dev.chosen},test:part(test)};
+  scope:'ActEV-style scoring re-implemented in this repository; whole-frame zones; 1 frame per second. Test: the detections of the single test run, scored with the corrected annotation reader (the first scoring misread one of the two KPF dialects; see docs/VALIDATION.md 0.5.0).',
+  dev:{...part(dev),chosen:dev.chosen},test:{...part(test),detections_run_id:test.detections_run_id??null,detections_commit:test.detections_commit??null,rescore:test.rescore??null}};
 }
 if(import.meta.url===`file://${process.argv[1]}`){
  const out=JSON.stringify(summarise(read('docs/validation/event-timeline-dev-report.json'),read('docs/validation/event-timeline-test-report.json')),null,1)+'\n';

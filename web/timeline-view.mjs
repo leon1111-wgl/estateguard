@@ -29,7 +29,7 @@ function evidenceLine(){
  if(!evaluationRequested){evaluationRequested=true;fetch(new URL('./data/timeline/evaluation.json',import.meta.url),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(e=>{evaluation=e;evidenceLine();}).catch(()=>{});}
  if(!evaluation?.test){box.textContent='';return;}
  const t=evaluation.test,p=x=>x==null?'—':`${Math.round(x*100)}%`;
- box.textContent=`公开数据上的表现（MEVA 测试半，${t.clips} 段 / ${t.minutes.toFixed(0)} 分钟，按摄像头与开发半分开，首次运行）：`+RULE_ORDER.map(r=>{const x=t.rules[r];return `${TIMELINE_RULES[r].label}漏报 ${p(x.pmiss)}（${x.references} 个标注），每分钟多报 ${x.unmatched_per_minute.toFixed(1)} 个${x.pmiss===1?`，在公开测试中全部漏报（${x.references} 个标注）`:x.pmiss>=.9?'，在公开测试中几乎全部漏报':''}`;}).join('；')+'。';
+ box.textContent=`公开数据上的表现（MEVA 测试半，${t.clips} 段 / ${t.minutes.toFixed(0)} 分钟，按摄像头与开发半分开；唯一一次测试运行的检测输出，修正标注读取后评分）：`+RULE_ORDER.map(r=>{const x=t.rules[r];return `${TIMELINE_RULES[r].label}漏报 ${p(x.pmiss)}（${x.references} 个标注），每分钟多报 ${x.unmatched_per_minute.toFixed(1)} 个${x.pmiss===1?`，在公开测试中全部漏报（${x.references} 个标注）`:x.pmiss>=.9?'，在公开测试中几乎全部漏报':''}`;}).join('；')+'。';
 }
 export function renderTimeline(report,{onSelect}={}){
  const t=report.timeline,panel=$('timeline-panel');if(!t||!panel)return;

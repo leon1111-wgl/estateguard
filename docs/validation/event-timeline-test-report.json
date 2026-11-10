@@ -1,8 +1,11 @@
 {
  "protocol": "docs/validation/event-timeline-protocol.md",
  "split": "test",
- "commit": "a4f1132250683e1034c11477d409da8902b2709a",
- "run_id": "42725830941",
+ "commit": "510b83ea3e3fe611d1262b6a852097164049f129",
+ "run_id": "42729382727",
+ "detections_run_id": "42725830941",
+ "detections_commit": "a4f1132250683e1034c11477d409da8902b2709a",
+ "rescore": "Same detections as that run; only the reading of the annotations changed.",
  "annotations": "meva-data-repo@421841a75577b697c314e952e585aecbb1b99e17",
  "clips": [
   {
@@ -14,6 +17,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 5,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 6,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -30,6 +45,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 4,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 4,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -46,6 +73,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 85,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 95,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 4,
     "person_puts_down_object": 1,
@@ -62,6 +101,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 23,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 23,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -78,6 +129,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 5,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 5,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -94,6 +157,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 34,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 41,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 1,
@@ -110,6 +185,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 10,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 11,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -126,6 +213,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 2,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 2,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -142,11 +241,23 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 12,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 9,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
     "person_enters_scene_through_structure": 0,
-    "person_opens_facility_door": 0
+    "person_opens_facility_door": 1
    }
   },
   {
@@ -158,6 +269,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 73,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 76,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -174,6 +297,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 2,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 1,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -190,11 +325,23 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 20,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 16,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
-    "person_enters_scene_through_structure": 0,
-    "person_opens_facility_door": 0
+    "person_enters_scene_through_structure": 5,
+    "person_opens_facility_door": 3
    }
   },
   {
@@ -206,6 +353,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 5,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 13,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -222,11 +381,23 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 55,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 66,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
-    "person_puts_down_object": 0,
+    "person_puts_down_object": 3,
     "person_enters_scene_through_structure": 0,
-    "person_opens_facility_door": 0
+    "person_opens_facility_door": 1
    }
   },
   {
@@ -238,6 +409,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 6,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 9,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 0,
     "person_puts_down_object": 0,
@@ -254,6 +437,18 @@
    "fps": 30,
    "analysed_seconds": 300,
    "frames": 300,
+   "kpf_audit": {
+    "activities": {
+     "records": 39,
+     "skipped": 0,
+     "skipped_data": 0
+    },
+    "types": {
+     "records": 64,
+     "skipped": 0,
+     "skipped_data": 0
+    }
+   },
    "references": {
     "vehicle_stops": 6,
     "person_puts_down_object": 1,
@@ -310,13 +505,13 @@
   },
   "object_left": {
    "activity": "person_puts_down_object",
-   "references": 3,
+   "references": 6,
    "system_instances": 10,
-   "non_reference_seconds": 4797.333333333333,
+   "non_reference_seconds": 4787.833333333333,
    "operating_point": {
     "matched": 0,
     "pmiss": 1,
-    "tfa": 0.0064619232907170655,
+    "tfa": 0.0064747450134020265,
     "false_alarm_seconds": 31,
     "unmatched_system_instances": 10,
     "unmatched_per_minute": 0.125
@@ -335,40 +530,40 @@
     "at_least_0_5": 0
    },
    "pmiss_wilson_95": [
-    0.43849391955098227,
-    1
+    0.6096569663469354,
+    0.9999999999999999
    ],
    "det_points": 10
   },
   "person_appears": {
    "activity": "person_enters_scene_through_structure",
-   "references": 70,
+   "references": 75,
    "system_instances": 336,
-   "non_reference_seconds": 4670.5,
+   "non_reference_seconds": 4664.333333333334,
    "operating_point": {
-    "matched": 53,
-    "pmiss": 0.24285714285714288,
-    "tfa": 0.12900831459872247,
-    "false_alarm_seconds": 602.5333333333333,
-    "unmatched_system_instances": 283,
-    "unmatched_per_minute": 3.5375
+    "matched": 57,
+    "pmiss": 0.24,
+    "tfa": 0.12815693561066246,
+    "false_alarm_seconds": 597.7666666666667,
+    "unmatched_system_instances": 279,
+    "unmatched_per_minute": 3.4875
    },
    "pmiss_at_tfa": {
-    "0.02": 0.44285714285714284,
-    "0.1": 0.2571428571428571,
-    "0.2": 0.24285714285714288
+    "0.02": 0.4594285714285704,
+    "0.1": 0.2533333333333333,
+    "0.2": 0.24
    },
    "naudc_range": 0.2,
-   "naudc": 0.316476831953212,
+   "naudc": 0.31737743559852016,
    "temporal_iou": {
-    "pairs": 53,
-    "mean": 0.5859601876713362,
-    "median": 0.6093749999999968,
+    "pairs": 57,
+    "mean": 0.5754801788256326,
+    "median": 0.5409836065573782,
     "at_least_0_5": 32
    },
    "pmiss_wilson_95": [
-    0.1575173261192311,
-    0.3549526095268004
+    0.15754748728758244,
+    0.3477897965828615
    ],
    "det_points": 336
   }
@@ -377,24 +572,24 @@
   {
    "rule": "person_appears",
    "activity": "person_opens_facility_door",
-   "references": 32,
+   "references": 37,
    "system_instances": 336,
-   "non_reference_seconds": 4728.566666666667,
+   "non_reference_seconds": 4718.266666666666,
    "operating_point": {
     "matched": 15,
-    "pmiss": 0.53125,
-    "tfa": 0.13977456170650723,
-    "false_alarm_seconds": 660.9333333333332,
+    "pmiss": 0.5945945945945945,
+    "tfa": 0.13984655381919914,
+    "false_alarm_seconds": 659.8333333333333,
     "unmatched_system_instances": 321,
     "unmatched_per_minute": 4.0125
    },
    "pmiss_at_tfa": {
-    "0.02": 0.875,
-    "0.1": 0.5625,
-    "0.2": 0.53125
+    "0.02": 0.8918918918918919,
+    "0.1": 0.6216216216216216,
+    "0.2": 0.5945945945945945
    },
    "naudc_range": 0.2,
-   "naudc": 0.6329690493112835,
+   "naudc": 0.6825186664547865,
    "temporal_iou": {
     "pairs": 15,
     "mean": 0.4775945248676219,
@@ -771,7 +966,7 @@
      {
       "min_px": 0,
       "max_px": 50,
-      "boxes": 0,
+      "boxes": 12,
       "found": 0
      },
      {
@@ -802,11 +997,11 @@
       "switches_per_100_matched_samples": null
      },
      "vehicle": {
-      "actors_with_3_matched_samples": 0,
-      "matched_samples": 0,
-      "mean_distinct_tracks_per_actor": null,
+      "actors_with_3_matched_samples": 2,
+      "matched_samples": 11,
+      "mean_distinct_tracks_per_actor": 1,
       "id_switches": 0,
-      "switches_per_100_matched_samples": null
+      "switches_per_100_matched_samples": 0
      }
     }
    },
@@ -912,14 +1107,14 @@
      {
       "min_px": 50,
       "max_px": 100,
-      "boxes": 0,
+      "boxes": 9,
       "found": 0
      },
      {
       "min_px": 100,
       "max_px": 200,
-      "boxes": 0,
-      "found": 0
+      "boxes": 41,
+      "found": 34
      },
      {
       "min_px": 200,
@@ -930,11 +1125,11 @@
     ],
     "id_switches": {
      "person": {
-      "actors_with_3_matched_samples": 0,
-      "matched_samples": 0,
-      "mean_distinct_tracks_per_actor": null,
-      "id_switches": 0,
-      "switches_per_100_matched_samples": null
+      "actors_with_3_matched_samples": 3,
+      "matched_samples": 29,
+      "mean_distinct_tracks_per_actor": 2.6666666666666665,
+      "id_switches": 7,
+      "switches_per_100_matched_samples": 24.137931034482758
      },
      "vehicle": {
       "actors_with_3_matched_samples": 0,
@@ -1002,29 +1197,29 @@
      {
       "min_px": 50,
       "max_px": 100,
-      "boxes": 0,
-      "found": 0
+      "boxes": 177,
+      "found": 164
      },
      {
       "min_px": 100,
       "max_px": 200,
-      "boxes": 0,
-      "found": 0
+      "boxes": 669,
+      "found": 394
      },
      {
       "min_px": 200,
       "max_px": null,
-      "boxes": 0,
-      "found": 0
+      "boxes": 833,
+      "found": 830
      }
     ],
     "id_switches": {
      "person": {
-      "actors_with_3_matched_samples": 0,
-      "matched_samples": 0,
-      "mean_distinct_tracks_per_actor": null,
-      "id_switches": 0,
-      "switches_per_100_matched_samples": null
+      "actors_with_3_matched_samples": 29,
+      "matched_samples": 1385,
+      "mean_distinct_tracks_per_actor": 5.758620689655173,
+      "id_switches": 406,
+      "switches_per_100_matched_samples": 29.314079422382672
      },
      "vehicle": {
       "actors_with_3_matched_samples": 0,
@@ -1152,7 +1347,18 @@
    {},
    {},
    {},
-   {},
+   {
+    "other": {
+     "objects": 2,
+     "with_boxes": 0,
+     "detected": 0
+    },
+    "bag": {
+     "objects": 1,
+     "with_boxes": 0,
+     "detected": 0
+    }
+   },
    {},
    {
     "other": {
@@ -1167,52 +1373,52 @@
     {
      "min_px": 0,
      "max_px": 50,
-     "boxes": 1473,
+     "boxes": 1485,
      "found": 248
     },
     {
      "min_px": 50,
      "max_px": 100,
-     "boxes": 1112,
-     "found": 804
+     "boxes": 1298,
+     "found": 968
     },
     {
      "min_px": 100,
      "max_px": 200,
-     "boxes": 2264,
-     "found": 1689
+     "boxes": 2974,
+     "found": 2117
     },
     {
      "min_px": 200,
      "max_px": null,
-     "boxes": 224,
-     "found": 200
+     "boxes": 1057,
+     "found": 1030
     }
    ],
    "id_switches": {
     "person": {
-     "actors": 108,
-     "matched_samples": 3439,
-     "id_switches": 633,
-     "mean_distinct_tracks_per_actor": 4.074074074074074,
-     "switches_per_100_matched_samples": 18.406513521372492
+     "actors": 140,
+     "matched_samples": 4853,
+     "id_switches": 1046,
+     "mean_distinct_tracks_per_actor": 4.392857142857143,
+     "switches_per_100_matched_samples": 21.5536781372347
     },
     "vehicle": {
-     "actors": 26,
-     "matched_samples": 140,
+     "actors": 28,
+     "matched_samples": 151,
      "id_switches": 2,
-     "mean_distinct_tracks_per_actor": 1.0384615384615385,
-     "switches_per_100_matched_samples": 1.4285714285714286
+     "mean_distinct_tracks_per_actor": 1.0357142857142858,
+     "switches_per_100_matched_samples": 1.3245033112582782
     }
    },
    "put_down_objects": {
     "bag": {
-     "objects": 1,
+     "objects": 2,
      "with_boxes": 0,
      "detected": 0
     },
     "other": {
-     "objects": 2,
+     "objects": 4,
      "with_boxes": 0,
      "detected": 0
     }
